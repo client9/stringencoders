@@ -1,0 +1,42 @@
+
+
+<h3> AMD 2.2Ghz, Linux 2.6.15, gcc -O3 (3.4.4)</h3>
+Tested: 16-May-2006
+<pre>
+Message size = 20
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    0.04    0.10    2.50x           0.09    0.05    0.04
+Decode    0.04    0.13    3.25x           0.07    0.06    0.05
+
+Message size = 200
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    0.43    0.99    2.30x           0.83    0.47    0.33
+Decode    0.34    1.10    3.24x           0.60    0.46    0.41
+
+Message size = 2000
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    4.02    9.45    2.35x           7.98    4.66    3.09
+Decode    3.18   10.77    3.39x           5.94    4.54    3.93
+</pre>
+
+<h3> PPC G4 1.33Ghz, Mac OS X 10.4.5, gcc -O3 (4.0.0)</h3>
+
+<pre>
+Darwin XXX 8.6.0 Darwin Kernel Version 8.6.0:/RELEASE_PPC Power Macintosh powerpc
+gcc version 4.0.0 (Apple Computer, Inc. build 5026)
+
+Message size = 20
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    0.13    0.18    1.38x           0.16    0.12    0.13
+Decode    0.13    0.24    1.85x           0.14    0.16    0.14
+
+Message size = 200
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    0.86    1.56    1.81x           1.16    0.93    0.95
+Decode    0.77    2.10    2.73x           1.13    1.24    1.09
+
+Message size = 2000
+        modpb64 apache  improvement     modpb85 modpurl modp_b16
+Encode    8.09   15.39    1.90x          10.99    9.09    9.24
+Decode    7.28   20.46    2.81x          10.98   12.13   10.79
+</pre>

@@ -1,0 +1,85 @@
+
+----------------------------------------
+PLAIN INSTALL
+----------------------------------------
+
+
+EXPORT CFLAGS='your optimization flags'
+
+   gcc defaults to "-O2 -g"  you probably want "-O3 -Wall"
+
+./configure
+
+make
+
+make test
+
+make install
+   will produce a shared and static library and put in the right places.
+   it will also install the include files.
+
+----------------------------------------
+IF YOU DON'T WANT TO DEAL WITH A LIBRARY
+----------------------------------------
+
+Base64 and base85 functions are so small, you might just want to
+directly add them into your existing project.  That's fine, it's all
+under the BSD license, so go ahead.
+
+
+For b64:
+--------
+After doing a "./configure && make", copy
+ * src/b64fast.c
+ * src/b64fast.h
+ * b64fast_data.h
+
+***** BUT, there is an IMPORTANT GOTCHA! *****
+
+This code has special versions that are -endian- dependant.  This
+means different code is used on an Intel CPU than it is on a Motorola,
+IBM, or Sun CPU. 
+
+**** IF you are using autoconf, just add AC_C_BIGENDIAN to your
+configure.in script and everything will work.
+
+**** IF NOT, edit b64fast.c, and replace the 
+#include "config.h"
+with
+#define WORDS_BIGENDIAN  /* for Sun, Ibm, Motorola */  
+OR
+#undef WORDS_BIGENDIAN   /* For intel, amd */
+
+see the source code for details.  Likewise you can pass in
+-DWORDS_BIGENDIAN or -DNWORDS_BIGENDIAN during compilation.
+
+For b85:
+--------
+There are no endian issues.  Just copy
+
+ * src/b85fast.c
+ * src/b85fast.h
+ * b85fast_data.h
+
+----------------------------------------
+UNIT TESTS
+----------------------------------------
+
+Two unit tests are included that are not installed.  They are built
+automatically and can be run with "make test"
+
+./speedtest tests performance of b64 and b85
+./unittest tests correctness of b64
+./b85test test correectness of b75
+
+
+If you are changing the base64 alphabet, just edit the b64gen.c program
+and type 'make'.
+
+If you are changing the base85 alphabet, edit the b85gen.c program and
+type 'make'.
+
+ALWAYS UNIT TEST ANY CHANGES.  The current unittests depend on the
+standard alphabet, so you might need to tweek them if to make custom
+alterations.
+
