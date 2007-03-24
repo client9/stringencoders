@@ -2,10 +2,9 @@
 
 
 
-== AMD 2.2 Ghz, Gcc 3.4 O3==
+== 2.2Ghz AMD, gcc 3.4.4 -O3==
 
 {{{
-AMD 2.2Ghz, Linux 2.6.15, gcc -O3 (3.4.4)
 
 Message size = 20
         modpb64 apache  improvement     modpb85 modpurl modp_b16
