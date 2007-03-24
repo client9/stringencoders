@@ -11,7 +11,6 @@ SOURCES = \
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
 
-
 libmodpbase64_la_DEPENDENCIES = \
 	modp_b16_data.h modp_b16_gen \
 	modp_b64_data.h modp_b64w_data.h modp_b64_gen \
@@ -23,12 +22,10 @@ include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h
 
-doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
-	doxygen Doxyfile
-
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
+	*.gcda *.gcno \
 	doxy/html/* \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
@@ -81,38 +78,30 @@ modp_bjavascript_gen_SOURCES =  src/arraytoc.c src/modp_bjavascript_gen.c
 
 speedtest_SOURCES = test/apr_base64.h test/apr_base64.c test/speedtest.c
 speedtest_LDADD = libmodpbase64.la
-speedtest_CFLAGS = $(CFLAGS) -Isrc
 
 modp_b16_test_SOURCES = test/modp_b16_test.c cutest/CuTest.c
 modp_b16_test_LDADD = libmodpbase64.la
-modp_b16_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 modp_b64_test_SOURCES = test/modp_b64_test.c cutest/CuTest.c
 modp_b64_test_LDADD = libmodpbase64.la
-modp_b64_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 test/modp_b64w_test.c: test/modp_b64_test.c
 	perl -p -i -e 's/b64/b64w/g' < test/modp_b64_test.c > test/modp_b64w_test.c
 
 modp_b64w_test_SOURCES = test/modp_b64w_test.c cutest/CuTest.c
 modp_b64w_test_LDADD = libmodpbase64.la
-modp_b64w_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 modp_b85_test_SOURCES = test/modp_b85_test.c cutest/CuTest.c
 modp_b85_test_LDADD = libmodpbase64.la
-modp_b85_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 modp_burl_test_SOURCES = test/modp_burl_test.c cutest/CuTest.c
 modp_burl_test_LDADD = libmodpbase64.la
-modp_burl_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c cutest/CuTest.c
 modp_bjavascript_test_LDADD = libmodpbase64.la
-modp_bjavascript_test_CFLAGS = $(CFLAGS) -Isrc -Icutest
 
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
-cxx_test_CXXFLAGS = $(CFLAGS) -Isrc
 
 .PHONY: test doxy
 test: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test speedtest
@@ -123,4 +112,7 @@ test: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_
 	./modp_burl_test
 	./modp_bjavascript_test
 	./speedtest
+
+doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
+	doxygen Doxyfile
 
