@@ -26,11 +26,14 @@ Tested 16-May-2006
 }}}
 
 
-== G4 PowerPC, gcc 4.01 -O3 ==
+== 1.33Ghz PowerPC G4, gcc 4.01 -O3 ==
+
+(aka, my old mac powerbook)
 
 Tested: Sat Mar 24 17:18:25 EDT 2007
 
 {{{
+$./speedtest
 Message size = 20
         modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
 Encode    0.13    0.18    1.38x           0.18    0.12    0.13    0.18
