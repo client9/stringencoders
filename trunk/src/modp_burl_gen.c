@@ -79,7 +79,7 @@ void urlencodeminmap()
                              '!', '$', '(', ')', '*', ',', ';',
                              ':', '@', '/', '?'};
     for (i = 0; i < sizeof(safechar); ++i) {
-        urlEncodeMap[safechar[i]] = safechar[i];
+        urlEncodeMap[(int)(safechar[i])] = safechar[i];
     }
 
 
