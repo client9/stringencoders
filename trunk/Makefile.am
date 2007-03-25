@@ -122,13 +122,14 @@ lcov-html:
 
 test: unittest speedtest
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test cxx_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
 	./modp_burl_test
 	./modp_bjavascript_test
+	./cxx_test
 
 perftest: speedtest
 	./speedtest
