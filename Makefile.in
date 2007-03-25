@@ -69,6 +69,7 @@ AMTAR = @AMTAR@
 AR = @AR@
 AS = @AS@
 AWK = @AWK@
+B64WCHARS = @B64WCHARS@
 CC = @CC@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
@@ -120,9 +121,7 @@ include_HEADERS = \
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
-	*.gcda *.gcno *.gcov stringencoders.info \
-	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
-	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
+	doxy/html/*
 
 
 noinst_PROGRAMS = \
@@ -1155,10 +1154,13 @@ uninstall-am: uninstall-includeHEADERS uninstall-info-am \
 	uninstall-am uninstall-includeHEADERS uninstall-info-am \
 	uninstall-libLTLIBRARIES
 
+	*.gcda *.gcno *.gcov stringencoders.info \
+	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
+	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
 clean:
 	rm -rf autom4te.cache
-	rm -rf doxy lcov-html
+	rm -rf lcov-html
 
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 
@@ -1179,8 +1181,11 @@ modp_b16_data.h: modp_b16_gen
 modp_b64_data.h: modp_b64_gen
 	./modp_b64_gen > modp_b64_data.h
 
+#
+# Recall B64WCHARS by default is "-_."
+#
 modp_b64w_data.h: modp_b64_gen
-	./modp_b64_gen "-_." > modp_b64w_data.h
+	./modp_b64_gen $(B64WCHARS) > modp_b64w_data.h
 
 modp_b85_data.h: modp_b85_gen
 	./modp_b85_gen > modp_b85_data.h
