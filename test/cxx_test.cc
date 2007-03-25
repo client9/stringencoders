@@ -24,6 +24,13 @@ void test_b16()
     if (s != orig) {
         cerr << "Expected " << orig << ", recieved " << s << "\n";
     }
+
+    // test bad input
+    s = "1";
+    b16_decode(s);
+    if (!s.empty()) {
+        cerr << "Expected decode to be empty\n";
+    }
 }
 
 void test_b64()
@@ -39,6 +46,14 @@ void test_b64()
     if (s != orig) {
         cerr << "Expected " << orig << ", recieved " << s << "\n";
     }
+
+    // test bad decode length
+    s = "a";
+    b64_decode(s);
+    if (!s.empty()) {
+        cerr << "Expected decode output to be empty\n";
+    }
+
 }
 
 void test_b85()
@@ -54,6 +69,21 @@ void test_b85()
     if (s != orig) {
         cerr << "Expected " << orig << ", recieved " << s << "\n";
     }
+
+    // test non-multiple for decode
+    string badstr;
+
+    badstr = "abcd";
+    b85_decode(badstr);
+    if (!badstr.empty()) {
+        cerr << "Expected decode output to be empty\n";
+    }
+
+    badstr = "abcdef";
+    b85_encode(badstr);
+    if (!badstr.empty()) {
+        cerr << "Expected encode output to be empty\n";
+    }
 }
 
 
@@ -62,14 +92,21 @@ void test_url()
     string orig("this is a test");
     string s(orig);
     url_encode(s);
-    if (s == orig) {
-        cerr << "something wrong\n";
+    if (s != "this%20is%20a%20test") {
+        cerr << "Expected " << orig << ", recieved " << s << "\n";
     }
 
     url_decode(s);
     if (s != orig) {
         cerr << "Expected " << orig << ", recieved " << s << "\n";
     }
+
+    s = "bad\n";
+    url_decode(s);
+    if (s.empty()) {
+        cerr << "Expected empty decode\n";
+    }
+
 }
 
 void test_javascript()

@@ -54,6 +54,28 @@ void testLength(CuTest* tc)
     CuAssertIntEquals(tc, 11, modp_b85_encode_len(8));
 }
 
+/** \brief test bad input lengths
+ * The b85 encode only accepts multiples of 4.
+ *
+ * The b85 decoder only accepts a mutliple of 5.
+ *
+ */
+void testBadInputLength(CuTest* tc)
+{
+    char buf[100];
+    CuAssertIntEquals(tc, -1, modp_b85_encode(buf, buf, 5));
+    CuAssertIntEquals(tc, -1, modp_b85_decode(buf, buf, 11));
+}
+
+/** \brief test decoding invalid b85 chars
+ *
+ */
+void testBadCharDecode(CuTest* tc)
+{
+    char buf[] = {'A', 'B', 'C', 'D', '\n', '\0'};
+    CuAssertIntEquals(tc, -1, modp_b85_decode(buf, buf, 5));
+}
+
 void testEncodeDecode(CuTest* tc)
 {
     char ibuf[10]; /* input */
@@ -91,6 +113,8 @@ static CuSuite* GetSuite() {
     CuSuite* suite = CuSuiteNew();
     SUITE_ADD_TEST(suite, testEndian);
     SUITE_ADD_TEST(suite, testLength);
+    SUITE_ADD_TEST(suite, testBadInputLength);
+    SUITE_ADD_TEST(suite, testBadCharDecode);
     SUITE_ADD_TEST(suite, testEncodeDecode);
     return suite;
 }
