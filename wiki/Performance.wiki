@@ -31,6 +31,8 @@ Tested 16-May-2006
 
 Oops! it's a bit slower than the apache encoder.
 
+Tested: Sat Mar 24 22:27:06 EDT 2007
+
 {{{
 Message size = 20
         modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
