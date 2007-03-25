@@ -13,6 +13,10 @@ AC_TYPE_SIZE_T
 AC_CHECK_FUNCS([memset, htonl, strlen])
 AC_ARG_ENABLE(gcov, AC_HELP_STRING([--enable-gcov],[turn on code coverage analysis tools]))
 
+B64WCHARS="-_."
+AC_ARG_WITH([b64wchars], AC_HELP_STRING([--with-b64wchars=3CHARS],[change b64 web extra chars, default is '-_.']),
+          [B64WCHARS=$withval], [])
+            
 EXTRACFLAGS="-Isrc -Icutest -Wall -Werror"
 
 if test "x$enable_gcov" = "xyes";
@@ -24,6 +28,7 @@ then
 fi
 CFLAGS="$EXTRACFLAGS $CFLAGS"
 CXXFLAGS="$CFLAGS"
+AC_SUBST(B64WCHARS)
 AC_CONFIG_FILES([Makefile])
 AC_PROG_MAKE_SET
 AC_OUTPUT

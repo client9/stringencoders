@@ -53,8 +53,11 @@ modp_b16_data.h: modp_b16_gen
 modp_b64_data.h: modp_b64_gen
 	./modp_b64_gen > modp_b64_data.h
 
+#
+# Recall B64WCHARS by default is "-_."
+#
 modp_b64w_data.h: modp_b64_gen
-	./modp_b64_gen "-_." > modp_b64w_data.h
+	./modp_b64_gen $(B64WCHARS) > modp_b64w_data.h
 
 modp_b85_data.h: modp_b85_gen
 	./modp_b85_gen > modp_b85_data.h
