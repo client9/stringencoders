@@ -20,9 +20,10 @@ then
     EXTRACFLAGS="$EXTRACFLAGS -fprofile-arcs -ftest-coverage"
     dnl Turn off optimization so code coverage tool
     dnl can get accurate line numbers
-    EXTRACFLAGS=`echo "$EXTRACFLAGS" | sed -e 's/-O[0-9]*//g'`
+    CFLAGS=`echo "$EXTRACFLAGS" | sed -e 's/-O[0-9]*//g'`
 fi
 CFLAGS="$EXTRACFLAGS $CFLAGS"
+CXXFLAGS="$CFLAGS"
 AC_CONFIG_FILES([Makefile])
 AC_PROG_MAKE_SET
 AC_OUTPUT

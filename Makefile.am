@@ -25,8 +25,10 @@ include_HEADERS = \
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
-	*.gcda *.gcno \
+	*.gcda *.gcno *.gcov stringencoders.info \
+	autom4te.cache/* \
 	doxy/html/* \
+	lcov-html/* \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
@@ -103,14 +105,32 @@ modp_bjavascript_test_LDADD = libmodpbase64.la
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
-.PHONY: test doxy
-test: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test speedtest
+.PHONY: test unittest speedtest doxy lcov-html
+
+lcov-html:
+	lcov -b . --directory . --zerocounters
+	@make unittest
+	lcov -b . --directory . --capture --output-file stringencoders.info
+	lcov -b . --directory . --remove stringencoders.info '*arraytoc.c' -o stringencoders.info
+	lcov -b . --directory . --remove stringencoders.info '*test*' -o stringencoders.info
+	lcov -b . --directory . --remove stringencoders.info '*_gen.c' -o stringencoders.info
+	lcov -b . --directory . --remove stringencoders.info '/usr/include*' -o stringencoders.info
+	rm -rf lcov-html
+	mkdir lcov-html
+	genhtml -o lcov-html stringencoders.info
+
+
+test: unittest speedtest
+
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
 	./modp_burl_test
 	./modp_bjavascript_test
+
+perftest: speedtest
 	./speedtest
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile

@@ -3,8 +3,8 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
-/* Define to 1 if you have the `htonl,' function. */
-#undef HAVE_HTONL_
+/* Define to 1 if you have the `htonl */
+#undef HAVE_HTONL
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
@@ -12,8 +12,8 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define to 1 if you have the `memset,' function. */
-#undef HAVE_MEMSET_
+/* Define to 1 if you have the `memset */
+#undef HAVE_MEMSET
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
@@ -70,5 +70,5 @@
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const
 
-/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* Define to `unsigned' if <sys/types.h> does not define. */
 #undef size_t
