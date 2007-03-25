@@ -29,7 +29,7 @@ Tested 16-May-2006
 
 (aka Mac-Mini)
 
-Oop! it's a bit slower than the apache encoder.
+Oops! it's a bit slower than the apache encoder.
 
 {{{
 Message size = 20
@@ -48,7 +48,7 @@ Encode    7.26    5.73    0.79x          13.66    4.39    4.73    5.48
 Decode    6.16    7.40    1.20x           9.71    5.47   16.00
 }}}
 
-== 1.33Ghz PowerPC G4, gcc 4.01 -O3 ==
+== 1.33Ghz PowerPC G4, gcc 4.0.1, -O3 ==
 
 (aka, my old mac powerbook)
 
