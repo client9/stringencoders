@@ -87,6 +87,40 @@ static void testOddDecode(CuTest* tc)
     CuAssertIntEquals(tc, 1, obuf[0]);
 }
 
+static void testOddEncode(CuTest* tc)
+{
+    char obuf[100];
+    char ibuf[100];
+
+    // oddball 1 char.
+    ibuf[0] = 1;
+    CuAssertIntEquals(tc, 2, modp_b16_encode(obuf, ibuf, 1));
+    CuAssertIntEquals(tc, obuf[0], '0');
+    CuAssertIntEquals(tc, obuf[1], '1');
+
+    // oddball 2 char.
+    ibuf[0] = 0;
+    ibuf[1] = 1;
+    CuAssertIntEquals(tc, 4, modp_b16_encode(obuf, ibuf, 2));
+    CuAssertIntEquals(tc, obuf[0], '0');
+    CuAssertIntEquals(tc, obuf[1], '0');
+    CuAssertIntEquals(tc, obuf[2], '0');
+    CuAssertIntEquals(tc, obuf[3], '1');
+
+    // oddball 1 char.
+    ibuf[0] = 0;
+    ibuf[1] = 0;
+    ibuf[2] = 1;
+    CuAssertIntEquals(tc, 6, modp_b16_encode(obuf, ibuf, 3));
+    CuAssertIntEquals(tc, obuf[0], '0');
+    CuAssertIntEquals(tc, obuf[1], '0');
+    CuAssertIntEquals(tc, obuf[2], '0');
+    CuAssertIntEquals(tc, obuf[3], '0');
+    CuAssertIntEquals(tc, obuf[4], '0');
+    CuAssertIntEquals(tc, obuf[5], '1');
+}
+
+
 static void testBadDecode(CuTest* tc)
 {
     char obuf[100];
@@ -192,7 +226,7 @@ static CuSuite* GetSuite() {
     SUITE_ADD_TEST(suite, testEmptyInput);
     SUITE_ADD_TEST(suite, testBadDecode);
     SUITE_ADD_TEST(suite, testOddDecode);
-
+    SUITE_ADD_TEST(suite, testOddEncode);
     return suite;
 }
 

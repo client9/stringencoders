@@ -50,7 +50,7 @@
 int modp_b16_encode(char* dest, const char* str, int len)
 {
     int i;
-    const int buckets = len >> 2; // i..e i / 4
+    const int buckets = len >> 2; // i.e. i / 4
     const int leftover = len & 0x03; // i.e. i % 4
 
     uint8_t* p = (uint8_t*) dest;
