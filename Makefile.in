@@ -120,10 +120,10 @@ include_HEADERS = \
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
-	*.gcda *.gcno *.gcov \
+	*.gcda *.gcno *.gcov stringencoders.info \
 	autom4te.cache/* \
 	doxy/html/* \
-	lcov-html \
+	lcov-html/* \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
@@ -1209,13 +1209,14 @@ lcov-html:
 
 test: unittest speedtest
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test cxx_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
 	./modp_burl_test
 	./modp_bjavascript_test
+	./cxx_test
 
 perftest: speedtest
 	./speedtest
