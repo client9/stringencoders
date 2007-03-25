@@ -25,13 +25,14 @@ include_HEADERS = \
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
+	doxy/html/*
 	*.gcda *.gcno *.gcov stringencoders.info \
-	autom4te.cache/* \
-	doxy/html/* \
-	lcov-html/* \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
+clean:
+	rm -rf autom4te.cache
+	rm -rf lcov-html
 
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 

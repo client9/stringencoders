@@ -15,6 +15,8 @@ using std::cerr;
 
 using namespace modp;
 
+#define WHERE(A) A << "[" << __FILE__ << ":" << __LINE__ << "] "
+
 void test_b16()
 {
     string orig("this is a test");
@@ -22,14 +24,16 @@ void test_b16()
     b16_encode(s);
     b16_decode(s);
     if (s != orig) {
-        cerr << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
     }
 
     // test bad input
     s = "1";
     b16_decode(s);
     if (!s.empty()) {
-        cerr << "Expected decode to be empty\n";
+        WHERE(cerr) << "Expected decode to be empty\n";
+        exit(1);
     }
 }
 
@@ -39,19 +43,22 @@ void test_b64()
     string s(orig);
     b64_encode(s);
     if (s == orig) {
-        cerr << "something wrong\n";
+        WHERE(cerr) << "something wrong\n";
+        exit(1);
     }
 
     b64_decode(s);
     if (s != orig) {
-        cerr << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
     }
 
     // test bad decode length
     s = "a";
     b64_decode(s);
     if (!s.empty()) {
-        cerr << "Expected decode output to be empty\n";
+        WHERE(cerr) << "Expected decode output to be empty\n";
+        exit(1);
     }
 
 }
@@ -63,11 +70,13 @@ void test_b85()
     string s(orig);
     b85_encode(s);
     if (s == orig) {
-        cerr << "something wrong\n";
+        WHERE(cerr) << "something wrong\n";
+        exit(1);
     }
     b85_decode(s);
     if (s != orig) {
-        cerr << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
     }
 
     // test non-multiple for decode
@@ -76,13 +85,15 @@ void test_b85()
     badstr = "abcd";
     b85_decode(badstr);
     if (!badstr.empty()) {
-        cerr << "Expected decode output to be empty\n";
+        WHERE(cerr) << "Expected decode output to be empty\n";
+        exit(1);
     }
 
     badstr = "abcdef";
     b85_encode(badstr);
     if (!badstr.empty()) {
-        cerr << "Expected encode output to be empty\n";
+        WHERE(cerr) << "Expected encode output to be empty\n";
+        exit(1);
     }
 }
 
@@ -90,21 +101,25 @@ void test_b85()
 void test_url()
 {
     string orig("this is a test");
+    string expected("this+is+a+test");
     string s(orig);
     url_encode(s);
-    if (s != "this%20is%20a%20test") {
-        cerr << "Expected " << orig << ", recieved " << s << "\n";
+    if (s != expected) {
+        WHERE(cerr) << "Expected " << expected << ", recieved " << s << "\n";
+        exit(1);
     }
 
     url_decode(s);
     if (s != orig) {
-        cerr << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
     }
 
     s = "bad\n";
     url_decode(s);
     if (s.empty()) {
-        cerr << "Expected empty decode\n";
+        WHERE(cerr) << "Expected empty decode\n";
+        exit(1);
     }
 
 }
@@ -115,7 +130,8 @@ void test_javascript()
     string expected("this \\\"is\\' a test\\n");
     javascript_encode(orig);
     if (orig != expected) {
-        cerr << "Expected: " << expected << "Received: " << orig << "\n";
+        WHERE(cerr) << "Expected: " << expected << "Received: " << orig << "\n";
+        exit(1);
     }
 }
 
