@@ -121,9 +121,6 @@ CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
 	*.gcda *.gcno *.gcov stringencoders.info \
-	autom4te.cache/* \
-	doxy/html/* \
-	lcov-html/* \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
@@ -1158,6 +1155,10 @@ uninstall-am: uninstall-includeHEADERS uninstall-info-am \
 	uninstall-am uninstall-includeHEADERS uninstall-info-am \
 	uninstall-libLTLIBRARIES
 
+
+clean:
+	rm -rf autom4te.cache
+	rm -rf doxy lcov-html
 
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 

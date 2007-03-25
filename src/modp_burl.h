@@ -52,6 +52,14 @@ int modp_burl_encode(char* dest, const char* str, int len);
  */
 int modp_burl_min_encode(char* dest, const char* str, int len);
 
+/** \brief get size of output string w/o doing actual encoding
+ *
+ * \param[in] src input string, not null
+ * \param[in] len length of input string
+ * \return length of output string NOT including any final null byte
+ */
+int modp_burl_min_encode_strlen(const char* src, const int len);
+
 /**
  * Provides the maximum size for output string given
  * and input size of A bytes.
@@ -140,16 +148,12 @@ inline std::string& url_min_encode(std::string& s)
  *
  * \param[in,out] s the string to be decoded
  * \return a reference to the input string.
- *      On error, the string is empty.
+ *      There is no error case, bad characters are passed through
  */
 inline std::string& url_decode(std::string& s)
 {
     int d = modp_burl_decode(const_cast<char*>(s.data()), s.data(), s.size());
-    if (d < 0) {
-        s.clear();
-    } else {
-        s.erase(d, std::string::npos);
-    }
+    s.erase(d, std::string::npos);
     return s;
 }
 

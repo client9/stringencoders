@@ -87,6 +87,17 @@ static void testOddDecode(CuTest* tc)
     CuAssertIntEquals(tc, 1, obuf[0]);
 }
 
+/** \brief test input that is a multiple of 2 (special case in code)
+ */
+static void testDecodeMutlipleOf2(CuTest* tc)
+{
+    char obuf[100];
+    memset(obuf, 0xff, sizeof(obuf));
+
+    CuAssertIntEquals(tc, 1, modp_b16_decode(obuf, "01", 2));
+    CuAssertIntEquals(tc, 1, obuf[0]);
+}
+
 static void testOddEncode(CuTest* tc)
 {
     char obuf[100];
@@ -227,6 +238,7 @@ static CuSuite* GetSuite() {
     SUITE_ADD_TEST(suite, testBadDecode);
     SUITE_ADD_TEST(suite, testOddDecode);
     SUITE_ADD_TEST(suite, testOddEncode);
+    SUITE_ADD_TEST(suite, testDecodeMutlipleOf2);
     return suite;
 }
 

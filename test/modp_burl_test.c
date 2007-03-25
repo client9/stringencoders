@@ -153,6 +153,27 @@ void TestUrlMinUntouched(CuTest* tc)
     CuAssertStrEquals(tc, buf, extra);
 }
 
+/** \brief make sure min encoding actually does hex encoding
+ *
+ */
+void TestUrlMinEncodeHex(CuTest* tc)
+{
+    char buf[1000];
+    int d = 0;
+
+    memset(buf, 0, sizeof(buf));
+    const char* str1 = "a b";
+    d = modp_burl_min_encode(buf, str1, strlen(str1));
+    CuAssertIntEquals(tc, 3, d);
+    CuAssertStrEquals(tc, "a+b", buf);
+
+    memset(buf, 0, sizeof(buf));
+    const char* str2 = "ab\n";
+    d = modp_burl_min_encode(buf, str2, strlen(str2));
+    CuAssertIntEquals(tc, 5, d);
+    CuAssertStrEquals(tc, "ab%0A", buf);
+}
+
 void TestUrlDecodeHexBad(CuTest* tc)
 {
 
@@ -294,6 +315,39 @@ void TestEncodeStrlen(CuTest* tc)
 
 }
 
+
+/** \brief test "modp_burl_min_encode_strlen"
+ *
+ */
+void TestEncodeMinStrlen(CuTest* tc)
+{
+    char ibuf[100];
+    char obuf[100];
+    memset(ibuf, 0, sizeof(ibuf));
+    memset(obuf, 0, sizeof(obuf));
+
+    // Empty.  should be 0
+    ibuf[0] = 0;
+    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+
+    // Plain, should be same size
+    strcpy(ibuf, "abcdefg");
+    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+
+    // Plain and spaces, should be same size
+    strcpy(ibuf, "a b c d e f g");
+    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+
+    // one bad char, adds two bytes
+    strcpy(ibuf, "abcdefg\n");
+    CuAssertIntEquals(tc, strlen(ibuf)+2, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+
+    // 2 bad chars, adds 4 bytes
+    strcpy(ibuf, "\nabcdefg\n");
+    CuAssertIntEquals(tc, strlen(ibuf)+4, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+
+}
+
 static CuSuite* GetSuite() {
     CuSuite* suite = CuSuiteNew();
     SUITE_ADD_TEST(suite, TestUrlUntouched);
@@ -304,6 +358,8 @@ static CuSuite* GetSuite() {
     SUITE_ADD_TEST(suite, TestHexEncoding);
     SUITE_ADD_TEST(suite, TestEncodeStrlen);
     SUITE_ADD_TEST(suite, TestUrlMinUntouched);
+    SUITE_ADD_TEST(suite, TestUrlMinEncodeHex);
+    SUITE_ADD_TEST(suite, TestEncodeMinStrlen);
     return suite;
 }
 
