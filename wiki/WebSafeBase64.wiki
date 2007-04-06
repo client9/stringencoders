@@ -18,12 +18,12 @@ defines certain transformations:
  * The `=` may be encoded with `%3d`
  * While `.`, `-`, `*` and `_` are safe and not touched.
 
-While using '.' in the spec if safe, some proxies and servers may
-misinterpret this as a filename reference (this is not so common anymore in 2007). Likewise I've seen some implementations use a tilde "~", but again this is a special character used in user directory mappings and is not safe according to spec.
+While using `.` in the spec if safe, some proxies and servers may
+misinterpret this as a filename reference (this is not so common anymore in 2007). Likewise I've seen some implementations use a tilde `~`, but again this is a special character used in user directory mappings and is not safe according to spec.
  
 Therefore in this modified alphabet defined in this class:
 
- * `+` &amp; `-` (char 62)
+ * `+` --> `-` (char 62)
  * `/` --> `_` (char 63)
  * `=` --> `*` padding
 
@@ -45,6 +45,6 @@ Other popular variations are
 If you are integrating with a thirdparty source, *be sure to check with them on the alphabet*.  If you only create and process the urls, the default is fine.
 
 
-This only changes the modp_b64w (with 'w') functions.  The modp_b64 is unchanged.
+This only changes the `modp_b64w` (with `w`) functions.  The `modp_b64` is unchanged and is always standard non-websafe urls.
 
 *ALWAYS TEST*
