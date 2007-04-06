@@ -8,8 +8,7 @@ Base 64 encoding converts 3 binary bytes into 4 ascii characters.  The base 64 "
 
 == Problems with the standard in urls==
 
-For URLs and form-posts the mime type of `www-form-urlencoded` is used and
-defines certain transformations:
+Unfortunately, the choice of the extra characters clashes with the http/html specifications.  For URLs and form-posts the mime type of `www-form-urlencoded` is used and defines certain transformations:
 
  * The `+` may be decoded as a space ' '
  * The `/` will be encoded with `%2f`
@@ -29,7 +28,7 @@ However this is not standardized.
 
 == stringencoders to the rescue ==
 
-You could use a standard base64 encoder and then post-process it to convert the bad characters to ones that are web safe.  However the `stringencoders` library has seperate functions to do this for you with no loss in performance.  The `modp_b64_xxx` functions are _standard_ base 64, while the the `modp_b65w_xx` (note the "w") are the web-safe versions.
+You could use a standard base64 encoder and then post-process the output to convert the bad characters to ones that are web safe.  However the `stringencoders` library has separate functions to do this for you with no loss in performance.  The `modp_b64_xxx` functions are _standard_ base 64, while the the `modp_b65w_xx` (note the "w") are the web-safe versions.
 
 
 You can change what characters are used at compile time.  The default is the equivalent of
@@ -45,7 +44,7 @@ Other popular variations are
 ./configure --with-b64w-chars='_-.'
 }}}
 
-If you are integrating with a thirdparty source, *be sure to check with them on the alphabet*.  If you only create and process the urls, the default is fine.
+If you are integrating with a third party source, *be sure to check with them on the alphabet*.  If you only create and process the urls, the default is fine.
 
 
 *ALWAYS TEST*
