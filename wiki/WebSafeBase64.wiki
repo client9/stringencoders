@@ -1,4 +1,5 @@
 #summary Using base64 in http urls
+#labels Featured
 
 
 ==Base 64 Standard==
