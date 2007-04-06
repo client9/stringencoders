@@ -1,0 +1,43 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+This document is based on ....
+
+
+For URLs and form-posts the mime type of `www-form-urlencoded` is used and
+defines certain transformations:
+
+ * The "+" may be decoded as a space ' '
+ * The "/" will be encoded with "%2f"
+ * The "=" may be encoded with "%3d"
+ * While '.', '-', '*' and '_' are safe and not touched.
+
+While using '.' in the spec if safe, some proxies and servers may
+misinterpret this as a filename reference (this is not so common anymore in 2007). Likewise I've seen some implementations use a tilde "~", but again this is a special character used in user directory mappings and is not safe according to spec.
+ 
+Therefore in this modified alphabet defined in this class:
+
+ * "+" --> "-" (char 62)
+ * "/" --> "_" (char 63)
+ * "=" --> "*" padding
+
+makes the base64 encoding safe for inclusion into urls.
+
+You can change this.  By default
+
+./configure --with-b64w-chars='-_*'
+
+Other popular would be
+
+{{{
+./configure --with-b64w-chars='-_.'
+./configure --with-b64w-chars='_-.'
+}}}
+
+If you are integrating with a thirdparty source, *be sure to check with them on the alphabet*.  If you are just 
