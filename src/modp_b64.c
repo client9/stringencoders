@@ -207,7 +207,7 @@ int modp_b64_decode(char* dest, const char* src, int len)
     int leftover = len % 4;
     int chunks = (leftover == 0) ? len / 4 - 1 : len /4;
 
-    uint8_t* p = dest;
+    uint8_t* p = (uint8_t*) dest;
     uint32_t x = 0;
     uint32_t* destInt = (uint32_t*) p;
     uint32_t* srcInt = (uint32_t*) src;
