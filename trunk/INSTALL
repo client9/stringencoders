@@ -19,6 +19,24 @@ make install
    it will also install the include files.
 
 ----------------------------------------
+CHANGING THE b64 web/url SAFE ALPHABET
+----------------------------------------
+
+If you are using base 64 encoding for use IN A URL, you
+CAN NOT use the standard mod_b64.  You MUST use modp_b64w
+(the w is for "web").  Unfortunately this is not standardized
+and if you are working with a third party, you might need to
+change the "alphabet" (chars).  
+
+You can change char 62,63 and the padding char with
+
+./configure --with-b64wchars='-_.'
+
+where "-" is char 62, "_" is char 63 and "." is the padding char.
+
+You can change this if you know what you are doing.
+
+----------------------------------------
 IF YOU DON'T WANT TO DEAL WITH A LIBRARY
 ----------------------------------------
 
@@ -30,9 +48,9 @@ under the BSD license, so go ahead.
 For b64:
 --------
 After doing a "./configure && make", copy
- * src/b64fast.c
- * src/b64fast.h
- * b64fast_data.h
+ * src/modp_b64.c
+ * src/modp_b64.h
+ * modp_b64_data.h
 
 ***** BUT, there is an IMPORTANT GOTCHA! *****
 
@@ -43,7 +61,7 @@ IBM, or Sun CPU.
 **** IF you are using autoconf, just add AC_C_BIGENDIAN to your
 configure.in script and everything will work.
 
-**** IF NOT, edit b64fast.c, and replace the 
+**** IF NOT, edit modp_b64.c, and replace the 
 #include "config.h"
 with
 #define WORDS_BIGENDIAN  /* for Sun, Ibm, Motorola */  
@@ -57,9 +75,9 @@ For b85:
 --------
 There are no endian issues.  Just copy
 
- * src/b85fast.c
- * src/b85fast.h
- * b85fast_data.h
+ * src/modp_b85.c
+ * src/modp_b85.h
+ * modp_b85_data.h
 
 ----------------------------------------
 UNIT TESTS
