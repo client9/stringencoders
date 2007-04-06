@@ -23,8 +23,8 @@ misinterpret this as a filename reference (this is not so common anymore in 2007
  
 Therefore in this modified alphabet defined in this class:
 
- * `+` --> `-` (char 62)
- * `/` --> `_` (char 63)
+ * `+` --> `-` (char 62, plus to dash)
+ * `/` --> `_` (char 63, slash to underscore)
  * `=` --> `*` padding
 
 makes the base64 encoding safe for inclusion into urls.
