@@ -1,14 +1,12 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
+#summary Using base64 in http urls
 
 
-= Details =
+==Base 64 Standard==
 
-This document is based on ....
+Base 64 encoding converts 3 binary bytes into 4 ascii characters.  The base 64 "alphabet" or "digits" are A-Z,a-z,0-9 plus two extra characters `+` (plus) and `/` (slash).  It also defines on extra character `=` for padding if the original input was not a multiple of 3.
 
+
+== Problems with the standard in urls==
 
 For URLs and form-posts the mime type of `www-form-urlencoded` is used and
 defines certain transformations:
@@ -18,18 +16,23 @@ defines certain transformations:
  * The `=` may be encoded with `%3d`
  * While `.`, `-`, `*` and `_` are safe and not touched.
 
-While using `.` in the spec if safe, some proxies and servers may
+While using `.` in the spec is safe, some proxies and servers may
 misinterpret this as a filename reference (this is not so common anymore in 2007). Likewise I've seen some implementations use a tilde `~`, but again this is a special character used in user directory mappings and is not safe according to spec.
  
-Therefore in this modified alphabet defined in this class:
+So to convert the base64 alpha into a format that is "web-safe" the following changes are recommended:
 
  * `+` --> `-` (char 62, plus to dash)
  * `/` --> `_` (char 63, slash to underscore)
  * `=` --> `*` padding
 
-makes the base64 encoding safe for inclusion into urls.
+However this is not standardized.
 
-You can change this.  The default is the equivalent of
+== stringencoders to the rescue ==
+
+You could use a standard base64 encoder and then post-process it to convert the bad characters to ones that are web safe.  However the `stringencoders` library has seperate functions to do this for you with no loss in performance.  The `modp_b64_xxx` functions are _standard_ base 64, while the the `modp_b65w_xx` (note the "w") are the web-safe versions.
+
+
+You can change what characters are used at compile time.  The default is the equivalent of
 
 {{{
 ./configure --with-b64w-chars='-_\*'
@@ -44,7 +47,5 @@ Other popular variations are
 
 If you are integrating with a thirdparty source, *be sure to check with them on the alphabet*.  If you only create and process the urls, the default is fine.
 
-
-This only changes the `modp_b64w` (with `w`) functions.  The `modp_b64` is unchanged and is always standard non-websafe urls.
 
 *ALWAYS TEST*
