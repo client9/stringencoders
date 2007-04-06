@@ -23,9 +23,9 @@ misinterpret this as a filename reference (this is not so common anymore in 2007
  
 Therefore in this modified alphabet defined in this class:
 
- * "+" --> "-" (char 62)
- * "/" --> "_" (char 63)
- * "=" --> "\*" padding
+ * `+` --> `-` (char 62)
+ * `/` --> `_` (char 63)
+ * `=` --> `*` padding
 
 makes the base64 encoding safe for inclusion into urls.
 
@@ -35,7 +35,7 @@ You can change this.  The default is the equivalent of
 ./configure --with-b64w-chars='-_\*'
 }}}
 
-Other popular would be
+Other popular variations are
 
 {{{
 ./configure --with-b64w-chars='-_.'
@@ -46,3 +46,5 @@ If you are integrating with a thirdparty source, *be sure to check with them on 
 
 
 This only changes the modp_b64w (with 'w') functions.  The modp_b64 is unchanged.
+
+*ALWAYS TEST*
