@@ -29,9 +29,11 @@ Therefore in this modified alphabet defined in this class:
 
 makes the base64 encoding safe for inclusion into urls.
 
-You can change this.  By default
+You can change this.  The default is the equivalent of
 
+{{{
 ./configure --with-b64w-chars='-_*'
+}}}
 
 Other popular would be
 
@@ -41,3 +43,6 @@ Other popular would be
 }}}
 
 If you are integrating with a thirdparty source, *be sure to check with them on the alphabet*.  If you are just 
+
+
+This only changes the modp_b64w (with 'w') functions.  The modp_b64 is unchanged.
