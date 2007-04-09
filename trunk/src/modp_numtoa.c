@@ -50,15 +50,15 @@ void modp_uitoa10(uint32_t value, char* str)
     strreverse(str, wstr-1);
 }
 
-void modp_dtoa(double value, char* str, int len, int prec)
+void modp_dtoa(double value, char* str, int prec)
 {
     char* wstr=str;
     int sign;
 
 	// it's really big or really small
 	// use exponential notation
-	if (value != 0 && (value > (1u<<31 -1) || value < 1.0/2048.0)) {
-		snprintf(str, len, "%e", value);
+	if (value != 0 && (value > ((1u<<31) -1) || value < (1.0/2048.0))) {
+		sprintf(str, "%e", value);
 		return;
 	}
 	int whole = (int) value;
@@ -94,13 +94,13 @@ void modp_dtoa(double value, char* str, int len, int prec)
 void testDtoA()
 {
 	double v[] = {0, 0.1, 0.01, 0.001, 0.5, 1, 1.0001, 1000000, 1000000.1,
-				  123456789.123456, 1e200, 1e-10,1e-200, 1u<<31, 1u<<31 -1};
+				  123456789.123456, 1e200, 1e-10,1e-200, 1u<<31, (1u<<31) -1};
 
 	char buf[100];
 	int i;
 	int max = sizeof(v)/sizeof(double);
 	for (i = 0; i < max; ++i) {
-		dtof(v[i], buf, sizeof(buf), 7);
+		modp_dtoa(v[i], buf, 7);
 		printf("%5.5f == %s\n", v[i], buf);
 	}
 }
