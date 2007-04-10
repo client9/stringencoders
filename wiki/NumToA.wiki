@@ -51,10 +51,21 @@ The modp stringencoders library introduces:
 
 === performance ===
 
+Yum!
 
 {{{
-
+$ ./speedtest_numtoa 
+    type        sprintf snprf   numtoa  improvement
+unsigned 8      200000  210000  10000   21.0x
+unsigned 16     190000  190000  30000   6.3x
+unsigned 32     160000  190000  30000   6.3x
+signed 8        190000  210000  20000   10.5x
+signed 16       180000  210000  30000   7.0x
+signed 32       170000  190000  40000   4.8x
+double          1670000 1590000 110000  14.5x
 }}}
+
+Your millage may vary.
 
 
 == Further Reading ==
