@@ -70,4 +70,7 @@ Your millage may vary.
 
 == Further Reading ==
 
-This isn't very original.
+This isn't the first or only way to solve the printf problem.
+
+   * http://www.jb.man.ac.uk/~slowe/cpp/itoa.html  
+   * http://www.ddj.com/dept/cpp/184401596?pgno=6
