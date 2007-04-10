@@ -1,5 +1,11 @@
 #summary Performance Numbers for 'numtoa'
 
+This is only in the SVN sources.
+
+Documentation needed.
+
+A release will be forthcoming
+
 == AMD 2.2G Dual Core Operton Processor 275 ==
 
 With gcc 3.4.4, -O3
