@@ -52,21 +52,23 @@ void modp_uitoa10(uint32_t value, char* str)
 
 void modp_dtoa(double value, char* str, int prec)
 {
+    const double thres_min = 1.0/2048.0;
     char* wstr=str;
     int sign;
 
-	// it's really big or really small
-	// use exponential notation
-	if (value != 0 && (value > ((1u<<31) -1) || value < (1.0/2048.0))) {
-		sprintf(str, "%e", value);
-		return;
-	}
+    if ((sign = value) < 0) value = -value;
 	int whole = (int) value;
 	double tmp = (value - whole) * pow10[prec];
     uint32_t frac = (uint32_t)(tmp);
 	if (tmp - frac > 0.5) {
 		++frac;
 	}
+
+    if (whole > ((1u<<31)-1) || (frac > 0 && frac < thres_min)) {
+		sprintf(str, "%e", value);
+		return;
+	}
+
 	int count = prec;
 	// now do fractional part, as an unsigned number
     do {
@@ -80,7 +82,6 @@ void modp_dtoa(double value, char* str, int prec)
 
 	// do whole part
     // Take care of sign
-    if ((sign = whole) < 0) whole = -whole;
     // Conversion. Number is reversed.
     do *wstr++ = 48 + (whole % 10); while (whole /= 10);
     if (sign < 0) *wstr++ = '-';
