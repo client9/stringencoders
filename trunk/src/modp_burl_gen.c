@@ -41,11 +41,11 @@ void urlencodemap()
         urlEncodeMap[i] = (char) i;
     }
     // safe chars
-    urlEncodeMap['.'] = '.';
-    urlEncodeMap['-'] = '-';
-    urlEncodeMap['_'] = '_';
+    urlEncodeMap[(int)'.'] = '.';
+    urlEncodeMap[(int)'-'] = '-';
+    urlEncodeMap[(int)'_'] = '_';
     // space is special
-    urlEncodeMap[' '] = '+';
+    urlEncodeMap[(int)' '] = '+';
 
     char_array_to_c(urlEncodeMap, 256, "gsUrlEncodeMap");
 };
@@ -74,11 +74,13 @@ void urlencodeminmap()
     }
 
     // space
-    urlEncodeMap[' '] = '+';
+    urlEncodeMap[(int)' '] = '+';
     const char safechar[] = {'_', '.', '-', '~',
                              '!', '$', '(', ')', '*', ',', ';',
                              ':', '@', '/', '?'};
-    for (i = 0; i < sizeof(safechar); ++i) {
+
+    int imax = sizeof(safechar);
+    for (i = 0; i < imax; ++i) {
         urlEncodeMap[(int)(safechar[i])] = safechar[i];
     }
 
