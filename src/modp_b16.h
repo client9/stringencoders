@@ -6,7 +6,8 @@
  * <PRE>
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
  * Version 1.0 -- 25-Apr-2006
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
+ *
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
