@@ -1,4 +1,5 @@
 #summary Performance Numbers for 'numtoa'
+#labels Featured
 
 This is only in the SVN sources.
 
