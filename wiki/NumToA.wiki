@@ -73,5 +73,6 @@ Your millage may vary.
 This isn't the first or only way to solve the printf problem.
 
    * http://www.jb.man.ac.uk/~slowe/cpp/itoa.html  
-   * [http://www.ddj.com/dept/cpp/184401596 Part 1]
-   * [http://www.ddj.com/dept/cpp/184403880 Part 3]
+   * [http://www.ddj.com/dept/cpp/184401596 Efficient Integer to String Conversions, Part 1]
+   * [http://www.ddj.com/dept/cpp/184403874 Efficient Integer to String Conversions, Part 2]
+   * [http://www.ddj.com/dept/cpp/184403880 Efficient Integer to String Conversions, Part 3]
