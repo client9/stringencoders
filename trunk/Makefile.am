@@ -75,6 +75,7 @@ noinst_PROGRAMS = \
 	modp_b16_test modp_b64_test modp_b64w_test \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
+	modp_numtoa_test \
 	cxx_test \
 	speedtest speedtest_numtoa
 
@@ -111,6 +112,9 @@ modp_burl_test_LDADD = libmodpbase64.la
 modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c cutest/CuTest.c
 modp_bjavascript_test_LDADD = libmodpbase64.la
 
+modp_numtoa_test_SOURCES = test/modp_numtoa_test.c cutest/CuTest.c
+modp_numtoa_test_LDADD = libmodpbase64.la
+
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
@@ -131,13 +135,14 @@ lcov-html:
 
 test: unittest speedtest
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test cxx_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test cxx_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
 	./modp_burl_test
 	./modp_bjavascript_test
+	./modp_numtoa_test
 	./cxx_test
 
 perftest: speedtest
