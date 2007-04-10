@@ -224,6 +224,5 @@ int main()
 	printf("%.1fx\n", last/(t1-t0));
 	fflush(stdout);
 
-	uint8_t junk = 1;
-	printf("junk = %hhd\n", junk);
+    return 0;
 }

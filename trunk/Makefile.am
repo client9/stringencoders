@@ -6,8 +6,13 @@ SOURCES = \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
+<<<<<<< .mine
+	src/modp_bjavascript.h src/modp_bjavascript.c \
+	src/modp_numtoa.h src/modp_numtoa.c
+=======
 	src/modp_bjavascript.h src/modp_bjavascript.c \
         src/modp_numtoa.h src/modp_numtoa.c
+>>>>>>> .r37
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -21,7 +26,8 @@ libmodpbase64_la_DEPENDENCIES = \
 
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
-	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h
+	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
+	src/modp_numtoa.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -75,7 +81,7 @@ noinst_PROGRAMS = \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
 	cxx_test \
-	speedtest
+	speedtest speedtest_numtoa
 
 modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
 modp_b64_gen_SOURCES = src/arraytoc.c src/modp_b64_gen.c
@@ -85,6 +91,9 @@ modp_bjavascript_gen_SOURCES =  src/arraytoc.c src/modp_bjavascript_gen.c
 
 speedtest_SOURCES = test/apr_base64.h test/apr_base64.c test/speedtest.c
 speedtest_LDADD = libmodpbase64.la
+
+speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
+speedtest_numtoa_LDADD = libmodpbase64.la
 
 modp_b16_test_SOURCES = test/modp_b16_test.c cutest/CuTest.c
 modp_b16_test_LDADD = libmodpbase64.la
@@ -110,7 +119,7 @@ modp_bjavascript_test_LDADD = libmodpbase64.la
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
-.PHONY: test unittest speedtest doxy lcov-html
+.PHONY: test unittest perftest doxy lcov-html
 
 lcov-html:
 	lcov -b . --directory . --zerocounters
@@ -138,6 +147,7 @@ unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 
 perftest: speedtest
 	./speedtest
+	./speedtest_numtoa
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile

@@ -99,7 +99,8 @@ SOURCES = \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
-	src/modp_bjavascript.h src/modp_bjavascript.c
+	src/modp_bjavascript.h src/modp_bjavascript.c \
+	src/modp_numtoa.h src/modp_numtoa.c
 
 
 lib_LTLIBRARIES = libmodpbase64.la
@@ -115,7 +116,8 @@ libmodpbase64_la_DEPENDENCIES = \
 
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
-	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h
+	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
+	src/modp_numtoa.h
 
 
 CLEANFILES = *.log \
@@ -133,7 +135,7 @@ noinst_PROGRAMS = \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
 	cxx_test \
-	speedtest
+	speedtest speedtest_numtoa
 
 
 modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
@@ -144,6 +146,9 @@ modp_bjavascript_gen_SOURCES = src/arraytoc.c src/modp_bjavascript_gen.c
 
 speedtest_SOURCES = test/apr_base64.h test/apr_base64.c test/speedtest.c
 speedtest_LDADD = libmodpbase64.la
+
+speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
+speedtest_numtoa_LDADD = libmodpbase64.la
 
 modp_b16_test_SOURCES = test/modp_b16_test.c cutest/CuTest.c
 modp_b16_test_LDADD = libmodpbase64.la
@@ -175,7 +180,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libmodpbase64_la_LDFLAGS =
 libmodpbase64_la_LIBADD =
 am__objects_1 = modp_b16.lo modp_b64.lo modp_b64w.lo modp_b85.lo \
-	modp_burl.lo modp_bjavascript.lo
+	modp_burl.lo modp_bjavascript.lo modp_numtoa.lo
 am_libmodpbase64_la_OBJECTS = $(am__objects_1)
 libmodpbase64_la_OBJECTS = $(am_libmodpbase64_la_OBJECTS)
 noinst_PROGRAMS = modp_b16_gen$(EXEEXT) modp_b64_gen$(EXEEXT) \
@@ -184,7 +189,7 @@ noinst_PROGRAMS = modp_b16_gen$(EXEEXT) modp_b64_gen$(EXEEXT) \
 	modp_b64w_test$(EXEEXT) modp_b85_test$(EXEEXT) \
 	modp_burl_test$(EXEEXT) modp_bjavascript_gen$(EXEEXT) \
 	modp_bjavascript_test$(EXEEXT) cxx_test$(EXEEXT) \
-	speedtest$(EXEEXT)
+	speedtest$(EXEEXT) speedtest_numtoa$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 
 am_cxx_test_OBJECTS = cxx_test.$(OBJEXT)
@@ -246,6 +251,10 @@ am_speedtest_OBJECTS = apr_base64.$(OBJEXT) speedtest.$(OBJEXT)
 speedtest_OBJECTS = $(am_speedtest_OBJECTS)
 speedtest_DEPENDENCIES = libmodpbase64.la
 speedtest_LDFLAGS =
+am_speedtest_numtoa_OBJECTS = speedtest_numtoa.$(OBJEXT)
+speedtest_numtoa_OBJECTS = $(am_speedtest_numtoa_OBJECTS)
+speedtest_numtoa_DEPENDENCIES = libmodpbase64.la
+speedtest_numtoa_LDFLAGS =
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I.
@@ -273,7 +282,9 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/modp_burl.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_burl_gen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_burl_test.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/speedtest.Po
+@AMDEP_TRUE@	./$(DEPDIR)/modp_numtoa.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/speedtest.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/speedtest_numtoa.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -297,7 +308,8 @@ DIST_SOURCES = $(libmodpbase64_la_SOURCES) $(cxx_test_SOURCES) \
 	$(modp_b64w_test_SOURCES) $(modp_b85_gen_SOURCES) \
 	$(modp_b85_test_SOURCES) $(modp_bjavascript_gen_SOURCES) \
 	$(modp_bjavascript_test_SOURCES) $(modp_burl_gen_SOURCES) \
-	$(modp_burl_test_SOURCES) $(speedtest_SOURCES)
+	$(modp_burl_test_SOURCES) $(speedtest_SOURCES) \
+	$(speedtest_numtoa_SOURCES)
 HEADERS = $(include_HEADERS)
 
 DIST_COMMON = README $(include_HEADERS) AUTHORS COPYING ChangeLog \
@@ -310,7 +322,8 @@ SOURCES = \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
-	src/modp_bjavascript.h src/modp_bjavascript.c
+	src/modp_bjavascript.h src/modp_bjavascript.c \
+	src/modp_numtoa.h src/modp_numtoa.c
 
 
 all: config.h
@@ -385,6 +398,7 @@ modp_b64w.lo: src/modp_b64w.c
 modp_b85.lo: src/modp_b85.c
 modp_burl.lo: src/modp_burl.c
 modp_bjavascript.lo: src/modp_bjavascript.c
+modp_numtoa.lo: src/modp_numtoa.c
 libmodpbase64.la: $(libmodpbase64_la_OBJECTS) $(libmodpbase64_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(libmodpbase64_la_LDFLAGS) $(libmodpbase64_la_OBJECTS) $(libmodpbase64_la_LIBADD) $(LIBS)
 
@@ -449,6 +463,10 @@ speedtest.$(OBJEXT): test/speedtest.c
 speedtest$(EXEEXT): $(speedtest_OBJECTS) $(speedtest_DEPENDENCIES) 
 	@rm -f speedtest$(EXEEXT)
 	$(LINK) $(speedtest_LDFLAGS) $(speedtest_OBJECTS) $(speedtest_LDADD) $(LIBS)
+speedtest_numtoa.$(OBJEXT): test/speedtest_numtoa.c
+speedtest_numtoa$(EXEEXT): $(speedtest_numtoa_OBJECTS) $(speedtest_numtoa_DEPENDENCIES) 
+	@rm -f speedtest_numtoa$(EXEEXT)
+	$(LINK) $(speedtest_numtoa_LDFLAGS) $(speedtest_numtoa_OBJECTS) $(speedtest_numtoa_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -477,7 +495,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_burl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_burl_gen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_burl_test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_numtoa.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speedtest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speedtest_numtoa.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -607,6 +627,24 @@ modp_bjavascript.lo: src/modp_bjavascript.c
 @AMDEP_TRUE@	depfile='$(DEPDIR)/modp_bjavascript.Plo' tmpdepfile='$(DEPDIR)/modp_bjavascript.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_bjavascript.lo `test -f 'src/modp_bjavascript.c' || echo '$(srcdir)/'`src/modp_bjavascript.c
+
+modp_numtoa.o: src/modp_numtoa.c
+@AMDEP_TRUE@	source='src/modp_numtoa.c' object='modp_numtoa.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_numtoa.Po' tmpdepfile='$(DEPDIR)/modp_numtoa.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_numtoa.o `test -f 'src/modp_numtoa.c' || echo '$(srcdir)/'`src/modp_numtoa.c
+
+modp_numtoa.obj: src/modp_numtoa.c
+@AMDEP_TRUE@	source='src/modp_numtoa.c' object='modp_numtoa.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_numtoa.Po' tmpdepfile='$(DEPDIR)/modp_numtoa.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_numtoa.obj `cygpath -w src/modp_numtoa.c`
+
+modp_numtoa.lo: src/modp_numtoa.c
+@AMDEP_TRUE@	source='src/modp_numtoa.c' object='modp_numtoa.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_numtoa.Plo' tmpdepfile='$(DEPDIR)/modp_numtoa.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_numtoa.lo `test -f 'src/modp_numtoa.c' || echo '$(srcdir)/'`src/modp_numtoa.c
 
 arraytoc.o: src/arraytoc.c
 @AMDEP_TRUE@	source='src/arraytoc.c' object='arraytoc.o' libtool=no @AMDEPBACKSLASH@
@@ -877,6 +915,24 @@ speedtest.lo: test/speedtest.c
 @AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest.Plo' tmpdepfile='$(DEPDIR)/speedtest.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest.lo `test -f 'test/speedtest.c' || echo '$(srcdir)/'`test/speedtest.c
+
+speedtest_numtoa.o: test/speedtest_numtoa.c
+@AMDEP_TRUE@	source='test/speedtest_numtoa.c' object='speedtest_numtoa.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_numtoa.Po' tmpdepfile='$(DEPDIR)/speedtest_numtoa.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_numtoa.o `test -f 'test/speedtest_numtoa.c' || echo '$(srcdir)/'`test/speedtest_numtoa.c
+
+speedtest_numtoa.obj: test/speedtest_numtoa.c
+@AMDEP_TRUE@	source='test/speedtest_numtoa.c' object='speedtest_numtoa.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_numtoa.Po' tmpdepfile='$(DEPDIR)/speedtest_numtoa.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_numtoa.obj `cygpath -w test/speedtest_numtoa.c`
+
+speedtest_numtoa.lo: test/speedtest_numtoa.c
+@AMDEP_TRUE@	source='test/speedtest_numtoa.c' object='speedtest_numtoa.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_numtoa.Plo' tmpdepfile='$(DEPDIR)/speedtest_numtoa.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_numtoa.lo `test -f 'test/speedtest_numtoa.c' || echo '$(srcdir)/'`test/speedtest_numtoa.c
 CCDEPMODE = @CCDEPMODE@
 
 .cc.o:
@@ -1199,7 +1255,7 @@ modp_bjavascript_data.h: modp_bjavascript_gen
 test/modp_b64w_test.c: test/modp_b64_test.c
 	perl -p -i -e 's/b64/b64w/g' < test/modp_b64_test.c > test/modp_b64w_test.c
 
-.PHONY: test unittest speedtest doxy lcov-html
+.PHONY: test unittest perftest doxy lcov-html
 
 lcov-html:
 	lcov -b . --directory . --zerocounters
@@ -1226,6 +1282,7 @@ unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 
 perftest: speedtest
 	./speedtest
+	./speedtest_numtoa
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile
