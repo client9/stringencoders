@@ -6,13 +6,8 @@ SOURCES = \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
-<<<<<<< .mine
 	src/modp_bjavascript.h src/modp_bjavascript.c \
 	src/modp_numtoa.h src/modp_numtoa.c
-=======
-	src/modp_bjavascript.h src/modp_bjavascript.c \
-        src/modp_numtoa.h src/modp_numtoa.c
->>>>>>> .r37
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
