@@ -56,6 +56,12 @@ void modp_dtoa(double value, char* str, int prec)
     char* wstr=str;
     int sign;
 
+    if (prec < 0) {
+        prec = 0;
+    } else if (prec > 9) {
+        prec = 9;
+    }
+
     if ((sign = value) < 0) value = -value;
 	int whole = (int) value;
 	double tmp = (value - whole) * pow10[prec];
