@@ -41,9 +41,7 @@ char buf[64];
 sprintf("%g", i);
 }}}
 
-This is _better_ but this format doesn't appear to be widely used.
-
-
+This is _better_ but this format doesn't appear to be widely used.  Also the conversion to xponental format may occur in ways you don't want.
 
 
 == modp_numtoa ==
