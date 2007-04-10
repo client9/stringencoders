@@ -34,6 +34,16 @@ sprintf("%f", i);
 
 would seem reasonable.  Until `d` is `1.1e200` and completely overruns your buffer.  You can use `snprintf` but you have to be careful in checking the return code.  And you can't totally limit the ouput size.  Only the number of digits to the _right_ of the decimal point, not to the left.
 
+As an alternate, one can use the `%g` specifier which will switch between fixed and exponential format depending on the number of significant digits.
+{{{
+double d = 123456.0123456789;
+char buf[64];
+sprintf("%g", i);
+}}}
+
+This is _better_ but this format doesn't appear to be widely used.
+
+
 
 
 == modp_numtoa ==
