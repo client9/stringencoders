@@ -3,14 +3,15 @@ Yeah, I know this isn't quite the right format.
 
 TODO:
 
-* use results of config.h for htonl (fails on darwin as well)
-* why does autoconf fail for memset on darwin?
 * more doco
 * man pages
 
 TODO: make web chars configurable
 TODO: make C++ classes work better
 
+06-Apr-2007
+	* Release 3.0
+	
 03-Mar-2007:
 	* initial import into google code
 	

@@ -10,7 +10,7 @@ AC_PROG_LIBTOOL
 AC_C_CONST
 AC_C_BIGENDIAN
 AC_TYPE_SIZE_T
-AC_CHECK_FUNCS([memset, htonl, strlen])
+AC_CHECK_FUNCS([memset htonl strlen])
 AC_ARG_ENABLE(gcov, AC_HELP_STRING([--enable-gcov],[turn on code coverage analysis tools]))
 
 B64WCHARS="-_."
