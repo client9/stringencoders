@@ -55,15 +55,15 @@ void testDoubleToA(CuTest* tc)
 	char buf1[100];
 	char buf2[100];
 	double d;
-	double wholes[] = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,67.0,101.0};
-	double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 0.01, 0.25, 0.125, 0.001};
+	double wholes[] = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,67.0,101.0,10000, 99999};
+	double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 0.01, 0.25, 0.125, 0.001, 0.00001};
 	int imax = sizeof(wholes)/sizeof(double);
 	int jmax = sizeof(frac)/sizeof(double);
 	int i,j;
 	for (i = 0; i < imax; ++i) {
 		for (j = 0; j < jmax; ++j) {
 			d = wholes[i] + frac[j];
-			sprintf(buf1, "%f", d);
+			sprintf(buf1, "%.6f", d);
 			modp_dtoa(d, buf2, 6);
 			CuAssertStrEquals(tc, buf1, buf2);
 
@@ -73,6 +73,14 @@ void testDoubleToA(CuTest* tc)
 			CuAssertStrEquals(tc, buf1, buf2);
 		}
 	}
+
+	d = 1.0e200;
+	modp_dtoa(d, buf2, 6);
+	CuAssertStrEquals(tc, "1.000000e+200", buf2);
+
+	d = -1.0e200;
+	modp_dtoa(d, buf2, 6);
+	CuAssertStrEquals(tc, "-1.000000e+200", buf2);
 }
 
 static CuSuite* GetSuite() {

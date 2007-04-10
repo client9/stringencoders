@@ -65,7 +65,7 @@ void modp_dtoa(double value, char* str, int prec)
 	}
 
     if (whole > ((1u<<31)-1) || (frac > 0 && frac < thres_min)) {
-		sprintf(str, "%e", value);
+		sprintf(str, "%e", (sign < 0) ? -value : value);
 		return;
 	}
 
