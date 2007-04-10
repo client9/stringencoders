@@ -10,7 +10,7 @@
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
  *
  * Released under bsd license.  See modp_b85.c for details.
  * </PRE>

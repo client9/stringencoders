@@ -196,10 +196,11 @@ int main()
 	printf("%.1fx\n", last/(t1-t0));
 	fflush(stdout);
 
+	printf("%s", "\n    type   \t%e\t%f\t%g\tdtoa\timprovement\n");
 	printf("%s", "double\t\t");
     t0 = clock();
 	for (i = 0; i < max; ++i) {
-		sprintf(buf, "%f", (double)(i));
+		sprintf(buf, "%e", (double)(i));
 	}
     t1 = clock();
     printf("%lu\t", (t1-t0));
@@ -207,7 +208,8 @@ int main()
 
     t0 = clock();
 	for (i = 0; i < max; ++i) {
-		snprintf(buf, sizeof(buf), "%f", (double)(i));
+        d = (double)i + 0.1;
+		snprintf(buf, sizeof(buf), "%f", d);
 	}
     t1 = clock();
 	last = (t1-t0);
@@ -216,7 +218,17 @@ int main()
 
     t0 = clock();
 	for (i = 0; i < max; ++i) {
-		d = ((double) i) + 0.123456;
+		d = (double)i + 0.123456;
+		snprintf(buf, sizeof(buf), "%g", d);
+	}
+    t1 = clock();
+	last = (t1-t0);
+    printf("%lu\t", (t1-t0));
+	fflush(stdout);
+
+    t0 = clock();
+	for (i = 0; i < max; ++i) {
+		d = (double)i + 0.123456;
 		modp_dtoa(d, buf, 6);
 	}
     t1 = clock();

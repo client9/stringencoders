@@ -12,28 +12,30 @@
  *
  * The header files all include a sample C++ std::string wrapper.
  *
+ * In addition the mod_numtoa.h defines fast integer and float types
+ * to char buffer converts.
+ *
  * \section modp_b64
  *
  * Converts 3 bytes into 4 characters, for 1.33 expansion ratio. This
- * version is ridiculously fast -- on some platforms the decode operation
- * is 4x faster than a standard implementation.
+ * version is ridiculously fast -- on some platforms the decode
+ * operation is 4x faster than a standard implementation.
  *
  * \section modp_b64w
  *
- * Does the same type of transformation as modp_b64 but uses a slightly different
- * alphabet to make it "safe" to use inside a URL.  The mapping is:
- * "/" to "_",  * "+" to "-",  * "=" to "."
- * If you are intergating with another
- * base64 encoder, you may need to change this. See the mod_b64w.h header
- * file for details.
+ * Does the same type of transformation as modp_b64 but uses a
+ * slightly different alphabet to make it "safe" to use inside a URL.
+ * The mapping is: "/" to "_", * "+" to "-", * "=" to "."  If you are
+ * intergating with another base64 encoder, you may need to change
+ * this. See the mod_b64w.h header file for details.
  *
  * \section modp_b16
  *
  * This is the standard "binary to ascii" encoding that convert 1 byte
  * into two chars (0-9, a-f).  It's actually slower than base64 so
  * there is not reason to use this except for legacy applications.
- * (how can this be?  Because on decode we have to read 4 bytes to get 2.
- * and in base64 we read 4 bytes to get 3, so base64's loop is
+ * (how can this be?  Because on decode we have to read 4 bytes to get
+ * 2.  and in base64 we read 4 bytes to get 3, so base64's loop is
  * shorter).
  *
  * \section modp_b85
@@ -48,16 +50,27 @@
  *
  * This performs url-encoding and url-decoding.  While not a true base
  * converted like the others, it does use an optimized base-16
- * converter for the encoded "%XY" data.  This has an alternate encoder
- * that provides a minimal encoding, modp_burl_min_encode.
+ * converter for the encoded "%XY" data.  This has an alternate
+ * encoder that provides a minimal encoding, modp_burl_min_encode.
  * See modp_burl.h for details
  *
  * \section modp_bjavascript
  *
  * Converts a raw c-string into something that can be enbedded into
- * javascript.  This might be useful for server-generated dynamic javascript.
- * There is no decode function provided.  This is only use when generating
- * raw "text/javascript" files.  It is <b>NOT</b> safe to make javascript that
- * will ultimately be embedded inside HTML via script tags.
+ * javascript.  This might be useful for server-generated dynamic
+ * javascript.  There is no decode function provided.  This is only
+ * use when generating raw "text/javascript" files.  It is <b>NOT</b>
+ * safe to make javascript that will ultimately be embedded inside
+ * HTML via script tags.
  *
+ * \section modp_numtoa
+ *
+ * The functions modp_itoa, modp_uitoa, modp_dtoa converts signed integers,
+ * unsigned integers, and 'double' type conversion to char buffer (string).
+ * The advantages over sprintf/snprintf are
+ *  - core dump proof
+ *  - have a fixed maximum size (e.g. try printf("%f", 2.0e100) for example)
+ *  - 5-22x faster!
+ *
+ * See modp_numtoa.h for details
  */
