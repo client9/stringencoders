@@ -102,21 +102,5 @@ void modp_dtoa(double value, char* str, int prec)
     strreverse(str,wstr-1);
 }
 
-#include <stdio.h>
-#include <time.h>
-
-void testDtoA()
-{
-	double v[] = {0, 0.1, 0.01, 0.001, 0.5, 1, 1.0001, 1000000, 1000000.1,
-				  123456789.123456, 1e200, 1e-10,1e-200, 1u<<31, (1u<<31) -1};
-
-	char buf[100];
-	int i;
-	int max = sizeof(v)/sizeof(double);
-	for (i = 0; i < max; ++i) {
-		modp_dtoa(v[i], buf, 7);
-		printf("%5.5f == %s\n", v[i], buf);
-	}
-}
 
 
