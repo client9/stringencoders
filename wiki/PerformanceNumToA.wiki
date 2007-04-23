@@ -1,11 +1,7 @@
 #summary Performance Numbers for 'numtoa'
 #labels Featured
 
-This is only in the SVN sources.
 
-Documentation needed.
-
-A release will be forthcoming
 
 == AMD 2.2G Dual Core Operton Processor 275 ==
 
