@@ -53,8 +53,8 @@ void modp_uitoa10(uint32_t value, char* str)
 void modp_dtoa(double value, char* str, int prec)
 {
     const double thres_min = 1.0/2048.0;
-    char* wstr=str;
-    int sign;
+    const double thres_max = (double)(0x7FFFFFFF);
+    char* wstr = str;
 
     if (prec < 0) {
         prec = 0;
@@ -62,7 +62,12 @@ void modp_dtoa(double value, char* str, int prec)
         prec = 9;
     }
 
-    if ((sign = value) < 0) value = -value;
+    int neg = 0;
+    if (value < 0) {
+        neg = 1;
+        value = -value;
+    }
+
 	int whole = (int) value;
 	double tmp = (value - whole) * pow10[prec];
     uint32_t frac = (uint32_t)(tmp);
@@ -70,8 +75,8 @@ void modp_dtoa(double value, char* str, int prec)
 		++frac;
 	}
 
-    if (whole > ((1u<<31)-1) || (frac > 0 && frac < thres_min)) {
-		sprintf(str, "%e", (sign < 0) ? -value : value);
+    if (value > thres_max || (frac > 0 && frac < thres_min)) {
+		sprintf(str, "%e", neg ? -value : value);
 		return;
 	}
 
@@ -90,7 +95,9 @@ void modp_dtoa(double value, char* str, int prec)
     // Take care of sign
     // Conversion. Number is reversed.
     do *wstr++ = 48 + (whole % 10); while (whole /= 10);
-    if (sign < 0) *wstr++ = '-';
+    if (neg) {
+        *wstr++ = '-';
+    }
     *wstr='\0';
     strreverse(str,wstr-1);
 }
