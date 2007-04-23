@@ -1,5 +1,5 @@
 #!/bin/sh
-FILE=stringencoders-v3.0.0
+FILE=stringencoders-v3.1.0
 rm -rf $FILE
 mkdir $FILE
 cp . $FILE
