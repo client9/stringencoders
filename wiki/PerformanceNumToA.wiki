@@ -25,6 +25,8 @@ double          1670000 1590000 110000  14.5x
 
 == Intel 2.2 Ghz Core 2 Duo ==
 
+With gcc 4.0.1, -O3
+
 {{{
 ~/stringencoders-v3.1.0 nickg$ date
 Fri May 11 17:23:04 EDT 2007
