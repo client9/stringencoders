@@ -39,4 +39,5 @@ signed 16       20      21      2       10.5x
 signed 32       19      20      3       6.7x
 
     type        %e      %f      %g      dtoa    impro
+double          54      61      43      13      3.3x
 }}}
