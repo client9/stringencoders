@@ -79,6 +79,7 @@
 int modp_b64_encode(char* dest, const char* str, int len)
 {
     int i;
+    const uint8_t* s = (const uint8_t*) str;
     uint8_t* p = (uint8_t*) dest;
 
     /* unsigned here is important! */
@@ -87,7 +88,7 @@ int modp_b64_encode(char* dest, const char* str, int len)
     uint32_t t1, t2, t3;
 
     for (i = 0; i < len - 2; i += 3) {
-        t1 = str[i]; t2 = str[i+1]; t3 = str[i+2];
+        t1 = s[i]; t2 = s[i+1]; t3 = s[i+2];
         *p++ = e0[t1];
         *p++ = e1[((t1 & 0x03) << 4) | ((t2 >> 4) & 0x0F)];
         *p++ = e1[((t2 & 0x0F) << 2) | ((t3 >> 6) & 0x03)];
@@ -98,14 +99,14 @@ int modp_b64_encode(char* dest, const char* str, int len)
     case 0:
         break;
     case 1:
-        t1 = str[i];
+        t1 = s[i];
         *p++ = e0[t1];
         *p++ = e1[(t1 & 0x03) << 4];
         *p++ = CHARPAD;
         *p++ = CHARPAD;
         break;
     default: /* case 2 */
-        t1 = str[i]; t2 = str[i+1];
+        t1 = s[i]; t2 = s[i+1];
         *p++ = e0[t1];
         *p++ = e1[((t1 & 0x03) << 4) | ((t2 >> 4) & 0x0F)];
         *p++ = e2[(t2 & 0x0F) << 2];
