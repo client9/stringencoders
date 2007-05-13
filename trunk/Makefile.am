@@ -8,7 +8,8 @@ SOURCES = \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
-	src/modp_numtoa.h src/modp_numtoa.c
+	src/modp_numtoa.h src/modp_numtoa.c \
+	src/modp_ascii.h src/modp_ascii.c
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -85,7 +86,7 @@ noinst_PROGRAMS = \
 	modp_bjavascript_gen modp_bjavascript_test \
 	modp_numtoa_test \
 	cxx_test \
-	speedtest speedtest_numtoa
+	speedtest speedtest_numtoa speedtest_ascii
 
 modp_b2_gen_SOURCES = src/arraytoc.c src/modp_b2_gen.c
 modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
@@ -99,6 +100,9 @@ speedtest_LDADD = libmodpbase64.la
 
 speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
+
+speedtest_ascii_SOURCES = test/speedtest_ascii.c
+speedtest_ascii_LDADD = libmodpbase64.la
 
 modp_b2_test_SOURCES = test/modp_b2_test.c cutest/CuTest.c
 modp_b2_test_LDADD = libmodpbase64.la
