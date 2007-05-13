@@ -29,14 +29,24 @@ void uint32_array_to_c_hex(const uint32_t* ary, int sz, const char* name)
 void char_array_to_c(const char* ary, int sz, const char* name)
 {
     printf("static const char %s[%d] = {\n", name, sz);
+    uint8_t tmp;
     int i = 0;
     for (;;) {
         if (ary[i] == 0) {
             printf("'\\0'");
+        } else if (ary[i] == '\n') {
+            printf("'\\n'");
+        } else if (ary[i] == '\t') {
+            printf("'\\t'");
+        } else if (ary[i] == '\r') {
+            printf("'\\r'");
         } else if (ary[i] == '\'') {
             printf("'\\''");
         } else if (ary[i] == '\\') {
             printf("'\\\\'");
+        } else if (ary[i] < 32 || ary[i] > 126) {
+            tmp = ary[i];
+            printf("0x%02x", tmp);
         } else {
             printf(" '%c'", (char)ary[i]);
         }
