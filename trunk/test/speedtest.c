@@ -1,14 +1,12 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
-/**
- * MODP_B64 - High performance base64 encode/decoder
- * Version 1.1 -- 20-Feb-2006
+/** \file speedtest.c
  *
- * Copyright 2005-2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright 2005,2006,2007, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
  *
  * Released under bsd license.  See modp_b64.c for details.
  *
@@ -16,6 +14,7 @@
  *
  */
 
+#include "modp_b2.h"
 #include "modp_b16.h"
 #include "modp_b64.h"
 #include "apr_base64.h"
@@ -60,7 +59,7 @@ int main() {
     for (j = 0; j < (sizeof(sizes)/sizeof(int)); ++j) {
         printf("\nMessage size = %d\n", sizes[j]);
 
-        printf("\tmodpb64\tapache\timprovement\tmodpb85\tmodpurl\tmodpb16\tmodpjs\n");
+        printf("\tmodpb64\tapache\timprovement\tmodpb85\tmodpurl\tmodpb16\tmodpb2\tmodpjs\n");
         printf("Encode\t");
         fflush(stdout);
 
@@ -118,6 +117,18 @@ int main() {
         c0 = clock();
         for (i = 0; i < MAX; ++i) {
             modp_b16_encode(result, teststr1, sizes[j]);
+        }
+        c1 = clock();
+        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        printf("%6.2f\t", s1);
+        fflush(stdout);
+
+        /**
+         * B2 BINARY
+         */
+        c0 = clock();
+        for (i = 0; i < MAX; ++i) {
+            modp_b2_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
         s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
@@ -197,12 +208,30 @@ int main() {
         printf("%6.2f\t", s1);
         fflush(stdout);
 
+        /**
+         ** B16 DECODE
+         **/
         /* re-encode to get urlencoded chars, not b64 */
         len = modp_b16_encode(result, teststr1, sizes[j]);
 
         c0 = clock();
         for (i = 0; i < MAX; ++i) {
             modp_b16_decode(result2, result, len);
+        }
+        c1 = clock();
+        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        printf("%6.2f\t", s1);
+        fflush(stdout);
+
+        /**
+         ** B16 DECODE
+         **/
+        /* re-encode to get urlencoded chars, not b64 */
+        len = modp_b2_encode(result, teststr1, sizes[j]);
+
+        c0 = clock();
+        for (i = 0; i < MAX; ++i) {
+            modp_b2_decode(result2, result, len);
         }
         c1 = clock();
         s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
