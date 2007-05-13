@@ -63,6 +63,9 @@ modp_b16_data.h: modp_b16_gen
 modp_b64_data.h: modp_b64_gen
 	./modp_b64_gen > modp_b64_data.h
 
+modp_ascii_data.h: modp_ascii_gen
+	./modp_ascii_gen > modp_ascii_data.h
+
 #
 # Recall B64WCHARS by default is "-_."
 #
@@ -79,7 +82,7 @@ modp_bjavascript_data.h: modp_bjavascript_gen
 	./modp_bjavascript_gen > modp_bjavascript_data.h 
 
 noinst_PROGRAMS = \
-	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen modp_burl_gen \
+	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen modp_burl_gen modp_ascii_gen \
 	modp_b2_test \
 	modp_b16_test modp_b64_test modp_b64w_test \
 	modp_b85_test modp_burl_test \
@@ -93,6 +96,7 @@ modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
 modp_b64_gen_SOURCES = src/arraytoc.c src/modp_b64_gen.c
 modp_b85_gen_SOURCES = src/arraytoc.c src/modp_b85_gen.c
 modp_burl_gen_SOURCES = src/arraytoc.c src/modp_burl_gen.c
+modp_ascii_gen_SOURCES = src/arraytoc.c src/modp_ascii_gen.c
 modp_bjavascript_gen_SOURCES =  src/arraytoc.c src/modp_bjavascript_gen.c
 
 speedtest_SOURCES = test/apr_base64.h test/apr_base64.c test/speedtest.c
