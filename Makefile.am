@@ -37,6 +37,8 @@ clean:
 	rm -rf autom4te.cache
 	rm -rf lcov-html
 
+src/modp_b2.c: src/modp_b2.h modp_b2_data.h
+
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 
 src/modp_b64.c: src/modp_b64.h modp_b64_data.h
@@ -49,6 +51,9 @@ src/modp_b85.c: src/modp_b85.h modp_b85_data.h
 src/modp_burl.c: src/modp_burl.h modp_burl_data.h
 
 src/modp_bjavascript.c: src/modp_bjavascript.h modp_bjavascript_data.h
+
+modp_b2_data.h: modp_b2_gen
+	./modp_b2_gen > modp_b2_data.h
 
 modp_b16_data.h: modp_b16_gen
 	./modp_b16_gen > modp_b16_data.h
