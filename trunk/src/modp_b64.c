@@ -1,13 +1,12 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 /**
- * \file
+ * \file modp_b64.c
  * <PRE>
  * MODP_B64 - High performance base64 encoder/decoder
- * Version 1.3 -- 17-Mar-2006
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2005, 2006  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005, 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -83,7 +82,9 @@ int modp_b64_encode(char* dest, const char* str, int len)
     uint8_t* p = (uint8_t*) dest;
 
     /* unsigned here is important! */
-    uint8_t t1, t2, t3;
+    /* uint8_t is fastest on G4, amd */
+    /* uint32_t is fastest on Intel */
+    uint32_t t1, t2, t3;
 
     for (i = 0; i < len - 2; i += 3) {
         t1 = str[i]; t2 = str[i+1]; t3 = str[i+2];
