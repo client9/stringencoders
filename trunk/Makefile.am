@@ -14,6 +14,7 @@ lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
 
 libmodpbase64_la_DEPENDENCIES = \
+	modp_b2_data.h modp_b2_gen \
 	modp_b16_data.h modp_b16_gen \
 	modp_b64_data.h modp_b64w_data.h modp_b64_gen \
 	modp_b85_data.h modp_b85_gen \
