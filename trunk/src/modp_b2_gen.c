@@ -12,13 +12,7 @@ void binary_encodemap()
     static const unsigned char sBinaryChars[] = "01";
     int i, j;
 
-    unsigned char e1[256];
-
-
-    for (i = 0; i <= 256; ++i) {
-        e1[i] = 0;
-    }
-
+    printf("%s","static const char* modp_b2_encodemap[] = {\n");
     char buf[9];
     buf[8] = 0;
     for (i = 0; i < 256; ++i) {
@@ -33,10 +27,7 @@ void binary_encodemap()
             printf("%s", "\n");
         }
     }
-
-
-    //char_array_to_c((char*)e1, 256, "gsHexEncodeC1");
-    //char_array_to_c((char*)e2, 256, "gsHexEncodeC2");
+    printf("%s", "};\n");
 }
 
 
