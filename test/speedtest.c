@@ -51,8 +51,8 @@ int main() {
     }
 
     // over allocate result buffers
-    char result[SZ*2];
-    char result2[SZ*2];
+    char result[SZ*8];
+    char result2[SZ*8];
 
     const int MAX = 1000000;
 
