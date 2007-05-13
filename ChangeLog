@@ -8,6 +8,9 @@ TODO:
 
 TODO: make C++ classes work better
 
+13-May-2007
+	* added modp_b2 -- ascii binary string encode/decode
+	
 22-Apr-2007
 	* Release 3.1 
 	* fixes some compliation problems on 64-bit platforms
