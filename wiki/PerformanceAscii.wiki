@@ -3,12 +3,16 @@
 
 AMD
 
--bash-3.00$ ./speedtest_ascii
+{{{
+$ ./speedtest_ascii
 type    clib    modp    improvement
 toupper 590000  280000  2.1x
+}}}
 
 Intel Core Duo
 
-nickgmini:~/dev/stringencoders nickg$ ./speedtest_ascii
+{{{
+$ ./speedtest_ascii
 type    clib    modp    improvement
 toupper 517     56      9.2x
+}}}
