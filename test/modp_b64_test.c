@@ -262,14 +262,5 @@ static char* all_tests()
     return 0;
 }
 
-int main(void) {
-    char *result = all_tests();
-    if (result != 0) {
-        printf("%s\n", result);
-    }
-    else {
-        printf("OK (%d tests)\n", tests_run);
-    }
-    return result != 0;
-}
+UNITTESTS
 

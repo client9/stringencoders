@@ -14,6 +14,19 @@
 
 #define mu_run_test(test) do { printf("."); fflush(stdout); char *message = test(); tests_run++; \
                                 if (message) return message; } while (0)
+
+#define UNITTESTS \
+int main() { \
+    printf("%s ", __FILE__); fflush(stdout); \
+    char *result = all_tests(); \
+    if (result != 0) { \
+        printf("%s\n", result); \
+    } else { \
+        printf("OK (%d tests)\n", tests_run); \
+    } \
+    return result != 0; \
+}
+
 int tests_run = 0;
 char mu_buf[1024];
 
