@@ -26,7 +26,7 @@ libmodpbase64_la_DEPENDENCIES = \
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
-	src/modp_numtoa.h src/modp_ascii.h
+	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -55,6 +55,8 @@ src/modp_b85.c: src/modp_b85.h modp_b85_data.h
 src/modp_burl.c: src/modp_burl.h modp_burl_data.h
 
 src/modp_bjavascript.c: src/modp_bjavascript.h modp_bjavascript_data.h
+
+src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
 
 modp_b2_data.h: modp_b2_gen
 	./modp_b2_gen > modp_b2_data.h
@@ -172,7 +174,7 @@ unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 	./modp_ascii_test
 	./cxx_test
 
-perftest: speedtest
+perftest: speedtest speedtest_numtoa speedtest_ascii
 	./speedtest
 	./speedtest_numtoa
 	./speedtest_ascii
