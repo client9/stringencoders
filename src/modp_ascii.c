@@ -45,14 +45,6 @@
 #include <stdint.h>
 #include "modp_ascii.h"
 #include "modp_ascii_data.h"
-void modp_toupper(char* str, int len)
-{
-	int i = len;
-	for (i = 0; i < len; ++i) {
-		char c = str[i];
-		str[i] = (c >= 'a' && c <= 'z') ? c -= 32 : c;
-	}
-}
 
 void modp_toupper_copy(char* dest, const char* str, int len)
 {
@@ -93,6 +85,12 @@ void modp_toupper_copy(char* dest, const char* str, int len)
     return;
 #endif
 }
+
+void modp_toupper(char* str, int len)
+{
+	modp_toupper_copy(str, str, len);
+}
+
 
 void modp_tolower(char* str, int len)
 {
