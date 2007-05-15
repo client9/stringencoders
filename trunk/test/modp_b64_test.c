@@ -5,40 +5,42 @@
 #include <stdlib.h>
 #include <string.h>
 #include "modp_b64.h"
-#include "CuTest.h"
+#include "minunit.h"
 
 /**
  * checks to make sure results are the same reguardless of
  * CPU endian type (i.e. Intel vs. Sparc, etc)
  *
  */
-void testEndian(CuTest* tc)
+static char* testEndian()
 {
     // this test that "1" is "AAAB"
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)1};
     int d = modp_b64_encode(buf, endian, 3);
-    CuAssertIntEquals(tc, 4, d);
-    CuAssertIntEquals(tc, 'A', buf[0]);
-    CuAssertIntEquals(tc, 'A', buf[1]);
-    CuAssertIntEquals(tc, 'A', buf[2]);
-    CuAssertIntEquals(tc, 'B', buf[3]);
+    mu_assert_int_equals(4, d);
+    mu_assert_int_equals('A', buf[0]);
+    mu_assert_int_equals('A', buf[1]);
+    mu_assert_int_equals('A', buf[2]);
+    mu_assert_int_equals('B', buf[3]);
 
     memset(result, 255, sizeof(result));
     d = modp_b64_decode(result, "AAAB", 4);
-    CuAssertIntEquals(tc, 3, d);
-    CuAssertIntEquals(tc, 0, result[0]);
-    CuAssertIntEquals(tc, 0, result[1]);
-    CuAssertIntEquals(tc, 1, result[2]);
-    CuAssertIntEquals(tc, -1, result[3]);
+    mu_assert_int_equals(3, d);
+    mu_assert_int_equals(0, result[0]);
+    mu_assert_int_equals(0, result[1]);
+    mu_assert_int_equals(1, result[2]);
+    mu_assert_int_equals(-1, result[3]);
+
+    return 0;
 }
 
 /**
  * sending 0 as length to encode and decode
  * should bascially do nothing
  */
-void testEmpty(CuTest* tc)
+static char* testEmpty()
 {
     char buf[10];
     const char* input = 0; // null
@@ -46,22 +48,24 @@ void testEmpty(CuTest* tc)
 
     memset(buf, 1, sizeof(buf));
     d = modp_b64_encode(buf, input, 0);
-    CuAssertIntEquals(tc, 0, d);
-    CuAssertIntEquals(tc, 0, buf[0]);
-    CuAssertIntEquals(tc, 1, buf[1]);
+    mu_assert_int_equals(0, d);
+    mu_assert_int_equals(0, buf[0]);
+    mu_assert_int_equals(1, buf[1]);
 
     memset(buf, 1, sizeof(buf));
     d = modp_b64_decode(buf, input, 0);
-    CuAssertIntEquals(tc, 0, d);
-    CuAssertIntEquals(tc, 1, buf[0]);
-    CuAssertIntEquals(tc, 1, buf[1]);
+    mu_assert_int_equals(0, d);
+    mu_assert_int_equals(1, buf[0]);
+    mu_assert_int_equals(1, buf[1]);
+
+    return 0;
 }
 
 /**
  * Test 1-6 bytes input and decode
  *
  */
-void testPadding(CuTest* tc)
+static char* testPadding()
 {
     char msg[100];
     const char ibuf[6] = {1,1,1,1,1,1};
@@ -73,95 +77,97 @@ void testPadding(CuTest* tc)
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 1);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 4, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[4]);
+    mu_assert_int_equals_msg(msg, 4, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 1, d);
-    CuAssertIntEquals(tc, 1, rbuf[0]);
-    CuAssertIntEquals(tc, -1, rbuf[1]);
+    mu_assert_int_equals_msg(msg, 1, d);
+    mu_assert_int_equals(1, rbuf[0]);
+    mu_assert_int_equals(-1, rbuf[1]);
 
     // 2 in, 4 out
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 2);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 4, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[4]);
+    mu_assert_int_equals_msg(msg, 4, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 2, d);
-    CuAssertIntEquals_Msg(tc, msg, 1, rbuf[0]);
-    CuAssertIntEquals_Msg(tc, msg, 1, rbuf[1]);
-    CuAssertIntEquals_Msg(tc, msg, -1, rbuf[2]);
+    mu_assert_int_equals_msg(msg, 2, d);
+    mu_assert_int_equals_msg(msg, 1, rbuf[0]);
+    mu_assert_int_equals_msg(msg, 1, rbuf[1]);
+    mu_assert_int_equals_msg(msg, -1, rbuf[2]);
 
     // 3 in, 4 out
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 3);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 4, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[4]);
+    mu_assert_int_equals_msg(msg, 4, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 3, d);
-    CuAssertIntEquals_Msg(tc, msg, 1, rbuf[0]);
-    CuAssertIntEquals_Msg(tc, msg, 1, rbuf[1]);
-    CuAssertIntEquals_Msg(tc, msg, 1, rbuf[2]);
-    CuAssertIntEquals_Msg(tc, msg, -1, rbuf[3]);
+    mu_assert_int_equals_msg(msg, 3, d);
+    mu_assert_int_equals_msg(msg, 1, rbuf[0]);
+    mu_assert_int_equals_msg(msg, 1, rbuf[1]);
+    mu_assert_int_equals_msg(msg, 1, rbuf[2]);
+    mu_assert_int_equals_msg(msg, -1, rbuf[3]);
 
     // 4 in, 8 out
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 4);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 8, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[8]);
+    mu_assert_int_equals_msg(msg, 8, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals(tc, 4, d);
-    CuAssertIntEquals(tc, 1, rbuf[0]);
-    CuAssertIntEquals(tc, 1, rbuf[1]);
-    CuAssertIntEquals(tc, 1, rbuf[2]);
-    CuAssertIntEquals(tc, 1, rbuf[3]);
-    CuAssertIntEquals(tc, -1, rbuf[4]);
+    mu_assert_int_equals(4, d);
+    mu_assert_int_equals(1, rbuf[0]);
+    mu_assert_int_equals(1, rbuf[1]);
+    mu_assert_int_equals(1, rbuf[2]);
+    mu_assert_int_equals(1, rbuf[3]);
+    mu_assert_int_equals(-1, rbuf[4]);
 
     // 5 in, 8 out
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 5);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 8, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[8]);
+    mu_assert_int_equals_msg(msg, 8, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals(tc, 5, d);
-    CuAssertIntEquals(tc, 1, rbuf[0]);
-    CuAssertIntEquals(tc, 1, rbuf[1]);
-    CuAssertIntEquals(tc, 1, rbuf[2]);
-    CuAssertIntEquals(tc, 1, rbuf[3]);
-    CuAssertIntEquals(tc, 1, rbuf[4]);
-    CuAssertIntEquals(tc, -1, rbuf[5]);
+    mu_assert_int_equals(5, d);
+    mu_assert_int_equals(1, rbuf[0]);
+    mu_assert_int_equals(1, rbuf[1]);
+    mu_assert_int_equals(1, rbuf[2]);
+    mu_assert_int_equals(1, rbuf[3]);
+    mu_assert_int_equals(1, rbuf[4]);
+    mu_assert_int_equals(-1, rbuf[5]);
 
     // 6 in, 8 out
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, 6);
     sprintf(msg, "b64='%s', d=%d", obuf, d);
-    CuAssertIntEquals_Msg(tc, msg, 8, d);
-    CuAssertIntEquals_Msg(tc, msg, 0, obuf[8]);
+    mu_assert_int_equals_msg(msg, 8, d);
+    mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
     d = modp_b64_decode(rbuf, obuf, d);
-    CuAssertIntEquals(tc, 6, d);
-    CuAssertIntEquals(tc, 1, rbuf[0]);
-    CuAssertIntEquals(tc, 1, rbuf[1]);
-    CuAssertIntEquals(tc, 1, rbuf[2]);
-    CuAssertIntEquals(tc, 1, rbuf[3]);
-    CuAssertIntEquals(tc, 1, rbuf[4]);
-    CuAssertIntEquals(tc, 1, rbuf[5]);
-    CuAssertIntEquals(tc, -1, rbuf[6]);
+    mu_assert_int_equals(6, d);
+    mu_assert_int_equals(1, rbuf[0]);
+    mu_assert_int_equals(1, rbuf[1]);
+    mu_assert_int_equals(1, rbuf[2]);
+    mu_assert_int_equals(1, rbuf[3]);
+    mu_assert_int_equals(1, rbuf[4]);
+    mu_assert_int_equals(1, rbuf[5]);
+    mu_assert_int_equals(-1, rbuf[6]);
+
+    return 0;
 }
 
 /**
  * Test all 17M 3 bytes inputs to encoder, decode
  * and make sure it's equal.
  */
-void testEncodeDecode(CuTest* tc)
+static char* testEncodeDecode()
 {
     char ibuf[4];
     char obuf[5];
@@ -182,22 +188,23 @@ void testEncodeDecode(CuTest* tc)
 
                 memset(obuf, 1, sizeof(obuf));
                 d = modp_b64_encode(obuf, ibuf, 3);
-                CuAssertIntEquals_Msg(tc, msg, 4, d);
-                CuAssertIntEquals_Msg(tc, msg, 0, obuf[4]);
+                mu_assert_int_equals_msg(msg, 4, d);
+                mu_assert_int_equals_msg(msg, 0, obuf[4]);
 
                 memset(rbuf, 1, sizeof(rbuf));
                 d = modp_b64_decode(rbuf, obuf, 4);
-                CuAssertIntEquals_Msg(tc, msg, 3, d);
-                CuAssertIntEquals_Msg(tc, msg, ibuf[0], rbuf[0]);
-                CuAssertIntEquals_Msg(tc, msg, ibuf[1], rbuf[1]);
-                CuAssertIntEquals_Msg(tc, msg, ibuf[2], rbuf[2]);
-                CuAssertIntEquals_Msg(tc, msg, 1, rbuf[3]);
+                mu_assert_int_equals_msg(msg, 3, d);
+                mu_assert_int_equals_msg(msg, ibuf[0], rbuf[0]);
+                mu_assert_int_equals_msg(msg, ibuf[1], rbuf[1]);
+                mu_assert_int_equals_msg(msg, ibuf[2], rbuf[2]);
+                mu_assert_int_equals_msg(msg, 1, rbuf[3]);
             }
         }
     }
+    return 0;
 }
 
-void testDecodeErrors(CuTest* tc)
+static char* testDecodeErrors()
 {
     int i, y;
     char out[1000];
@@ -207,7 +214,7 @@ void testDecodeErrors(CuTest* tc)
     /* negative length */
     memset(decode, 1, sizeof(decode));
     y = modp_b64_decode(out, decode, -1);
-    CuAssertIntEquals(tc, -1, y);
+    mu_assert_int_equals(-1, y);
 
     /* test bad input -  all combinations */
     char goodchar = 'A';
@@ -221,7 +228,7 @@ void testDecodeErrors(CuTest* tc)
 
         sprintf(msg, "i = %d, %s", i, decode);
         y = modp_b64_decode(out, decode, 4);
-        CuAssertIntEquals_Msg(tc, msg, -1, y);
+        mu_assert_int_equals_msg(msg, -1, y);
     }
 
 
@@ -231,7 +238,7 @@ void testDecodeErrors(CuTest* tc)
         decode[i+1] = '\0';
         y = modp_b64_decode(out, decode, i+1);
         sprintf(msg, "i=%d, b64=%s", i, decode);
-        CuAssertIntEquals_Msg(tc, msg, -1, y);
+        mu_assert_int_equals_msg(msg, -1, y);
     }
 
     /* Test good+3 pad chars (should be impossible) */
@@ -240,26 +247,29 @@ void testDecodeErrors(CuTest* tc)
     decode[2] = '=';
     decode[3] = '=';
     y = modp_b64_decode(out, decode, 4);
-    CuAssertIntEquals(tc, -1, y);
+    mu_assert_int_equals(-1, y);
+
+    return 0;
 }
 
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testEndian);
-    SUITE_ADD_TEST(suite, testEmpty);
-    SUITE_ADD_TEST(suite, testPadding);
-    SUITE_ADD_TEST(suite, testEncodeDecode);
-    SUITE_ADD_TEST(suite, testDecodeErrors);
-    return suite;
+static char* all_tests()
+{
+    mu_run_test(testEndian);
+    mu_run_test(testEmpty);
+    mu_run_test(testPadding);
+    mu_run_test(testEncodeDecode);
+    mu_run_test(testDecodeErrors);
+    return 0;
 }
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
+

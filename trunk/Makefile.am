@@ -26,7 +26,7 @@ libmodpbase64_la_DEPENDENCIES = \
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
-	src/modp_numtoa.h
+	src/modp_numtoa.h src/modp_ascii.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -34,7 +34,7 @@ CLEANFILES = *.log \
 	doxy/html/* \
 	*.gcda *.gcno *.gcov stringencoders.info \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
-	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
+	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c test/modp_ascii_data.h
 
 clean:
 	rm -rf autom4te.cache
@@ -109,31 +109,31 @@ speedtest_numtoa_LDADD = libmodpbase64.la
 speedtest_ascii_SOURCES = test/speedtest_ascii.c
 speedtest_ascii_LDADD = libmodpbase64.la
 
-modp_b2_test_SOURCES = test/modp_b2_test.c cutest/CuTest.c
+modp_b2_test_SOURCES = test/modp_b2_test.c
 modp_b2_test_LDADD = libmodpbase64.la
 
-modp_b16_test_SOURCES = test/modp_b16_test.c cutest/CuTest.c
+modp_b16_test_SOURCES = test/modp_b16_test.c
 modp_b16_test_LDADD = libmodpbase64.la
 
-modp_b64_test_SOURCES = test/modp_b64_test.c cutest/CuTest.c
+modp_b64_test_SOURCES = test/modp_b64_test.c
 modp_b64_test_LDADD = libmodpbase64.la
 
 test/modp_b64w_test.c: test/modp_b64_test.c
 	perl -p -i -e 's/b64/b64w/g' < test/modp_b64_test.c > test/modp_b64w_test.c
 
-modp_b64w_test_SOURCES = test/modp_b64w_test.c cutest/CuTest.c
+modp_b64w_test_SOURCES = test/modp_b64w_test.c
 modp_b64w_test_LDADD = libmodpbase64.la
 
-modp_b85_test_SOURCES = test/modp_b85_test.c cutest/CuTest.c
+modp_b85_test_SOURCES = test/modp_b85_test.c
 modp_b85_test_LDADD = libmodpbase64.la
 
-modp_burl_test_SOURCES = test/modp_burl_test.c cutest/CuTest.c
+modp_burl_test_SOURCES = test/modp_burl_test.c
 modp_burl_test_LDADD = libmodpbase64.la
 
-modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c cutest/CuTest.c
+modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c
 modp_bjavascript_test_LDADD = libmodpbase64.la
 
-modp_numtoa_test_SOURCES = test/modp_numtoa_test.c cutest/CuTest.c
+modp_numtoa_test_SOURCES = test/modp_numtoa_test.c
 modp_numtoa_test_LDADD = libmodpbase64.la
 
 modp_ascii_test_SOURCES = test/modp_ascii_test.c
@@ -159,7 +159,7 @@ lcov-html:
 
 test: unittest speedtest
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test cxx_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test

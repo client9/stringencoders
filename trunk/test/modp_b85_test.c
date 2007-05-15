@@ -5,53 +5,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include "modp_b85.h"
-#include "CuTest.h"
+#include "minunit.h"
 
 /**
  * checks to make sure results are the same reguardless of
  * CPU endian type (i.e. Intel vs. Sparc, etc)
  *
  */
-void testEndian(CuTest* tc)
+static char* testEndian()
 {
     // this test that "1" is "!!!!#"
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
     int d = modp_b85_encode(buf, endian, 4);
-    CuAssertIntEquals(tc, 5, d);
-    CuAssertIntEquals(tc, '!', buf[0]);
-    CuAssertIntEquals(tc, '!', buf[1]);
-    CuAssertIntEquals(tc, '!', buf[2]);
-    CuAssertIntEquals(tc, '!', buf[3]);
-    CuAssertIntEquals(tc, '#', buf[4]);
+    mu_assert_int_equals(5, d);
+    mu_assert_int_equals('!', buf[0]);
+    mu_assert_int_equals('!', buf[1]);
+    mu_assert_int_equals('!', buf[2]);
+    mu_assert_int_equals('!', buf[3]);
+    mu_assert_int_equals('#', buf[4]);
 
     memset(result, 255, sizeof(result));
     d = modp_b85_decode(result, "!!!!#", 5);
-    CuAssertIntEquals(tc, 4, d);
-    CuAssertIntEquals(tc, 0, result[0]);
-    CuAssertIntEquals(tc, 0, result[1]);
-    CuAssertIntEquals(tc, 0, result[2]);
-    CuAssertIntEquals(tc, 1, result[3]);
-    CuAssertIntEquals(tc, -1, result[4]);
+    mu_assert_int_equals(4, d);
+    mu_assert_int_equals(0, result[0]);
+    mu_assert_int_equals(0, result[1]);
+    mu_assert_int_equals(0, result[2]);
+    mu_assert_int_equals(1, result[3]);
+    mu_assert_int_equals(-1, result[4]);
+
+    return 0;
 }
 
-void testLength(CuTest* tc)
+static char* testLength()
 {
     /**
      * Decode Len
      * 5 bytes -> 4 in, no null
      */
-    CuAssertIntEquals(tc, 0, modp_b85_decode_len(0));
-    CuAssertIntEquals(tc, 4, modp_b85_decode_len(5));
-    CuAssertIntEquals(tc, 8, modp_b85_decode_len(10));
+    mu_assert_int_equals(0, modp_b85_decode_len(0));
+    mu_assert_int_equals(4, modp_b85_decode_len(5));
+    mu_assert_int_equals(8, modp_b85_decode_len(10));
 
     /* Encode Len
      * 4 byte -> 5 output + 1 null byte
      */
-    CuAssertIntEquals(tc,  1, modp_b85_encode_len(0));
-    CuAssertIntEquals(tc,  6, modp_b85_encode_len(4));
-    CuAssertIntEquals(tc, 11, modp_b85_encode_len(8));
+    mu_assert_int_equals( 1, modp_b85_encode_len(0));
+    mu_assert_int_equals( 6, modp_b85_encode_len(4));
+    mu_assert_int_equals(11, modp_b85_encode_len(8));
+    return 0;
 }
 
 /** \brief test bad input lengths
@@ -60,23 +63,25 @@ void testLength(CuTest* tc)
  * The b85 decoder only accepts a mutliple of 5.
  *
  */
-void testBadInputLength(CuTest* tc)
+static char* testBadInputLength()
 {
     char buf[100];
-    CuAssertIntEquals(tc, -1, modp_b85_encode(buf, buf, 5));
-    CuAssertIntEquals(tc, -1, modp_b85_decode(buf, buf, 11));
+    mu_assert_int_equals(-1, modp_b85_encode(buf, buf, 5));
+    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, 11));
+    return 0;
 }
 
 /** \brief test decoding invalid b85 chars
  *
  */
-void testBadCharDecode(CuTest* tc)
+static char* testBadCharDecode()
 {
     char buf[] = {'A', 'B', 'C', 'D', '\n', '\0'};
-    CuAssertIntEquals(tc, -1, modp_b85_decode(buf, buf, 5));
+    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, 5));
+    return 0;
 }
 
-void testEncodeDecode(CuTest* tc)
+static char* testEncodeDecode()
 {
     char ibuf[10]; /* input */
     char obuf[10]; /* output */
@@ -93,39 +98,40 @@ void testEncodeDecode(CuTest* tc)
                     ibuf[3] = l;
                     memset(obuf, 255, sizeof(obuf));
                     d = modp_b85_encode(obuf, ibuf, 4);
-                    CuAssertIntEquals(tc, 5, d);
-                    CuAssertIntEquals(tc, 0, obuf[5]);
+                    mu_assert_int_equals(5, d);
+                    mu_assert_int_equals(0, obuf[5]);
                     memset(rbuf, 255, sizeof(rbuf));
                     d = modp_b85_decode(rbuf, obuf, 5);
-                    CuAssertIntEquals(tc, 4, d);
-                    CuAssertIntEquals(tc, ibuf[0], rbuf[0]);
-                    CuAssertIntEquals(tc, ibuf[1], rbuf[1]);
-                    CuAssertIntEquals(tc, ibuf[2], rbuf[2]);
-                    CuAssertIntEquals(tc, ibuf[3], rbuf[3]);
-                    CuAssertIntEquals(tc, -1, rbuf[4]);
+                    mu_assert_int_equals(4, d);
+                    mu_assert_int_equals(ibuf[0], rbuf[0]);
+                    mu_assert_int_equals(ibuf[1], rbuf[1]);
+                    mu_assert_int_equals(ibuf[2], rbuf[2]);
+                    mu_assert_int_equals(ibuf[3], rbuf[3]);
+                    mu_assert_int_equals(-1, rbuf[4]);
                 }
             }
         }
     }
+    return 0;
 }
 
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testEndian);
-    SUITE_ADD_TEST(suite, testLength);
-    SUITE_ADD_TEST(suite, testBadInputLength);
-    SUITE_ADD_TEST(suite, testBadCharDecode);
-    SUITE_ADD_TEST(suite, testEncodeDecode);
-    return suite;
+static char* all_tests()
+{
+    mu_run_test(testEndian);
+    mu_run_test(testLength);
+    mu_run_test(testBadInputLength);
+    mu_run_test(testBadCharDecode);
+    mu_run_test(testEncodeDecode);
+    return 0;
 }
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
