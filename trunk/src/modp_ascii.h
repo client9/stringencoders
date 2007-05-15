@@ -22,13 +22,44 @@
 extern "C" {
 #endif
 
-	void modp_toupper(char* str, int len);
+    /** \brief ascii upper case a string in place
+     *
+     * \param[in,out] str the input string
+     * \param[in] len the length of input string (the strlen)
+     */
+    void modp_toupper(char* str, int len);
 
-	void modp_toupper_copy(char* dest, const char* str, int len);
+    /** \brief make lower case copy of input string
+     *
+     * \param[out] output buffer, with at least 'len + 1' byte allocated
+     * \param[in] str the input string
+     * \param[in] len the length of input string (the strlen)
+     *
+     * Please make sure dest has been allocation with at least 'len+1'
+     * bytes.  This appends a trailing NULL character at the end of
+     * dest!
+     */
+    void modp_toupper_copy(char* dest, const char* str, int len);
 
-	void modp_tolower(char* str, int len);
+    /** \brief lower case a string in place
+     *
+     * \param[in, out] str the input string
+     * \param[in] len the length of input string (the strlen)
+     *
+     */
+    void modp_tolower(char* str, int len);
 
-	void modp_tolower_copy(char* dest, const char* str, int len);
+    /** \brief make lower case copy of input string
+     *
+     * \param[out] output buffer, with at least 'len + 1' byte allocated
+     * \param[in] str the input string
+     * \param[in] len the length of input string (the strlen)
+     *
+     * Please make sure dest has been allocation with at least 'len+1'
+     * bytes.  This appends a trailing NULL character at the end of
+     * dest!
+     */
+    void modp_tolower_copy(char* dest, const char* str, int len);
 
 #ifdef __cplusplus
 }
