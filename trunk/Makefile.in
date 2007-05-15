@@ -94,30 +94,34 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 SOURCES = \
+	src/modp_b2.c src/modp_b2.h \
 	src/modp_b16.c src/modp_b16.h modp_b16_data.h \
 	src/modp_b64.c src/modp_b64.h modp_b64_data.h \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
-	src/modp_numtoa.h src/modp_numtoa.c
+	src/modp_numtoa.h src/modp_numtoa.c \
+	src/modp_ascii.h src/modp_ascii.c
 
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
 
 libmodpbase64_la_DEPENDENCIES = \
+	modp_b2_data.h modp_b2_gen \
 	modp_b16_data.h modp_b16_gen \
 	modp_b64_data.h modp_b64w_data.h modp_b64_gen \
 	modp_b85_data.h modp_b85_gen \
 	modp_burl_data.h modp_burl_gen \
-	modp_bjavascript_data.h modp_bjavascript_gen
+	modp_bjavascript_data.h modp_bjavascript_gen \
+	modp_ascii_data.h modp_ascii_gen
 
 
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
-	src/modp_numtoa.h
+	src/modp_numtoa.h src/modp_ascii.h
 
 
 CLEANFILES = *.log \
@@ -126,23 +130,27 @@ CLEANFILES = *.log \
 	doxy/html/* \
 	*.gcda *.gcno *.gcov stringencoders.info \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
-	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
+	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
+	modp_ascii_data.h modp_b2_data.h
 
 
 noinst_PROGRAMS = \
-	modp_b16_gen  modp_b64_gen  modp_b85_gen  modp_burl_gen \
+	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen modp_burl_gen modp_ascii_gen \
+	modp_b2_test \
 	modp_b16_test modp_b64_test modp_b64w_test \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
-	modp_numtoa_test \
+	modp_numtoa_test modp_ascii_test \
 	cxx_test \
-	speedtest speedtest_numtoa
+	speedtest speedtest_numtoa speedtest_ascii
 
 
+modp_b2_gen_SOURCES = src/arraytoc.c src/modp_b2_gen.c
 modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
 modp_b64_gen_SOURCES = src/arraytoc.c src/modp_b64_gen.c
 modp_b85_gen_SOURCES = src/arraytoc.c src/modp_b85_gen.c
 modp_burl_gen_SOURCES = src/arraytoc.c src/modp_burl_gen.c
+modp_ascii_gen_SOURCES = src/arraytoc.c src/modp_ascii_gen.c
 modp_bjavascript_gen_SOURCES = src/arraytoc.c src/modp_bjavascript_gen.c
 
 speedtest_SOURCES = test/apr_base64.h test/apr_base64.c test/speedtest.c
@@ -151,26 +159,35 @@ speedtest_LDADD = libmodpbase64.la
 speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
 
-modp_b16_test_SOURCES = test/modp_b16_test.c cutest/CuTest.c
+speedtest_ascii_SOURCES = test/speedtest_ascii.c
+speedtest_ascii_LDADD = libmodpbase64.la
+
+modp_b2_test_SOURCES = test/modp_b2_test.c
+modp_b2_test_LDADD = libmodpbase64.la
+
+modp_b16_test_SOURCES = test/modp_b16_test.c
 modp_b16_test_LDADD = libmodpbase64.la
 
-modp_b64_test_SOURCES = test/modp_b64_test.c cutest/CuTest.c
+modp_b64_test_SOURCES = test/modp_b64_test.c
 modp_b64_test_LDADD = libmodpbase64.la
 
-modp_b64w_test_SOURCES = test/modp_b64w_test.c cutest/CuTest.c
+modp_b64w_test_SOURCES = test/modp_b64w_test.c
 modp_b64w_test_LDADD = libmodpbase64.la
 
-modp_b85_test_SOURCES = test/modp_b85_test.c cutest/CuTest.c
+modp_b85_test_SOURCES = test/modp_b85_test.c
 modp_b85_test_LDADD = libmodpbase64.la
 
-modp_burl_test_SOURCES = test/modp_burl_test.c cutest/CuTest.c
+modp_burl_test_SOURCES = test/modp_burl_test.c
 modp_burl_test_LDADD = libmodpbase64.la
 
-modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c cutest/CuTest.c
+modp_bjavascript_test_SOURCES = test/modp_bjavascript_test.c
 modp_bjavascript_test_LDADD = libmodpbase64.la
 
-modp_numtoa_test_SOURCES = test/modp_numtoa_test.c cutest/CuTest.c
+modp_numtoa_test_SOURCES = test/modp_numtoa_test.c
 modp_numtoa_test_LDADD = libmodpbase64.la
+
+modp_ascii_test_SOURCES = test/modp_ascii_test.c
+modp_ascii_test_LDADD = libmodpbase64.la
 
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
@@ -183,42 +200,64 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 
 libmodpbase64_la_LDFLAGS =
 libmodpbase64_la_LIBADD =
-am__objects_1 = modp_b16.lo modp_b64.lo modp_b64w.lo modp_b85.lo \
-	modp_burl.lo modp_bjavascript.lo modp_numtoa.lo
+am__objects_1 = modp_b2.lo modp_b16.lo modp_b64.lo modp_b64w.lo \
+	modp_b85.lo modp_burl.lo modp_bjavascript.lo modp_numtoa.lo \
+	modp_ascii.lo
 am_libmodpbase64_la_OBJECTS = $(am__objects_1)
 libmodpbase64_la_OBJECTS = $(am_libmodpbase64_la_OBJECTS)
-noinst_PROGRAMS = modp_b16_gen$(EXEEXT) modp_b64_gen$(EXEEXT) \
-	modp_b85_gen$(EXEEXT) modp_burl_gen$(EXEEXT) \
-	modp_b16_test$(EXEEXT) modp_b64_test$(EXEEXT) \
-	modp_b64w_test$(EXEEXT) modp_b85_test$(EXEEXT) \
-	modp_burl_test$(EXEEXT) modp_bjavascript_gen$(EXEEXT) \
-	modp_bjavascript_test$(EXEEXT) modp_numtoa_test$(EXEEXT) \
-	cxx_test$(EXEEXT) speedtest$(EXEEXT) speedtest_numtoa$(EXEEXT)
+noinst_PROGRAMS = modp_b2_gen$(EXEEXT) modp_b16_gen$(EXEEXT) \
+	modp_b64_gen$(EXEEXT) modp_b85_gen$(EXEEXT) \
+	modp_burl_gen$(EXEEXT) modp_ascii_gen$(EXEEXT) \
+	modp_b2_test$(EXEEXT) modp_b16_test$(EXEEXT) \
+	modp_b64_test$(EXEEXT) modp_b64w_test$(EXEEXT) \
+	modp_b85_test$(EXEEXT) modp_burl_test$(EXEEXT) \
+	modp_bjavascript_gen$(EXEEXT) modp_bjavascript_test$(EXEEXT) \
+	modp_numtoa_test$(EXEEXT) modp_ascii_test$(EXEEXT) \
+	cxx_test$(EXEEXT) speedtest$(EXEEXT) speedtest_numtoa$(EXEEXT) \
+	speedtest_ascii$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 
 am_cxx_test_OBJECTS = cxx_test.$(OBJEXT)
 cxx_test_OBJECTS = $(am_cxx_test_OBJECTS)
 cxx_test_DEPENDENCIES = libmodpbase64.la
 cxx_test_LDFLAGS =
+am_modp_ascii_gen_OBJECTS = arraytoc.$(OBJEXT) modp_ascii_gen.$(OBJEXT)
+modp_ascii_gen_OBJECTS = $(am_modp_ascii_gen_OBJECTS)
+modp_ascii_gen_LDADD = $(LDADD)
+modp_ascii_gen_DEPENDENCIES =
+modp_ascii_gen_LDFLAGS =
+am_modp_ascii_test_OBJECTS = modp_ascii_test.$(OBJEXT)
+modp_ascii_test_OBJECTS = $(am_modp_ascii_test_OBJECTS)
+modp_ascii_test_DEPENDENCIES = libmodpbase64.la
+modp_ascii_test_LDFLAGS =
 am_modp_b16_gen_OBJECTS = arraytoc.$(OBJEXT) modp_b16_gen.$(OBJEXT)
 modp_b16_gen_OBJECTS = $(am_modp_b16_gen_OBJECTS)
 modp_b16_gen_LDADD = $(LDADD)
 modp_b16_gen_DEPENDENCIES =
 modp_b16_gen_LDFLAGS =
-am_modp_b16_test_OBJECTS = modp_b16_test.$(OBJEXT) CuTest.$(OBJEXT)
+am_modp_b16_test_OBJECTS = modp_b16_test.$(OBJEXT)
 modp_b16_test_OBJECTS = $(am_modp_b16_test_OBJECTS)
 modp_b16_test_DEPENDENCIES = libmodpbase64.la
 modp_b16_test_LDFLAGS =
+am_modp_b2_gen_OBJECTS = arraytoc.$(OBJEXT) modp_b2_gen.$(OBJEXT)
+modp_b2_gen_OBJECTS = $(am_modp_b2_gen_OBJECTS)
+modp_b2_gen_LDADD = $(LDADD)
+modp_b2_gen_DEPENDENCIES =
+modp_b2_gen_LDFLAGS =
+am_modp_b2_test_OBJECTS = modp_b2_test.$(OBJEXT)
+modp_b2_test_OBJECTS = $(am_modp_b2_test_OBJECTS)
+modp_b2_test_DEPENDENCIES = libmodpbase64.la
+modp_b2_test_LDFLAGS =
 am_modp_b64_gen_OBJECTS = arraytoc.$(OBJEXT) modp_b64_gen.$(OBJEXT)
 modp_b64_gen_OBJECTS = $(am_modp_b64_gen_OBJECTS)
 modp_b64_gen_LDADD = $(LDADD)
 modp_b64_gen_DEPENDENCIES =
 modp_b64_gen_LDFLAGS =
-am_modp_b64_test_OBJECTS = modp_b64_test.$(OBJEXT) CuTest.$(OBJEXT)
+am_modp_b64_test_OBJECTS = modp_b64_test.$(OBJEXT)
 modp_b64_test_OBJECTS = $(am_modp_b64_test_OBJECTS)
 modp_b64_test_DEPENDENCIES = libmodpbase64.la
 modp_b64_test_LDFLAGS =
-am_modp_b64w_test_OBJECTS = modp_b64w_test.$(OBJEXT) CuTest.$(OBJEXT)
+am_modp_b64w_test_OBJECTS = modp_b64w_test.$(OBJEXT)
 modp_b64w_test_OBJECTS = $(am_modp_b64w_test_OBJECTS)
 modp_b64w_test_DEPENDENCIES = libmodpbase64.la
 modp_b64w_test_LDFLAGS =
@@ -227,7 +266,7 @@ modp_b85_gen_OBJECTS = $(am_modp_b85_gen_OBJECTS)
 modp_b85_gen_LDADD = $(LDADD)
 modp_b85_gen_DEPENDENCIES =
 modp_b85_gen_LDFLAGS =
-am_modp_b85_test_OBJECTS = modp_b85_test.$(OBJEXT) CuTest.$(OBJEXT)
+am_modp_b85_test_OBJECTS = modp_b85_test.$(OBJEXT)
 modp_b85_test_OBJECTS = $(am_modp_b85_test_OBJECTS)
 modp_b85_test_DEPENDENCIES = libmodpbase64.la
 modp_b85_test_LDFLAGS =
@@ -237,8 +276,7 @@ modp_bjavascript_gen_OBJECTS = $(am_modp_bjavascript_gen_OBJECTS)
 modp_bjavascript_gen_LDADD = $(LDADD)
 modp_bjavascript_gen_DEPENDENCIES =
 modp_bjavascript_gen_LDFLAGS =
-am_modp_bjavascript_test_OBJECTS = modp_bjavascript_test.$(OBJEXT) \
-	CuTest.$(OBJEXT)
+am_modp_bjavascript_test_OBJECTS = modp_bjavascript_test.$(OBJEXT)
 modp_bjavascript_test_OBJECTS = $(am_modp_bjavascript_test_OBJECTS)
 modp_bjavascript_test_DEPENDENCIES = libmodpbase64.la
 modp_bjavascript_test_LDFLAGS =
@@ -247,12 +285,11 @@ modp_burl_gen_OBJECTS = $(am_modp_burl_gen_OBJECTS)
 modp_burl_gen_LDADD = $(LDADD)
 modp_burl_gen_DEPENDENCIES =
 modp_burl_gen_LDFLAGS =
-am_modp_burl_test_OBJECTS = modp_burl_test.$(OBJEXT) CuTest.$(OBJEXT)
+am_modp_burl_test_OBJECTS = modp_burl_test.$(OBJEXT)
 modp_burl_test_OBJECTS = $(am_modp_burl_test_OBJECTS)
 modp_burl_test_DEPENDENCIES = libmodpbase64.la
 modp_burl_test_LDFLAGS =
-am_modp_numtoa_test_OBJECTS = modp_numtoa_test.$(OBJEXT) \
-	CuTest.$(OBJEXT)
+am_modp_numtoa_test_OBJECTS = modp_numtoa_test.$(OBJEXT)
 modp_numtoa_test_OBJECTS = $(am_modp_numtoa_test_OBJECTS)
 modp_numtoa_test_DEPENDENCIES = libmodpbase64.la
 modp_numtoa_test_LDFLAGS =
@@ -260,6 +297,10 @@ am_speedtest_OBJECTS = apr_base64.$(OBJEXT) speedtest.$(OBJEXT)
 speedtest_OBJECTS = $(am_speedtest_OBJECTS)
 speedtest_DEPENDENCIES = libmodpbase64.la
 speedtest_LDFLAGS =
+am_speedtest_ascii_OBJECTS = speedtest_ascii.$(OBJEXT)
+speedtest_ascii_OBJECTS = $(am_speedtest_ascii_OBJECTS)
+speedtest_ascii_DEPENDENCIES = libmodpbase64.la
+speedtest_ascii_LDFLAGS =
 am_speedtest_numtoa_OBJECTS = speedtest_numtoa.$(OBJEXT)
 speedtest_numtoa_OBJECTS = $(am_speedtest_numtoa_OBJECTS)
 speedtest_numtoa_DEPENDENCIES = libmodpbase64.la
@@ -272,11 +313,16 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/CuTest.Po ./$(DEPDIR)/apr_base64.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/apr_base64.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/arraytoc.Po ./$(DEPDIR)/cxx_test.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/modp_ascii.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/modp_ascii_gen.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/modp_ascii_test.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b16.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b16_gen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b16_test.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/modp_b2.Plo ./$(DEPDIR)/modp_b2_gen.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/modp_b2_test.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b64.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b64_gen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_b64_test.Po \
@@ -294,6 +340,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/modp_numtoa.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/modp_numtoa_test.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/speedtest.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/speedtest_ascii.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/speedtest_numtoa.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -313,13 +360,16 @@ CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 CXXFLAGS = @CXXFLAGS@
 DIST_SOURCES = $(libmodpbase64_la_SOURCES) $(cxx_test_SOURCES) \
+	$(modp_ascii_gen_SOURCES) $(modp_ascii_test_SOURCES) \
 	$(modp_b16_gen_SOURCES) $(modp_b16_test_SOURCES) \
+	$(modp_b2_gen_SOURCES) $(modp_b2_test_SOURCES) \
 	$(modp_b64_gen_SOURCES) $(modp_b64_test_SOURCES) \
 	$(modp_b64w_test_SOURCES) $(modp_b85_gen_SOURCES) \
 	$(modp_b85_test_SOURCES) $(modp_bjavascript_gen_SOURCES) \
 	$(modp_bjavascript_test_SOURCES) $(modp_burl_gen_SOURCES) \
 	$(modp_burl_test_SOURCES) $(modp_numtoa_test_SOURCES) \
-	$(speedtest_SOURCES) $(speedtest_numtoa_SOURCES)
+	$(speedtest_SOURCES) $(speedtest_ascii_SOURCES) \
+	$(speedtest_numtoa_SOURCES)
 HEADERS = $(include_HEADERS)
 
 DIST_COMMON = README $(include_HEADERS) AUTHORS COPYING ChangeLog \
@@ -327,13 +377,15 @@ DIST_COMMON = README $(include_HEADERS) AUTHORS COPYING ChangeLog \
 	config.guess config.h.in config.sub configure configure.ac \
 	depcomp install-sh ltmain.sh missing mkinstalldirs
 SOURCES = \
+	src/modp_b2.c src/modp_b2.h \
 	src/modp_b16.c src/modp_b16.h modp_b16_data.h \
 	src/modp_b64.c src/modp_b64.h modp_b64_data.h \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
-	src/modp_numtoa.h src/modp_numtoa.c
+	src/modp_numtoa.h src/modp_numtoa.c \
+	src/modp_ascii.h src/modp_ascii.c
 
 
 all: config.h
@@ -402,6 +454,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+modp_b2.lo: src/modp_b2.c
 modp_b16.lo: src/modp_b16.c
 modp_b64.lo: src/modp_b64.c
 modp_b64w.lo: src/modp_b64w.c
@@ -409,6 +462,7 @@ modp_b85.lo: src/modp_b85.c
 modp_burl.lo: src/modp_burl.c
 modp_bjavascript.lo: src/modp_bjavascript.c
 modp_numtoa.lo: src/modp_numtoa.c
+modp_ascii.lo: src/modp_ascii.c
 libmodpbase64.la: $(libmodpbase64_la_OBJECTS) $(libmodpbase64_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(libmodpbase64_la_LDFLAGS) $(libmodpbase64_la_OBJECTS) $(libmodpbase64_la_LIBADD) $(LIBS)
 
@@ -423,15 +477,30 @@ cxx_test$(EXEEXT): $(cxx_test_OBJECTS) $(cxx_test_DEPENDENCIES)
 	@rm -f cxx_test$(EXEEXT)
 	$(CXXLINK) $(cxx_test_LDFLAGS) $(cxx_test_OBJECTS) $(cxx_test_LDADD) $(LIBS)
 arraytoc.$(OBJEXT): src/arraytoc.c
+modp_ascii_gen.$(OBJEXT): src/modp_ascii_gen.c
+modp_ascii_gen$(EXEEXT): $(modp_ascii_gen_OBJECTS) $(modp_ascii_gen_DEPENDENCIES) 
+	@rm -f modp_ascii_gen$(EXEEXT)
+	$(LINK) $(modp_ascii_gen_LDFLAGS) $(modp_ascii_gen_OBJECTS) $(modp_ascii_gen_LDADD) $(LIBS)
+modp_ascii_test.$(OBJEXT): test/modp_ascii_test.c
+modp_ascii_test$(EXEEXT): $(modp_ascii_test_OBJECTS) $(modp_ascii_test_DEPENDENCIES) 
+	@rm -f modp_ascii_test$(EXEEXT)
+	$(LINK) $(modp_ascii_test_LDFLAGS) $(modp_ascii_test_OBJECTS) $(modp_ascii_test_LDADD) $(LIBS)
 modp_b16_gen.$(OBJEXT): src/modp_b16_gen.c
 modp_b16_gen$(EXEEXT): $(modp_b16_gen_OBJECTS) $(modp_b16_gen_DEPENDENCIES) 
 	@rm -f modp_b16_gen$(EXEEXT)
 	$(LINK) $(modp_b16_gen_LDFLAGS) $(modp_b16_gen_OBJECTS) $(modp_b16_gen_LDADD) $(LIBS)
 modp_b16_test.$(OBJEXT): test/modp_b16_test.c
-CuTest.$(OBJEXT): cutest/CuTest.c
 modp_b16_test$(EXEEXT): $(modp_b16_test_OBJECTS) $(modp_b16_test_DEPENDENCIES) 
 	@rm -f modp_b16_test$(EXEEXT)
 	$(LINK) $(modp_b16_test_LDFLAGS) $(modp_b16_test_OBJECTS) $(modp_b16_test_LDADD) $(LIBS)
+modp_b2_gen.$(OBJEXT): src/modp_b2_gen.c
+modp_b2_gen$(EXEEXT): $(modp_b2_gen_OBJECTS) $(modp_b2_gen_DEPENDENCIES) 
+	@rm -f modp_b2_gen$(EXEEXT)
+	$(LINK) $(modp_b2_gen_LDFLAGS) $(modp_b2_gen_OBJECTS) $(modp_b2_gen_LDADD) $(LIBS)
+modp_b2_test.$(OBJEXT): test/modp_b2_test.c
+modp_b2_test$(EXEEXT): $(modp_b2_test_OBJECTS) $(modp_b2_test_DEPENDENCIES) 
+	@rm -f modp_b2_test$(EXEEXT)
+	$(LINK) $(modp_b2_test_LDFLAGS) $(modp_b2_test_OBJECTS) $(modp_b2_test_LDADD) $(LIBS)
 modp_b64_gen.$(OBJEXT): src/modp_b64_gen.c
 modp_b64_gen$(EXEEXT): $(modp_b64_gen_OBJECTS) $(modp_b64_gen_DEPENDENCIES) 
 	@rm -f modp_b64_gen$(EXEEXT)
@@ -477,6 +546,10 @@ speedtest.$(OBJEXT): test/speedtest.c
 speedtest$(EXEEXT): $(speedtest_OBJECTS) $(speedtest_DEPENDENCIES) 
 	@rm -f speedtest$(EXEEXT)
 	$(LINK) $(speedtest_LDFLAGS) $(speedtest_OBJECTS) $(speedtest_LDADD) $(LIBS)
+speedtest_ascii.$(OBJEXT): test/speedtest_ascii.c
+speedtest_ascii$(EXEEXT): $(speedtest_ascii_OBJECTS) $(speedtest_ascii_DEPENDENCIES) 
+	@rm -f speedtest_ascii$(EXEEXT)
+	$(LINK) $(speedtest_ascii_LDFLAGS) $(speedtest_ascii_OBJECTS) $(speedtest_ascii_LDADD) $(LIBS)
 speedtest_numtoa.$(OBJEXT): test/speedtest_numtoa.c
 speedtest_numtoa$(EXEEXT): $(speedtest_numtoa_OBJECTS) $(speedtest_numtoa_DEPENDENCIES) 
 	@rm -f speedtest_numtoa$(EXEEXT)
@@ -488,13 +561,18 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CuTest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/apr_base64.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arraytoc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cxx_test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_ascii.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_ascii_gen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_ascii_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b16.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b16_gen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b16_test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b2_gen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b2_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b64.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b64_gen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_b64_test.Po@am__quote@
@@ -512,6 +590,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_numtoa.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modp_numtoa_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speedtest.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speedtest_ascii.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speedtest_numtoa.Po@am__quote@
 
 distclean-depend:
@@ -534,6 +613,24 @@ distclean-depend:
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Plo' tmpdepfile='$(DEPDIR)/$*.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LTCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+
+modp_b2.o: src/modp_b2.c
+@AMDEP_TRUE@	source='src/modp_b2.c' object='modp_b2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2.Po' tmpdepfile='$(DEPDIR)/modp_b2.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2.o `test -f 'src/modp_b2.c' || echo '$(srcdir)/'`src/modp_b2.c
+
+modp_b2.obj: src/modp_b2.c
+@AMDEP_TRUE@	source='src/modp_b2.c' object='modp_b2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2.Po' tmpdepfile='$(DEPDIR)/modp_b2.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2.obj `cygpath -w src/modp_b2.c`
+
+modp_b2.lo: src/modp_b2.c
+@AMDEP_TRUE@	source='src/modp_b2.c' object='modp_b2.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2.Plo' tmpdepfile='$(DEPDIR)/modp_b2.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2.lo `test -f 'src/modp_b2.c' || echo '$(srcdir)/'`src/modp_b2.c
 
 modp_b16.o: src/modp_b16.c
 @AMDEP_TRUE@	source='src/modp_b16.c' object='modp_b16.o' libtool=no @AMDEPBACKSLASH@
@@ -661,6 +758,24 @@ modp_numtoa.lo: src/modp_numtoa.c
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_numtoa.lo `test -f 'src/modp_numtoa.c' || echo '$(srcdir)/'`src/modp_numtoa.c
 
+modp_ascii.o: src/modp_ascii.c
+@AMDEP_TRUE@	source='src/modp_ascii.c' object='modp_ascii.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii.Po' tmpdepfile='$(DEPDIR)/modp_ascii.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii.o `test -f 'src/modp_ascii.c' || echo '$(srcdir)/'`src/modp_ascii.c
+
+modp_ascii.obj: src/modp_ascii.c
+@AMDEP_TRUE@	source='src/modp_ascii.c' object='modp_ascii.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii.Po' tmpdepfile='$(DEPDIR)/modp_ascii.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii.obj `cygpath -w src/modp_ascii.c`
+
+modp_ascii.lo: src/modp_ascii.c
+@AMDEP_TRUE@	source='src/modp_ascii.c' object='modp_ascii.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii.Plo' tmpdepfile='$(DEPDIR)/modp_ascii.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii.lo `test -f 'src/modp_ascii.c' || echo '$(srcdir)/'`src/modp_ascii.c
+
 arraytoc.o: src/arraytoc.c
 @AMDEP_TRUE@	source='src/arraytoc.c' object='arraytoc.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@	depfile='$(DEPDIR)/arraytoc.Po' tmpdepfile='$(DEPDIR)/arraytoc.TPo' @AMDEPBACKSLASH@
@@ -678,6 +793,42 @@ arraytoc.lo: src/arraytoc.c
 @AMDEP_TRUE@	depfile='$(DEPDIR)/arraytoc.Plo' tmpdepfile='$(DEPDIR)/arraytoc.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o arraytoc.lo `test -f 'src/arraytoc.c' || echo '$(srcdir)/'`src/arraytoc.c
+
+modp_ascii_gen.o: src/modp_ascii_gen.c
+@AMDEP_TRUE@	source='src/modp_ascii_gen.c' object='modp_ascii_gen.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_gen.Po' tmpdepfile='$(DEPDIR)/modp_ascii_gen.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_gen.o `test -f 'src/modp_ascii_gen.c' || echo '$(srcdir)/'`src/modp_ascii_gen.c
+
+modp_ascii_gen.obj: src/modp_ascii_gen.c
+@AMDEP_TRUE@	source='src/modp_ascii_gen.c' object='modp_ascii_gen.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_gen.Po' tmpdepfile='$(DEPDIR)/modp_ascii_gen.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_gen.obj `cygpath -w src/modp_ascii_gen.c`
+
+modp_ascii_gen.lo: src/modp_ascii_gen.c
+@AMDEP_TRUE@	source='src/modp_ascii_gen.c' object='modp_ascii_gen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_gen.Plo' tmpdepfile='$(DEPDIR)/modp_ascii_gen.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_gen.lo `test -f 'src/modp_ascii_gen.c' || echo '$(srcdir)/'`src/modp_ascii_gen.c
+
+modp_ascii_test.o: test/modp_ascii_test.c
+@AMDEP_TRUE@	source='test/modp_ascii_test.c' object='modp_ascii_test.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_test.Po' tmpdepfile='$(DEPDIR)/modp_ascii_test.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_test.o `test -f 'test/modp_ascii_test.c' || echo '$(srcdir)/'`test/modp_ascii_test.c
+
+modp_ascii_test.obj: test/modp_ascii_test.c
+@AMDEP_TRUE@	source='test/modp_ascii_test.c' object='modp_ascii_test.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_test.Po' tmpdepfile='$(DEPDIR)/modp_ascii_test.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_test.obj `cygpath -w test/modp_ascii_test.c`
+
+modp_ascii_test.lo: test/modp_ascii_test.c
+@AMDEP_TRUE@	source='test/modp_ascii_test.c' object='modp_ascii_test.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_ascii_test.Plo' tmpdepfile='$(DEPDIR)/modp_ascii_test.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_ascii_test.lo `test -f 'test/modp_ascii_test.c' || echo '$(srcdir)/'`test/modp_ascii_test.c
 
 modp_b16_gen.o: src/modp_b16_gen.c
 @AMDEP_TRUE@	source='src/modp_b16_gen.c' object='modp_b16_gen.o' libtool=no @AMDEPBACKSLASH@
@@ -715,23 +866,41 @@ modp_b16_test.lo: test/modp_b16_test.c
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b16_test.lo `test -f 'test/modp_b16_test.c' || echo '$(srcdir)/'`test/modp_b16_test.c
 
-CuTest.o: cutest/CuTest.c
-@AMDEP_TRUE@	source='cutest/CuTest.c' object='CuTest.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/CuTest.Po' tmpdepfile='$(DEPDIR)/CuTest.TPo' @AMDEPBACKSLASH@
+modp_b2_gen.o: src/modp_b2_gen.c
+@AMDEP_TRUE@	source='src/modp_b2_gen.c' object='modp_b2_gen.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_gen.Po' tmpdepfile='$(DEPDIR)/modp_b2_gen.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o CuTest.o `test -f 'cutest/CuTest.c' || echo '$(srcdir)/'`cutest/CuTest.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_gen.o `test -f 'src/modp_b2_gen.c' || echo '$(srcdir)/'`src/modp_b2_gen.c
 
-CuTest.obj: cutest/CuTest.c
-@AMDEP_TRUE@	source='cutest/CuTest.c' object='CuTest.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/CuTest.Po' tmpdepfile='$(DEPDIR)/CuTest.TPo' @AMDEPBACKSLASH@
+modp_b2_gen.obj: src/modp_b2_gen.c
+@AMDEP_TRUE@	source='src/modp_b2_gen.c' object='modp_b2_gen.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_gen.Po' tmpdepfile='$(DEPDIR)/modp_b2_gen.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o CuTest.obj `cygpath -w cutest/CuTest.c`
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_gen.obj `cygpath -w src/modp_b2_gen.c`
 
-CuTest.lo: cutest/CuTest.c
-@AMDEP_TRUE@	source='cutest/CuTest.c' object='CuTest.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/CuTest.Plo' tmpdepfile='$(DEPDIR)/CuTest.TPlo' @AMDEPBACKSLASH@
+modp_b2_gen.lo: src/modp_b2_gen.c
+@AMDEP_TRUE@	source='src/modp_b2_gen.c' object='modp_b2_gen.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_gen.Plo' tmpdepfile='$(DEPDIR)/modp_b2_gen.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o CuTest.lo `test -f 'cutest/CuTest.c' || echo '$(srcdir)/'`cutest/CuTest.c
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_gen.lo `test -f 'src/modp_b2_gen.c' || echo '$(srcdir)/'`src/modp_b2_gen.c
+
+modp_b2_test.o: test/modp_b2_test.c
+@AMDEP_TRUE@	source='test/modp_b2_test.c' object='modp_b2_test.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_test.Po' tmpdepfile='$(DEPDIR)/modp_b2_test.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_test.o `test -f 'test/modp_b2_test.c' || echo '$(srcdir)/'`test/modp_b2_test.c
+
+modp_b2_test.obj: test/modp_b2_test.c
+@AMDEP_TRUE@	source='test/modp_b2_test.c' object='modp_b2_test.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_test.Po' tmpdepfile='$(DEPDIR)/modp_b2_test.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_test.obj `cygpath -w test/modp_b2_test.c`
+
+modp_b2_test.lo: test/modp_b2_test.c
+@AMDEP_TRUE@	source='test/modp_b2_test.c' object='modp_b2_test.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/modp_b2_test.Plo' tmpdepfile='$(DEPDIR)/modp_b2_test.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modp_b2_test.lo `test -f 'test/modp_b2_test.c' || echo '$(srcdir)/'`test/modp_b2_test.c
 
 modp_b64_gen.o: src/modp_b64_gen.c
 @AMDEP_TRUE@	source='src/modp_b64_gen.c' object='modp_b64_gen.o' libtool=no @AMDEPBACKSLASH@
@@ -948,6 +1117,24 @@ speedtest.lo: test/speedtest.c
 @AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest.Plo' tmpdepfile='$(DEPDIR)/speedtest.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest.lo `test -f 'test/speedtest.c' || echo '$(srcdir)/'`test/speedtest.c
+
+speedtest_ascii.o: test/speedtest_ascii.c
+@AMDEP_TRUE@	source='test/speedtest_ascii.c' object='speedtest_ascii.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_ascii.Po' tmpdepfile='$(DEPDIR)/speedtest_ascii.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_ascii.o `test -f 'test/speedtest_ascii.c' || echo '$(srcdir)/'`test/speedtest_ascii.c
+
+speedtest_ascii.obj: test/speedtest_ascii.c
+@AMDEP_TRUE@	source='test/speedtest_ascii.c' object='speedtest_ascii.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_ascii.Po' tmpdepfile='$(DEPDIR)/speedtest_ascii.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_ascii.obj `cygpath -w test/speedtest_ascii.c`
+
+speedtest_ascii.lo: test/speedtest_ascii.c
+@AMDEP_TRUE@	source='test/speedtest_ascii.c' object='speedtest_ascii.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/speedtest_ascii.Plo' tmpdepfile='$(DEPDIR)/speedtest_ascii.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o speedtest_ascii.lo `test -f 'test/speedtest_ascii.c' || echo '$(srcdir)/'`test/speedtest_ascii.c
 
 speedtest_numtoa.o: test/speedtest_numtoa.c
 @AMDEP_TRUE@	source='test/speedtest_numtoa.c' object='speedtest_numtoa.o' libtool=no @AMDEPBACKSLASH@
@@ -1251,6 +1438,8 @@ clean:
 	rm -rf autom4te.cache
 	rm -rf lcov-html
 
+src/modp_b2.c: src/modp_b2.h modp_b2_data.h
+
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 
 src/modp_b64.c: src/modp_b64.h modp_b64_data.h
@@ -1264,11 +1453,17 @@ src/modp_burl.c: src/modp_burl.h modp_burl_data.h
 
 src/modp_bjavascript.c: src/modp_bjavascript.h modp_bjavascript_data.h
 
+modp_b2_data.h: modp_b2_gen
+	./modp_b2_gen > modp_b2_data.h
+
 modp_b16_data.h: modp_b16_gen
 	./modp_b16_gen > modp_b16_data.h
 
 modp_b64_data.h: modp_b64_gen
 	./modp_b64_gen > modp_b64_data.h
+
+modp_ascii_data.h: modp_ascii_gen
+	./modp_ascii_gen > modp_ascii_data.h
 
 #
 # Recall B64WCHARS by default is "-_."
@@ -1304,19 +1499,22 @@ lcov-html:
 
 test: unittest speedtest
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test cxx_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
 	./modp_b16_test
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
+	./modp_b2_test
 	./modp_burl_test
 	./modp_bjavascript_test
 	./modp_numtoa_test
+	./modp_ascii_test
 	./cxx_test
 
 perftest: speedtest
 	./speedtest
 	./speedtest_numtoa
+	./speedtest_ascii
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile
