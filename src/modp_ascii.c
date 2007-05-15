@@ -48,28 +48,33 @@
 
 void modp_toupper_copy(char* dest, const char* str, int len)
 {
+    /*
+      int i;
+        for (i = 0; i < len; ++i) {
+         char c = str[i];
+		 *dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
+        }
+    */
 
-#if 1
     int i;
-	for (i = 0; i < len; ++i) {
-		char c = str[i];
-		*dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
-	}
-#else
-    int i;
+    uint8_t c1,c2,c3,c4;
+
     const int leftover = len % 4;
     const int imax = len - leftover;
     const uint8_t* s = (const uint8_t*) str;
     for (i = 0; i != imax ; i+=4) {
-        // it's important to make these variables
-        // it helps the optimizer to figure out what to do
-        uint8_t c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
+        /*
+          it's important to make these variables
+          it helps the optimizer to figure out what to do
+        */
+        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
         dest[0] = gsToUpperMap[c1];
         dest[1] = gsToUpperMap[c2];
         dest[2] = gsToUpperMap[c3];
         dest[3] = gsToUpperMap[c4];
         dest += 4;
     }
+
     switch (leftover) {
     case 0:
         *dest = '\0';
@@ -82,8 +87,6 @@ void modp_toupper_copy(char* dest, const char* str, int len)
         *dest++ = gsToUpperMap[i];
         *dest = '\0';
     }
-    return;
-#endif
 }
 
 void modp_toupper(char* str, int len)
@@ -91,21 +94,50 @@ void modp_toupper(char* str, int len)
 	modp_toupper_copy(str, str, len);
 }
 
-
-void modp_tolower(char* str, int len)
-{
-	int i = len;
-	for (i = 0; i < len; ++i) {
-		char c = str[i];
-		str[i] = (c >= 'A' && c <= 'Z') ? c + 32 : c;
-	}
-}
-
 void modp_tolower_copy(char* dest, const char* str, int len)
 {
+    /*
 	int i = 0;
 	for (i = 0; i < len; ++i) {
 		char c = str[i];
 		*dest++ = (c >= 'A' && c <= 'Z') ? c + 32 : c;
 	}
+    */
+
+    int i;
+    uint8_t c1,c2,c3,c4;
+
+    const int leftover = len % 4;
+    const int imax = len - leftover;
+    const uint8_t* s = (const uint8_t*) str;
+    for (i = 0; i != imax ; i+=4) {
+        /*
+          it's important to make these variables
+          it helps the optimizer to figure out what to do
+        */
+        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
+        dest[0] = gsToLowerMap[c1];
+        dest[1] = gsToLowerMap[c2];
+        dest[2] = gsToLowerMap[c3];
+        dest[3] = gsToLowerMap[c4];
+        dest += 4;
+    }
+
+    switch (leftover) {
+    case 0:
+        *dest = '\0';
+        return;
+    case 3:
+        *dest++ = gsToLowerMap[i++];
+    case 2:
+        *dest++ = gsToLowerMap[i++];
+    case 1:
+        *dest++ = gsToLowerMap[i];
+        *dest = '\0';
+    }
+}
+
+void modp_tolower(char* str, int len)
+{
+    modp_tolower_copy(str,str,len);
 }
