@@ -4,32 +4,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "minunit.h"
 #include "modp_b2.h"
 #include "modp_b16.h"
-#include "CuTest.h"
 
-static void testEndian(CuTest* tc)
+static char* testEndian()
 {
     // this test that "0001" is "0...1"
     char buf[100];
     char result[100];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
     int d = modp_b2_encode(buf, endian, 4);
-    CuAssertIntEquals(tc, 32, d);
-    CuAssertStrEquals(tc, "00000000000000000000000000000001", buf);
-    CuAssertIntEquals(tc, '0', buf[0]);
-    CuAssertIntEquals(tc, '1', buf[31]);
+    mu_assert_int_equals(32, d);
+    mu_assert_str_equals("00000000000000000000000000000001", buf);
+    mu_assert_int_equals('0', buf[0]);
+    mu_assert_int_equals('1', buf[31]);
 
     memset(result, 255, sizeof(result));
     d = modp_b2_decode(result, buf, 32);
-    CuAssertIntEquals(tc, 4, d);
-    CuAssertIntEquals(tc, endian[0], result[0]);
-    CuAssertIntEquals(tc, endian[1], result[1]);
-    CuAssertIntEquals(tc, endian[2], result[2]);
-    CuAssertIntEquals(tc, endian[3], result[3]);
+    mu_assert_int_equals(4, d);
+    mu_assert_int_equals(endian[0], result[0]);
+    mu_assert_int_equals(endian[1], result[1]);
+    mu_assert_int_equals(endian[2], result[2]);
+    mu_assert_int_equals(endian[3], result[3]);
+
+    return 0;
 }
 
-static void testEncodeDecode(CuTest* tc)
+static char* testEncodeDecode()
 {
     // 2 bytes == 4 bytes out
     char ibuf[2];
@@ -49,16 +51,17 @@ static void testEncodeDecode(CuTest* tc)
 
             memset(obuf, 0, sizeof(obuf));
             d = modp_b16_encode(obuf, ibuf, 2);
-            CuAssertIntEquals_Msg(tc, msg, 4, d);
+            mu_assert_int_equals_msg(msg, 4, d);
             d = modp_b16_decode(rbuf, obuf, d);
-            CuAssertIntEquals_Msg(tc, msg, 2, d);
-            CuAssertIntEquals_Msg(tc, msg, ibuf[0], rbuf[0]);
-            CuAssertIntEquals_Msg(tc, msg, ibuf[1], rbuf[1]);
+            mu_assert_int_equals_msg(msg, 2, d);
+            mu_assert_int_equals_msg(msg, ibuf[0], rbuf[0]);
+            mu_assert_int_equals_msg(msg, ibuf[1], rbuf[1]);
         }
     }
+    return 0;
 }
 
-static void testOddDecode(CuTest* tc)
+static char* testOddDecode()
 {
     char obuf[100];
     char ibuf[100];
@@ -70,64 +73,68 @@ static void testOddDecode(CuTest* tc)
      * Should be error
      */
     obuf[0] = 1;
-    CuAssertIntEquals(tc, -1, modp_b2_decode(obuf, ibuf, 1));
-    CuAssertIntEquals(tc, 1, obuf[0]);
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 1));
+    mu_assert_int_equals(1, obuf[0]);
 
     obuf[0] = 1;
-    CuAssertIntEquals(tc, -1, modp_b2_decode(obuf, ibuf, 3));
-    CuAssertIntEquals(tc, 1, obuf[0]);
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 3));
+    mu_assert_int_equals(1, obuf[0]);
 
     obuf[0] = 1;
-    CuAssertIntEquals(tc, -1, modp_b2_decode(obuf, ibuf, 7));
-    CuAssertIntEquals(tc, 1, obuf[0]);
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 7));
+    mu_assert_int_equals(1, obuf[0]);
+
+    return 0;
 }
 
 /** \brief test input that is a multiple of 2 (special case in code)
  */
-static void testDecodeMutlipleOf2(CuTest* tc)
+static char* testDecodeMutlipleOf2()
 {
     char obuf[100];
     memset(obuf, 0xff, sizeof(obuf));
 
-    CuAssertIntEquals(tc, 1, modp_b16_decode(obuf, "01", 2));
-    CuAssertIntEquals(tc, 1, obuf[0]);
+    mu_assert_int_equals(1, modp_b16_decode(obuf, "01", 2));
+    mu_assert_int_equals(1, obuf[0]);
+    return 0;
 }
 
-static void testOddEncode(CuTest* tc)
+static char* testOddEncode()
 {
     char obuf[100];
     char ibuf[100];
 
     // oddball 1 char.
     ibuf[0] = 1;
-    CuAssertIntEquals(tc, 2, modp_b16_encode(obuf, ibuf, 1));
-    CuAssertIntEquals(tc, obuf[0], '0');
-    CuAssertIntEquals(tc, obuf[1], '1');
+    mu_assert_int_equals(2, modp_b16_encode(obuf, ibuf, 1));
+    mu_assert_int_equals(obuf[0], '0');
+    mu_assert_int_equals(obuf[1], '1');
 
     // oddball 2 char.
     ibuf[0] = 0;
     ibuf[1] = 1;
-    CuAssertIntEquals(tc, 4, modp_b16_encode(obuf, ibuf, 2));
-    CuAssertIntEquals(tc, obuf[0], '0');
-    CuAssertIntEquals(tc, obuf[1], '0');
-    CuAssertIntEquals(tc, obuf[2], '0');
-    CuAssertIntEquals(tc, obuf[3], '1');
+    mu_assert_int_equals(4, modp_b16_encode(obuf, ibuf, 2));
+    mu_assert_int_equals(obuf[0], '0');
+    mu_assert_int_equals(obuf[1], '0');
+    mu_assert_int_equals(obuf[2], '0');
+    mu_assert_int_equals(obuf[3], '1');
 
     // oddball 1 char.
     ibuf[0] = 0;
     ibuf[1] = 0;
     ibuf[2] = 1;
-    CuAssertIntEquals(tc, 6, modp_b16_encode(obuf, ibuf, 3));
-    CuAssertIntEquals(tc, obuf[0], '0');
-    CuAssertIntEquals(tc, obuf[1], '0');
-    CuAssertIntEquals(tc, obuf[2], '0');
-    CuAssertIntEquals(tc, obuf[3], '0');
-    CuAssertIntEquals(tc, obuf[4], '0');
-    CuAssertIntEquals(tc, obuf[5], '1');
+    mu_assert_int_equals(6, modp_b16_encode(obuf, ibuf, 3));
+    mu_assert_int_equals(obuf[0], '0');
+    mu_assert_int_equals(obuf[1], '0');
+    mu_assert_int_equals(obuf[2], '0');
+    mu_assert_int_equals(obuf[3], '0');
+    mu_assert_int_equals(obuf[4], '0');
+    mu_assert_int_equals(obuf[5], '1');
+    return 0;
 }
 
 
-static void testBadDecode(CuTest* tc)
+static char* testBadDecode()
 {
     char obuf[100];
     char ibuf[100];
@@ -139,52 +146,54 @@ static void testBadDecode(CuTest* tc)
      * to test all possible screwups
      */
     strcpy(ibuf, "X1");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XX");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 1 bad char */
     strcpy(ibuf, "X111");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X11");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "11X1");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "111X");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 2 bad chars */
     strcpy(ibuf, "XX11");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1XX1");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "11XX");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X1X1");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X1X");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X11X");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 3 bad chars */
     strcpy(ibuf, "1XXX");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X1XX");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XX1X");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XXX1");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 4 bad chars */
     strcpy(ibuf, "XXXX");
-    CuAssertIntEquals(tc, -1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+
+    return 0;
 }
 
-static void testEmptyInput(CuTest* tc)
+static char* testEmptyInput()
 {
     char obuf[100];
     char ibuf[100];
@@ -194,57 +203,59 @@ static void testEmptyInput(CuTest* tc)
 
     // encode 0 bytes, get a null byte back
     obuf[0] = 1;
-    CuAssertIntEquals(tc, 0, modp_b16_encode(obuf, ibuf,0));
-    CuAssertIntEquals(tc, 0, obuf[0]);
+    mu_assert_int_equals(0, modp_b16_encode(obuf, ibuf,0));
+    mu_assert_int_equals(0, obuf[0]);
 
     // decode 0 bytes, buffer is untouched
     obuf[0] = 1;
-    CuAssertIntEquals(tc, 0, modp_b16_decode(obuf, ibuf, 0));
-    CuAssertIntEquals(tc, 1, obuf[0]);
+    mu_assert_int_equals(0, modp_b16_decode(obuf, ibuf, 0));
+    mu_assert_int_equals(1, obuf[0]);
+    return 0;
 }
 
-static void testLengths(CuTest* tc)
+static char* testLengths()
 {
     /* Decode Len
      * 2 input -> 1 output.  No added NULL byte
      */
-    CuAssertIntEquals(tc, 0, modp_b16_decode_len(0));
-    CuAssertIntEquals(tc, 1, modp_b16_decode_len(1));
-    CuAssertIntEquals(tc, 1, modp_b16_decode_len(2));
-    CuAssertIntEquals(tc, 2, modp_b16_decode_len(3));
-    CuAssertIntEquals(tc, 2, modp_b16_decode_len(4));
+    mu_assert_int_equals(0, modp_b16_decode_len(0));
+    mu_assert_int_equals(1, modp_b16_decode_len(1));
+    mu_assert_int_equals(1, modp_b16_decode_len(2));
+    mu_assert_int_equals(2, modp_b16_decode_len(3));
+    mu_assert_int_equals(2, modp_b16_decode_len(4));
 
     /* Encode Len
      * 1 byte -> 2 output + 1 null byte
      */
-    CuAssertIntEquals(tc, 1, modp_b16_encode_len(0));
-    CuAssertIntEquals(tc, 3, modp_b16_encode_len(1));
-    CuAssertIntEquals(tc, 5, modp_b16_encode_len(2));
-    CuAssertIntEquals(tc, 7, modp_b16_encode_len(3));
-    CuAssertIntEquals(tc, 9, modp_b16_encode_len(4));
+    mu_assert_int_equals(1, modp_b16_encode_len(0));
+    mu_assert_int_equals(3, modp_b16_encode_len(1));
+    mu_assert_int_equals(5, modp_b16_encode_len(2));
+    mu_assert_int_equals(7, modp_b16_encode_len(3));
+    mu_assert_int_equals(9, modp_b16_encode_len(4));
+    return 0;
 }
 
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testEndian);
-    SUITE_ADD_TEST(suite, testEncodeDecode);
-    SUITE_ADD_TEST(suite, testLengths);
-    SUITE_ADD_TEST(suite, testEmptyInput);
-    SUITE_ADD_TEST(suite, testBadDecode);
-    SUITE_ADD_TEST(suite, testOddDecode);
-    SUITE_ADD_TEST(suite, testOddEncode);
-    SUITE_ADD_TEST(suite, testDecodeMutlipleOf2);
-    return suite;
+static char* all_tests() {
+    mu_run_test(testEndian);
+    mu_run_test(testEncodeDecode);
+    mu_run_test(testLengths);
+    mu_run_test(testEmptyInput);
+    mu_run_test(testBadDecode);
+    mu_run_test(testOddDecode);
+    mu_run_test(testOddEncode);
+    mu_run_test(testDecodeMutlipleOf2);
+    return 0;
 }
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
+
 

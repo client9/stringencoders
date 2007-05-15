@@ -6,12 +6,12 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CuTest.h"
+#include "minunit.h"
 
-void testToUpper(CuTest* tc)
+static char* testToUpper()
 {
     int i;
-	char buf1[300];
+    char buf1[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
@@ -19,26 +19,27 @@ void testToUpper(CuTest* tc)
     }
 
     modp_toupper(buf1, 256);
-    CuAssertTrue(tc, strncmp(expected, buf1, 256) == 0);
+    mu_assert(memcmp(expected, buf1, 256) == 0);
 
     // do other sizes to check
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_toupper(buf1, 255);
-    CuAssertTrue(tc, strncmp(expected, buf1, 255) == 0);
+    mu_assert(memcmp(expected, buf1, 255) == 0);
 
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_toupper(buf1, 254);
-    CuAssertTrue(tc, strncmp(expected, buf1, 254) == 0);
+    mu_assert(memcmp(expected, buf1, 254) == 0);
 
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_toupper(buf1, 253);
-    CuAssertTrue(tc, strncmp(expected, buf1, 253) == 0);
+    mu_assert(memcmp(expected, buf1, 253) == 0);
+    return 0;
 }
 
-void testToLower(CuTest* tc)
+static char* testToLower()
 {
     int i;
-	char buf1[300];
+    char buf1[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
@@ -46,27 +47,28 @@ void testToLower(CuTest* tc)
     }
 
     modp_tolower(buf1, 256);
-    CuAssertTrue(tc, strncmp(expected, buf1, 256) == 0);
+    mu_assert(memcmp(expected, buf1, 256) == 0);
 
     // do other sizes to check
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_tolower(buf1, 255);
-    CuAssertTrue(tc, strncmp(expected, buf1, 255) == 0);
+    mu_assert(memcmp(expected, buf1, 255) == 0);
 
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_tolower(buf1, 254);
-    CuAssertTrue(tc, strncmp(expected, buf1, 254) == 0);
+    mu_assert(memcmp(expected, buf1, 254) == 0);
 
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_tolower(buf1, 253);
-    CuAssertTrue(tc, strncmp(expected, buf1, 253) == 0);
+    mu_assert(memcmp(expected, buf1, 253) == 0);
+    return 0;
 }
 
-void testToUpperCopy(CuTest* tc)
+static char* testToUpperCopy()
 {
     int i;
-	char buf1[300];
-	char output[300];
+    char buf1[300];
+    char output[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
@@ -77,27 +79,28 @@ void testToUpperCopy(CuTest* tc)
     output[i] = 0;
 
     modp_toupper_copy(output, buf1, 256);
-    CuAssertTrue(tc, strncmp(expected, output, 256) == 0);
+    mu_assert(memcmp(expected, output, 256) == 0);
 
     // do other sizes to check
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_toupper_copy(output, buf1, 255);
-    CuAssertTrue(tc, strncmp(expected, output, 255) == 0);
+    mu_assert(memcmp(expected, output, 255) == 0);
 
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_toupper_copy(output, buf1, 254);
-    CuAssertTrue(tc, strncmp(expected, output, 254) == 0);
+    mu_assert(memcmp(expected, output, 254) == 0);
 
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_toupper_copy(output, buf1, 253);
-    CuAssertTrue(tc, strncmp(expected, output, 253) == 0);
+    mu_assert(memcmp(expected, output, 253) == 0);
+    return 0;
 }
 
-void testToLowerCopy(CuTest* tc)
+static char* testToLowerCopy()
 {
     int i;
-	char buf1[300];
-	char output[300];
+    char buf1[300];
+    char output[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
@@ -108,39 +111,39 @@ void testToLowerCopy(CuTest* tc)
     output[i] = 0;
 
     modp_tolower_copy(output, buf1, 256);
-    CuAssertTrue(tc, strncmp(expected, output, 256) == 0);
+    mu_assert(memcmp(expected, output, 256) == 0);
 
     // do other sizes to check
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_tolower_copy(output, buf1, 255);
-    CuAssertTrue(tc, strncmp(expected, output, 255) == 0);
+    mu_assert(memcmp(expected, output, 255) == 0);
 
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_tolower_copy(output, buf1, 254);
-    CuAssertTrue(tc, strncmp(expected, output, 254) == 0);
+    mu_assert(memcmp(expected, output, 254) == 0);
 
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_tolower_copy(output, buf1, 253);
-    CuAssertTrue(tc, strncmp(expected, output, 253) == 0);
+    mu_assert(memcmp(expected, output, 253) == 0);
+    return 0;
 }
 
-
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testToUpperCopy);
-    SUITE_ADD_TEST(suite, testToLowerCopy);
-    SUITE_ADD_TEST(suite, testToUpper);
-    SUITE_ADD_TEST(suite, testToLower);
-    return suite;
+static char* all_tests() {
+    mu_run_test(testToUpperCopy);
+    mu_run_test(testToLowerCopy);
+    mu_run_test(testToUpper);
+    mu_run_test(testToLower);
+    return 0;
 }
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
+

@@ -20,7 +20,8 @@ libmodpbase64_la_DEPENDENCIES = \
 	modp_b64_data.h modp_b64w_data.h modp_b64_gen \
 	modp_b85_data.h modp_b85_gen \
 	modp_burl_data.h modp_burl_gen \
-	modp_bjavascript_data.h modp_bjavascript_gen
+	modp_bjavascript_data.h modp_bjavascript_gen \
+	modp_ascii_data.h modp_ascii_gen
 
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
@@ -33,7 +34,7 @@ CLEANFILES = *.log \
 	doxy/html/* \
 	*.gcda *.gcno *.gcov stringencoders.info \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
-	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c test/modp_ascii_test.c
+	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c
 
 clean:
 	rm -rf autom4te.cache
@@ -135,7 +136,7 @@ modp_bjavascript_test_LDADD = libmodpbase64.la
 modp_numtoa_test_SOURCES = test/modp_numtoa_test.c cutest/CuTest.c
 modp_numtoa_test_LDADD = libmodpbase64.la
 
-modp_ascii_test_SOURCES = test/modp_ascii_test.c cutest/CuTest.c
+modp_ascii_test_SOURCES = test/modp_ascii_test.c
 modp_ascii_test_LDADD = libmodpbase64.la
 
 cxx_test_SOURCES = test/cxx_test.cc
@@ -163,14 +164,17 @@ unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 	./modp_b64_test
 	./modp_b64w_test
 	./modp_b85_test
+	./modp_b2_test
 	./modp_burl_test
 	./modp_bjavascript_test
 	./modp_numtoa_test
+	./modp_ascii_test
 	./cxx_test
 
 perftest: speedtest
 	./speedtest
 	./speedtest_numtoa
+	./speedtest_ascii
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile
