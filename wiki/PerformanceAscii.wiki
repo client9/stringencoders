@@ -16,3 +16,13 @@ $ ./speedtest_ascii
 type    clib    modp    improvement
 toupper 517     56      9.2x
 }}}
+
+G4
+
+Something is very wrong with the optimizer/compiler if we can get a 44x performance improvement.
+
+{{{
+nickg-pbook:~/dev/stringencoders nickg$ ./speedtest_ascii
+type    clib    modp    improvement
+toupper 3256    74      44.0x
+}}}
