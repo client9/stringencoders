@@ -5,9 +5,6 @@ that is too much of a restriction, let me know and we'll make deal.
 The apr_base64.h apr_base64.c files in the test directory and from
 the apr_util pacakage from apache.org.  They are under the Apache License.
 
-The files in the /cutest direct are covered by the zlib licence.  See
-that directory for more details.
-
 /*
  * Copyright 2005, 2006, 2007
  * Nick Galbreath -- nickg [at] modp [dot] com
