@@ -9,7 +9,7 @@ SOURCES = \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
 	src/modp_numtoa.h src/modp_numtoa.c \
-	src/modp_ascii.h src/modp_ascii.c
+	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
