@@ -47,13 +47,13 @@
 #include "modp_b2.h"
 #include "modp_b2_data.h"
 
-static const unsigned char gsBinaryChars[] = "01";
 
 int modp_b2_encode(char* dest, const char* str, int len)
 {
     const uint8_t* orig = (const uint8_t*) str;
 #if 0
     /* THIS IS A STANDARD VERSION */
+    static const unsigned char gsBinaryChars[] = "01";
     int i,j;
     for (i = 0; i < len; ++i) {
         for (j = 0; j <= 7; ++j) {
