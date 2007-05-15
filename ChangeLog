@@ -8,6 +8,9 @@ TODO:
 
 TODO: make C++ classes work better
 
+15-May-2007
+	* Removed CuTest since it's crap and leaks memory.
+	
 14-May-2007
 	* added modp_ascii -- ascii transformations (upper/lower/etc) -- 25x faster the ctype toupper,etc
 	
