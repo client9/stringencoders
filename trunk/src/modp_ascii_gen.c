@@ -24,8 +24,8 @@ void modp_tolower_map()
 	int i = 0;
 	char map[256];
 	for (i = 0; i < sizeof(map); ++i) {
-		if (i >= 'a' && i <= 'z') {
-			map[i] = i - 32;
+		if (i >= 'A' && i <= 'Z') {
+			map[i] = i + 32;
 		} else {
 			map[i] = i;
 		}
