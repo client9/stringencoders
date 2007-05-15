@@ -5,111 +5,113 @@
 #include <stdlib.h>
 #include <string.h>
 #include "modp_bjavascript.h"
-#include "CuTest.h"
+#include "minunit.h"
 
 /**
  * Tests input where no escaping happens
  */
-static void testNoEscape(CuTest* tc)
+static char* testNoEscape()
 {
-	char buf[100];
-	const char* s1 = "this is a string";
-	const int len1 = strlen(s1);
-	int d = modp_bjavascript_encode(buf, s1, len1);
+    char buf[100];
+    const char* s1 = "this is a string";
+    const int len1 = strlen(s1);
+    int d = modp_bjavascript_encode(buf, s1, len1);
 
-	CuAssertIntEquals(tc, len1, d);
-	CuAssertStrEquals(tc, buf, s1);
+    mu_assert_int_equals(len1, d);
+    mu_assert_str_equals(buf, s1);
 
-	int sz = modp_bjavascript_encode_strlen(s1, len1);
-	CuAssertIntEquals(tc, sz, len1);
+    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    mu_assert_int_equals(sz, len1);
+    return 0;
 }
 
-static void testSimpleEscape(CuTest* tc)
+static char* testSimpleEscape()
 {
-	char buf[100];
-	const char* s1 = "\\this\nis a string\n";
-	const char* s2 = "\\\\this\\nis a string\\n";
-	const int len1 = strlen(s1);
-	const int len2 = strlen(s2);
-	int d = modp_bjavascript_encode(buf, s1, len1);
+    char buf[100];
+    const char* s1 = "\\this\nis a string\n";
+    const char* s2 = "\\\\this\\nis a string\\n";
+    const int len1 = strlen(s1);
+    const int len2 = strlen(s2);
+    int d = modp_bjavascript_encode(buf, s1, len1);
 
-	CuAssertIntEquals(tc, len2, d);
-	CuAssertStrEquals(tc, buf, s2);
+    mu_assert_int_equals(len2, d);
+    mu_assert_str_equals(buf, s2);
 
-	int sz = modp_bjavascript_encode_strlen(s1, len1);
-	CuAssertIntEquals(tc, sz, len2);
-
+    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    mu_assert_int_equals(sz, len2);
+    return 0;
 }
 
-static void testSQuoteEscape(CuTest* tc)
+static char* testSQuoteEscape()
 {
-	char buf[100];
-	const char* s1 = "this is a 'string'\n";
-	const char* s2 = "this is a \\'string\\'\\n";
-	const int len1 = strlen(s1);
-	const int len2 = strlen(s2);
-	int d = modp_bjavascript_encode(buf, s1, len1);
+    char buf[100];
+    const char* s1 = "this is a 'string'\n";
+    const char* s2 = "this is a \\'string\\'\\n";
+    const int len1 = strlen(s1);
+    const int len2 = strlen(s2);
+    int d = modp_bjavascript_encode(buf, s1, len1);
 
-	CuAssertIntEquals(tc, len2, d);
-	CuAssertStrEquals(tc, buf, s2);
+    mu_assert_int_equals(len2, d);
+    mu_assert_str_equals(buf, s2);
 
-	int sz = modp_bjavascript_encode_strlen(s1, len1);
-	CuAssertIntEquals(tc, sz, len2);
+    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    mu_assert_int_equals(sz, len2);
+    return 0;
 }
 
-static void testDQuoteEscape(CuTest* tc)
+static char* testDQuoteEscape()
 {
-	char buf[100];
-	const char* s1 = "this is a \"string\"\n";
-	const char* s2 = "this is a \\\"string\\\"\\n";
-	const int len1 = strlen(s1);
-	const int len2 = strlen(s2);
-	int d = modp_bjavascript_encode(buf, s1, len1);
+    char buf[100];
+    const char* s1 = "this is a \"string\"\n";
+    const char* s2 = "this is a \\\"string\\\"\\n";
+    const int len1 = strlen(s1);
+    const int len2 = strlen(s2);
+    int d = modp_bjavascript_encode(buf, s1, len1);
 
-	CuAssertIntEquals(tc, len2, d);
-	CuAssertStrEquals(tc, buf, s2);
+    mu_assert_int_equals(len2, d);
+    mu_assert_str_equals(buf, s2);
 
-	int sz = modp_bjavascript_encode_strlen(s1, len1);
-	CuAssertIntEquals(tc, sz, len2);
-
+    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    mu_assert_int_equals(sz, len2);
+    return 0;
 }
 
-static void testBinaryEscape(CuTest* tc)
+static char* testBinaryEscape()
 {
-	char buf[100];
-	const char s1[] = {1,2,3,4,0};
-	const char* s2 = "\\x01\\x02\\x03\\x04";
-	const int len1 = strlen(s1);
-	const int len2 = strlen(s2);
-	int d = modp_bjavascript_encode(buf, s1, len1);
+    char buf[100];
+    const char s1[] = {1,2,3,4,0};
+    const char* s2 = "\\x01\\x02\\x03\\x04";
+    const int len1 = strlen(s1);
+    const int len2 = strlen(s2);
+    int d = modp_bjavascript_encode(buf, s1, len1);
 
-	CuAssertIntEquals(tc, len2, d);
-	CuAssertStrEquals(tc, buf, s2);
+    mu_assert_int_equals(len2, d);
+    mu_assert_str_equals(buf, s2);
 
-	int sz = modp_bjavascript_encode_strlen(s1, len1);
-	CuAssertIntEquals(tc, sz, len2);
-
+    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    mu_assert_int_equals(sz, len2);
+    return 0;
 }
 
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testNoEscape);
-    SUITE_ADD_TEST(suite, testSimpleEscape);
-    SUITE_ADD_TEST(suite, testBinaryEscape);
-    SUITE_ADD_TEST(suite, testSQuoteEscape);
-    SUITE_ADD_TEST(suite, testDQuoteEscape);
-
-    return suite;
+static char* all_tests()
+{
+    mu_run_test(testNoEscape);
+    mu_run_test(testSimpleEscape);
+    mu_run_test(testBinaryEscape);
+    mu_run_test(testSQuoteEscape);
+    mu_run_test(testDQuoteEscape);
+    return 0;
 }
 
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
+

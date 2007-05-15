@@ -6,9 +6,9 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CuTest.h"
+#include "minunit.h"
 
-void testITOA(CuTest* tc)
+static char* testITOA()
 {
 	char buf1[100];
 	char buf2[100];
@@ -16,23 +16,24 @@ void testITOA(CuTest* tc)
 	for (i = 0; i < 100000; ++i) {
 		sprintf(buf1, "%d", i);
 		modp_itoa10(i, buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 
 		sprintf(buf1, "%d", -i);
 		modp_itoa10(-i, buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 
 		sprintf(buf1, "%d", INT_MAX - i);
 		modp_itoa10(INT_MAX - i, buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 
 		sprintf(buf1, "%d", -(INT_MAX - i));
 		modp_itoa10(-(INT_MAX - i), buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 	}
+    return 0;
 }
 
-void testUITOA(CuTest* tc)
+static char* testUITOA()
 {
 	char buf1[100];
 	char buf2[100];
@@ -40,17 +41,18 @@ void testUITOA(CuTest* tc)
 	for (i = 0; i < 1000000; ++i) {
 		sprintf(buf1, "%u", i);
 		modp_uitoa10(i, buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 	}
 
 	for (i = 0; i < 1000000; ++i) {
 		sprintf(buf1, "%u", 0xFFFFFFFFu - i);
 		modp_uitoa10(0xFFFFFFFFu -i, buf2);
-		CuAssertStrEquals(tc, buf1, buf2);
+		mu_assert_str_equals(buf1, buf2);
 	}
+    return 0;
 }
 
-void testDoubleToA(CuTest* tc)
+static char* testDoubleToA()
 {
 	char buf1[100];
 	char buf2[100];
@@ -65,39 +67,41 @@ void testDoubleToA(CuTest* tc)
 			d = wholes[i] + frac[j];
 			sprintf(buf1, "%.6f", d);
 			modp_dtoa(d, buf2, 6);
-			CuAssertStrEquals(tc, buf1, buf2);
+			mu_assert_str_equals(buf1, buf2);
 
 			d = -d;
 			sprintf(buf1, "%f", d);
 			modp_dtoa(d, buf2, 6);
-			CuAssertStrEquals(tc, buf1, buf2);
+			mu_assert_str_equals(buf1, buf2);
 		}
 	}
 
 	d = 1.0e200;
 	modp_dtoa(d, buf2, 6);
-	CuAssertStrEquals(tc, "1.000000e+200", buf2);
+	mu_assert_str_equals("1.000000e+200", buf2);
 
 	d = -1.0e200;
 	modp_dtoa(d, buf2, 6);
-	CuAssertStrEquals(tc, "-1.000000e+200", buf2);
-}
-
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, testITOA);
-    SUITE_ADD_TEST(suite, testUITOA);
-    SUITE_ADD_TEST(suite, testDoubleToA);
-    return suite;
-}
-
-int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
+	mu_assert_str_equals("-1.000000e+200", buf2);
     return 0;
 }
+
+static char* all_tests() {
+    mu_run_test(testITOA);
+    mu_run_test(testUITOA);
+    mu_run_test(testDoubleToA);
+    return 0;
+}
+
+
+int main(void) {
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
+}
+

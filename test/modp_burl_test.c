@@ -5,30 +5,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include "modp_burl.h"
-#include "CuTest.h"
+#include "minunit.h"
 
 /**
  * Test empty input to encode and decode
  */
-void TestUrlEmpty(CuTest* tc)
+static char* testUrlEmpty()
 {
     int d;
     char buf[1000];
     buf[0] = 1;
     d = modp_burl_encode(buf, "", 0);
-    CuAssertIntEquals(tc, d, 0);
-    CuAssertTrue(tc, buf[0] == 0);
+    mu_assert_int_equals(d, 0);
+    mu_assert(buf[0] == 0);
 
     buf[0] = 1;
     d = modp_burl_decode(buf, "", 0);
-    CuAssertIntEquals(tc, d, 0);
-    CuAssertTrue(tc, buf[0] == 0);
+    mu_assert_int_equals(d, 0);
+    mu_assert(buf[0] == 0);
+
+    return 0;
 }
 
 /**
  * test space <--> plus conversion
  */
-void TestUrlSpaces(CuTest* tc)
+static char* testUrlSpaces()
 {
     int d = 0;
     char buf[1000];
@@ -36,18 +38,20 @@ void TestUrlSpaces(CuTest* tc)
     const char* output = "+++";
 
     d = modp_burl_encode(buf, input, strlen(input));
-    CuAssertIntEquals(tc, d, strlen(output));
-    CuAssertStrEquals(tc, buf, output);
+    mu_assert_int_equals(d, strlen(output));
+    mu_assert_str_equals(buf, output);
 
     d = modp_burl_decode(buf, output, strlen(output));
-    CuAssertIntEquals(tc, d, strlen(input));
-    CuAssertStrEquals(tc, buf, input);
+    mu_assert_int_equals(d, strlen(input));
+    mu_assert_str_equals(buf, input);
+
+    return 0;
 }
 
 /**
  * Test charactes that should be unchanged
  */
-void TestUrlUntouched(CuTest* tc)
+static char* testUrlUntouched()
 {
     const char* lower = "abcdefghijklmnopqrstuvwxyz";
     const char* upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -58,46 +62,48 @@ void TestUrlUntouched(CuTest* tc)
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(buf, lower, strlen(lower));
-    CuAssertIntEquals(tc, d, strlen(lower));
-    CuAssertStrEquals(tc, buf, lower);
+    mu_assert_int_equals(d, strlen(lower));
+    mu_assert_str_equals(buf, lower);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, lower, strlen(lower));
-    CuAssertIntEquals(tc, d, strlen(lower));
-    CuAssertStrEquals(tc, buf, lower);
+    mu_assert_int_equals(d, strlen(lower));
+    mu_assert_str_equals(buf, lower);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(buf, upper, strlen(upper));
-    CuAssertIntEquals(tc, d, strlen(upper));
-    CuAssertStrEquals(tc, buf, upper);
+    mu_assert_int_equals(d, strlen(upper));
+    mu_assert_str_equals(buf, upper);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, upper, strlen(upper));
-    CuAssertIntEquals(tc, d, strlen(upper));
-    CuAssertStrEquals(tc, buf, upper);
+    mu_assert_int_equals(d, strlen(upper));
+    mu_assert_str_equals(buf, upper);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(buf, digits, strlen(digits));
-    CuAssertIntEquals(tc, d, strlen(digits));
-    CuAssertStrEquals(tc, buf, digits);
+    mu_assert_int_equals(d, strlen(digits));
+    mu_assert_str_equals(buf, digits);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, digits, strlen(digits));
-    CuAssertIntEquals(tc, d, strlen(digits));
-    CuAssertStrEquals(tc, buf, digits);
+    mu_assert_int_equals(d, strlen(digits));
+    mu_assert_str_equals(buf, digits);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(buf, special, strlen(special));
-    CuAssertIntEquals(tc, d, strlen(special));
-    CuAssertStrEquals(tc, buf, special);
+    mu_assert_int_equals(d, strlen(special));
+    mu_assert_str_equals(buf, special);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, special, strlen(special));
-    CuAssertIntEquals(tc, d, strlen(special));
-    CuAssertStrEquals(tc, buf, special);
+    mu_assert_int_equals(d, strlen(special));
+    mu_assert_str_equals(buf, special);
+
+    return 0;
 }
 
 
 /**
  * Test charactes that should be unchanged
  */
-void TestUrlMinUntouched(CuTest* tc)
+static char* testUrlMinUntouched()
 {
     const char* lower   = "abcdefghijklmnopqrstuvwxyz";
     const char* upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -109,54 +115,56 @@ void TestUrlMinUntouched(CuTest* tc)
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, lower, strlen(lower));
-    CuAssertIntEquals(tc, d, strlen(lower));
-    CuAssertStrEquals(tc, buf, lower);
+    mu_assert_int_equals(d, strlen(lower));
+    mu_assert_str_equals(buf, lower);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, lower, strlen(lower));
-    CuAssertIntEquals(tc, d, strlen(lower));
-    CuAssertStrEquals(tc, buf, lower);
+    mu_assert_int_equals(d, strlen(lower));
+    mu_assert_str_equals(buf, lower);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, upper, strlen(upper));
-    CuAssertIntEquals(tc, d, strlen(upper));
-    CuAssertStrEquals(tc, buf, upper);
+    mu_assert_int_equals(d, strlen(upper));
+    mu_assert_str_equals(buf, upper);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, upper, strlen(upper));
-    CuAssertIntEquals(tc, d, strlen(upper));
-    CuAssertStrEquals(tc, buf, upper);
+    mu_assert_int_equals(d, strlen(upper));
+    mu_assert_str_equals(buf, upper);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, digits, strlen(digits));
-    CuAssertIntEquals(tc, d, strlen(digits));
-    CuAssertStrEquals(tc, buf, digits);
+    mu_assert_int_equals(d, strlen(digits));
+    mu_assert_str_equals(buf, digits);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, digits, strlen(digits));
-    CuAssertIntEquals(tc, d, strlen(digits));
-    CuAssertStrEquals(tc, buf, digits);
+    mu_assert_int_equals(d, strlen(digits));
+    mu_assert_str_equals(buf, digits);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, special, strlen(special));
-    CuAssertIntEquals(tc, d, strlen(special));
-    CuAssertStrEquals(tc, buf, special);
+    mu_assert_int_equals(d, strlen(special));
+    mu_assert_str_equals(buf, special);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, special, strlen(special));
-    CuAssertIntEquals(tc, d, strlen(special));
-    CuAssertStrEquals(tc, buf, special);
+    mu_assert_int_equals(d, strlen(special));
+    mu_assert_str_equals(buf, special);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, extra, strlen(extra));
-    CuAssertIntEquals(tc, d, strlen(extra));
-    CuAssertStrEquals(tc, buf, extra);
+    mu_assert_int_equals(d, strlen(extra));
+    mu_assert_str_equals(buf, extra);
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, extra, strlen(extra));
-    CuAssertIntEquals(tc, d, strlen(extra));
-    CuAssertStrEquals(tc, buf, extra);
+    mu_assert_int_equals(d, strlen(extra));
+    mu_assert_str_equals(buf, extra);
+
+    return 0;
 }
 
 /** \brief make sure min encoding actually does hex encoding
  *
  */
-void TestUrlMinEncodeHex(CuTest* tc)
+static char* testUrlMinEncodeHex()
 {
     char buf[1000];
     int d = 0;
@@ -164,17 +172,19 @@ void TestUrlMinEncodeHex(CuTest* tc)
     memset(buf, 0, sizeof(buf));
     const char* str1 = "a b";
     d = modp_burl_min_encode(buf, str1, strlen(str1));
-    CuAssertIntEquals(tc, 3, d);
-    CuAssertStrEquals(tc, "a+b", buf);
+    mu_assert_int_equals(3, d);
+    mu_assert_str_equals("a+b", buf);
 
     memset(buf, 0, sizeof(buf));
     const char* str2 = "ab\n";
     d = modp_burl_min_encode(buf, str2, strlen(str2));
-    CuAssertIntEquals(tc, 5, d);
-    CuAssertStrEquals(tc, "ab%0A", buf);
+    mu_assert_int_equals(5, d);
+    mu_assert_str_equals("ab%0A", buf);
+
+    return 0;
 }
 
-void TestUrlDecodeHexBad(CuTest* tc)
+static char* testUrlDecodeHexBad()
 {
 
     const char* bad1 = "%0X"; // bad trailing char
@@ -187,31 +197,33 @@ void TestUrlDecodeHexBad(CuTest* tc)
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad1, strlen(bad1));
-    CuAssertIntEquals(tc, d, strlen(bad1));
-    CuAssertStrEquals(tc, buf, bad1);
+    mu_assert_int_equals(d, strlen(bad1));
+    mu_assert_str_equals(buf, bad1);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad2, strlen(bad2));
-    CuAssertIntEquals(tc, strlen(bad2), d);
-    CuAssertStrEquals(tc, bad2, buf);
+    mu_assert_int_equals(strlen(bad2), d);
+    mu_assert_str_equals(bad2, buf);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad3, strlen(bad3));
-    CuAssertIntEquals(tc, d, strlen(bad3));
-    CuAssertStrEquals(tc, buf, bad3);
+    mu_assert_int_equals(d, strlen(bad3));
+    mu_assert_str_equals(buf, bad3);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad4, strlen(bad4));
-    CuAssertIntEquals(tc, d, strlen(bad4));
-    CuAssertStrEquals(tc, buf, bad4);
+    mu_assert_int_equals(d, strlen(bad4));
+    mu_assert_str_equals(buf, bad4);
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad5, strlen(bad5));
-    CuAssertIntEquals(tc, d, strlen(bad5));
-    CuAssertStrEquals(tc, buf, bad5);
+    mu_assert_int_equals(d, strlen(bad5));
+    mu_assert_str_equals(buf, bad5);
+
+    return 0;
 }
 
-void TestUrlDecodeHex(CuTest* tc)
+static char* testUrlDecodeHex()
 {
     int d; // size of output
     int i, j; // loops
@@ -234,10 +246,10 @@ void TestUrlDecodeHex(CuTest* tc)
     }
 
     d = modp_burl_decode(output, inputbuf, sizeof(inputbuf)-1);
-    CuAssertIntEquals(tc, d, 256);
+    mu_assert_int_equals(d, 256);
     for (i = 0; i < 256; ++i) {
         sprintf(msg, "Loop at %d", i);
-        CuAssertIntEquals_Msg(tc, msg, i, (unsigned char) output[i]);
+        mu_assert_int_equals_msg(msg, i, (unsigned char) output[i]);
     }
 
     // make input string contain every possible "%XX"
@@ -255,18 +267,19 @@ void TestUrlDecodeHex(CuTest* tc)
     }
 
     d = modp_burl_decode(output, inputbuf, sizeof(inputbuf)-1);
-    CuAssertIntEquals(tc, 256, d);
+    mu_assert_int_equals(256, d);
     for (i = 0; i < 256; ++i) {
         sprintf(msg, "Loop at %d", i);
-        CuAssertIntEquals_Msg(tc, msg, i, (unsigned char)output[i]);
+        mu_assert_int_equals_msg(msg, i, (unsigned char)output[i]);
     }
+    return 0;
 }
 
 /**
  * test hex encoding.. to be done after hex decoding
  * is tested.
  */
-void TestHexEncoding(CuTest* tc)
+static char* testHexEncoding()
 {
     int i = 0;
     int d = 0;
@@ -279,14 +292,15 @@ void TestHexEncoding(CuTest* tc)
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(output, input, 256);
     d = modp_burl_decode(buf, output, d);
-    CuAssertIntEquals(tc, 256, d);
+    mu_assert_int_equals(256, d);
     for (i= 0; i < 256; ++i) {
         sprintf(msg, "Loop at %d failed", i);
-        CuAssertIntEquals_Msg(tc, msg, input[i], buf[i]);
+        mu_assert_int_equals_msg(msg, input[i], buf[i]);
     }
+    return 0;
 }
 
-void TestEncodeStrlen(CuTest* tc)
+static char* testEncodeStrlen()
 {
     char ibuf[100];
     char obuf[100];
@@ -295,31 +309,31 @@ void TestEncodeStrlen(CuTest* tc)
 
     // Empty.  should be 0
     ibuf[0] = 0;
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain, should be same size
     strcpy(ibuf, "abcdefg");
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain and spaces, should be same size
     strcpy(ibuf, "a b c d e f g");
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // one bad char, adds two bytes
     strcpy(ibuf, "abcdefg\n");
-    CuAssertIntEquals(tc, strlen(ibuf)+2, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+2, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // 2 bad chars, adds 4 bytes
     strcpy(ibuf, "\nabcdefg\n");
-    CuAssertIntEquals(tc, strlen(ibuf)+4, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
-
+    mu_assert_int_equals(strlen(ibuf)+4, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    return 0;
 }
 
 
 /** \brief test "modp_burl_min_encode_strlen"
  *
  */
-void TestEncodeMinStrlen(CuTest* tc)
+static char* testEncodeMinStrlen()
 {
     char ibuf[100];
     char obuf[100];
@@ -328,48 +342,49 @@ void TestEncodeMinStrlen(CuTest* tc)
 
     // Empty.  should be 0
     ibuf[0] = 0;
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain, should be same size
     strcpy(ibuf, "abcdefg");
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain and spaces, should be same size
     strcpy(ibuf, "a b c d e f g");
-    CuAssertIntEquals(tc, strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // one bad char, adds two bytes
     strcpy(ibuf, "abcdefg\n");
-    CuAssertIntEquals(tc, strlen(ibuf)+2, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+2, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // 2 bad chars, adds 4 bytes
     strcpy(ibuf, "\nabcdefg\n");
-    CuAssertIntEquals(tc, strlen(ibuf)+4, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
-
+    mu_assert_int_equals(strlen(ibuf)+4, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    return 0;
 }
 
-static CuSuite* GetSuite() {
-    CuSuite* suite = CuSuiteNew();
-    SUITE_ADD_TEST(suite, TestUrlUntouched);
-    SUITE_ADD_TEST(suite, TestUrlEmpty);
-    SUITE_ADD_TEST(suite, TestUrlSpaces);
-    SUITE_ADD_TEST(suite, TestUrlDecodeHex);
-    SUITE_ADD_TEST(suite, TestUrlDecodeHexBad);
-    SUITE_ADD_TEST(suite, TestHexEncoding);
-    SUITE_ADD_TEST(suite, TestEncodeStrlen);
-    SUITE_ADD_TEST(suite, TestUrlMinUntouched);
-    SUITE_ADD_TEST(suite, TestUrlMinEncodeHex);
-    SUITE_ADD_TEST(suite, TestEncodeMinStrlen);
-    return suite;
+static char* all_tests()
+{
+    mu_run_test(testUrlUntouched);
+    mu_run_test(testUrlEmpty);
+    mu_run_test(testUrlSpaces);
+    mu_run_test(testUrlDecodeHex);
+    mu_run_test(testUrlDecodeHexBad);
+    mu_run_test(testHexEncoding);
+    mu_run_test(testEncodeStrlen);
+    mu_run_test(testUrlMinUntouched);
+    mu_run_test(testUrlMinEncodeHex);
+    mu_run_test(testEncodeMinStrlen);
+    return 0;
 }
+
 
 int main(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
-    CuSuiteAddSuite(suite, GetSuite());
-    CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-    return 0;
+    char *result = all_tests();
+    if (result != 0) {
+        printf("%s\n", result);
+    }
+    else {
+        printf("OK (%d tests)\n", tests_run);
+    }
+    return result != 0;
 }
