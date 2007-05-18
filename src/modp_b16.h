@@ -23,43 +23,43 @@
 extern "C" {
 #endif
 
-/**
- * encode a string into hex (base 16, 0-9,a-f)
- *
- * \param[out] dest the output string.  Must have at least modp_b16_encode_len
- *   bytes allocated
- * \param[in] str the input string
- * \param[in] len of the input string
- * \return strlen of dest
- */
-int modp_b16_encode(char* dest, const char* str, int len);
+    /**
+     * encode a string into hex (base 16, 0-9,a-f)
+     *
+     * \param[out] dest the output string.  Must have at least modp_b16_encode_len
+     *   bytes allocated
+     * \param[in] str the input string
+     * \param[in] len of the input string
+     * \return strlen of dest
+     */
+    int modp_b16_encode(char* dest, const char* str, int len);
 
-/**
- * Decode a hex-encoded string.
- *
- * \param[out] dest output, must have at least modp_b16_decode_len bytes allocated,
- *   input must be a mutliple of 2, and be different than the source buffer.
- * \param[in] src the hex encoded source
- * \param[in] len the length of the source
- * \return the length of the the output, or -1 if an error
- */
-int modp_b16_decode(char* dest, const char* src, int len);
+    /**
+     * Decode a hex-encoded string.
+     *
+     * \param[out] dest output, must have at least modp_b16_decode_len bytes allocated,
+     *   input must be a mutliple of 2, and be different than the source buffer.
+     * \param[in] src the hex encoded source
+     * \param[in] len the length of the source
+     * \return the length of the the output, or -1 if an error
+     */
+    int modp_b16_decode(char* dest, const char* src, int len);
 
-/**
- * Encode length.
- * 2 x the length of A, round up the next high mutliple of 2
- * +1 for null byte added
- */
+    /**
+     * Encode length.
+     * 2 x the length of A, round up the next high mutliple of 2
+     * +1 for null byte added
+     */
 #define modp_b16_encode_len(A) (2*A + 1)
 
-/**
- * Encode string length
- */
+    /**
+     * Encode string length
+     */
 #define modp_b16_encode_strlen(A) (2*A)
 
-/**
- * Decode string length
- */
+    /**
+     * Decode string length
+     */
 #define modp_b16_decode_len(A) ((A + 1)/ 2)
 
 #ifdef __cplusplus
@@ -70,37 +70,57 @@ int modp_b16_decode(char* dest, const char* src, int len);
 #include <string>
 
 namespace modp {
-/**
- * hex encode a string (self-modified)
- * \param[in,out] s the input string to be encoded
- * \return a reference to the input string.
- */
-inline std::string& b16_encode(std::string& s)
-{
-    std::string x(modp_b16_encode_len(s.size()), '\0');
-    int d = modp_b16_encode(const_cast<char*>(x.data()), s.data(), s.size());
-    x.erase(d, std::string::npos);
-    s.swap(x);
-    return s;
-}
-
-/**
- * Decode a hex-encoded string.  On error, input string is cleared.
- * This function does not allocate memory.
- *
- * \param[in,out] s the input string
- * \return a reference to the input string
- */
-inline std::string& b16_decode(std::string& s)
-{
-    int d = modp_b16_decode(const_cast<char*>(s.data()), s.data(), s.size());
-    if (d < 0) {
-        s.clear();
-    } else {
-        s.erase(d, std::string::npos);
+    /**
+     * hex encode a string (self-modified)
+     * \param[in,out] s the input string to be encoded
+     * \return a reference to the input string.
+     */
+    inline std::string& b16_encode(std::string& s)
+    {
+        std::string x(modp_b16_encode_len(s.size()), '\0');
+        int d = modp_b16_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        s.swap(x);
+        return s;
     }
-    return s;
-}
+
+    inline std::string b16_encode(const std::string& s)
+    {
+        std::string x(modp_b16_encode_len(s.size()), '\0');
+        int d = modp_b16_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        return x;
+    }
+
+    /**
+     * Decode a hex-encoded string.  On error, input string is cleared.
+     * This function does not allocate memory.
+     *
+     * \param[in,out] s the input string
+     * \return a reference to the input string
+     */
+    inline std::string& b16_decode(std::string& s)
+    {
+        int d = modp_b16_decode(const_cast<char*>(s.data()), s.data(), s.size());
+        if (d < 0) {
+            s.clear();
+        } else {
+            s.erase(d, std::string::npos);
+        }
+        return s;
+    }
+
+    inline std::string b16_decode(const std::string& s)
+    {
+        std::string x(s.size()/2 + 1, '\0');
+        int d = modp_b16_decode(const_cast<char*>(x.data()), s.data(), s.size());
+        if (d < 0) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
+        return x;
+    }
 
 } /* namespace modp */
 

@@ -25,7 +25,7 @@ void stdlib_toupper_copy(char* dest, const char* str, int len)
 int main()
 {
     double last = 0.0;
-    int i = 0;
+    size_t i = 0;
     char buf[256];
     char obuf[300];
 

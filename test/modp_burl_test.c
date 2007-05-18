@@ -32,7 +32,7 @@ static char* testUrlEmpty()
  */
 static char* testUrlSpaces()
 {
-    int d = 0;
+    size_t d = 0;
     char buf[1000];
     const char* input = "   ";
     const char* output = "+++";
@@ -58,7 +58,7 @@ static char* testUrlUntouched()
     const char* digits = "0123456789";
     const char* special = ".-_";
     char buf[1000];
-    int d = 0;
+    size_t d = 0;
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_encode(buf, lower, strlen(lower));
@@ -111,7 +111,7 @@ static char* testUrlMinUntouched()
     const char* special = ".-_";
     const char* extra = "~!$()*,;:@/?";
     char buf[1000];
-    int d = 0;
+    size_t d = 0;
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_min_encode(buf, lower, strlen(lower));
@@ -167,7 +167,7 @@ static char* testUrlMinUntouched()
 static char* testUrlMinEncodeHex()
 {
     char buf[1000];
-    int d = 0;
+    size_t d = 0;
 
     memset(buf, 0, sizeof(buf));
     const char* str1 = "a b";
@@ -192,7 +192,7 @@ static char* testUrlDecodeHexBad()
     const char* bad3 = "%XX"; // bad chars
     const char* bad4 = "%2"; // not enough room, good char
     const char* bad5 = "%X"; // not enought room, bad char
-    int d = 0;
+    size_t d = 0;
     char buf[1000];
 
     memset(buf, 0, sizeof(buf));
@@ -202,7 +202,7 @@ static char* testUrlDecodeHexBad()
 
     memset(buf, 0, sizeof(buf));
     d = modp_burl_decode(buf, bad2, strlen(bad2));
-    mu_assert_int_equals(strlen(bad2), d);
+    mu_assert_int_equals(d, strlen(bad2));
     mu_assert_str_equals(bad2, buf);
 
     memset(buf, 0, sizeof(buf));
@@ -309,23 +309,23 @@ static char* testEncodeStrlen()
 
     // Empty.  should be 0
     ibuf[0] = 0;
-    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain, should be same size
     strcpy(ibuf, "abcdefg");
-    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain and spaces, should be same size
     strcpy(ibuf, "a b c d e f g");
-    mu_assert_int_equals(strlen(ibuf), modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // one bad char, adds two bytes
     strcpy(ibuf, "abcdefg\n");
-    mu_assert_int_equals(strlen(ibuf)+2, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+2, (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
     // 2 bad chars, adds 4 bytes
     strcpy(ibuf, "\nabcdefg\n");
-    mu_assert_int_equals(strlen(ibuf)+4, modp_burl_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+4, (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
     return 0;
 }
 
@@ -342,23 +342,23 @@ static char* testEncodeMinStrlen()
 
     // Empty.  should be 0
     ibuf[0] = 0;
-    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain, should be same size
     strcpy(ibuf, "abcdefg");
-    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // Plain and spaces, should be same size
     strcpy(ibuf, "a b c d e f g");
-    mu_assert_int_equals(strlen(ibuf), modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // one bad char, adds two bytes
     strcpy(ibuf, "abcdefg\n");
-    mu_assert_int_equals(strlen(ibuf)+2, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+2, (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
     // 2 bad chars, adds 4 bytes
     strcpy(ibuf, "\nabcdefg\n");
-    mu_assert_int_equals(strlen(ibuf)+4, modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
+    mu_assert_int_equals(strlen(ibuf)+4, (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
     return 0;
 }
 

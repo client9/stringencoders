@@ -23,83 +23,83 @@
 extern "C" {
 #endif
 
-/**
- * Url encode a string.  This uses a very strict definition of url encoding.
- * The only characters NOT encoded are A-Z, a-z, 0-9, "-", "_", ".", along with
- * the space char getting mapped to "+".  Everything else is escaped using
- * "%HEXHEX" format.  This is identical to the implementation of php's urlencode
- * and nearly identical to Java's UrlEncoder class (they do not escape '*' for
- * some reason).
- *
- * \param[out] dest output string.  Must
- * \param[in] str The input string
- * \param[in] len  The length of the input string, excluding any
- *   final null byte.
- */
-int modp_burl_encode(char* dest, const char* str, int len);
+    /**
+     * Url encode a string.  This uses a very strict definition of url encoding.
+     * The only characters NOT encoded are A-Z, a-z, 0-9, "-", "_", ".", along with
+     * the space char getting mapped to "+".  Everything else is escaped using
+     * "%HEXHEX" format.  This is identical to the implementation of php's urlencode
+     * and nearly identical to Java's UrlEncoder class (they do not escape '*' for
+     * some reason).
+     *
+     * \param[out] dest output string.  Must
+     * \param[in] str The input string
+     * \param[in] len  The length of the input string, excluding any
+     *   final null byte.
+     */
+    int modp_burl_encode(char* dest, const char* str, int len);
 
-/**
- * Url encode a string.  This uses a minimal definition of url encoding.
- * This works similar to the previous function except '~', '!', '$', '\'',
- * '(', ')', '*', ',', ';', ':', '@', '/', '?' are NOT escaped.  This will
- * allow decoding by standard url-decoders and make the encoded urls more
- * readable.
- *
- * \param[out] dest output string.  Must
- * \param[in] str The input string
- * \param[in] len  The length of the input string, excluding any
- *   final null byte.
- */
-int modp_burl_min_encode(char* dest, const char* str, int len);
+    /**
+     * Url encode a string.  This uses a minimal definition of url encoding.
+     * This works similar to the previous function except '~', '!', '$', '\'',
+     * '(', ')', '*', ',', ';', ':', '@', '/', '?' are NOT escaped.  This will
+     * allow decoding by standard url-decoders and make the encoded urls more
+     * readable.
+     *
+     * \param[out] dest output string.  Must
+     * \param[in] str The input string
+     * \param[in] len  The length of the input string, excluding any
+     *   final null byte.
+     */
+    int modp_burl_min_encode(char* dest, const char* str, int len);
 
-/** \brief get size of output string w/o doing actual encoding
- *
- * \param[in] src input string, not null
- * \param[in] len length of input string
- * \return length of output string NOT including any final null byte
- */
-int modp_burl_min_encode_strlen(const char* src, const int len);
+    /** \brief get size of output string w/o doing actual encoding
+     *
+     * \param[in] src input string, not null
+     * \param[in] len length of input string
+     * \return length of output string NOT including any final null byte
+     */
+    int modp_burl_min_encode_strlen(const char* src, const int len);
 
-/**
- * Provides the maximum size for output string given
- * and input size of A bytes.
- */
+    /**
+     * Provides the maximum size for output string given
+     * and input size of A bytes.
+     */
 #define modp_burl_encode_len(A) (3*A + 1)
 
-/**
- * Given the exact size of output string.
- *
- * Can be used to allocate the right amount of memory for
- * modp_burl_encode.  Be sure to add 1 byte for final null.
- *
- * This is somewhat expensive since it examines every character
- *  in the input string
- *
- * \param[in] str  The input string
- * \param[in] len  THe length of the input string, excluding any
- *   final null byte (i.e. strlen(str))
- * \return the size of the output string, excluding the final
- *   null byte.
- */
-int modp_burl_encode_strlen(const char* str, const int len);
+    /**
+     * Given the exact size of output string.
+     *
+     * Can be used to allocate the right amount of memory for
+     * modp_burl_encode.  Be sure to add 1 byte for final null.
+     *
+     * This is somewhat expensive since it examines every character
+     *  in the input string
+     *
+     * \param[in] str  The input string
+     * \param[in] len  THe length of the input string, excluding any
+     *   final null byte (i.e. strlen(str))
+     * \return the size of the output string, excluding the final
+     *   null byte.
+     */
+    int modp_burl_encode_strlen(const char* str, const int len);
 
-/**
- * URL Decode a string
- *
- * \param[out] dest  The output string.  Must be at least (len + 1)
- *  bytes allocated.  This may be the same as the input buffer.
- * \param[in] str The input string that is URL encoded.
- * \param[in] len The length of the input string (excluding final
- *   null byte)
- * \return the strlen of the output string.
- */
-int modp_burl_decode(char* dest, const char* str, int len);
+    /**
+     * URL Decode a string
+     *
+     * \param[out] dest  The output string.  Must be at least (len + 1)
+     *  bytes allocated.  This may be the same as the input buffer.
+     * \param[in] str The input string that is URL encoded.
+     * \param[in] len The length of the input string (excluding final
+     *   null byte)
+     * \return the strlen of the output string.
+     */
+    int modp_burl_decode(char* dest, const char* str, int len);
 
-/**
- * Returns memory required to decoded a url-encoded
- * string of length A.
- *
- */
+    /**
+     * Returns memory required to decoded a url-encoded
+     * string of length A.
+     *
+     */
 #define modp_burl_decode_len(A) (A + 1)
 
 #ifdef __cplusplus
@@ -112,51 +112,73 @@ int modp_burl_decode(char* dest, const char* str, int len);
 
 namespace modp {
 
-/**
- * Standard (maximal) url encoding.
- *
- * \param[in,out] s the string to be encoded
- * \return a reference to the input string
- */
-inline std::string& url_encode(std::string& s)
-{
-    std::string x(modp_burl_encode_len(s.size()), '\0');
-    int d = modp_burl_encode(const_cast<char*>(x.data()), s.data(), s.size());
-    x.erase(d, std::string::npos);
-    s.swap(x);
-    return s;
-}
+    /**
+     * Standard (maximal) url encoding.
+     *
+     * \param[in,out] s the string to be encoded
+     * \return a reference to the input string
+     */
+    inline std::string& url_encode(std::string& s)
+    {
+        std::string x(modp_burl_encode_len(s.size()), '\0');
+        int d = modp_burl_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        s.swap(x);
+        return s;
+    }
 
-/**
- * Minimal Url Encoding
- *
- * \param[in,out] s the string to be encoded
- * \return a reference to the input string
- */
-inline std::string& url_min_encode(std::string& s)
-{
-    std::string x(modp_burl_encode_len(s.size()), '\0');
-    int d = modp_burl_min_encode(const_cast<char*>(x.data()), s.data(), s.size());
-    x.erase(d, std::string::npos);
-    s.swap(x);
-    return s;
-}
+    inline std::string url_encode(const std::string& s)
+    {
+        std::string x(modp_burl_encode_len(s.size()), '\0');
+        int d = modp_burl_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        return x;
+    }
 
-/**
- * Url decode a string.
- * This function does not allocate memory.
- *
- * \param[in,out] s the string to be decoded
- * \return a reference to the input string.
- *      There is no error case, bad characters are passed through
- */
-inline std::string& url_decode(std::string& s)
-{
-    int d = modp_burl_decode(const_cast<char*>(s.data()), s.data(), s.size());
-    s.erase(d, std::string::npos);
-    return s;
-}
+    /**
+     * Minimal Url Encoding
+     *
+     * \param[in,out] s the string to be encoded
+     * \return a reference to the input string
+     */
+    inline std::string& url_min_encode(std::string& s)
+    {
+        std::string x(modp_burl_encode_len(s.size()), '\0');
+        int d = modp_burl_min_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        s.swap(x);
+        return s;
+    }
 
+    inline std::string url_min_encode(const std::string& s)
+    {
+        std::string x(modp_burl_encode_len(s.size()), '\0');
+        int d = modp_burl_min_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        x.erase(d, std::string::npos);
+        return s;
+    }
+
+    /**
+     * Url decode a string.
+     * This function does not allocate memory.
+     *
+     * \param[in,out] s the string to be decoded
+     * \return a reference to the input string.
+     *      There is no error case, bad characters are passed through
+     */
+    inline std::string& url_decode(std::string& s)
+    {
+        int d = modp_burl_decode(const_cast<char*>(s.data()), s.data(), s.size());
+        s.erase(d, std::string::npos);
+        return s;
+    }
+
+    inline std::string url_decode(const std::string& s)
+    {
+        std::string x(s);
+        url_decode(x);
+        return x;
+    }
 }
 #endif
 

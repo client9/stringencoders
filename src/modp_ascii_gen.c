@@ -5,7 +5,7 @@
 
 void modp_toupper_map()
 {
-	int i = 0;
+	size_t i = 0;
 	char map[256];
 	for (i = 0; i < sizeof(map); ++i) {
 		if (i >= 'a' && i <= 'z') {
@@ -21,7 +21,7 @@ void modp_toupper_map()
 
 void modp_tolower_map()
 {
-	int i = 0;
+	size_t i = 0;
 	char map[256];
 	for (i = 0; i < sizeof(map); ++i) {
 		if (i >= 'A' && i <= 'Z') {
@@ -36,7 +36,7 @@ void modp_tolower_map()
 
 void modp_toprint_map()
 {
-	int i = 0;
+	size_t i = 0;
 	char map[256];
 	for (i = 0; i < sizeof(map); ++i) {
 		if (i < 32 || i > 126) {
