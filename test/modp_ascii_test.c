@@ -8,6 +8,33 @@
 #include <string.h>
 #include "minunit.h"
 
+static char* testSimple()
+{
+    const char* case4 = "ABCD1234";
+    const char* case3 = "ABCD123";
+    const char* case2 = "ABCD12";
+    const char* case1 = "ABCD1";
+
+    char orig[100];
+    strcpy(orig, case4);
+    modp_tolower(orig, strlen(orig));
+    mu_assert_str_equals("abcd1234", orig);
+
+    strcpy(orig, case3);
+    modp_tolower(orig, strlen(orig));
+    mu_assert_str_equals("abcd123", orig);
+
+    strcpy(orig, case2);
+    modp_tolower(orig, strlen(orig));
+    mu_assert_str_equals("abcd12", orig);
+
+    strcpy(orig, case1);
+    modp_tolower(orig, strlen(orig));
+    mu_assert_str_equals("abcd1", orig);
+
+    return 0;
+}
+
 static char* testToUpper()
 {
     int i;
@@ -129,6 +156,7 @@ static char* testToLowerCopy()
 }
 
 static char* all_tests() {
+    mu_run_test(testSimple);
     mu_run_test(testToUpperCopy);
     mu_run_test(testToLowerCopy);
     mu_run_test(testToUpper);

@@ -31,7 +31,7 @@ extern "C" {
 
     /** \brief make lower case copy of input string
      *
-     * \param[out] output buffer, with at least 'len + 1' byte allocated
+     * \param[out] output buffer, with at least 'len + 1' bytes allocated
      * \param[in] str the input string
      * \param[in] len the length of input string (the strlen)
      *
@@ -51,7 +51,7 @@ extern "C" {
 
     /** \brief make lower case copy of input string
      *
-     * \param[out] output buffer, with at least 'len + 1' byte allocated
+     * \param[out] output buffer, with at least 'len + 1' bytes allocated
      * \param[in] str the input string
      * \param[in] len the length of input string (the strlen)
      *
@@ -61,9 +61,80 @@ extern "C" {
      */
     void modp_tolower_copy(char* dest, const char* str, int len);
 
+    /** \brief turn a string into 7-bit printable ascii.
+     *
+     * By "printable" we means all characters between 32 and 126.
+     * All other values are turned into '?'
+     *
+     * \param[in, out] str the input string
+     * \param[in] len the length of input string (the strlen)
+     *
+     */
+    void modp_toprint(char* str, int len);
+
+    /** \brief make a printable copy of a string
+     *
+     * By "printable" we means all characters between 32 and 126.
+     * All other values are turned into '?'
+     *
+     * \param[out] output buffer, with at least 'len + 1' bytes allocated
+     * \param[in] str the input string
+     * \param[in] len the length of input string (the strlen)
+     *
+     * Please make sure dest has been allocation with at least 'len+1'
+     * bytes.  This appends a trailing NULL character at the end of
+     * dest!
+     */
+    void modp_toprint_copy(char* dest, const char* str, int len);
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#ifdef __cplusplus
+#include <string>
 
+namespace modp {
+
+    inline std::string& toupper(std::string& str)
+    {
+        modp_toupper(const_cast<char*>(str.c_str()), str.size());
+        return str;
+    }
+
+    inline std::string toupper(const std::string& str)
+    {
+        std::string s(str);
+        modp_toupper_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        return s;
+    }
+
+    inline std::string tolower(const std::string& str)
+    {
+        std::string s(str);
+        modp_tolower_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        return s;
+    }
+
+    inline std::string& tolower(std::string& str)
+    {
+        modp_tolower(const_cast<char*>(str.c_str()), str.size());
+        return str;
+    }
+
+    inline std::string toprint(const std::string& str)
+    {
+        std::string s(str);
+        modp_toprint_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        return s;
+    }
+    inline std::string& toprint(std::string& str)
+    {
+        modp_toprint(const_cast<char*>(str.c_str()), str.size());
+        return str;
+    }
+}
+
+#endif  /* __cplusplus */
+
+#endif  /* MODP_ASCII */

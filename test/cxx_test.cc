@@ -12,6 +12,7 @@ using std::cerr;
 #include "modp_b85.h"
 #include "modp_burl.h"
 #include "modp_bjavascript.h"
+#include "modp_ascii.h"
 
 using namespace modp;
 
@@ -135,6 +136,25 @@ void test_javascript()
     }
 }
 
+void test_ascii_copy()
+{
+    string orig;
+
+    orig = "abcd123";
+    toupper(orig);
+    if (orig != "ABCD123") {
+        WHERE(cerr) << "to upper copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        exit(1);
+    }
+
+    orig = "ABCD123";
+    tolower(orig);
+    if (orig != "abcd123") {
+        WHERE(cerr) << "to lower copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        exit(1);
+    }
+}
+
 int main()
 {
     test_b16();
@@ -142,6 +162,7 @@ int main()
     test_b85();
     test_url();
     test_javascript();
+    test_ascii_copy();
 
     return 0;
 }
