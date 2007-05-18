@@ -76,15 +76,13 @@ void modp_toupper_copy(char* dest, const char* str, int len)
     }
 
     switch (leftover) {
-    case 0:
-        *dest = '\0';
-        return;
     case 3:
         *dest++ = gsToUpperMap[i++];
     case 2:
         *dest++ = gsToUpperMap[i++];
     case 1:
         *dest++ = gsToUpperMap[i];
+    case 0:
         *dest = '\0';
     }
 }
@@ -124,15 +122,13 @@ void modp_tolower_copy(char* dest, const char* str, int len)
     }
 
     switch (leftover) {
-    case 0:
-        *dest = '\0';
-        return;
     case 3:
         *dest++ = gsToLowerMap[i++];
     case 2:
         *dest++ = gsToLowerMap[i++];
     case 1:
         *dest++ = gsToLowerMap[i];
+    case 0:
         *dest = '\0';
     }
 }
