@@ -155,7 +155,7 @@ namespace modp {
         std::string x(modp_burl_encode_len(s.size()), '\0');
         int d = modp_burl_min_encode(const_cast<char*>(x.data()), s.data(), s.size());
         x.erase(d, std::string::npos);
-        return s;
+        return x;
     }
 
     /**
