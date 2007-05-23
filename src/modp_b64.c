@@ -164,7 +164,7 @@ int modp_b64_decode(char* dest, const char* src, int len)
         *p++ = ((uint8_t*)&x)[2];
         *p = ((uint8_t*)&x)[3];
         return (chunks+1)*3;
-    case 1:
+    case 1:  /* with padding this is an impossible case */
         x = d3[y >> 24];
         *p =  (uint8_t)x;
         break;
