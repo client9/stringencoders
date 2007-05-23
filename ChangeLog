@@ -6,16 +6,20 @@ TODO:
 * more doco
 * man pages
 
-TODO: make C++ classes work better
-
+23-May-2007
+	* Add C++ "const" methods everywhere in case you don't want to 
+	  modify the original input
+	
 15-May-2007
 	* Removed CuTest since it's crap and leaks memory.
 	
 14-May-2007
-	* added modp_ascii -- ascii transformations (upper/lower/etc) -- 25x faster the ctype toupper,etc
+	* added modp_ascii -- ascii transformations (upper/lower/etc) --
+	  25x faster than ctype toupper,etc
 	
 13-May-2007
-	* made b64_encode be about 30% faster on Intel based chip.  Minimal performance loss on AMD, G4
+	* made b64_encode be about 30% faster on Intel based chip.
+	  Minimal performance loss on AMD, G4
 	  (now all platforms are faster than the apache encoder)
 	* added modp_b2 -- ascii binary string encode/decode
 	
