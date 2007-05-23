@@ -83,6 +83,13 @@ static char* testDoubleToA()
 	d = -1.0e200;
 	modp_dtoa(d, buf2, 6);
 	mu_assert_str_equals("-1.000000e+200", buf2);
+
+    // test bad precision values
+    d = 1.1;
+    modp_dtoa(d, buf2, -1);
+    mu_assert_str_equals("1.0", buf2);
+    modp_dtoa(d, buf2, 10);
+    mu_assert_str_equals("1.100000000", buf2);
     return 0;
 }
 
@@ -94,5 +101,3 @@ static char* all_tests() {
 }
 
 UNITTESTS
-
-
