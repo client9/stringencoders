@@ -19306,6 +19306,7 @@ if test "x$enable_gcov" = "xyes";
 then
     EXTRACFLAGS="$EXTRACFLAGS -fprofile-arcs -ftest-coverage"
             CFLAGS=`echo "$EXTRACFLAGS" | sed -e 's/-O0-9*//g'`
+    CFLAGS="$CFLAGS -O0 -fno-inline"
 fi
 CFLAGS="$EXTRACFLAGS $CFLAGS"
 CXXFLAGS="$CFLAGS"

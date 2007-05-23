@@ -25,7 +25,7 @@ then
     dnl Turn off optimization so code coverage tool
     dnl can get accurate line numbers
     CFLAGS=`echo "$EXTRACFLAGS" | sed -e 's/-O[0-9]*//g'`
-    CFLAGS="$CFLAGS -O0"
+    CFLAGS="$CFLAGS -O0 -fno-inline"
 fi
 CFLAGS="$EXTRACFLAGS $CFLAGS"
 CXXFLAGS="$CFLAGS"
