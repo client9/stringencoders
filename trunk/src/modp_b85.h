@@ -33,8 +33,8 @@ extern "C" {
      *
      * \param[out] dest  should have at least b85fast_encode_len memory allocated
      * \param[in] src   input string
-     * \param[in] len   input string length
-     *
+     * \param[in] len   input string length, must be a multiple of 4
+     * \return the strlen of the destination, or -1 if error
      */
     int modp_b85_encode(char* dest, const char* src, int len);
 
