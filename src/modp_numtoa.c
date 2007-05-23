@@ -16,7 +16,7 @@
  * 10^0 to 10^9
  */
 static const double pow10[] = {0, 10, 100, 1000, 10000, 100000, 1000000,
-							   10000000, 100000000, 1000000000};
+                               10000000, 100000000, 1000000000};
 
 static void strreverse(char* begin, char* end)
 {
@@ -68,30 +68,30 @@ void modp_dtoa(double value, char* str, int prec)
         value = -value;
     }
 
-	int whole = (int) value;
-	double tmp = (value - whole) * pow10[prec];
+    int whole = (int) value;
+    double tmp = (value - whole) * pow10[prec];
     uint32_t frac = (uint32_t)(tmp);
-	if (tmp - frac > 0.5) {
-		++frac;
-	}
+    if (tmp - frac > 0.5) {
+        ++frac;
+    }
 
     if (value > thres_max || (frac > 0 && frac < thres_min)) {
-		sprintf(str, "%e", neg ? -value : value);
-		return;
-	}
+        sprintf(str, "%e", neg ? -value : value);
+        return;
+    }
 
-	int count = prec;
-	// now do fractional part, as an unsigned number
+    int count = prec;
+    // now do fractional part, as an unsigned number
     do {
-		--count;
-		*wstr++ = 48 + (frac % 10);
-	} while (frac /= 10);
-	// add extra 0s
-	while (count-- > 0) *wstr++ = '0';
-	// add decimal
-	*wstr++ = '.';
+        --count;
+        *wstr++ = 48 + (frac % 10);
+    } while (frac /= 10);
+    // add extra 0s
+    while (count-- > 0) *wstr++ = '0';
+    // add decimal
+    *wstr++ = '.';
 
-	// do whole part
+    // do whole part
     // Take care of sign
     // Conversion. Number is reversed.
     do *wstr++ = 48 + (whole % 10); while (whole /= 10);
@@ -99,7 +99,7 @@ void modp_dtoa(double value, char* str, int prec)
         *wstr++ = '-';
     }
     *wstr='\0';
-    strreverse(str,wstr-1);
+    strreverse(str, wstr-1);
 }
 
 
