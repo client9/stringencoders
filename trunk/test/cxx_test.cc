@@ -7,6 +7,7 @@ using std::string;
 #include <iostream>
 using std::cerr;
 
+#include "modp_b2.h"
 #include "modp_b16.h"
 #include "modp_b64.h"
 #include "modp_b85.h"
@@ -17,6 +18,43 @@ using std::cerr;
 using namespace modp;
 
 #define WHERE(A) A << "[" << __FILE__ << ":" << __LINE__ << "] "
+
+void test_b2()
+{
+    string orig("this is a test");
+    string s(orig);
+    b2_encode(s);
+    b2_decode(s);
+    if (s != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
+    }
+
+    s = "1";
+    b2_decode(s);
+    if (!s.empty()) {
+        WHERE(cerr) << "Expected decode to be empty\n";
+        exit(1);
+    }
+}
+
+void test_b2_const()
+{
+    const string orig("this is a test");
+    const string s(b2_encode(orig));
+    string result = b2_decode(s);
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+
+    const string badstr("1");
+    result = b2_decode(badstr);
+    if (!result.empty()) {
+        WHERE(cerr) << "Expected decode to be empty\n";
+        exit(1);
+    }
+}
 
 void test_b16()
 {
@@ -33,6 +71,25 @@ void test_b16()
     s = "1";
     b16_decode(s);
     if (!s.empty()) {
+        WHERE(cerr) << "Expected decode to be empty\n";
+        exit(1);
+    }
+}
+
+void test_b16_const()
+{
+    const string orig("this is a test");
+    const string s(b16_encode(orig));
+    string result = b16_decode(s);
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+
+    // test bad input
+    const string badstr("1");
+    result = b16_decode(badstr);
+    if (!result.empty()) {
         WHERE(cerr) << "Expected decode to be empty\n";
         exit(1);
     }
@@ -61,7 +118,24 @@ void test_b64()
         WHERE(cerr) << "Expected decode output to be empty\n";
         exit(1);
     }
+}
 
+void test_b64_const()
+{
+    const string orig("this is a test");
+    const string s(b64_encode(orig));
+    string result = b64_decode(s);
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+
+    const string badstr("a");
+    result = b64_decode(badstr);
+    if (!result.empty()) {
+        WHERE(cerr) << "Expected decode output to be empty\n";
+        exit(1);
+    }
 }
 
 void test_b85()
@@ -98,6 +172,23 @@ void test_b85()
     }
 }
 
+void test_b85_const()
+{
+    const string orig("this is a test!!"); // must be multiple of 4
+    const string s(b85_encode(orig));
+    string result = b85_decode(s);
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+
+    const string badstr("abcdef");
+    result = b85_encode(badstr);
+    if (!result.empty()) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+}
 
 void test_url()
 {
@@ -125,6 +216,30 @@ void test_url()
 
 }
 
+void test_url_const()
+{
+    const string orig("this is a test");
+    const string expected("this+is+a+test");
+    const string s1(url_encode(orig));
+    if (s1 != expected) {
+        WHERE(cerr) << "Expected " << expected << ", recieved " << s1 << "\n";
+        exit(1);
+    }
+
+    const string s2(url_decode(s1));
+    if (s2 != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s2 << "\n";
+        exit(1);
+    }
+
+    const string s3("bad\n");
+    const string r3(url_decode(s3));
+    if (r3.empty()) {
+        WHERE(cerr) << "Expected empty decode\n";
+        exit(1);
+    }
+}
+
 void test_javascript()
 {
     string orig("this \"is\' a test\n");
@@ -132,6 +247,16 @@ void test_javascript()
     javascript_encode(orig);
     if (orig != expected) {
         WHERE(cerr) << "Expected: " << expected << "Received: " << orig << "\n";
+        exit(1);
+    }
+}
+void test_javascript_const()
+{
+    const string orig("this \"is\' a test\n");
+    const string expected("this \\\"is\\' a test\\n");
+    string result = javascript_encode(orig);
+    if (result != expected) {
+        WHERE(cerr) << "Expected: " << expected << "Received: " << result << "\n";
         exit(1);
     }
 }
@@ -157,11 +282,18 @@ void test_ascii_copy()
 
 int main()
 {
+    test_b2();
+    test_b2_const();
     test_b16();
+    test_b16_const();
     test_b64();
+    test_b64_const();
     test_b85();
+    test_b85_const();
     test_url();
+    test_url_const();
     test_javascript();
+    test_javascript_const();
     test_ascii_copy();
 
     return 0;
