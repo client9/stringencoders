@@ -113,6 +113,13 @@ namespace modp {
         return s;
     }
 
+    inline std::string b2_decode(const std::string& s)
+    {
+        std::string x(s);
+        b2_decode(x);
+        return x;
+    }
+
 } /* namespace modp */
 
 #endif  /* ifdef __cplusplus */
