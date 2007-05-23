@@ -164,10 +164,12 @@ int modp_b64_decode(char* dest, const char* src, int len)
         *p++ = ((uint8_t*)&x)[2];
         *p = ((uint8_t*)&x)[3];
         return (chunks+1)*3;
+#ifndef DOPAD
     case 1:  /* with padding this is an impossible case */
         x = d3[y >> 24];
         *p =  (uint8_t)x;
         break;
+#endif
     case 2:
         x = d3[y >> 24] *64 + d3[(y >> 16) & 0xff];
         *p =  (uint8_t)(x >> 4);
@@ -240,10 +242,12 @@ int modp_b64_decode(char* dest, const char* src, int len)
         *p =    ((uint8_t*)(&x))[2];
         return (chunks+1)*3;
         break;
+#ifndef DOPAD
     case 1:  /* with padding this is an impossible case */
         x = d0[y & 0xff];
         *p = *((uint8_t*)(&x)); // i.e. first char/byte in int
         break;
+#endif
     case 2: // * case 2, 1  output byte */
         x = d0[y & 0xff] | d1[y >> 8 & 0xff];
         *p = *((uint8_t*)(&x)); // i.e. first char
