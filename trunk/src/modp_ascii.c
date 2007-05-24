@@ -50,10 +50,10 @@ void modp_toupper_copy(char* dest, const char* str, int len)
 {
     /*
       int i;
-        for (i = 0; i < len; ++i) {
-         char c = str[i];
-		 *dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
-        }
+      for (i = 0; i < len; ++i) {
+      char c = str[i];
+      *dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
+      }
     */
 
     int i;
@@ -85,17 +85,17 @@ void modp_toupper_copy(char* dest, const char* str, int len)
 
 void modp_toupper(char* str, int len)
 {
-	modp_toupper_copy(str, str, len);
+    modp_toupper_copy(str, str, len);
 }
 
 void modp_tolower_copy(char* dest, const char* str, int len)
 {
     /*
-	int i = 0;
-	for (i = 0; i < len; ++i) {
-		char c = str[i];
-		*dest++ = (c >= 'A' && c <= 'Z') ? c + 32 : c;
-	}
+      int i = 0;
+      for (i = 0; i < len; ++i) {
+      char c = str[i];
+      *dest++ = (c >= 'A' && c <= 'Z') ? c + 32 : c;
+      }
     */
 
     int i;

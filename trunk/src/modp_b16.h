@@ -19,51 +19,55 @@
 #define COM_MODP_STRINGENCODERS_B16
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
 
-    /**
-     * encode a string into hex (base 16, 0-9,a-f)
-     *
-     * \param[out] dest the output string.  Must have at least modp_b16_encode_len
-     *   bytes allocated
-     * \param[in] str the input string
-     * \param[in] len of the input string
-     * \return strlen of dest
-     */
-    int modp_b16_encode(char* dest, const char* str, int len);
+BEGIN_C
 
-    /**
-     * Decode a hex-encoded string.
-     *
-     * \param[out] dest output, must have at least modp_b16_decode_len bytes allocated,
-     *   input must be a mutliple of 2, and be different than the source buffer.
-     * \param[in] src the hex encoded source
-     * \param[in] len the length of the source
-     * \return the length of the the output, or -1 if an error
-     */
-    int modp_b16_decode(char* dest, const char* src, int len);
+/**
+ * encode a string into hex (base 16, 0-9,a-f)
+ *
+ * \param[out] dest the output string.  Must have at least modp_b16_encode_len
+ *   bytes allocated
+ * \param[in] str the input string
+ * \param[in] len of the input string
+ * \return strlen of dest
+ */
+int modp_b16_encode(char* dest, const char* str, int len);
 
-    /**
-     * Encode length.
-     * 2 x the length of A, round up the next high mutliple of 2
-     * +1 for null byte added
-     */
+/**
+ * Decode a hex-encoded string.
+ *
+ * \param[out] dest output, must have at least modp_b16_decode_len bytes allocated,
+ *   input must be a mutliple of 2, and be different than the source buffer.
+ * \param[in] src the hex encoded source
+ * \param[in] len the length of the source
+ * \return the length of the the output, or -1 if an error
+ */
+int modp_b16_decode(char* dest, const char* src, int len);
+
+/**
+ * Encode length.
+ * 2 x the length of A, round up the next high mutliple of 2
+ * +1 for null byte added
+ */
 #define modp_b16_encode_len(A) (2*A + 1)
 
-    /**
-     * Encode string length
-     */
+/**
+ * Encode string length
+ */
 #define modp_b16_encode_strlen(A) (2*A)
 
-    /**
-     * Decode string length
-     */
+/**
+ * Decode string length
+ */
 #define modp_b16_decode_len(A) ((A + 1)/ 2)
 
-#ifdef __cplusplus
-}
-#endif
+END_C
 
 #ifdef __cplusplus
 #include <string>

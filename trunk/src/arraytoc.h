@@ -7,38 +7,40 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
 
-    /** \brief output a uint32_t array into source code
-     *
-     *
-     * \param[in] ary the input array
-     * \param[in] size number of elements in array
-     * \param[in] name the name of the struct for the source code
-     *
-     */
-    void uint32_array_to_c(const uint32_t* ary, int size, const char* name);
+BEGIN_C
 
-    /** \brief output an uint32_t array into source code as hex values
-     *
-     * \param[in] ary the input array
-     * \param[in] size number of elements in array
-     * \param[in] name the name of the struct for source code
-     *
-     */
-    void uint32_array_to_c_hex(const uint32_t* ary, int size, const char* name);
+/** \brief output a uint32_t array into source code
+ *
+ *
+ * \param[in] ary the input array
+ * \param[in] size number of elements in array
+ * \param[in] name the name of the struct for the source code
+ *
+ */
+void uint32_array_to_c(const uint32_t* ary, int size, const char* name);
 
-    /** \brief output a char array into source code
-     *
-     * \param[in] ary the input array
-	 * \param[in] size number of elements in array
-	 * \param[in] name the name of the struct for source code
-     */
-    void char_array_to_c(const char* ary, int size, const char* name);
+/** \brief output an uint32_t array into source code as hex values
+ *
+ * \param[in] ary the input array
+ * \param[in] size number of elements in array
+ * \param[in] name the name of the struct for source code
+ *
+ */
+void uint32_array_to_c_hex(const uint32_t* ary, int size, const char* name);
 
-#ifdef __cplusplus
-}
-#endif
+/** \brief output a char array into source code
+ *
+ * \param[in] ary the input array
+ * \param[in] size number of elements in array
+ * \param[in] name the name of the struct for source code
+ */
+void char_array_to_c(const char* ary, int size, const char* name);
 
 #endif

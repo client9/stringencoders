@@ -25,53 +25,56 @@
 #define COM_MODP_STRINGENCODERS_B85
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
 
-    /**
-     * base 85 encode
-     *
-     * \param[out] dest  should have at least b85fast_encode_len memory allocated
-     * \param[in] src   input string
-     * \param[in] len   input string length, must be a multiple of 4
-     * \return the strlen of the destination, or -1 if error
-     */
-    int modp_b85_encode(char* dest, const char* src, int len);
+BEGIN_C
 
-    /**
-     * Base 85 decode
-     *
-     * \param[out] dest -- destination locations.  May equal input.
-     * \param[in] src -- source b85data
-     * \param len -- length of source
-     * \return -1 on decoding error, length of output otherwise
-     *    No ending null is added
-     */
-    int modp_b85_decode(char* dest, const char* src, int len);
+/**
+ * base 85 encode
+ *
+ * \param[out] dest  should have at least b85fast_encode_len memory allocated
+ * \param[in] src   input string
+ * \param[in] len   input string length, must be a multiple of 4
+ * \return the strlen of the destination, or -1 if error
+ */
+int modp_b85_encode(char* dest, const char* src, int len);
 
-    /**
-     * Returns the amount of memory to allocate for encoding the input
-     * string.
-     *
-     */
+/**
+ * Base 85 decode
+ *
+ * \param[out] dest -- destination locations.  May equal input.
+ * \param[in] src -- source b85data
+ * \param len -- length of source
+ * \return -1 on decoding error, length of output otherwise
+ *    No ending null is added
+ */
+int modp_b85_decode(char* dest, const char* src, int len);
+
+/**
+ * Returns the amount of memory to allocate for encoding the input
+ * string.
+ *
+ */
 #define modp_b85_encode_len(A) ((A + 3) / 4 * 5 + 1)
 
-    /**
-     * Return output strlen, without a NULL
-     */
+/**
+ * Return output strlen, without a NULL
+ */
 #define modp_b85_encode_strlen(A) ((A + 3) / 4 * 5)
 
-    /**
-     * Return the amount of memory to allocate for decoding a base 85
-     * encoded string.
-     *
-     */
+/**
+ * Return the amount of memory to allocate for decoding a base 85
+ * encoded string.
+ *
+ */
 #define modp_b85_decode_len(A) ((A + 4) / 5 * 4)
 
-#ifdef __cplusplus
-}
-#endif
-
+END_C
 
 #ifdef __cplusplus
 #include <string>

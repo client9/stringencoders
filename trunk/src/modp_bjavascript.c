@@ -52,14 +52,14 @@ int modp_bjavascript_encode(char* dest, const char* src, const int len)
     const char* deststart = dest;
     const uint8_t* s = (const uint8_t*) src;
     const uint8_t* srcend = s + len;
-	uint8_t x;
+    uint8_t x;
     uint8_t val;
 
     // if 0, do nothing
     // if 'A', hex escape
     // else, \\ + value
     while (s < srcend) {
-		x = *s++;
+        x = *s++;
         val = gsJavascriptEncodeMap[x];
         if (val == 0) {
             *dest++ = x;
@@ -72,7 +72,7 @@ int modp_bjavascript_encode(char* dest, const char* src, const int len)
             *dest++ = '\\';
             *dest++ = val;
         }
-	}
+    }
     *dest = '\0';
     return dest - deststart;
 }
@@ -80,11 +80,11 @@ int modp_bjavascript_encode(char* dest, const char* src, const int len)
 int modp_bjavascript_encode_strlen(const char* src, const int len)
 {
     const uint8_t* s = (const uint8_t*)src;
-	const uint8_t* srcend = s + len;
-	int count = 0;
+    const uint8_t* srcend = s + len;
+    int count = 0;
     uint8_t val;
 
-	while (s < srcend) {
+    while (s < srcend) {
         val = gsJavascriptEncodeMap[*s++];
         if (val == 0) {
             count++;
@@ -93,6 +93,6 @@ int modp_bjavascript_encode_strlen(const char* src, const int len)
         } else {
             count += 2;
         }
-	}
-	return count;
+    }
+    return count;
 }

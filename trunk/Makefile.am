@@ -1,5 +1,4 @@
 
-
 SOURCES = \
 	src/modp_b2.c src/modp_b2.h \
 	src/modp_b16.c src/modp_b16.h modp_b16_data.h \
