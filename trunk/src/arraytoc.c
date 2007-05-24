@@ -80,7 +80,3 @@ void uint32_array_to_c(const uint32_t* ary, int sz, const char* name)
     }
     printf("\n};\n\n");
 }
-
-
-
-
