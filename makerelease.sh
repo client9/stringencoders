@@ -6,7 +6,6 @@ svn co http://stringencoders.googlecode.com/svn/trunk ${FILE}
 
 find $FILE -name '.svn' | xargs rm -rf
 
-rm -f ${FILE}/index.html
 rm -f ${FILE}/Doxyfile
 rm -f ${FILE}/makerelease.sh
 rm -rf ${FILE}/doxy
