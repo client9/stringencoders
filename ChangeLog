@@ -6,6 +6,9 @@ TODO:
 * more doco
 * man pages
 
+24-May-2004
+	* Cleaned-up include guards, and 'extern c' stuff for C++.
+	
 23-May-2007
 	* Add C++ "const" methods everywhere in case you don't want to 
 	  modify the original input
