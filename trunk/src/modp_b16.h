@@ -5,7 +5,6 @@
  * \file
  * <PRE>
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
- * Version 1.0 -- 25-Apr-2006
  * http://code.google.com/p/stringencoders/
  *
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
@@ -16,8 +15,8 @@
  *
  */
 
-#ifndef MODP_B16
-#define MODP_B16
+#ifndef COM_MODP_STRINGENCODERS_B16
+#define COM_MODP_STRINGENCODERS_B16
 
 #ifdef __cplusplus
 extern "C" {

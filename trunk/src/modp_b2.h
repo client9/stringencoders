@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef MODP_B2
-#define MODP_B2
+#ifndef COM_MODP_STRINGENCODERS_B2
+#define COM_MODP_STRINGENCODERS_B2
 
 #ifdef __cplusplus
 extern "C" {

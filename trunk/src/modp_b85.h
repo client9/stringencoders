@@ -1,4 +1,4 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
@@ -21,8 +21,8 @@
  *  the decode operation, so why bother)
  */
 
-#ifndef MODP_B85
-#define MODP_B85
+#ifndef COM_MODP_STRINGENCODERS_B85
+#define COM_MODP_STRINGENCODERS_B85
 
 #ifdef __cplusplus
 extern "C" {

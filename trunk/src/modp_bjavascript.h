@@ -5,7 +5,6 @@
  * \file
  * <PRE>
  * High Performance c-string to javascript-string encoder
- * Version 1.0 -- 01-Sep-2006
  *
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
@@ -16,8 +15,8 @@
  * </PRE>
  */
 
-#ifndef MODP_BJAVASCRIPT
-#define MODP_BJAVASCRIPT
+#ifndef COM_MODP_STRINGENCODERS_BJAVASCRIPT
+#define COM_MODP_STRINGENCODERS_BJAVASCRIPT
 
 #ifdef __cplusplus
 extern "C" {

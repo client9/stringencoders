@@ -1,13 +1,12 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
  * \file
  * <PRE>
  * High performance base64 encoder / decoder
- * Version 1.3 -- 17-Mar-2006
  *
- * Copyright &copy; 2005, 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005, 2006, 2007 Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * http://code.google.com/p/stringencoders/
@@ -20,8 +19,8 @@
  *
  */
 
-#ifndef MODP_B64
-#define MODP_B64
+#ifndef COM_MODP_STRINGENCODERS_B64
+#define COM_MODP_STRINGENCODERS_B64
 
 #ifdef __cplusplus
 extern "C" {
@@ -152,6 +151,10 @@ namespace modp {
         return s;
     }
 
+    /**
+     * \param[in] s input string
+     * \return b64 encoded string
+     */
     inline std::string b64_encode(const std::string& s)
     {
         // allocate space
@@ -187,6 +190,10 @@ namespace modp {
         return s;
     }
 
+    /**
+     * \param[n] s the string to decode
+     * \return decoded string.  Empty if an error occured.
+     */
     inline std::string b64_decode(const std::string& s)
     {
         std::string x(modp_b64_decode_len(s.size())+1, '\0');
