@@ -15,11 +15,11 @@
  */
 void stdlib_toupper_copy(char* dest, const char* str, int len)
 {
-	int i;
-	for (i = 0; i < len; ++i) {
+    int i;
+    for (i = 0; i < len; ++i) {
         // toupper is defined in <ctype.h>
-		*dest++ = toupper(str[i]);
-	}
+        *dest++ = toupper(str[i]);
+    }
 }
 
 int main()
@@ -35,37 +35,37 @@ int main()
 
     uint32_t max = 1000000;
     clock_t t0, t1;
-	printf("%s", "type\tclib\tmodp\timprovement\n");
+    printf("%s", "type\tclib\tmodp\timprovement\n");
 
-	printf("toupper\t");
-	fflush(stdout);
+    printf("toupper\t");
+    fflush(stdout);
 
     /**
      ** CLIB
      **/
     t0 = clock();
     for (i = 0; i < max; ++i) {
-		stdlib_toupper_copy(obuf, buf, sizeof(buf));
+        stdlib_toupper_copy(obuf, buf, sizeof(buf));
     }
     t1 = clock();
     last = t1 -t0;
     printf("%lu\t", (t1-t0));
-	fflush(stdout);
+    fflush(stdout);
 
     /**
      ** MODP
      **/
     t0 = clock();
     for (i = 0; i < max; ++i) {
-		modp_toupper_copy(obuf, buf, sizeof(buf));
+        modp_toupper_copy(obuf, buf, sizeof(buf));
     }
     t1 = clock();
     printf("%lu\t", (t1-t0));
-	fflush(stdout);
+    fflush(stdout);
 
 
-	printf("%.1fx\n", last/(t1-t0));
-	fflush(stdout);
+    printf("%.1fx\n", last/(t1-t0));
+    fflush(stdout);
 
     return 0;
 }

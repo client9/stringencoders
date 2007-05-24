@@ -5,15 +5,15 @@
 
 void modp_toupper_map()
 {
-	size_t i = 0;
-	char map[256];
-	for (i = 0; i < sizeof(map); ++i) {
-		if (i >= 'a' && i <= 'z') {
-			map[i] = i - 32;
-		} else {
-			map[i] = i;
-		}
-	}
+    size_t i = 0;
+    char map[256];
+    for (i = 0; i < sizeof(map); ++i) {
+        if (i >= 'a' && i <= 'z') {
+            map[i] = i - 32;
+        } else {
+            map[i] = i;
+        }
+    }
 
     char_array_to_c(map, sizeof(map), "gsToUpperMap");
 }
@@ -21,30 +21,30 @@ void modp_toupper_map()
 
 void modp_tolower_map()
 {
-	size_t i = 0;
-	char map[256];
-	for (i = 0; i < sizeof(map); ++i) {
-		if (i >= 'A' && i <= 'Z') {
-			map[i] = i + 32;
-		} else {
-			map[i] = i;
-		}
-	}
+    size_t i = 0;
+    char map[256];
+    for (i = 0; i < sizeof(map); ++i) {
+        if (i >= 'A' && i <= 'Z') {
+            map[i] = i + 32;
+        } else {
+            map[i] = i;
+        }
+    }
 
     char_array_to_c(map, sizeof(map), "gsToLowerMap");
 }
 
 void modp_toprint_map()
 {
-	size_t i = 0;
-	char map[256];
-	for (i = 0; i < sizeof(map); ++i) {
-		if (i < 32 || i > 126) {
-			map[i] = '?';
-		} else {
-			map[i] = i;
-		}
-	}
+    size_t i = 0;
+    char map[256];
+    for (i = 0; i < sizeof(map); ++i) {
+        if (i < 32 || i > 126) {
+            map[i] = '?';
+        } else {
+            map[i] = i;
+        }
+    }
 
     char_array_to_c(map, sizeof(map), "gsToPrintMap");
 }
@@ -52,8 +52,8 @@ void modp_toprint_map()
 
 int main(int argc, char* argv[])
 {
-	modp_toupper_map();
-	modp_tolower_map();
-	modp_toprint_map();
-	return 0;
+    modp_toupper_map();
+    modp_tolower_map();
+    modp_toprint_map();
+    return 0;
 }

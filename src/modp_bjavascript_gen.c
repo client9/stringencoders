@@ -23,28 +23,28 @@ void jsencodemap()
     int i;
     char jsEncodeMap[256];
 
-	// set everything to "as is"
+    // set everything to "as is"
     for (i = 0; i < 256; ++i) {
         jsEncodeMap[i] = 0;
     }
 
-	// chars that need hex escaping
-	for (i = 0; i < 32; ++i) {
-		jsEncodeMap[i] = 'A';
-	}
-	for (i = 127; i < 256; ++i) {
-		jsEncodeMap[i] = 'A';
-	}
+    // chars that need hex escaping
+    for (i = 0; i < 32; ++i) {
+        jsEncodeMap[i] = 'A';
+    }
+    for (i = 127; i < 256; ++i) {
+        jsEncodeMap[i] = 'A';
+    }
 
-	// items that have special escaping
-	jsEncodeMap[0x08] = 'b';
-	jsEncodeMap[0x09] = 't';
-	jsEncodeMap[0x0a] = 'n';
-	jsEncodeMap[0x0b] = 'v';
-	jsEncodeMap[0x0c] = 'f';
-	jsEncodeMap[0x0d] = 'r';
+    // items that have special escaping
+    jsEncodeMap[0x08] = 'b';
+    jsEncodeMap[0x09] = 't';
+    jsEncodeMap[0x0a] = 'n';
+    jsEncodeMap[0x0b] = 'v';
+    jsEncodeMap[0x0c] = 'f';
+    jsEncodeMap[0x0d] = 'r';
     jsEncodeMap[0x5c] = '\\';  /* blackslash gets escaped */
-	jsEncodeMap[0x22] = '"';   /* dquote gets escaped */
+    jsEncodeMap[0x22] = '"';   /* dquote gets escaped */
     jsEncodeMap[0x27] = '\'';  /* squote gets escaped */
 
     char_array_to_c(jsEncodeMap, 256, "gsJavascriptEncodeMap");

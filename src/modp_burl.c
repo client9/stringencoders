@@ -66,11 +66,11 @@ int modp_burl_encode(char* dest, const char* src, const int len)
             *dest++ = gsHexEncodeMap1[x];
             *dest++ = gsHexEncodeMap2[x];
             /*
-               is the equiv of this
-               static const char sHexChars[] = "0123456789ABCDEF";
-               *dest++ = sHexChars[x >> 4];
-               *dest++ = sHexChars[x & 0x0F];
-            */
+              is the equiv of this
+              static const char sHexChars[] = "0123456789ABCDEF";
+              *dest++ = sHexChars[x >> 4];
+              *dest++ = sHexChars[x & 0x0F];
+              */
         }
     }
     *dest = '\0';
@@ -100,11 +100,11 @@ int modp_burl_min_encode(char* dest, const char* src, const int len)
             *dest++ = gsHexEncodeMap1[x];
             *dest++ = gsHexEncodeMap2[x];
             /*
-               is the equiv of this
-               static const char sHexChars[] = "0123456789ABCDEF";
-               *dest++ = sHexChars[x >> 4];
-               *dest++ = sHexChars[x & 0x0F];
-            */
+              is the equiv of this
+              static const char sHexChars[] = "0123456789ABCDEF";
+              *dest++ = sHexChars[x >> 4];
+              *dest++ = sHexChars[x & 0x0F];
+              */
         }
     }
     *dest = '\0';

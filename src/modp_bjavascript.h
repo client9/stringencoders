@@ -19,43 +19,48 @@
 #define COM_MODP_STRINGENCODERS_BJAVASCRIPT
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
 
-    /**
-     * "javascript" encode a stirng
-     * This takes a c-string and does character escaping
-     * so it can be put into a var js_string = '...';
-     *
-     * \param[out] dest output string.  Must
-     * \param[in] str The input string
-     * \param[in] len  The length of the input string, excluding any
-     *   final null byte.
-     */
-    int modp_bjavascript_encode(char* dest, const char* str, int len);
+BEGIN_C
+
+
+/**
+ * "javascript" encode a stirng
+ * This takes a c-string and does character escaping
+ * so it can be put into a var js_string = '...';
+ *
+ * \param[out] dest output string.  Must
+ * \param[in] str The input string
+ * \param[in] len  The length of the input string, excluding any
+ *   final null byte.
+ */
+int modp_bjavascript_encode(char* dest, const char* str, int len);
 
 #define modp_bjavascript_encode_len(A) (4*A + 1)
 
-    /**
-     * Given the exact size of output string.
-     *
-     * Can be used to allocate the right amount of memory for
-     * modp_burl_encode.  Be sure to add 1 byte for final null.
-     *
-     * This is somewhat expensive since it examines every character
-     *  in the input string
-     *
-     * \param[in] str  The input string
-     * \param[in] len  THe length of the input string, excluding any
-     *   final null byte (i.e. strlen(str))
-     * \return the size of the output string, excluding the final
-     *   null byte.
-     */
-    int modp_bjavascript_encode_strlen(const char* str, const int len);
+/**
+ * Given the exact size of output string.
+ *
+ * Can be used to allocate the right amount of memory for
+ * modp_burl_encode.  Be sure to add 1 byte for final null.
+ *
+ * This is somewhat expensive since it examines every character
+ *  in the input string
+ *
+ * \param[in] str  The input string
+ * \param[in] len  THe length of the input string, excluding any
+ *   final null byte (i.e. strlen(str))
+ * \return the size of the output string, excluding the final
+ *   null byte.
+ */
+int modp_bjavascript_encode_strlen(const char* str, const int len);
 
-#ifdef __cplusplus
-}
-#endif
+END_C
 
 #ifdef __cplusplus
 #include <string>
