@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef MODP_ASCII
-#define MODP_ASCII
+#ifndef COM_MODP_STRINGENCODERS_ASCII
+#define COM_MODP_STRINGENCODERS_ASCII
 
 #ifdef __cplusplus
 extern "C" {
@@ -128,6 +128,7 @@ namespace modp {
         modp_toprint_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
         return s;
     }
+
     inline std::string& toprint(std::string& str)
     {
         modp_toprint(const_cast<char*>(str.c_str()), str.size());

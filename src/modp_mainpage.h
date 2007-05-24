@@ -12,8 +12,9 @@
  *
  * The header files all include a sample C++ std::string wrapper.
  *
- * In addition the mod_numtoa.h defines fast integer and float types
- * to char buffer converts.
+ * In addition:
+ * - modp_numtoa.h defines fast integer and float  types to char buffer converts.
+ * - modp_ascii.h defines fast toupper, tolower transformations.
  *
  * \section modp_b64
  *
@@ -73,4 +74,13 @@
  *  - 5-22x faster!
  *
  * See modp_numtoa.h for details
+ *
+ * \section modp_ascii
+ *
+ * modp_toupper and modp_tolower upper or lower case a string using the standard C
+ * locale (i.e. 7-bit ascii).  These are 2-22x faster than using standard ctype
+ * functions.  Also include is "toprint" which replaces "unprintable" characters
+ * with a "?".
+ *
+ *
  */

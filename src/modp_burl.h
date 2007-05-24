@@ -1,11 +1,10 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
  * \file
  * <PRE>
  * High Performance URL Encoder/Decoder
- * Version 1.0 -- 27-Mar-2006
  *
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
@@ -16,8 +15,8 @@
  * </PRE>
  */
 
-#ifndef MODP_BURL
-#define MODP_BURL
+#ifndef COM_MODP_STRINGENCODERS_BURL
+#define COM_MODP_STRINGENCODERS_BURL
 
 #ifdef __cplusplus
 extern "C" {
