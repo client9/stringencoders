@@ -35,6 +35,51 @@ static char* testLowerSimple()
     return 0;
 }
 
+/** 
+ * Test possible overflow conditions
+ *
+ */
+static char* testUpperHighBits()
+{
+    char obuf[5];
+    char expected[5];
+    char buf[5];
+
+    buf[0] = 'z';
+    buf[1] = 0xff;
+    buf[2] = 0xff;
+    buf[3] = 0xff;
+    buf[4] = '\0';
+
+    expected[0] = 'Z';
+    expected[1] = 0xff;
+    expected[2] = 0xff;
+    expected[3] = 0xff;
+    expected[4] = '\0';
+
+    memset(obuf, 0, sizeof(obuf));
+    modp_toupper_copy(obuf, buf, strlen(buf));
+    mu_assert_str_equals(expected, obuf);
+
+
+    buf[0] = 0xff;
+    buf[1] = 0xff;
+    buf[2] = 0xff;
+    buf[3] = 'z';
+    buf[4] = '\0';
+
+    expected[0] = 0xff;
+    expected[1] = 0xff;
+    expected[2] = 0xff;
+    expected[3] = 'Z';
+    expected[4] = '\0';
+    memset(obuf, 0, sizeof(obuf));
+    modp_toupper_copy(obuf, buf, strlen(buf));
+    mu_assert_str_equals(expected, obuf);
+
+    return 0;
+}
+
 static char* testUpperSimple()
 {
     const char* case4 = "ABCD abcd1234";
@@ -99,7 +144,9 @@ static char* testToUpper()
         expected[i] = (i >= 'a' && i <= 'z') ? i-32 : i;
     }
 
+    printf("before: %s\n", (buf1+1));
     modp_toupper(buf1, 256);
+    printf("after: %s\n", (buf1+1));
     mu_assert(memcmp(expected, buf1, 256) == 0);
 
     // do other sizes to check
@@ -210,6 +257,7 @@ static char* testToLowerCopy()
 }
 
 static char* all_tests() {
+    mu_run_test(testUpperHighBits);
     mu_run_test(testUpperSimple);
     mu_run_test(testLowerSimple);
     mu_run_test(testPrintSimple);
