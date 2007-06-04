@@ -175,6 +175,20 @@ namespace modp {
         return s;
     }
 
+    inline std::string url_decode(const char* str)
+    {
+        std::string s(str);
+        url_decode(s);
+        return s;
+    }
+
+    inline std::string url_decode(const char* str, size_t len)
+    {
+        std::string s(str, len);
+        url_decode(s);
+        return s;
+    }
+
     inline std::string url_decode(const std::string& s)
     {
         std::string x(s);

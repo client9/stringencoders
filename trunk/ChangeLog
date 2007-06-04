@@ -8,6 +8,7 @@ TODO:
 04-Jun-2007
 	* toupper/lower now 2x faster than before!  Based on an alogirthm by Hsieh
 	  http://www.azillionmonkeys.com/qed/asmexample.html
+	* C++ added more C++ methods for url_decode
 	
 24-May-2007
 	* Version 3.2 released

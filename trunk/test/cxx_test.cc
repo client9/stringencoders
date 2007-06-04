@@ -240,6 +240,24 @@ void test_url_const()
     }
 }
 
+void test_url_cstr()
+{
+    const char* data = "this+is+a%20test";
+    const string expected("this is a test");
+
+    const string s1(url_decode(data));
+    if (s1 != expected) {
+        WHERE(cerr) << "Expected " << expected << ", recieved " << s1 << "\n";
+        exit(1);
+    }
+
+    const string s2(url_decode(data, strlen(data)));
+    if (s2 != expected) {
+        WHERE(cerr) << "Expected " << expected << ", recieved " << s2 << "\n";
+        exit(1);
+    }
+}
+
 void test_javascript()
 {
     string orig("this \"is\' a test\n");
@@ -292,6 +310,7 @@ int main()
     test_b85_const();
     test_url();
     test_url_const();
+    test_url_cstr();
     test_javascript();
     test_javascript_const();
     test_ascii_copy();
