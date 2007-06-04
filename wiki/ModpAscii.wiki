@@ -1,0 +1,61 @@
+#summary Fast ascii transformations
+
+
+= The Hseigh ToUpper Algorithm in Painful Detail=
+
+The most direct translation from the original ASM source is this:
+{{{
+uint32_t toupper(uint32_t eax) 
+{
+    uint32_t ebx, ecx, edx;
+    ebx = 0x7f7f7f7f;
+    edx = 0x7f7f7f7f;
+    ebx = ebx & eax;
+    ebx = ebx + 0x05050505;
+    ecx = eax;
+    ecx = ~ecx;
+    ebx = ebx & edx;
+    ebx = ebx + 0x1a1a1a1a;
+    ebx = ebx & ecx;
+    ebx = ebx >> 2;
+    ebx = ebx & 0x20202020;
+    eax = eax - ebx;
+    return eax;
+}
+}}}
+
+If you "de-asm" it, it looks like
+
+{{{
+uint32_t touper(uint32_t eax)
+{
+    ebx = ((eax + 0x05050505ul) & 0x7f7f7f7ful) + 0x1a1a1a1aul;
+    ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
+    return eax - ebx;
+}
+}}}
+
+
+Niether version really explains what is going on.  Lower case ascii characer are from 0x61 to 0x7A.  For each octet, we want a result that is either 0x0 or 0x20.  Then we can just substract.  For instance if the input is 0x61614242 ("aaBB") we want 0x20200000, so 0x61614242 - 0x20200000 = 0x41414242 ("AABB").
+
+First, let's ignore input that is non-ascii, i.e. has the high bit set.
+1.   "0x05" to each octet. This "moves" the range of lower case characters to 0x66 and 0x7F.
+
+2. Strip off the high bits.  This means anything that is "bigger" than "z" is removed.
+3. Add 0x1a (26).  Now all lower case characters have the hight bit SET.  All non-lower case character do NOT.
+4. Right shift by 2.  This moves that high bit to where we want it
+5. And by 0x20  all other bits are zero'd out.
+5. Subtract
+
+Ta-da.
+
+Now for the case of 8-bit input, we do a `ebx & ~eax`.  This is a bit deceptive.   Formally all we are doing is this  `ebx & ~(eax & 0x80808080)`.  but we don't need to do that since ALL we care about is the high bit.  All the other bits we don't care about.  So if the high bit is set, our octet will become 0, in otherwords, no change.
+
+
+
+
+
+
+
+
+
