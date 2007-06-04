@@ -1,7 +1,7 @@
 #summary Fast ascii transformations
 
 
-= The Hseigh ToUpper Algorithm in Painful Detail=
+= The Hseih ToUpper Algorithm in Painful Detail=
 
 The most direct translation from the original ASM source is this:
 {{{
@@ -29,7 +29,7 @@ If you "de-asm" it, it looks like
 {{{
 uint32_t touper(uint32_t eax)
 {
-    ebx = ((eax + 0x05050505ul) & 0x7f7f7f7ful) + 0x1a1a1a1aul;
+    uint32_t ebx = ((eax + 0x05050505ul) & 0x7f7f7f7ful) + 0x1a1a1a1aul;
     ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
     return eax - ebx;
 }
@@ -50,7 +50,6 @@ First, let's ignore input that is non-ascii, i.e. has the high bit set.
 Ta-da.
 
 Now for the case of 8-bit input, we do a `ebx & ~eax`.  This is a bit deceptive.   Formally all we are doing is this  `ebx & ~(eax & 0x80808080)`.  but we don't need to do that since ALL we care about is the high bit.  All the other bits we don't care about.  So if the high bit is set, our octet will become 0, in otherwords, no change.
-
 
 
 
