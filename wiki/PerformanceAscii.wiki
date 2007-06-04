@@ -9,12 +9,14 @@ type    clib    modp    improvement
 toupper 590000  280000  2.1x
 }}}
 
-Intel Core Duo
+Intel Core Duo / Mac OS X
 
 {{{
+$ date
+Mon Jun  4 17:03:56 EDT 2007
 $ ./speedtest_ascii
-type    clib    modp    improvement
-toupper 517     56      9.2x
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 467     81      85      66      33      32      33      14.2x
 }}}
 
 G4
