@@ -1,7 +1,7 @@
 #summary Fast ascii transformations
 
 
-= The Hseih ToUpper Algorithm in Painful Detail=
+= The Hsieh ToUpper Algorithm in Painful Detail=
 
 The most direct translation from the original ASM source is this:
 {{{
@@ -53,7 +53,6 @@ First, let's ignore input that is non-ascii, i.e. has the high bit set.
 5. We now have a integer that has octets of either 0x00 or 0x020. Subtract.
 
 Ta-da.
-
 
 
 
