@@ -96,8 +96,11 @@ void toupper_copy4(char* dest, const char* str, int len)
 }
 
 /** \brief toupper Versions 5 -- hsieh alternate
+ * Based code from Paul Hsieh
+ * http://www.azillionmonkeys.com/qed/asmexample.html
  *
- *
+ * This was his "improved" version, but it appears to either run just
+ * as fast, or a bit slower than his original version
  */
 void toupper_copy5(char* dest, const char* str, int len)
 {
@@ -128,7 +131,12 @@ void toupper_copy5(char* dest, const char* str, int len)
 }
 
 /** \brief ToUpper Version 6 -- Hsieh original, ASM style
+ * Based code from Paul Hsieh
+ * http://www.azillionmonkeys.com/qed/asmexample.html
  *
+ * This is almost a direct port of the original ASM code, on some
+ * platforms/compilers it does run faster then the "de-asm'ed" version
+ * used in the modp library.
  *
  */
 void toupper_copy6(char* dest, const char* str, int len)
@@ -141,6 +149,10 @@ void toupper_copy6(char* dest, const char* str, int len)
     const uint32_t* s = (const uint32_t*) str;
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
+#if 1
+        /*
+         * as close to original asm code as possible
+         */
         eax = s[i];
         ebx = 0x7f7f7f7f;
         edx = 0x7f7f7f7f;
@@ -155,6 +167,16 @@ void toupper_copy6(char* dest, const char* str, int len)
         ebx = ebx & 0x20202020;
         eax = eax - ebx;
         *d++ = eax;
+#else
+        /*
+         * "de-asm'ed" version, this is what is used in the modp library
+         */
+        eax = s[i];
+        ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
+        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
+        ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
+        *d++ = eax - ebx;
+#endif
     }
 
     i = imax*4;
@@ -178,6 +200,7 @@ void modp_toupper_copy_a2(char* dest, const char* str, int len)
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
+
         ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
         ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
         ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;

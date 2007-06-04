@@ -38,6 +38,9 @@ extern "C" {
      * Please make sure dest has been allocation with at least 'len+1'
      * bytes.  This appends a trailing NULL character at the end of
      * dest!
+     *
+     * This is based on the algorithm by Paul Hsieh
+     * http://www.azillionmonkeys.com/qed/asmexample.html
      */
     void modp_toupper_copy(char* dest, const char* str, int len);
 
@@ -58,6 +61,9 @@ extern "C" {
      * Please make sure dest has been allocation with at least 'len+1'
      * bytes.  This appends a trailing NULL character at the end of
      * dest!
+     *
+     * This is based on the algorithm by Paul Hsieh
+     * http://www.azillionmonkeys.com/qed/asmexample.html
      */
     void modp_tolower_copy(char* dest, const char* str, int len);
 
