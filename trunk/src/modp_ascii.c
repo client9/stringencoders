@@ -57,6 +57,10 @@ void modp_toupper_copy(char* dest, const char* str, int len)
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
+        /*
+         * This is based on the algorithm by Paul Hsieh
+         * http://www.azillionmonkeys.com/qed/asmexample.html
+         */
         ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
         ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
         ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
@@ -84,6 +88,10 @@ void modp_tolower_copy(char* dest, const char* str, int len)
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
+        /*
+         * This is based on the algorithm by Paul Hsieh
+         * http://www.azillionmonkeys.com/qed/asmexample.html
+         */
         ebx = (0x7f7f7f7ful & eax) + 0x25252525ul;
         ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
         ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
