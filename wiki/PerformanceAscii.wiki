@@ -1,7 +1,7 @@
 #summary Performance for ascii encoders
 #labels Featured
 
-AMD
+AMD / Linux / gLibc
 
 {{{
 $ date
