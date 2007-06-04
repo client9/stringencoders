@@ -5,8 +5,12 @@ TODO:
 
 * more doco
 * man pages
-
-24-May-2004
+04-Jun-2007
+	* toupper/lower now 2x faster than before!  Based on an alogirthm by Hsieh
+	  http://www.azillionmonkeys.com/qed/asmexample.html
+	
+24-May-2007
+	* Version 3.2 released
 	* Cleaned-up include guards, and 'extern c' stuff for C++.
 	
 23-May-2007
