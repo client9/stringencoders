@@ -143,10 +143,7 @@ static char* testToUpper()
         buf1[i] = (char) i;
         expected[i] = (i >= 'a' && i <= 'z') ? i-32 : i;
     }
-
-    printf("before: %s\n", (buf1+1));
     modp_toupper(buf1, 256);
-    printf("after: %s\n", (buf1+1));
     mu_assert(memcmp(expected, buf1, 256) == 0);
 
     // do other sizes to check
