@@ -46,83 +46,10 @@
 #include "modp_ascii.h"
 #include "modp_ascii_data.h"
 
-void modp_toupper_copy1(char* dest, const char* str, int len)
-{
-    /*
-     *  int i;
-     *  for (i = 0; i < len; ++i) {
-     *      char c = str[i];
-     *      *dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
-     *  }
-     */
-
-    int i;
-    uint8_t c1,c2,c3,c4;
-
-    const int leftover = len % 4;
-    const int imax = len - leftover;
-    const uint8_t* s = (const uint8_t*) str;
-    for (i = 0; i != imax ; i+=4) {
-        /*
-         *  it's important to make these variables
-         *  it helps the optimizer to figure out what to do
-         */
-        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
-        dest[0] = gsToUpperMap[c1];
-        dest[1] = gsToUpperMap[c2];
-        dest[2] = gsToUpperMap[c3];
-        dest[3] = gsToUpperMap[c4];
-        dest += 4;
-    }
-
-    switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[s[i++]];
-        case 2: *dest++ = gsToUpperMap[s[i++]];
-        case 1: *dest++ = gsToUpperMap[s[i]];
-        case 0: *dest = '\0';
-    }
-}
-
-void modp_toupper_copy2(char* dest, const char* str, int len)
-{
-    int i=0;
-    uint32_t eax,ebx,ecx,edx;
-    const uint8_t* ustr = (const uint8_t*) str;
-    const int leftover = len % 4;
-    const int imax = len / 4;
-    const uint32_t* s = (const uint32_t*) str;
-    uint32_t* d = (uint32_t*) dest;
-    for (i = 0; i != imax; ++i) {
-        eax = s[i];
-        ebx = 0x7f7f7f7f;
-        edx = 0x7f7f7f7f;
-        ebx = ebx & eax;
-        ebx = ebx + 0x05050505;
-        ecx = eax;
-        ecx = ~ecx;
-        ebx = ebx & edx;
-        ebx = ebx + 0x1a1a1a1a;
-        ebx = ebx & ecx;
-        ebx = ebx >> 2;
-        ebx = ebx & 0x20202020;
-        eax = eax - ebx;
-        *d++ = eax;
-    }
-
-    i = imax*4;
-    dest = (char*) d;
-    switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[ustr[i++]];
-        case 2: *dest++ = gsToUpperMap[ustr[i++]];
-        case 1: *dest++ = gsToUpperMap[ustr[i]];
-        case 0: *dest = '\0';
-    }
-}
-
 void modp_toupper_copy(char* dest, const char* str, int len)
 {
     int i;
-    uint32_t eax,ebx,ecx,edx,eex;
+    uint32_t eax, ebx;
     const uint8_t* ustr = (const uint8_t*) str;
     const int leftover = len % 4;
     const int imax = len / 4;
@@ -130,11 +57,10 @@ void modp_toupper_copy(char* dest, const char* str, int len)
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
-        ebx = 0x80808080ul | eax;
-        ecx = ebx - 0x61616161ul;
-        edx = ~(ebx - 0x7b7b7b7bul);
-        eex = (ecx & edx) & (~eax & 0x80808080ul);
-        *d++ = eax - (eex >> 2);
+        ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
+        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
+        ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
+        *d++ = eax - ebx;
     }
 
     i = imax*4;
@@ -143,6 +69,33 @@ void modp_toupper_copy(char* dest, const char* str, int len)
         case 3: *dest++ = gsToUpperMap[ustr[i++]];
         case 2: *dest++ = gsToUpperMap[ustr[i++]];
         case 1: *dest++ = gsToUpperMap[ustr[i]];
+        case 0: *dest = '\0';
+    }
+}
+
+void modp_tolower_copy(char* dest, const char* str, int len)
+{
+    int i;
+    uint32_t eax, ebx;
+    const uint8_t* ustr = (const uint8_t*) str;
+    const int leftover = len % 4;
+    const int imax = len / 4;
+    const uint32_t* s = (const uint32_t*) str;
+    uint32_t* d = (uint32_t*) dest;
+    for (i = 0; i != imax; ++i) {
+        eax = s[i];
+        ebx = (0x7f7f7f7ful & eax) + 0x25252525ul;
+        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
+        ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
+        *d++ = eax + ebx;
+    }
+
+    i = imax*4;
+    dest = (char*) d;
+    switch (leftover) {
+        case 3: *dest++ = gsToLowerMap[ustr[i++]];
+        case 2: *dest++ = gsToLowerMap[ustr[i++]];
+        case 1: *dest++ = gsToLowerMap[ustr[i]];
         case 0: *dest = '\0';
     }
 }
@@ -150,42 +103,6 @@ void modp_toupper_copy(char* dest, const char* str, int len)
 void modp_toupper(char* str, int len)
 {
     modp_toupper_copy(str, str, len);
-}
-
-void modp_tolower_copy(char* dest, const char* str, int len) {
-    /*
-     *  int i = 0;
-     *  for (i = 0; i < len; ++i) {
-     *      char c = str[i];
-     *       *dest++ = (c >= 'A' && c <= 'Z') ? c + 32 : c;
-     *  } 
-     */
-
-    int i;
-    uint8_t c1,c2,c3,c4;
-
-    const int leftover = len % 4;
-    const int imax = len - leftover;
-    const uint8_t* s = (const uint8_t*) str;
-    for (i = 0; i != imax ; i+=4) {
-        /*
-         *  it's important to make these variables
-         *  it helps the optimizer to figure out what to do
-         */
-        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
-        dest[0] = gsToLowerMap[c1];
-        dest[1] = gsToLowerMap[c2];
-        dest[2] = gsToLowerMap[c3];
-        dest[3] = gsToLowerMap[c4];
-        dest += 4;
-    }
-
-    switch (leftover) {
-        case 3: *dest++ = gsToLowerMap[s[i++]];
-        case 2: *dest++ = gsToLowerMap[s[i++]];
-        case 1: *dest++ = gsToLowerMap[s[i]];
-        case 0: *dest = '\0';
-    }
 }
 
 void modp_tolower(char* str, int len)
