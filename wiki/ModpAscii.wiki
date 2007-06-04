@@ -29,7 +29,8 @@ If you "de-asm" it, it looks like
 {{{
 uint32_t touper(uint32_t eax)
 {
-    uint32_t ebx = ((eax + 0x05050505ul) & 0x7f7f7f7ful) + 0x1a1a1a1aul;
+    uint32_t ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
+    ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
     ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
     return eax - ebx;
 }
@@ -39,20 +40,19 @@ uint32_t touper(uint32_t eax)
 Niether version really explains what is going on.  Lower case ascii characer are from 0x61 to 0x7A.  For each octet, we want a result that is either 0x0 or 0x20.  Then we can just substract.  For instance if the input is 0x61614242 ("aaBB") we want 0x20200000, so 0x61614242 - 0x20200000 = 0x41414242 ("AABB").
 
 First, let's ignore input that is non-ascii, i.e. has the high bit set.
-1.   "0x05" to each octet. This "moves" the range of lower case characters to 0x66 and 0x7F.
 
-2. Strip off the high bits.  This means anything that is "bigger" than "z" is removed.
-3. Add 0x1a (26).  Now all lower case characters have the hight bit SET.  All non-lower case character do NOT.
-4. Right shift by 2.  This moves that high bit to where we want it
-5. And by 0x20  all other bits are zero'd out.
-5. Subtract
+1. Strip high bits of each octet (e.g. `(0x7f7f7f7ful & eax)` and then add 0x05 to each octet `+ 0x05050505ul;`.  The stripping of high bits is needed so overflows when we add 5 doesn't effect the next octet.  The addition moves the range of lower case characters to 0x66 to 0x7F.
+
+
+2. Restrip off the high bits.  This means anything that is "bigger" than "z" is removed and add 0x1a (26).  Now all lower case characters have the hight bit SET.  All non-lower case character do NOT.  This bit is all we care about now.
+
+3. `ebx & ~eax` is a bit tricky.  All we care about in `~eax` is the high bit.  We could do `ebx & ~(eax & 0x80808080ul)` to make the intentions more clear.  Regardless, if the original input has the high bit set, then _clear_ our high bit since this is not a lower case character If the original does not have the high bit set, then all is ok.
+
+4. Shift the high bits over by two places, i.e. 0x80 becomes 0x20.  Then clear out all the other bits.
+
+5. We now have a integer that has octets of either 0x00 or 0x020. Subtract.
 
 Ta-da.
-
-Now for the case of 8-bit input, we do a `ebx & ~eax`.  This is a bit deceptive.   Formally all we are doing is this  `ebx & ~(eax & 0x80808080)`.  but we don't need to do that since ALL we care about is the high bit.  All the other bits we don't care about.  So if the high bit is set, our octet will become 0, in otherwords, no change.
-
-
-
 
 
 
