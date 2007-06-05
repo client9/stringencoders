@@ -5,6 +5,11 @@ TODO:
 
 * more doco
 * man pages
+
+05-Jun-2007
+	* Fix bug in modp_b16_gen that could core dump (doesn't not effect output, only occurs
+	  during building).  Thanks to Constantine Verutin.
+	
 04-Jun-2007
 	* toupper/lower now 2x faster than before!  Based on an alogirthm by Hsieh
 	  http://www.azillionmonkeys.com/qed/asmexample.html
