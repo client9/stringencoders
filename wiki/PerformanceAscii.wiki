@@ -1,6 +1,44 @@
 #summary Performance for ascii encoders
 #labels Featured
 
+
+== Performance Numbers ==
+
+AMD / Linux / gLibc
+
+{{{
+$ date
+Mon Jun  4 21:04:58 UTC 2007
+$ ./speedtest_ascii
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 590000  590000  580000  260000  190000  190000  230000  2.6x
+}}}
+
+Intel Core Duo / Mac OS X
+
+{{{
+$ date
+Mon Jun  4 17:03:56 EDT 2007
+$ ./speedtest_ascii
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 467     81      85      66      33      32      33      14.2x
+}}}
+
+G4
+
+Something is very wrong with the optimizer/compiler/os if we can get a 62.5x performance improvement.
+
+{{{
+$ date
+Tue Jun  5 00:05:26 EDT 2007
+$ ./speedtest_ascii
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 3249    136     110     71      40      48      52      62.5x
+}}}
+
+
+== ToUpper Algorithms ==
+
 === Sequential Ctypes toupper ===
 A simple example is doing upper casing an ascii string.  A standard implementation might look like
 
@@ -89,37 +127,82 @@ void toupper_copy4(char* dest, const char* str, int len)
 This does things in chunks of 4.  On AMD processors this is twice as fast, on Intel, _nine_ times faster, and on my old Powerbook G4, _44 times faster_.  For details see PerformanceAscii.
 
 
+=== The Hsieh Algorithm, Take 1 ===
 
-== Performance Numbers ==
-
-AMD / Linux / gLibc
+The above trick works quite well, but all those char -> unsigned char -> int conversions and table looks takes time.  Even better is treat the string as if it were a array of integers, not chars.
 
 {{{
-$ date
-Mon Jun  4 21:04:58 UTC 2007
-$ ./speedtest_ascii
-type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
-toupper 590000  590000  580000  260000  190000  190000  230000  2.6x
+ * Based code from Paul Hsieh
+ * http://www.azillionmonkeys.com/qed/asmexample.html
+ *
+ * This was his "improved" version, but it appears to either run just
+ * as fast, or a bit slower than his original version
+ */
+void toupper_copy5(char* dest, const char* str, int len)
+{
+    int i;
+    uint32_t eax,ebx,ecx,edx;
+    const uint8_t* ustr = (const uint8_t*) str;
+    const int leftover = len % 4;
+    const int imax = len / 4;
+    const uint32_t* s = (const uint32_t*) str;
+    uint32_t* d = (uint32_t*) dest;
+    for (i = 0; i != imax; ++i) {
+        eax = s[i];
+        ebx = 0x80808080ul | eax;
+        ecx = ebx - 0x61616161ul;
+        edx = ~(ebx - 0x7b7b7b7bul);
+        ebx = (ecx & edx) & (~eax & 0x80808080ul);
+        *d++ = eax - (ebx >> 2);
+    }
+
+    i = imax*4;
+    dest = (char*) d;
+    switch (leftover) {
+        case 3: *dest++ = gsToUpperMap[ustr[i++]];
+        case 2: *dest++ = gsToUpperMap[ustr[i++]];
+        case 1: *dest++ = gsToUpperMap[ustr[i]];
+        case 0: *dest = '\0';
+    }
+}
 }}}
 
-Intel Core Duo / Mac OS X
+
+On some platforms this is the fastest I've seen (but at this stage we are splitting hairs).
+
+=== The Hsieh Algorithm, Take 2 ===
+
+Hsieh provided an earlier version of the toupper algorithm, but it's only as raw ASM source.  The most direct translation is 
 
 {{{
-$ date
-Mon Jun  4 17:03:56 EDT 2007
-$ ./speedtest_ascii
-type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
-toupper 467     81      85      66      33      32      33      14.2x
+for (i = 0; i != imax; ++i) {
+    eax = s[i];
+    ebx = 0x7f7f7f7f;
+    edx = 0x7f7f7f7f;
+    ebx = ebx & eax;
+    ebx = ebx + 0x05050505;
+    ecx = eax;
+    ecx = ~ecx;
+    ebx = ebx & edx;
+    ebx = ebx + 0x1a1a1a1a;
+    ebx = ebx & ecx;
+    ebx = ebx >> 2;
+    ebx = ebx & 0x20202020;
+    eax = eax - ebx;
+    *d++ = eax;
+}
 }}}
 
-G4
+=== The Hsieh Algorithm, Take 3, Final ===
 
-Something is very wrong with the optimizer/compiler/os if we can get a 62.5x performance improvement.
+The "De-Asmed" version of the above algorithm is something like this.  On some platforms this is a bit slower than the previous.
 
 {{{
-$ date
-Tue Jun  5 00:05:26 EDT 2007
-$ ./speedtest_ascii
-type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
-toupper 3249    136     110     71      40      48      52      62.5x
+for (i = 0; i != imax; ++i) {
+    eax = s[i];
+    ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
+    ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
+    ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
+    *d++ = eax - ebx;
+}
 }}}
