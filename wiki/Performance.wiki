@@ -66,24 +66,25 @@ Decode    6.11    7.42    1.21x           9.72    5.48   15.98  103.96
 
 (aka, my old mac powerbook)
 
-Tested: Sat Mar 24 17:18:25 EDT 2007
-
 {{{
-$./speedtest
+$ date
+Tue Jun  5 09:53:47 EDT 2007
+$ ./speedtest
+
 Message size = 20
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    0.13    0.18    1.38x           0.18    0.12    0.13    0.18
-Decode    0.13    0.24    1.85x           0.15    0.15    0.16
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.12    0.18    1.50x           0.17    0.13    0.13    0.20    0.18
+Decode    0.14    0.23    1.64x           0.15    0.16    0.16    1.02
 
 Message size = 200
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    0.87    1.57    1.80x           1.28    0.93    0.95    1.59
-Decode    0.77    2.09    2.71x           1.18    1.23    1.16
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.84    1.59    1.89x           1.26    0.95    0.93    1.69    1.55
+Decode    0.81    2.09    2.58x           1.16    1.25    1.18   10.07
 
 Message size = 2000
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    8.07   14.84    1.84x          12.12    9.09    9.29   15.87
-Decode    7.23   20.44    2.83x          11.35   12.10   11.71
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    8.00   15.37    1.92x          12.13    9.09    9.04   16.69   15.43
+Decode    7.69   20.45    2.66x          11.35   12.10   11.98  100.85
 
 $ uname -a
 Darwin nickg-pbook.local 8.9.0 Darwin Kernel Version 8.9.0: Thu Feb 22 20:54:07 PST 2007; root:xnu-792.17.14~1/RELEASE_PPC Power Macintosh powerpc
