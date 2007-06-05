@@ -23,10 +23,12 @@ toupper 467     81      85      66      33      32      33      14.2x
 
 G4
 
-Something is very wrong with the optimizer/compiler if we can get a 44x performance improvement.
+Something is very wrong with the optimizer/compiler/os if we can get a 62.5x performance improvement.
 
 {{{
+$ date
+Tue Jun  5 00:05:26 EDT 2007
 $ ./speedtest_ascii
-type    clib    modp    improvement
-toupper 3256    74      44.0x
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 3249    136     110     71      40      48      52      62.5x
 }}}
