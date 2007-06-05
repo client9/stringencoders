@@ -5,26 +5,7 @@
 
 == 2.2Ghz AMD, gcc 3.4.4 -O3==
 
-{{{
-$ date
-Tue Jun  5 09:45:07 EDT 2007
-$ ./speedtest
 
-Message size = 20
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
-Encode    0.09    0.12    1.33x           0.18    0.06    0.07    0.09    0.07
-Decode    0.09    0.10    1.11x           0.11    0.06    0.18    1.02
-
-Message size = 200
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
-Encode    0.55    0.64    1.16x           1.41    0.45    0.49    0.84    0.57
-Decode    0.63    0.79    1.25x           0.99    0.56    1.62   10.33
-
-Message size = 2000
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
-Encode    5.08    5.73    1.13x          13.66    4.40    4.66    8.33    5.48
-Decode    6.11    7.42    1.21x           9.72    5.48   15.98  103.96
-}}}
 
 
 == 2.X Ghz Intel Core 2 Duo, gcc 4.0.1 -O3 ==
@@ -60,26 +41,25 @@ Decode    4.78    6.25    1.31x           6.08    2.81   14.09
 
 (aka Mac-Mini)
 
-Oops! it's a bit slower than the apache encoder.  I need to fix this.
-*THIS IS FIXED IN V3.2.0 WILL POST NEW RESULTS SHORTLY*
-
-Tested: Sat Mar 24 22:27:06 EDT 2007
-
 {{{
+$ date
+Tue Jun  5 09:45:07 EDT 2007
+$ ./speedtest
+
 Message size = 20
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    0.09    0.12    1.33x           0.18    0.05    0.07    0.07
-Decode    0.09    0.10    1.11x           0.11    0.07    0.17
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.09    0.12    1.33x           0.18    0.06    0.07    0.09    0.07
+Decode    0.09    0.10    1.11x           0.11    0.06    0.18    1.02
 
 Message size = 200
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    0.74    0.64    0.86x           1.41    0.46    0.49    0.57
-Decode    0.63    0.78    1.24x           0.98    0.57    1.62
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.55    0.64    1.16x           1.41    0.45    0.49    0.84    0.57
+Decode    0.63    0.79    1.25x           0.99    0.56    1.62   10.33
 
 Message size = 2000
-        modpb64 apache  improvement     modpb85 modpurl modpb16 modpjs
-Encode    7.26    5.73    0.79x          13.66    4.39    4.73    5.48
-Decode    6.16    7.40    1.20x           9.71    5.47   16.00
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    5.08    5.73    1.13x          13.66    4.40    4.66    8.33    5.48
+Decode    6.11    7.42    1.21x           9.72    5.48   15.98  103.96
 }}}
 
 == 1.33Ghz PowerPC G4, gcc 4.0.1, -O3 ==
