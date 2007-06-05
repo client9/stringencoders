@@ -10,7 +10,7 @@ void hexencodemap_char()
     unsigned char e1[256];
     unsigned char e2[256];
 
-    for (i = 0;i <= 256; ++i) {
+    for (i = 0;i < 256; ++i) {
         e1[i] = 0;
         e2[i] = 0;
     }
@@ -31,7 +31,7 @@ void hexdecodemap()
     int i;
     uint32_t map1[256];
     uint32_t map2[256];
-    for (i = 0; i <= 255; ++i) {
+    for (i = 0; i < 256; ++i) {
         map1[i] = 256;
         map2[i] = 256;
     }
