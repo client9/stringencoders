@@ -1,4 +1,4 @@
-AC_INIT(stringencoders, [v3.3.0], [nickg -at- modp -dot- com])
+AC_INIT(stringencoders, [v3.3.1], [nickg -at- modp -dot- com])
 AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
