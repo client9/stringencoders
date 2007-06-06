@@ -108,7 +108,8 @@ speedtest_LDADD = libmodpbase64.la
 speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
 
-speedtest_ascii_SOURCES = test/speedtest_ascii.c
+test/speedtest_ascii.c: modp_ascii_data.h
+speedtest_ascii_SOURCES = test/speedtest_ascii.c 
 speedtest_ascii_LDADD = libmodpbase64.la
 
 modp_b2_test_SOURCES = test/modp_b2_test.c
