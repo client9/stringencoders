@@ -22,6 +22,7 @@ static char* testNoEscape()
 
     int sz = modp_bjavascript_encode_strlen(s1, len1);
     mu_assert_int_equals(sz, len1);
+
     return 0;
 }
 
@@ -39,6 +40,17 @@ static char* testSimpleEscape()
 
     int sz = modp_bjavascript_encode_strlen(s1, len1);
     mu_assert_int_equals(sz, len2);
+
+    /*
+     * Test the Raw escape '\' --> '\\'
+     */
+    char ibuf[] = {'\\', '\0'};
+    memset(buf, 0, sizeof(buf));   
+    d = modp_bjavascript_encode(buf,ibuf, 1);
+    mu_assert_int_equals(buf[0], '\\');
+    mu_assert_int_equals(buf[1], '\\');
+    mu_assert_int_equals(buf[2], 0);
+
     return 0;
 }
 
@@ -56,6 +68,14 @@ static char* testSQuoteEscape()
 
     int sz = modp_bjavascript_encode_strlen(s1, len1);
     mu_assert_int_equals(sz, len2);
+
+    char ibuf[] = {'\'', '\0'};
+    memset(buf, 0, sizeof(buf));
+    d = modp_bjavascript_encode(buf, ibuf, 1);
+    mu_assert_int_equals(buf[0], '\\');
+    mu_assert_int_equals(buf[1], '\'');
+    mu_assert_int_equals(buf[2], '\0');
+
     return 0;
 }
 
@@ -73,6 +93,12 @@ static char* testDQuoteEscape()
 
     int sz = modp_bjavascript_encode_strlen(s1, len1);
     mu_assert_int_equals(sz, len2);
+    char ibuf[] = {'\"', '\0'};
+    memset(buf, 0, sizeof(buf));
+    d = modp_bjavascript_encode(buf, ibuf, 1);
+    mu_assert_int_equals(buf[0], '\\');
+    mu_assert_int_equals(buf[1], '\"');
+    mu_assert_int_equals(buf[2], '\0');
     return 0;
 }
 
