@@ -5,9 +5,8 @@
  * \file
  * <PRE>
  * High performance WEB-SAFE base64 encoder / decoder
- * Version 1.0 -- 02-Sep-2006
  *
- * Copyright &copy; 2005, 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005, 2006, 2007 Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * http://code.google.com/p/stringencoders/
@@ -27,12 +26,18 @@
  *
  */
 
-#ifndef MODP_B64W
-#define MODP_B64W
+#ifndef COM_MODP_STRINGENCODERS_B64W
+#define COM_MODP_STRINGENCODERS_B64W
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
+
+BEGIN_C
 
     /**
      * Encode a raw binary string into web-safe base 64.
@@ -132,10 +137,7 @@ extern "C" {
      */
 #define modp_b64w_encode_strlen(A) ((A + 2)/ 3 * 4)
 
-#ifdef __cplusplus
-}
-#endif
-
+END_C
 
 #ifdef __cplusplus
 #include <string>
@@ -146,7 +148,7 @@ namespace modp {
      * web-safe base 64 decode a string (self-modifing)
      * On failure, the string is empty.
      *
-     * This function is for C++ only (duh)
+     * These functions arer for C++ only (duh)
      *
      * \param[in,out] s the string to be decoded
      * \return a reference to the input string
