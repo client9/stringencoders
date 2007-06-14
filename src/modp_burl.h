@@ -114,6 +114,24 @@ END_C
 
 namespace modp {
 
+    inline std::string url_encode(const char* s, size_t len)
+    {
+        std::string x(modp_burl_encode_len(len), '\0');
+        int d = modp_burl_encode(const_cast<char*>(x.data()), s, len);
+        x.erase(d, std::string::npos);
+        return x;
+    }
+
+    inline std::string url_encode(const char* s)
+    {
+        return url_encode(s, strlen(s));
+    }
+
+    inline std::string url_encode(const std::string& s)
+    {
+        return url_encode(s.data(), s.size());
+    }
+
     /**
      * Standard (maximal) url encoding.
      *
@@ -122,21 +140,11 @@ namespace modp {
      */
     inline std::string& url_encode(std::string& s)
     {
-        std::string x(modp_burl_encode_len(s.size()), '\0');
-        int d = modp_burl_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        std::string x(url_encode(s.data(), s.size()));
         s.swap(x);
         return s;
     }
-
-    inline std::string url_encode(const std::string& s)
-    {
-        std::string x(modp_burl_encode_len(s.size()), '\0');
-        int d = modp_burl_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
-        return x;
-    }
-
+ 
     /**
      * Minimal Url Encoding
      *

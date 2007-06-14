@@ -137,6 +137,40 @@ END_C
 #include <string>
 
 namespace modp {
+    /** \brief b64 encode a cstr with len
+     *
+     * \param[in] s the input string to encode
+     * \param[in] len the length of the input string
+     * \return a newly allocated b64 string.  Empty if failed.
+     */
+    inline std::string b64_encode(const char* s, size_t len)
+    {
+        std::string x(modp_b64_encode_len(len), '\0');
+        int d = modp_b64_encode(const_cast<char*>(x.data()), s, len);
+        x.erase(d, std::string::npos);
+        return x;
+    }
+
+    /** \brief b64 encode a cstr
+     *
+     * \param[in] s the input string to encode
+     * \return a newly allocated b64 string.  Empty if failed.
+     */
+    inline std::string b64_encode(const char* s)
+    {
+        return b64_encode(s, strlen(s));
+    }
+    
+    /** \brief b64 encode a const std::string
+     *
+     * \param[in] s the input string to encode
+     * \return a newly allocated b64 string.  Empty if failed.
+     */
+    inline std::string b64_encode(const string& s)
+    {
+        return b64_encode(s.data(), s.size());
+    }
+
     /**
      * base 64 encode a string (self-modifing)
      *
@@ -147,28 +181,9 @@ namespace modp {
      */
     inline std::string& b64_encode(std::string& s)
     {
-        std::string x(modp_b64_encode_len(s.size()), '\0');
-        int d = modp_b64_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        std::string x(b64_encode(s.data(), s.size()));
         s.swap(x);
         return s;
-    }
-
-    /**
-     * \param[in] s input string
-     * \return b64 encoded string
-     */
-    inline std::string b64_encode(const std::string& s)
-    {
-        // allocate space
-        std::string x(modp_b64_encode_len(s.size()), '\0');
-
-        // do it
-        int d = modp_b64_encode(const_cast<char*>(x.data()), s.data(), s.size());
-
-        // remove empty space at the end
-        x.erase(d, std::string::npos);
-        return x;
     }
 
     /**
