@@ -5,7 +5,6 @@
  * \file
  * <PRE>
  * MODP_B85 - High performance base85 encoder/decoder
- * Version 1.2 -- 10-Mar-2006
  * http://modp.com/release/base64
  *
  * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
@@ -65,7 +64,7 @@ int modp_b85_decode(char* out, const char* data, int len)
 {
     int i,j;
     const int buckets = len / 5;
-    const unsigned char* d2 = (const unsigned char*) data;
+    const uint8_t* d2 = (const uint8_t*) data;
     if (len % 5 != 0) {
         return -1;
     }
