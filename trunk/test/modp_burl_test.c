@@ -192,6 +192,14 @@ static char* testUrlDecodeHexBad()
     const char* bad3 = "%XX"; // bad chars
     const char* bad4 = "%2"; // not enough room, good char
     const char* bad5 = "%X"; // not enought room, bad char
+    const char* bad6 = "%";  // test oddball
+    const char* bad7 = "AA%"; // test end of line
+    char bad8[4]; // %XX where X is high bit (test sign char vs. uint8_t*)
+    bad8[0] = '%';
+    bad8[1] = 0x81;
+    bad8[2] = 0x82;
+    bad8[3] = 0;
+
     size_t d = 0;
     char buf[1000];
 
@@ -219,6 +227,22 @@ static char* testUrlDecodeHexBad()
     d = modp_burl_decode(buf, bad5, strlen(bad5));
     mu_assert_int_equals(d, strlen(bad5));
     mu_assert_str_equals(buf, bad5);
+
+    memset(buf, 0, sizeof(buf));
+    d= modp_burl_decode(buf, bad6, strlen(bad6));
+    mu_assert_int_equals(d, strlen(bad6));
+    mu_assert_str_equals(buf, bad6);
+
+    memset(buf, 0, sizeof(buf));
+    d= modp_burl_decode(buf, bad7, strlen(bad7));
+    mu_assert_int_equals(d, strlen(bad7));
+    mu_assert_str_equals(buf, bad7);
+
+    memset(buf, 0, sizeof(buf));
+    d = modp_burl_decode(buf, bad8, strlen(bad8));
+    mu_assert_int_equals(d, strlen(bad8));
+    mu_assert_str_equals(buf, bad8);
+    return 0;
 
     return 0;
 }
