@@ -186,6 +186,23 @@ namespace modp {
         return s;
     }
 
+    inline std::string b64_decode(const char* src, size_t len)
+    {
+        std::string x(modp_b64_decode_len(len)+1, '\0');
+        int d = modp_b64_decode(const_cast<char*>(x.data()), src, len);
+        if (d < 0) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
+        return x;
+    }
+
+    inline std::string b64_decode(const char* src)
+    {
+        return b64_decode(src, strlen(src));
+    }
+
     /**
      * base 64 decode a string (self-modifing)
      * On failure, the string is empty.
@@ -197,32 +214,16 @@ namespace modp {
      */
     inline std::string& b64_decode(std::string& s)
     {
-        std::string x(modp_b64_decode_len(s.size())+1, '\0');
-        int d = modp_b64_decode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d < 0) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
+        std::string x(b64_decode(s.data(), s.size()));
         s.swap(x);
         return s;
     }
 
-    /**
-     * \param[n] s the string to decode
-     * \return decoded string.  Empty if an error occured.
-     */
     inline std::string b64_decode(const std::string& s)
     {
-        std::string x(modp_b64_decode_len(s.size())+1, '\0');
-        int d = modp_b64_decode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d < 0) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        return x;
+        return b64_decode(s.data(), s.size());
     }
+
 }
 
 #endif /* __cplusplus */

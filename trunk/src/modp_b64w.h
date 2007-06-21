@@ -188,9 +188,26 @@ namespace modp {
      */
     inline std::string& b64w_encode(std::string& s)
     {
-        std::string x(b64w_encode(s.data(), s.size());
+        std::string x(b64w_encode(s.data(), s.size()));
         s.swap(x);
         return s;
+    }
+
+    inline std::string b64w_decode(const char* src, size_t len)
+    {
+        std::string x(modp_b64w_decode_len(len)+1, '\0');
+        int d = modp_b64w_decode(const_cast<char*>(x.data()), src, len);
+        if (d < 0) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
+        return x;
+    }
+
+    inline std::string b64w_decode(const char* src)
+    {
+        return b64w_decode(src, strlen(src));
     }
 
     /**
@@ -204,15 +221,14 @@ namespace modp {
      */
     inline std::string& b64w_decode(std::string& s)
     {
-        std::string x(modp_b64w_decode_len(s.size())+1, '\0');
-        int d = modp_b64w_decode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d < 0) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
+        std::string x(b64w_decode(s.data(), s.size()));
         s.swap(x);
         return s;
+    }
+
+    inline std::string b64w_decode(const std::string& s)
+    {
+        return b64w_decode(s.data(), s.size());
     }
 }
 

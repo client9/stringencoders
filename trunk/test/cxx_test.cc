@@ -9,8 +9,9 @@ using std::cerr;
 
 #include "modp_b2.h"
 #include "modp_b16.h"
-#include "modp_b64.h"
 #include "modp_b85.h"
+#include "modp_b64.h"
+#include "modp_b64w.h"
 #include "modp_burl.h"
 #include "modp_bjavascript.h"
 #include "modp_ascii.h"
@@ -19,7 +20,7 @@ using namespace modp;
 
 #define WHERE(A) A << "[" << __FILE__ << ":" << __LINE__ << "] "
 
-void test_b2()
+static void test_b2()
 {
     string orig("this is a test");
     string s(orig);
@@ -38,7 +39,7 @@ void test_b2()
     }
 }
 
-void test_b2_const()
+static void test_b2_const()
 {
     const string orig("this is a test");
     const string s(b2_encode(orig));
@@ -56,7 +57,7 @@ void test_b2_const()
     }
 }
 
-void test_b16()
+static void test_b16()
 {
     string orig("this is a test");
     string s(orig);
@@ -76,7 +77,7 @@ void test_b16()
     }
 }
 
-void test_b16_const()
+static void test_b16_const()
 {
     const string orig("this is a test");
     const string s(b16_encode(orig));
@@ -95,7 +96,7 @@ void test_b16_const()
     }
 }
 
-void test_b64()
+static void test_b64()
 {
     string orig("this is a test");
     string s(orig);
@@ -120,7 +121,32 @@ void test_b64()
     }
 }
 
-void test_b64_const()
+static void test_b64w()
+{
+    string orig("this is a test");
+    string s(orig);
+    b64w_encode(s);
+    if (s == orig) {
+        WHERE(cerr) << "something wrong\n";
+        exit(1);
+    }
+
+    b64w_decode(s);
+    if (s != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        exit(1);
+    }
+
+    // test bad decode length
+    s = "a";
+    b64w_decode(s);
+    if (!s.empty()) {
+        WHERE(cerr) << "Expected decode output to be empty\n";
+        exit(1);
+    }
+}
+
+static void test_b64_const()
 {
     const string orig("this is a test");
     const string s(b64_encode(orig));
@@ -138,7 +164,68 @@ void test_b64_const()
     }
 }
 
-void test_b85()
+static void test_b64w_const()
+{
+    const string orig("this is a test");
+    const string s(b64w_encode(orig));
+    string result = b64w_decode(s);
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+
+    const string badstr("a");
+    result = b64w_decode(badstr);
+    if (!result.empty()) {
+        WHERE(cerr) << "Expected decode output to be empty\n";
+        exit(1);
+    }
+} 
+
+static void test_b64_cstr()
+{
+    const char* orig = "this is a test";
+    const string s(b64_encode(orig));
+    string result = b64_decode(s);
+
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+    result = b64_decode(s.data(), s.size());
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+    result = b64_decode(s.c_str());
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+}
+
+static void test_b64w_cstr()
+{
+    const char* orig = "this is a test";
+    const string s(b64w_encode(orig));
+    string result = b64w_decode(s);
+
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+    result = b64w_decode(s.data(), s.size());
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+    result = b64w_decode(s.c_str());
+    if (result != orig) {
+        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        exit(1);
+    }
+}
+static void test_b85()
 {
     // must be multiple of 4
     string orig("this is a test!!");
@@ -172,7 +259,7 @@ void test_b85()
     }
 }
 
-void test_b85_const()
+static void test_b85_const()
 {
     const string orig("this is a test!!"); // must be multiple of 4
     const string s(b85_encode(orig));
@@ -190,7 +277,7 @@ void test_b85_const()
     }
 }
 
-void test_url()
+static void test_url()
 {
     string orig("this is a test");
     string expected("this+is+a+test");
@@ -216,7 +303,7 @@ void test_url()
 
 }
 
-void test_url_const()
+static void test_url_const()
 {
     const string orig("this is a test");
     const string expected("this+is+a+test");
@@ -240,7 +327,7 @@ void test_url_const()
     }
 }
 
-void test_url_cstr()
+static void test_url_cstr()
 {
     const char* data = "this+is+a%20test";
     const string expected("this is a test");
@@ -258,7 +345,7 @@ void test_url_cstr()
     }
 }
 
-void test_javascript()
+static void test_javascript()
 {
     string orig("this \"is\' a test\n");
     string expected("this \\\"is\\' a test\\n");
@@ -268,7 +355,7 @@ void test_javascript()
         exit(1);
     }
 }
-void test_javascript_const()
+static void test_javascript_const()
 {
     const string orig("this \"is\' a test\n");
     const string expected("this \\\"is\\' a test\\n");
@@ -279,7 +366,7 @@ void test_javascript_const()
     }
 }
 
-void test_ascii_copy()
+static void test_ascii_copy()
 {
     string orig;
 
@@ -306,6 +393,10 @@ int main()
     test_b16_const();
     test_b64();
     test_b64_const();
+    test_b64_cstr();
+    test_b64w();
+    test_b64w_const();
+    test_b64w_cstr();
     test_b85();
     test_b85_const();
     test_url();
