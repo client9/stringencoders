@@ -147,12 +147,13 @@ int modp_burl_min_encode_strlen(const char* src, const int len)
     return count;
 }
 
-int modp_burl_decode(char* dest, const char* src, const int len)
+int modp_burl_decode(char* dest, const char* s, const int len)
 {
     uint32_t d = 0; // used for decoding %XX
+    const uint8_t* src = (const uint8_t*) s;
     const char* deststart = dest;
-    const char* srcend = src + len;
-    const char* srcendloop = srcend - 2;
+    const uint8_t* srcend = (const uint8_t*)(src + len);
+    const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
 
     while (src < srcendloop) {
         switch (*src) {
