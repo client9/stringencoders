@@ -180,6 +180,8 @@ perftest: speedtest speedtest_numtoa speedtest_ascii
 	./speedtest_numtoa
 	./speedtest_ascii
 
+.PHONY: doxy
+
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile
 

@@ -158,8 +158,7 @@ speedtest_LDADD = libmodpbase64.la
 
 speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
-
-speedtest_ascii_SOURCES = test/speedtest_ascii.c
+speedtest_ascii_SOURCES = test/speedtest_ascii.c 
 speedtest_ascii_LDADD = libmodpbase64.la
 
 modp_b2_test_SOURCES = test/modp_b2_test.c
@@ -1482,6 +1481,8 @@ modp_burl_data.h: modp_burl_gen
 modp_bjavascript_data.h: modp_bjavascript_gen
 	./modp_bjavascript_gen > modp_bjavascript_data.h 
 
+test/speedtest_ascii.c: modp_ascii_data.h
+
 test/modp_b64w_test.c: test/modp_b64_test.c
 	perl -p -i -e 's/b64/b64w/g' < test/modp_b64_test.c > test/modp_b64w_test.c
 
@@ -1518,6 +1519,8 @@ perftest: speedtest speedtest_numtoa speedtest_ascii
 	./speedtest
 	./speedtest_numtoa
 	./speedtest_ascii
+
+.PHONY: doxy
 
 doxy: ${SOURCES} doxy/header.html doxy/footer.html Doxyfile
 	doxygen Doxyfile
