@@ -160,7 +160,7 @@ namespace modp {
     {
         return b64_encode(s, strlen(s));
     }
-    
+
     /** \brief b64 encode a const std::string
      *
      * \param[in] s the input string to encode

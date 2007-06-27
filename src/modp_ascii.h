@@ -110,7 +110,7 @@ namespace modp {
         modp_toupper(const_cast<char*>(str.c_str()), str.size());
         return str;
     }
-        
+
     inline std::string toupper(const std::string& str)
     {
         std::string s(str);
