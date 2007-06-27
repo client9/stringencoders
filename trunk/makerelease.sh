@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILE=stringencoders-v3.4.0.a
+FILE=stringencoders-v3.4.0
 rm -rf ${FILE}
 svn co http://stringencoders.googlecode.com/svn/trunk ${FILE}
 
