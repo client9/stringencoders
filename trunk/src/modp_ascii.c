@@ -70,10 +70,10 @@ void modp_toupper_copy(char* dest, const char* str, int len)
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[ustr[i++]];
-        case 2: *dest++ = gsToUpperMap[ustr[i++]];
-        case 1: *dest++ = gsToUpperMap[ustr[i]];
-        case 0: *dest = '\0';
+    case 3: *dest++ = gsToUpperMap[ustr[i++]];
+    case 2: *dest++ = gsToUpperMap[ustr[i++]];
+    case 1: *dest++ = gsToUpperMap[ustr[i]];
+    case 0: *dest = '\0';
     }
 }
 
@@ -101,10 +101,10 @@ void modp_tolower_copy(char* dest, const char* str, int len)
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-        case 3: *dest++ = gsToLowerMap[ustr[i++]];
-        case 2: *dest++ = gsToLowerMap[ustr[i++]];
-        case 1: *dest++ = gsToLowerMap[ustr[i]];
-        case 0: *dest = '\0';
+    case 3: *dest++ = gsToLowerMap[ustr[i++]];
+    case 2: *dest++ = gsToLowerMap[ustr[i++]];
+    case 1: *dest++ = gsToLowerMap[ustr[i]];
+    case 0: *dest = '\0';
     }
 }
 
@@ -140,10 +140,10 @@ void modp_toprint_copy(char* dest, const char* str, int len)
     }
 
     switch (leftover) {
-        case 3: *dest++ = gsToPrintMap[s[i++]];
-        case 2: *dest++ = gsToPrintMap[s[i++]];
-        case 1: *dest++ = gsToPrintMap[s[i]];
-        case 0: *dest = '\0';
+    case 3: *dest++ = gsToPrintMap[s[i++]];
+    case 2: *dest++ = gsToPrintMap[s[i++]];
+    case 1: *dest++ = gsToPrintMap[s[i]];
+    case 0: *dest = '\0';
     }
 }
 

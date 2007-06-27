@@ -6,7 +6,7 @@
  * <PRE>
  * High Performance URL Encoder/Decoder
  *
- * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * http://code.google.com/p/stringencoders/
@@ -144,7 +144,7 @@ namespace modp {
         s.swap(x);
         return s;
     }
- 
+
     /**
      * Minimal Url Encoding
      *
