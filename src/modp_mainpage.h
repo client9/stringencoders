@@ -47,6 +47,10 @@
  * encoding since true division has to be used (instead of raw bit
  * operations).
  *
+ * \section mod_b2
+ * Converts the given string to a base 2 or binary encoding (all
+ * 1s and 0s).  For useful for debugging.
+ *
  * \section modp_burl
  *
  * This performs url-encoding and url-decoding.  While not a true base
