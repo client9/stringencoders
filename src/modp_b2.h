@@ -128,4 +128,4 @@ namespace modp {
 
 #endif /* cplusplus */
 
-#endif  /* ifndef modp_b16 */
+#endif  /* ifndef modp_b2 */

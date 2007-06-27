@@ -82,32 +82,50 @@ END_C
 namespace modp {
 
     /**
-     * /param[in,out] s the string to encode
-     * /return a reference to the input string, empty if error
+     *
+     * \param[in] s the input data
+     * \param[in] len the length of input
+     * \return b85 encoded string
      */
-    inline std::string& b85_encode(std::string& s)
+    inline std::string b85_encode(const char* s, size_t len)
     {
-        std::string x(modp_b85_encode_len(s.size()), '\0');
-        int d = modp_b85_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d < 0) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        s.swap(x);
-        return s;
-    }
-
-    inline std::string b85_encode(const std::string& s)
-    {
-        std::string x(modp_b85_encode_len(s.size()), '\0');
-        int d = modp_b85_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        std::string x(modp_b85_encode_len(len), '\0');
+        int d = modp_b85_encode(const_cast<char*>(x.data()), s, len);
         if (d < 0) {
             x.clear();
         } else {
             x.erase(d, std::string::npos);
         }
         return x;
+    }
+
+    /**
+     * \param[in] null-terminated c-string input
+     * \return b85 encoded string
+     */
+    inline std::string b85_encode(const char* s)
+    {
+        return b85_encode(s, strlen(s));
+    }
+
+    /**
+     * /param[in,out] s the string to encode
+     * /return a reference to the input string, empty if error
+     */
+    inline std::string& b85_encode(std::string& s)
+    {
+        std::string x(b85_encode(s.data(), s.size()));
+        s.swap(x);
+        return s;
+    }
+
+    /**
+     * \param[in] s the input string
+     * \return base85 encoded string
+     */
+    inline std::string b85_encode(const std::string& s)
+    {
+        return b85_encode(s.data(), s.size());
     }
 
     /**
@@ -134,6 +152,18 @@ namespace modp {
         std::string x(s);
         b85_decode(x);
         return x;
+    }
+
+    inline std::string b85_decode(const char* s, size_t len)
+    {
+        string x(s,len);
+        return b85_decode(x);
+    }
+
+    inline std::string b85_decode(const char* s)
+    {
+        string x(s);
+        return b85_decode(x);
     }
 
 }  /* namespace modp */

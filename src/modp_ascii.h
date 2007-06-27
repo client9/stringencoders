@@ -19,83 +19,86 @@
 #define COM_MODP_STRINGENCODERS_ASCII
 
 #ifdef __cplusplus
-extern "C" {
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
 #endif
 
-    /** \brief ascii upper case a string in place
-     *
-     * \param[in,out] str the input string
-     * \param[in] len the length of input string (the strlen)
-     */
-    void modp_toupper(char* str, int len);
+BEGIN_C
 
-    /** \brief make lower case copy of input string
-     *
-     * \param[out] output buffer, with at least 'len + 1' bytes allocated
-     * \param[in] str the input string
-     * \param[in] len the length of input string (the strlen)
-     *
-     * Please make sure dest has been allocation with at least 'len+1'
-     * bytes.  This appends a trailing NULL character at the end of
-     * dest!
-     *
-     * This is based on the algorithm by Paul Hsieh
-     * http://www.azillionmonkeys.com/qed/asmexample.html
-     */
-    void modp_toupper_copy(char* dest, const char* str, int len);
+/*
+ * \param[in,out] str the input string
+ * \param[in] len the length of input string (the strlen)
+ */
+void modp_toupper(char* str, int len);
 
-    /** \brief lower case a string in place
-     *
-     * \param[in, out] str the input string
-     * \param[in] len the length of input string (the strlen)
-     *
-     */
-    void modp_tolower(char* str, int len);
+/** \brief make lower case copy of input string
+ *
+ * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[in] str the input string
+ * \param[in] len the length of input string (the strlen)
+ *
+ * Please make sure dest has been allocation with at least 'len+1'
+ * bytes.  This appends a trailing NULL character at the end of
+ * dest!
+ *
+ * This is based on the algorithm by Paul Hsieh
+ * http://www.azillionmonkeys.com/qed/asmexample.html
+ */
+void modp_toupper_copy(char* dest, const char* str, int len);
 
-    /** \brief make lower case copy of input string
-     *
-     * \param[out] output buffer, with at least 'len + 1' bytes allocated
-     * \param[in] str the input string
-     * \param[in] len the length of input string (the strlen)
-     *
-     * Please make sure dest has been allocation with at least 'len+1'
-     * bytes.  This appends a trailing NULL character at the end of
-     * dest!
-     *
-     * This is based on the algorithm by Paul Hsieh
-     * http://www.azillionmonkeys.com/qed/asmexample.html
-     */
-    void modp_tolower_copy(char* dest, const char* str, int len);
+/** \brief lower case a string in place
+ *
+ * \param[in, out] str the input string
+ * \param[in] len the length of input string (the strlen)
+ *
+ */
+void modp_tolower(char* str, int len);
 
-    /** \brief turn a string into 7-bit printable ascii.
-     *
-     * By "printable" we means all characters between 32 and 126.
-     * All other values are turned into '?'
-     *
-     * \param[in, out] str the input string
-     * \param[in] len the length of input string (the strlen)
-     *
-     */
-    void modp_toprint(char* str, int len);
+/** \brief make lower case copy of input string
+ *
+ * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[in] str the input string
+ * \param[in] len the length of input string (the strlen)
+ *
+ * Please make sure dest has been allocation with at least 'len+1'
+ * bytes.  This appends a trailing NULL character at the end of
+ * dest!
+ *
+ * This is based on the algorithm by Paul Hsieh
+ * http://www.azillionmonkeys.com/qed/asmexample.html
+ */
+void modp_tolower_copy(char* dest, const char* str, int len);
 
-    /** \brief make a printable copy of a string
-     *
-     * By "printable" we means all characters between 32 and 126.
-     * All other values are turned into '?'
-     *
-     * \param[out] output buffer, with at least 'len + 1' bytes allocated
-     * \param[in] str the input string
-     * \param[in] len the length of input string (the strlen)
-     *
-     * Please make sure dest has been allocation with at least 'len+1'
-     * bytes.  This appends a trailing NULL character at the end of
-     * dest!
-     */
-    void modp_toprint_copy(char* dest, const char* str, int len);
+/** \brief turn a string into 7-bit printable ascii.
+ *
+ * By "printable" we means all characters between 32 and 126.
+ * All other values are turned into '?'
+ *
+ * \param[in, out] str the input string
+ * \param[in] len the length of input string (the strlen)
+ *
+ */
+void modp_toprint(char* str, int len);
 
-#ifdef __cplusplus
-}
-#endif
+/** \brief make a printable copy of a string
+ *
+ * By "printable" we means all characters between 32 and 126.
+ * All other values are turned into '?'
+ *
+ * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[in] str the input string
+ * \param[in] len the length of input string (the strlen)
+ *
+ * Please make sure dest has been allocation with at least 'len+1'
+ * bytes.  This appends a trailing NULL character at the end of
+ * dest!
+ */
+void modp_toprint_copy(char* dest, const char* str, int len);
+
+END_C
 
 #ifdef __cplusplus
 #include <string>
@@ -107,7 +110,7 @@ namespace modp {
         modp_toupper(const_cast<char*>(str.c_str()), str.size());
         return str;
     }
-
+        
     inline std::string toupper(const std::string& str)
     {
         std::string s(str);

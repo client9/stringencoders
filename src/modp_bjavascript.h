@@ -6,12 +6,12 @@
  * <PRE>
  * High Performance c-string to javascript-string encoder
  *
- * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * http://code.google.com/p/stringencoders/
  *
- * Released under bsd license.  See bfast64.c for details.
+ * Released under bsd license.  See modp_bjavascript.c for details.
  * </PRE>
  */
 
@@ -66,23 +66,32 @@ END_C
 #include <string>
 namespace modp {
 
+    inline std::string javascript_encode(const char* s, size_t len)
+    {
+        std::string x(modp_bjavascript_encode_len(len), '\0');
+        int d = modp_bjavascript_encode(const_cast<char*>(x.data()), s, len);
+        x.erase(d, std::string::npos);
+        return x;
+    }
+
+    inline std::string javascript_encode(const char* s)
+    {
+        return javascript_encode(s, strlen(s));
+    }
+
     inline std::string& javascript_encode(std::string& s)
     {
-        std::string x(modp_bjavascript_encode_len(s.size()), '\0');
-        int d = modp_bjavascript_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        std::string x(javascript_encode(s.data(), s.size()));
         s.swap(x);
         return s;
     }
 
     inline std::string javascript_encode(const std::string& s)
     {
-        std::string x(modp_bjavascript_encode_len(s.size()), '\0');
-        int d = modp_bjavascript_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
-        return x;
+        return javascript_encode(s.data(), s.size());
     }
-}
-#endif
 
-#endif
+}       /* namespace modp */
+#endif  /* __cplusplus */
+
+#endif /* modp_bjavascript */

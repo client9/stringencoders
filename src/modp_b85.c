@@ -5,9 +5,9 @@
  * \file
  * <PRE>
  * MODP_B85 - High performance base85 encoder/decoder
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

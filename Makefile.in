@@ -1486,7 +1486,17 @@ test/speedtest_ascii.c: modp_ascii_data.h
 test/modp_b64w_test.c: test/modp_b64_test.c
 	perl -p -i -e 's/b64/b64w/g' < test/modp_b64_test.c > test/modp_b64w_test.c
 
-.PHONY: test unittest perftest doxy lcov-html
+.PHONY: test unittest perftest doxy lcov-html help
+help:
+	@echo ""
+	@echo "make -- make everything"
+	@echo "make install -- install everything"
+	@echo "make test -- run unit and performance tests"
+	@echo "make unittest -- run only unit tests"
+	@echo "make perftest -- run only performance tests"
+	@echo "make doxy -- generate doxygen output"
+	@echo "make lcov-html -- make test + generate lcov html output"
+	@echo ""
 
 lcov-html:
 	lcov -b . --directory . --zerocounters
