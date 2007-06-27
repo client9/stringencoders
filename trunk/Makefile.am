@@ -145,7 +145,17 @@ modp_ascii_test_LDADD = libmodpbase64.la
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
-.PHONY: test unittest perftest doxy lcov-html
+.PHONY: test unittest perftest doxy lcov-html help
+help:
+	@echo ""
+	@echo "make -- make everything"
+	@echo "make install -- install everything"
+	@echo "make test -- run unit and performance tests"
+	@echo "make unittest -- run only unit tests"
+	@echo "make perftest -- run only performance tests"
+	@echo "make doxy -- generate doxygen output"
+	@echo "make lcov-html -- make test + generate lcov html output"
+	@echo ""
 
 lcov-html:
 	lcov -b . --directory . --zerocounters
@@ -158,7 +168,6 @@ lcov-html:
 	rm -rf lcov-html
 	mkdir lcov-html
 	genhtml -o lcov-html stringencoders.info
-
 
 test: unittest speedtest
 

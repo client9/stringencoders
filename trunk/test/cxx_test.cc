@@ -60,11 +60,20 @@ static void test_b2_const()
 static void test_b16()
 {
     string orig("this is a test");
+    string expected("7468697320697320612074657374");
     string s(orig);
     b16_encode(s);
+    if (s.size() != expected.size()) {
+        WHERE(cerr) << "Bad Size.  Expected " << expected.size() << ", recieved " << s.size() << "\n";
+        exit(1);
+    }
+    if (s != expected) {
+        WHERE(cerr) << "Expected " << expected << ", recieved " << s << "\n";
+        exit(1);
+    }    
     b16_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", recieved '" << s << "'\n";
         exit(1);
     }
 

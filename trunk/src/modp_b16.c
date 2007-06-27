@@ -1,14 +1,13 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
  * \file
  * <PRE>
  * MODP_B16 - High performance base16 encoder/decoder
- * Version 1.0 -- 25-Apr-2006
- * http://modp.com/release/base64
+ * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2005, 2006  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005, 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

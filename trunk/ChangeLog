@@ -9,7 +9,7 @@ TODO:
 	* Ugh.  Fix bug in url decode where core dump can occur if someone passes in %XX, where X
 	  has high bit set (> 0x80).  Due to signed chars, this is interpreted as a negative, and
 	  bad things happen.  Thanks to Andrei Khemmelis.
-        * Improve more C++ methods
+        * Improve more C++ methods, b64, b64w
 
 05-Jun-2007
 	* Fix bug in modp_b16_gen that could core dump (doesn't not effect output, only occurs

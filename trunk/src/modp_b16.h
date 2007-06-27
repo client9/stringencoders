@@ -7,7 +7,7 @@
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
  * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2006, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005-2007, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  *
  * Released under bsd license.  See modp_b16.c for details.
@@ -73,6 +73,25 @@ END_C
 #include <string>
 
 namespace modp {
+
+    inline std::string b16_encode(const char* s, size_t len)
+    {
+        std::string x(modp_b16_encode_len(len), '\0');
+        int d = modp_b16_encode(const_cast<char*>(x.data()), s, len);
+        x.erase(d, std::string::npos);
+        return x;
+    }
+
+    inline std::string b16_encode(const char* s)
+    {
+        return b16_encode(s, strlen(s));
+    }
+
+    inline std::string b16_encode(const std::string& s)
+    {
+        return b16_encode(s.data(), s.size());
+    }
+
     /**
      * hex encode a string (self-modified)
      * \param[in,out] s the input string to be encoded
@@ -80,19 +99,26 @@ namespace modp {
      */
     inline std::string& b16_encode(std::string& s)
     {
-        std::string x(modp_b16_encode_len(s.size()), '\0');
-        int d = modp_b16_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        std::string x(b16_encode(s.data(), s.size()));
         s.swap(x);
         return s;
     }
 
-    inline std::string b16_encode(const std::string& s)
+    inline std::string b16_decode(const char* s, size_t len)
     {
-        std::string x(modp_b16_encode_len(s.size()), '\0');
-        int d = modp_b16_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        string x(len / 2 + 1, '\0');
+        int d = modp_b16_decode(const_cast<char*>(x.data()), s, len);
+        if (d < 0) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
         return x;
+    }
+
+    inline std::string b16_decode(const char* s)
+    {
+        return b16_decode(s, strlen(s));
     }
 
     /**
@@ -104,25 +130,14 @@ namespace modp {
      */
     inline std::string& b16_decode(std::string& s)
     {
-        int d = modp_b16_decode(const_cast<char*>(s.data()), s.data(), s.size());
-        if (d < 0) {
-            s.clear();
-        } else {
-            s.erase(d, std::string::npos);
-        }
+        string x(b16_decode(s.data(), s.size()));
+        s.swap(x);
         return s;
     }
 
     inline std::string b16_decode(const std::string& s)
     {
-        std::string x(s.size()/2 + 1, '\0');
-        int d = modp_b16_decode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d < 0) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        return x;
+        return b16_decode(s.data(), s.size());
     }
 
 } /* namespace modp */
@@ -130,3 +145,4 @@ namespace modp {
 #endif  /* ifdef __cplusplus */
 
 #endif  /* ifndef modp_b16 */
+
