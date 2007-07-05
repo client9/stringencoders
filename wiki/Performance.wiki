@@ -2,6 +2,31 @@
 #labels Featured
 
 
+==Intel(R) Xeon(R) CPU L5310  @ 1.60GHz ==
+
+This is from a monster dual quad-core server.
+
+{{{
+
+gcc version 3.4.6 20060404 (Red Hat 3.4.6-3)
+Thu Jul  5 16:53:46 UTC 2007
+
+Message size = 20
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.05    0.06    1.20x           0.11    0.08    0.06    0.07    0.04
+Decode    0.07    0.11    1.57x           0.08    0.05    0.10    0.87
+
+Message size = 200
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.53    0.66    1.25x           1.19    0.41    0.48    0.62    0.39
+Decode    0.41    0.92    2.24x           0.80    0.48    0.87    9.26
+
+Message size = 2000
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    4.81    5.49    1.14x          10.55    3.82    4.82    5.91    3.79
+Decode    3.93    8.94    2.27x           7.76    4.65    8.39   92.21
+
+}}}
 
 == 2.2Ghz AMD, gcc 3.4.4 -O3==
 
