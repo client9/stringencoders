@@ -4,6 +4,15 @@
 
 == Performance Numbers ==
 
+Intel(R) Xeon(R) CPU L5310  @ 1.60GHz / Linux / Gcc 3.4.5
+{{{
+$ date
+Thu Jul  5 16:55:36 UTC 2007
+./speedtest_ascii
+type    clib    direct  map     para    hsieh1  hsieh2  Final   improvement
+toupper 520000  690000  440000  340000  320000  320000  310000  1.7x
+}}}
+
 AMD / Linux / gLibc
 
 {{{
