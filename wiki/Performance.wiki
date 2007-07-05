@@ -30,15 +30,33 @@ Decode    3.93    8.94    2.27x           7.76    4.65    8.39   92.21
 
 == 2.2Ghz AMD, gcc 3.4.4 -O3==
 
+{{{
+Thu Jul  5 17:01:59 UTC 2007
+gcc version 3.4.6 20060404 (Red Hat 3.4.6-3)
 
+
+Message size = 20
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.04    0.09    2.25x           0.09    0.06    0.04    0.10    0.06
+Decode    0.04    0.13    3.25x           0.07    0.05    0.07    0.68
+
+Message size = 200
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    0.41    0.91    2.22x           0.81    0.52    0.38    0.90    0.52
+Decode    0.31    1.20    3.87x           0.55    0.43    0.56    6.71
+
+Message size = 2000
+        modpb64 apache  improvement     modpb85 modpurl modpb16 modpb2  modpjs
+Encode    3.91    8.71    2.23x           7.93    5.01    3.62    8.97    5.05
+Decode    2.94   11.62    3.95x           5.44    4.17    5.39   66.84
+}}}
 
 
 == 2.X Ghz Intel Core 2 Duo, gcc 4.0.1 -O3 ==
 
 (aka MacBookPro)
 
-Oops! it's a bit slower than the apache encoder.  I need to fix this.
-*THIS IS FIXED IN V3.2.0 WILL POST NEW RESULTS SHORTLY*
+THESE NUMBERS ARE FOR VERSION 3.2 AND EARILER.  The new versions always are faster than apache.
 
 Tested: Fri May 11 17:20:10 EDT 2007
 
