@@ -2,6 +2,27 @@
 #labels Featured
 
 
+== Intel Xeon CPU L5310  @ 1.60GHz ==
+
+Linux, gcc 3.4.6, -O3
+
+{{{
+$ date
+Thu Jul  5 16:57:59 UTC 2007
+$./speedtest_numtoa
+    type        sprintf snprf   numtoa  improvement
+unsigned 8      200000  210000  20000   10.5x
+unsigned 16     220000  230000  40000   5.8x
+unsigned 32     220000  230000  50000   4.6x
+signed 8        200000  210000  20000   10.5x
+signed 16       230000  220000  50000   4.4x
+signed 32       220000  220000  60000   3.7x
+
+    type        %e      %f      %g      dtoa    improvement
+double          1610000 2280000 1590000 120000  13.2x
+
+}}}
+
 
 == AMD 2.2G Dual Core Operton Processor 275 ==
 
