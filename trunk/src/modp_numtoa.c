@@ -11,6 +11,10 @@
 // http://www.jb.man.ac.uk/~slowe/cpp/itoa.html
 // and http://www.ddj.com/dept/cpp/184401596?pgno=6
 
+// Version 19-Nov-2007
+// Fixed round-to-even rules to match printf
+//   thanks to Johannes Otepka
+
 /**
  * Powers of 10
  * 10^0 to 10^9
