@@ -1,8 +1,8 @@
 #!/bin/sh
 
-FILE=stringencoders-v3.4.0
+FILE=stringencoders-v3.5.0
 rm -rf ${FILE}
-svn co http://stringencoders.googlecode.com/svn/trunk ${FILE}
+svn export http://stringencoders.googlecode.com/svn/trunk ${FILE}
 
 find $FILE -name '.svn' | xargs rm -rf
 
