@@ -6,6 +6,11 @@ TODO:
 * more doco
 * man pages
 
+19-Nov-2007
+	* modp_dtoa
+	  Fixed round-to-even, and precision 0 rules to match printf
+	  thanks to Johannes Otepka
+	
 27-Jun-2007
 	* VERSION 3.4 RELEASED
 	
