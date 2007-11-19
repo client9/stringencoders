@@ -54,11 +54,13 @@ void modp_dtoa(double value, char* str, int prec)
 {
     const double thres_min = 1.0/2048.0;
     const double thres_max = (double)(0x7FFFFFFF);
+    double diff = 0.0;
     char* wstr = str;
 
     if (prec < 0) {
         prec = 0;
     } else if (prec > 9) {
+        /* precision of >= 10 can lead to overflow errors */
         prec = 9;
     }
 
@@ -71,25 +73,43 @@ void modp_dtoa(double value, char* str, int prec)
     int whole = (int) value;
     double tmp = (value - whole) * pow10[prec];
     uint32_t frac = (uint32_t)(tmp);
-    if (tmp - frac > 0.5) {
+    diff = tmp - frac;
+    if (diff > 0.5) {
+        ++frac;
+    } else if (diff == 0.5 && ((frac == 0) || (frac & 1))) {
+        /* if halfway, round up if odd, OR
+           if last digit is 0.  That last part is strange */
         ++frac;
     }
+
 
     if (value > thres_max || (frac > 0 && frac < thres_min)) {
         sprintf(str, "%e", neg ? -value : value);
         return;
     }
 
-    int count = prec;
-    // now do fractional part, as an unsigned number
-    do {
-        --count;
-        *wstr++ = 48 + (frac % 10);
-    } while (frac /= 10);
-    // add extra 0s
-    while (count-- > 0) *wstr++ = '0';
-    // add decimal
-    *wstr++ = '.';
+    if (prec == 0) {
+        diff = value - whole;
+        if (diff > 0.5) {
+            /* greater than 0.5, round up, e.g. 1.6 -> 2 */
+            ++whole;
+        } else if (diff == 0.5 && (whole & 1)) {
+            /* exactly 0.5 and ODD, then round up */
+            /* 1.5 -> 2, but 2.5 -> 2 */
+            ++whole;
+        }
+    } else {
+        int count = prec;
+        // now do fractional part, as an unsigned number
+        do {
+            --count;
+            *wstr++ = 48 + (frac % 10);
+        } while (frac /= 10);
+        // add extra 0s
+        while (count-- > 0) *wstr++ = '0';
+        // add decimal
+        *wstr++ = '.';
+    }
 
     // do whole part
     // Take care of sign

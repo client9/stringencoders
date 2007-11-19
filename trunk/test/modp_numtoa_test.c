@@ -56,9 +56,10 @@ static char* testDoubleToA()
 {
     char buf1[100];
     char buf2[100];
+    char msg[200];
     double d;
-    double wholes[] = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,67.0,101.0,10000, 99999};
-    double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 0.01, 0.25, 0.125, 0.001, 0.00001};
+    double wholes[] = {0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,67.0,101.0,10000, 99999};
+    double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9, 0.01, 0.25, 0.125, 0.05, 0.005, 0.0005, 0.00005, 0.001, 0.00001};
     int imax = sizeof(wholes)/sizeof(double);
     int jmax = sizeof(frac)/sizeof(double);
     int i,j;
@@ -69,10 +70,40 @@ static char* testDoubleToA()
             modp_dtoa(d, buf2, 6);
             mu_assert_str_equals(buf1, buf2);
 
-            d = -d;
-            sprintf(buf1, "%f", d);
-            modp_dtoa(d, buf2, 6);
+            sprintf(buf1, "%.5f", d);
+            modp_dtoa(d, buf2, 5);
             mu_assert_str_equals(buf1, buf2);
+
+            sprintf(buf1, "%.4f", d);
+            modp_dtoa(d, buf2, 4);
+            mu_assert_str_equals(buf1, buf2);
+
+            sprintf(buf1, "%.3f", d);
+            modp_dtoa(d, buf2, 3);
+            mu_assert_str_equals(buf1, buf2);
+
+            sprintf(msg, "whole=%f, frac=%f, prec=%d -- ", wholes[i], frac[j], 2);
+            sprintf(buf1, "%.2f", d);
+            modp_dtoa(d, buf2, 2);
+            mu_assert_str_equals_msg(msg, buf1, buf2);
+
+            sprintf(msg, "whole=%f, frac=%f, prec=%d -- ", wholes[i], frac[j], 1);
+            sprintf(buf1, "%.1f", d);
+            modp_dtoa(d, buf2, 1);
+            mu_assert_str_equals_msg(msg,buf1, buf2);
+
+            sprintf(msg, "whole=%f, frac=%f, prec=%d -- ", wholes[i], frac[j], 0);
+            sprintf(buf1, "%.0f", d);
+            modp_dtoa(d, buf2, 0);
+            mu_assert_str_equals_msg(msg, buf1, buf2);
+
+            if (d != 0) {
+                /* not dealing with "-0" issues */
+                d = -d;
+                sprintf(buf1, "%f", d);
+                modp_dtoa(d, buf2, 6);
+                mu_assert_str_equals(buf1, buf2);
+            }
         }
     }
 
@@ -87,7 +118,7 @@ static char* testDoubleToA()
     // test bad precision values
     d = 1.1;
     modp_dtoa(d, buf2, -1);
-    mu_assert_str_equals("1.0", buf2);
+    mu_assert_str_equals("1", buf2);
     modp_dtoa(d, buf2, 10);
     mu_assert_str_equals("1.100000000", buf2);
     return 0;
