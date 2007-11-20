@@ -6,10 +6,18 @@ TODO:
 * more doco
 * man pages
 
+20-Nov-2007
+	* modp_dtoa	
+	  Fixed round-to-even "rollovers" (e.g. 0.99, prec 1 -> 1.0)
+	  Simplified "very small number" logic
+	  Unit tests greatly improved.
+	  thanks again to Johannes Otepka for finding bugs
+	* VERSION 3.6 RELEASED
 19-Nov-2007
 	* modp_dtoa
 	  Fixed round-to-even, and precision 0 rules to match printf
 	  thanks to Johannes Otepka
+	* VERSION 3.5 RELEASED
 	
 27-Jun-2007
 	* VERSION 3.4 RELEASED
