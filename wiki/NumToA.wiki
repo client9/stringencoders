@@ -16,7 +16,7 @@ A common use of sprintf for a integer is:
 {{{
 int i;
 char buf[32];
-sprintf("%d", i);
+sprintf(buf,"%d", i);
 }}}
 
 The problem here is when `i` isn't an `int`.  if it changes, you'll be running to man page to learn that `%hhd` or "%lu" is the right format string.  Except some types, like `time_t` are different sizes  (either unsigned 32-bits or signed 64-bits), so you have to cast or use an `ifdef`.
@@ -30,7 +30,7 @@ Floating point types are even worse.  For instance
 {{{
 double d = 123456.0123456789;
 char buf[64];
-sprintf("%f", i);
+sprintf(buf, "%f", i);
 }}}
 
 would seem reasonable.  Until `d` is `1.1e200` and completely overruns your buffer.  You can use `snprintf` but you have to be careful in checking the return code.  And you can't totally limit the ouput size.  Only the number of digits to the _right_ of the decimal point, not to the left.
@@ -39,7 +39,7 @@ As an alternate, one can use the `%g` specifier which will switch between fixed 
 {{{
 double d = 123456.0123456789;
 char buf[64];
-sprintf("%g", i);
+sprintf(buf, "%g", i);
 }}}
 
 This is _better_ but this format doesn't appear to be widely used.  Also the conversion to exponental format may occur in ways you don't want.
