@@ -46,6 +46,8 @@ double          1670000 1590000 110000  14.5x
 
 == Intel 2.2 Ghz Core 2 Duo ==
 
+I forgot what machine this was.  I think it was MacBookPro, running 10.4.X
+
 With gcc 4.0.1, -O3
 
 {{{
@@ -63,4 +65,24 @@ signed 32       19      20      3       6.7x
 
     type        %e      %f      %g      dtoa    impro
 double          54      61      43      13      3.3x
+}}}
+
+== Intel 2.2 Ghz Core 2 Duo, Mac OS X 10.5 ==
+
+New MacBook, Running Mac OS X 10.5.1.  I believe this has a different motherboard than the version before.
+
+{{{
+$ date
+Thu Dec  6 09:50:17 EST 2007
+./speedtest_numtoa
+    type   	sprintf	snprf	numtoa	improvement
+unsigned 8	193380	183893	15041	12.2x
+unsigned 16	204912	203507	23012	8.8x
+unsigned 32	206285	202143	26785	7.5x
+signed 8	187765	189751	16240	11.7x
+signed 16	214287	209203	26885	7.8x
+signed 32	201955	205160	32701	6.3x
+
+    type   	%e	%f	%g	dtoa	improvement
+double		541438	593712	434464	84678	5.1x
 }}}
