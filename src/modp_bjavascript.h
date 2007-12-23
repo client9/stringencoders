@@ -58,7 +58,7 @@ int modp_bjavascript_encode(char* dest, const char* str, int len);
  * \return the size of the output string, excluding the final
  *   null byte.
  */
-int modp_bjavascript_encode_strlen(const char* str, const int len);
+int modp_bjavascript_encode_strlen(const char* str, int len);
 
 END_C
 

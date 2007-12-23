@@ -131,7 +131,7 @@ void modp_toprint_copy(char* dest, const char* str, int len)
          * it's important to make these variables
          * it helps the optimizer to figure out what to do
          */
-        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
+        c1 = s[i]; c2=s[i+1]; c3=s[i+2]; c4=s[i+3];
         dest[0] = gsToPrintMap[c1];
         dest[1] = gsToPrintMap[c2];
         dest[2] = gsToPrintMap[c3];
