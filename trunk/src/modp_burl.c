@@ -46,7 +46,7 @@
 #include "modp_burl.h"
 #include "modp_burl_data.h"
 
-int modp_burl_encode(char* dest, const char* src, const int len)
+int modp_burl_encode(char* dest, const char* src, int len)
 {
 
     const char* deststart = dest;
@@ -80,7 +80,7 @@ int modp_burl_encode(char* dest, const char* src, const int len)
  * The implementation is identical except it uses a
  * different array
  */
-int modp_burl_min_encode(char* dest, const char* src, const int len)
+int modp_burl_min_encode(char* dest, const char* src, int len)
 {
 
     const char* deststart = dest;
@@ -146,7 +146,7 @@ int modp_burl_min_encode_strlen(const char* src, const int len)
     return count;
 }
 
-int modp_burl_decode(char* dest, const char* s, const int len)
+int modp_burl_decode(char* dest, const char* s, int len)
 {
     uint32_t d = 0; // used for decoding %XX
     const uint8_t* src = (const uint8_t*) s;
