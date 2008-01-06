@@ -10,6 +10,7 @@ TODO:
 	* Regenerated libtool/autoconf/autoheader/etc to fix
 	  problem where ranlib was improperly being invoked on some systems
 	* Added "std::" to some raw "string" in C++ methods
+	* Added "#include <cstring>" to some headers for C++
 	* No logic changes
 20-Nov-2007
 	* modp_dtoa	
