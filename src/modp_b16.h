@@ -106,7 +106,7 @@ namespace modp {
 
     inline std::string b16_decode(const char* s, size_t len)
     {
-        string x(len / 2 + 1, '\0');
+        std::string x(len / 2 + 1, '\0');
         int d = modp_b16_decode(const_cast<char*>(x.data()), s, len);
         if (d < 0) {
             x.clear();
@@ -130,7 +130,7 @@ namespace modp {
      */
     inline std::string& b16_decode(std::string& s)
     {
-        string x(b16_decode(s.data(), s.size()));
+        std::string x(b16_decode(s.data(), s.size()));
         s.swap(x);
         return s;
     }

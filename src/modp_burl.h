@@ -29,11 +29,12 @@
 BEGIN_C
 
 /**
- * Url encode a string.  This uses a very strict definition of url encoding.
- * The only characters NOT encoded are A-Z, a-z, 0-9, "-", "_", ".", along with
- * the space char getting mapped to "+".  Everything else is escaped using
- * "%HEXHEX" format.  This is identical to the implementation of php's urlencode
- * and nearly identical to Java's UrlEncoder class (they do not escape '*' for
+ * Url encode a string.  This uses a very strict definition of url
+ * encoding.  The only characters NOT encoded are A-Z, a-z, 0-9, "-",
+ * "_", ".", along with the space char getting mapped to "+".
+ * Everything else is escaped using "%HEXHEX" format.  This is
+ * identical to the implementation of php's urlencode and nearly
+ * identical to Java's UrlEncoder class (they do not escape '*' for
  * some reason).
  *
  * \param[out] dest output string.  Must
@@ -44,11 +45,11 @@ BEGIN_C
 int modp_burl_encode(char* dest, const char* str, int len);
 
 /**
- * Url encode a string.  This uses a minimal definition of url encoding.
- * This works similar to the previous function except '~', '!', '$', '\'',
- * '(', ')', '*', ',', ';', ':', '@', '/', '?' are NOT escaped.  This will
- * allow decoding by standard url-decoders and make the encoded urls more
- * readable.
+ * Url encode a string.  This uses a minimal definition of url
+ * encoding.  This works similar to the previous function except '~',
+ * '!', '$', '\'', '(', ')', '*', ',', ';', ':', '@', '/', '?' are NOT
+ * escaped.  This will allow decoding by standard url-decoders and
+ * make the encoded urls more readable.
  *
  * \param[out] dest output string.  Must
  * \param[in] str The input string

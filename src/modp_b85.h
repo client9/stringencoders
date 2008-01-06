@@ -156,13 +156,13 @@ namespace modp {
 
     inline std::string b85_decode(const char* s, size_t len)
     {
-        string x(s,len);
+        std::string x(s,len);
         return b85_decode(x);
     }
 
     inline std::string b85_decode(const char* s)
     {
-        string x(s);
+        std::string x(s);
         return b85_decode(x);
     }
 
