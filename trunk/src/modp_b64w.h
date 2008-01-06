@@ -173,7 +173,7 @@ namespace modp {
      * \param[in] s the input string to encode
      * \return a newly allocated b64w string.  Empty if failed.
      */
-    inline std::string b64w_encode(const string& s)
+    inline std::string b64w_encode(const std::string& s)
     {
         return b64w_encode(s.data(), s.size());
     }

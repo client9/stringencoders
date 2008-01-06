@@ -166,7 +166,7 @@ namespace modp {
      * \param[in] s the input string to encode
      * \return a newly allocated b64 string.  Empty if failed.
      */
-    inline std::string b64_encode(const string& s)
+    inline std::string b64_encode(const std::string& s)
     {
         return b64_encode(s.data(), s.size());
     }
