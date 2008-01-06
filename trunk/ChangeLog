@@ -6,6 +6,11 @@ TODO:
 * more doco
 * man pages
 
+05-Jan-2008
+	* Regenerated libtool/autoconf/autoheader/etc to fix
+	  problem where ranlib was improperly being invoked on some systems
+	* Added "std::" to some raw "string" in C++ methods
+	* No logic changes
 20-Nov-2007
 	* modp_dtoa	
 	  Fixed round-to-even "rollovers" (e.g. 0.99, prec 1 -> 1.0)
