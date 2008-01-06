@@ -63,6 +63,7 @@ int modp_bjavascript_encode_strlen(const char* str, int len);
 END_C
 
 #ifdef __cplusplus
+#include <cstring>
 #include <string>
 namespace modp {
 

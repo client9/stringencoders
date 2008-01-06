@@ -77,6 +77,7 @@ int modp_b85_decode(char* dest, const char* src, int len);
 END_C
 
 #ifdef __cplusplus
+#include <cstring>
 #include <string>
 
 namespace modp {

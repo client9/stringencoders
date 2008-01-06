@@ -111,6 +111,7 @@ int modp_burl_decode(char* dest, const char* str, int len);
 END_C
 
 #ifdef __cplusplus
+#include <cstring>
 #include <string>
 
 namespace modp {
