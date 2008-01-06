@@ -1,4 +1,4 @@
-AC_INIT(stringencoders, [v3.4.0], [nickg -at- modp -dot- com])
+AC_INIT(stringencoders, [v3.7.0], [nickg -at- modp -dot- com])
 AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(config.h)
@@ -17,7 +17,7 @@ B64WCHARS="-_."
 AC_ARG_WITH([b64wchars], AC_HELP_STRING([--with-b64wchars=3CHARS],[change b64 web extra chars, default is '-_.']),
           [B64WCHARS=$withval], [])
             
-EXTRACFLAGS="-Isrc -Wall -Werror"
+EXTRACFLAGS="-Isrc -Wall -Werror -Wformat=2"
 
 if test "x$enable_gcov" = "xyes";
 then
