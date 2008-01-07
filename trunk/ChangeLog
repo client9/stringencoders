@@ -11,6 +11,7 @@ TODO:
 	  problem where ranlib was improperly being invoked on some systems
 	* Added "std::" to some raw "string" in C++ methods
 	* Added "#include <cstring>" to some headers for C++
+	* Tested with latest snapshot of gcc/g++ with -Wall -Wextra
 	* No logic changes
 20-Nov-2007
 	* modp_dtoa	
