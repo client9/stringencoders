@@ -57,23 +57,23 @@ int modp_burl_encode(char* dest, const char* src, int len)
 
     while (s < srcend) {
         x = *s++;
-        c = gsUrlEncodeMap[x];
+        c = (char)gsUrlEncodeMap[x];
         if (c) {
             *dest++ = c;
         } else {
             *dest++ = '%';
-            *dest++ = gsHexEncodeMap1[x];
-            *dest++ = gsHexEncodeMap2[x];
+            *dest++ = (char)gsHexEncodeMap1[x];
+            *dest++ = (char)gsHexEncodeMap2[x];
             /*
               is the equiv of this
               static const char sHexChars[] = "0123456789ABCDEF";
-              *dest++ = sHexChars[x >> 4];
-              *dest++ = sHexChars[x & 0x0F];
+              *dest++ = (char)sHexChars[x >> 4];
+              *dest++ = (char)sHexChars[x & 0x0F];
               */
         }
     }
     *dest = '\0';
-    return dest - deststart; // compute "strlen" of dest.
+    return (int)(dest - deststart); // compute "strlen" of dest.
 }
 
 /**
@@ -91,13 +91,13 @@ int modp_burl_min_encode(char* dest, const char* src, int len)
 
     while (s < srcend) {
         x = *s++;
-        c = gsUrlEncodeMinMap[x]; /** CHANGE HERE **/
+        c = (char)(gsUrlEncodeMinMap[x]); /** CHANGE HERE **/
         if (c) {
             *dest++ = c;
         } else {
             *dest++ = '%';
-            *dest++ = gsHexEncodeMap1[x];
-            *dest++ = gsHexEncodeMap2[x];
+            *dest++ = (char) gsHexEncodeMap1[x];
+            *dest++ = (char)(gsHexEncodeMap2[x]);
             /*
               is the equiv of this
               static const char sHexChars[] = "0123456789ABCDEF";
@@ -107,7 +107,7 @@ int modp_burl_min_encode(char* dest, const char* src, int len)
         }
     }
     *dest = '\0';
-    return dest - deststart; // compute "strlen" of dest.
+    return (int)(dest - deststart); // compute "strlen" of dest.
 }
 
 /**
@@ -173,7 +173,7 @@ int modp_burl_decode(char* dest, const char* s, int len)
             }
             break;
         default:
-            *dest++ = *src++;
+            *dest++ = (char) *src++;
         }
     }
 
@@ -186,10 +186,10 @@ int modp_burl_decode(char* dest, const char* s, int len)
             src++;
             break;
         default:
-            *dest++ = *src++;
+            *dest++ = (char)( *src++);
         }
     }
 
     *dest = '\0';
-    return dest - deststart; // compute "strlen" of dest.
+    return (int)(dest - deststart); // compute "strlen" of dest.
 }

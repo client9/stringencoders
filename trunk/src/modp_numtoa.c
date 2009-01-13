@@ -36,7 +36,7 @@ void modp_itoa10(int32_t value, char* str)
     // Take care of sign
     if ((sign=value) < 0) value = -value;
     // Conversion. Number is reversed.
-    do *wstr++ = (48 + (value % 10)); while( value /= 10);
+    do *wstr++ = (char)(48 + (value % 10)); while( value /= 10);
     if (sign < 0) *wstr++ = '-';
     *wstr='\0';
 
@@ -48,7 +48,7 @@ void modp_uitoa10(uint32_t value, char* str)
 {
     char* wstr=str;
     // Conversion. Number is reversed.
-    do *wstr++ = 48 + (value % 10); while (value /= 10);
+    do *wstr++ = (char)(48 + (value % 10)); while (value /= 10);
     *wstr='\0';
     // Reverse string
     strreverse(str, wstr-1);
@@ -123,7 +123,7 @@ void modp_dtoa(double value, char* str, int prec)
         // now do fractional part, as an unsigned number
         do {
             --count;
-            *wstr++ = 48 + (frac % 10);
+            *wstr++ = (char)(48 + (frac % 10));
         } while (frac /= 10);
         // add extra 0s
         while (count-- > 0) *wstr++ = '0';
@@ -134,7 +134,7 @@ void modp_dtoa(double value, char* str, int prec)
     // do whole part
     // Take care of sign
     // Conversion. Number is reversed.
-    do *wstr++ = 48 + (whole % 10); while (whole /= 10);
+    do *wstr++ = (char)(48 + (whole % 10)); while (whole /= 10);
     if (neg) {
         *wstr++ = '-';
     }

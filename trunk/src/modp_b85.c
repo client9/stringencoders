@@ -102,11 +102,11 @@ int modp_b85_encode(char* out, const char* src, int len)
 
         /* this crazy function */
 #if 1
-        *out++ =  gsIntToChar[(tmp / 52200625)]; // don't need % 85 here, always < 85
-        *out++ =  gsIntToChar[(tmp / 614125) % 85];
-        *out++ =  gsIntToChar[(tmp / 7225) % 85];
-        *out++ =  gsIntToChar[(tmp / 85) % 85];
-        *out++ =  gsIntToChar[tmp % 85];
+        *out++ =  (char)gsIntToChar[(tmp / 52200625)]; // don't need % 85 here, always < 85
+        *out++ =  (char)gsIntToChar[(tmp / 614125) % 85];
+        *out++ =  (char)gsIntToChar[(tmp / 7225) % 85];
+        *out++ =  (char)gsIntToChar[(tmp / 85) % 85];
+        *out++ =  (char)gsIntToChar[tmp % 85];
 #else
         /* is really this */
         *(out+4) =  gsIntToChar[tmp % 85]; tmp /= 85;

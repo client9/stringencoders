@@ -13,7 +13,7 @@ void binary_encodemap()
     int i, j;
 
     printf("%s","static const char* modp_b2_encodemap[] = {\n");
-    char buf[9];
+    unsigned char buf[9];
     buf[8] = 0;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 8; ++j) {
@@ -34,7 +34,7 @@ void binary_encodemap()
 // exact same thing as one used on urlencode
 void hexdecodemap()
 {
-    int i;
+    uint32_t i;
     uint32_t map1[256];
     uint32_t map2[256];
     for (i = 0; i <= 255; ++i) {
@@ -66,7 +66,8 @@ void hexdecodemap()
     uint32_array_to_c(map2, 256, "gsHexDecodeD2");
 }
 
-int main(int argc, char* argv[])
+//int main(int argc, char* argv[])
+int main()
 {
     binary_encodemap();
 

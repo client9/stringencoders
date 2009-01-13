@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static char b64chars[64] = {
+static unsigned char b64chars[64] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -41,7 +41,7 @@ static char b64chars[64] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
 } ;
 
-static char padchar = '=';
+static unsigned char padchar = '=';
 
 void printStart()
 {
@@ -63,8 +63,8 @@ int main(int argc, char** argv)
 {
     // over-ride standard alphabet
     if (argc == 2) {
-        char* replacements = argv[1];
-        if (strlen(replacements) != 3) {
+        unsigned char* replacements = (unsigned char*) argv[1];
+        if (strlen((char*)replacements) != 3) {
             fprintf(stderr, "input must be a string of 3 characters '-', '.' or '_'\n");
             exit(1);
         }
@@ -75,19 +75,22 @@ int main(int argc, char** argv)
     }
 
     uint32_t x;
-    int i = 0;
+    uint32_t i = 0;
     char cary[256];
     uint32_t ary[256];
 
     printStart();
 
-    for (i = 0; i < 256; ++i) { cary[i] = b64chars[i >> 2 & 0x3f]; }
+    for (i = 0; i < 256; ++i) {
+        cary[i] = (char)(b64chars[i >> 2 & 0x3f]);
+    }
     char_array_to_c(cary, 256, "e0");
 
-    for (i = 0; i < 256; ++i) { cary[i] = b64chars[(i & 0x3F)]; }
+    for (i = 0; i < 256; ++i) {
+        cary[i] = (char) b64chars[(i & 0x3F)]; }
     char_array_to_c(cary, 256, "e1");
 
-    for (i = 0; i < 256; ++i) { cary[i] = b64chars[(i & 0x3F)]; }
+    for (i = 0; i < 256; ++i) { cary[i] = (char) b64chars[(i & 0x3F)]; }
     char_array_to_c(cary, 256, "e2");
 
 

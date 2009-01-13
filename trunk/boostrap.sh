@@ -6,7 +6,7 @@
 #
 set -x
 aclocal
-glibtoolize --force --copy
+libtoolize --force --copy
 autoheader
 automake --add-missing --copy
 autoconf

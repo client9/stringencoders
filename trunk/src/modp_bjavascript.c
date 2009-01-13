@@ -61,19 +61,19 @@ int modp_bjavascript_encode(char* dest, const char* src, int len)
         x = *s++;
         val = gsJavascriptEncodeMap[x];
         if (val == 0) {
-            *dest++ = x;
+            *dest++ = (char) x;
         } else if (val == 'A') {
             *dest++ = '\\';
             *dest++ = 'x';
-            *dest++ = gsHexEncodeMap1[x];
-            *dest++ = gsHexEncodeMap2[x];
+            *dest++ = (char)(gsHexEncodeMap1[x]);
+            *dest++ = (char)(gsHexEncodeMap2[x]);
         } else {
             *dest++ = '\\';
-            *dest++ = val;
+            *dest++ = (char)val;
         }
     }
     *dest = '\0';
-    return dest - deststart;
+    return (int)(dest - deststart);
 }
 
 int modp_bjavascript_encode_strlen(const char* src, int len)

@@ -123,7 +123,7 @@ int modp_b16_encode(char* dest, const char* str, int len)
         *p++ = gsHexEncodeC2[t3];
     }
     *p = '\0';
-    return  p - (uint8_t*) dest;
+    return  (int)(p - (uint8_t*) dest);
 }
 
 int modp_b16_decode(char* dest, const char* str, int len)
@@ -161,5 +161,5 @@ int modp_b16_decode(char* dest, const char* str, int len)
         *p++ = (uint8_t) val1;
     }
 
-    return p - (uint8_t*)dest;
+    return (int)(p - (uint8_t*)dest);
 }

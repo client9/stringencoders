@@ -46,8 +46,8 @@ static char* testEncodeDecode()
         for (j = 0; j < 256; ++j) {
             // comment this out.. it really slows down the test
             sprintf(msg, "(i,j) = (%d,%d):", i,j);
-            ibuf[0] = (unsigned char) i;
-            ibuf[1] = (unsigned char) j;
+            ibuf[0] = (char)((unsigned char) i);
+            ibuf[1] = (char)((unsigned char) j);
 
             memset(obuf, 0, sizeof(obuf));
             d = modp_b16_encode(obuf, ibuf, 2);
@@ -146,49 +146,49 @@ static char* testBadDecode()
      * to test all possible screwups
      */
     strcpy(ibuf, "X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
 
     /* 1 bad char */
     strcpy(ibuf, "X111");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "1X11");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "11X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "111X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
 
     /* 2 bad chars */
     strcpy(ibuf, "XX11");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "1XX1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "11XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "X1X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "1X1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "X11X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
 
     /* 3 bad chars */
     strcpy(ibuf, "1XXX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "X1XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "XX1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
     strcpy(ibuf, "XXX1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
 
     /* 4 bad chars */
     strcpy(ibuf, "XXXX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf, strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
 
     return 0;
 }

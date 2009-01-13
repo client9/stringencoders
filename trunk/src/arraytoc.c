@@ -28,7 +28,7 @@ void uint32_array_to_c_hex(const uint32_t* ary, int sz, const char* name)
  */
 void char_array_to_c(const char* ary, int sz, const char* name)
 {
-    printf("static const char %s[%d] = {\n", name, sz);
+    printf("static const unsigned char %s[%d] = {\n", name, sz);
     uint8_t tmp;
     int i = 0;
     for (;;) {
@@ -45,7 +45,7 @@ void char_array_to_c(const char* ary, int sz, const char* name)
         } else if (ary[i] == '\\') {
             printf("'\\\\'");
         } else if (ary[i] < 32 || ary[i] > 126) {
-            tmp = ary[i];
+            tmp = (uint8_t) ary[i];
             printf("0x%02x", tmp);
         } else {
             printf(" '%c'", (char)ary[i]);

@@ -39,8 +39,8 @@ void initTables()
         if (i == ';' || i == '&' || i == '\\' || i == '"' || i == ',') {
             continue ;
         }
-        gsIntToChar[j] = i ;
-        gsCharToInt[i] = j ;
+        gsIntToChar[j] = (char)i ;
+        gsCharToInt[i] = (uint32_t)j ;
         ++j;
     }
 
