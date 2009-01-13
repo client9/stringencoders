@@ -9,9 +9,9 @@ void modp_toupper_map()
     char map[256];
     for (i = 0; i < sizeof(map); ++i) {
         if (i >= 'a' && i <= 'z') {
-            map[i] = i - 32;
+            map[i] = (char)(i - 32);
         } else {
-            map[i] = i;
+            map[i] = (char)(i);
         }
     }
 
@@ -25,9 +25,9 @@ void modp_tolower_map()
     char map[256];
     for (i = 0; i < sizeof(map); ++i) {
         if (i >= 'A' && i <= 'Z') {
-            map[i] = i + 32;
+            map[i] = (char)(i + 32);
         } else {
-            map[i] = i;
+            map[i] = (char)i;
         }
     }
 
@@ -42,7 +42,7 @@ void modp_toprint_map()
         if (i < 32 || i > 126) {
             map[i] = '?';
         } else {
-            map[i] = i;
+            map[i] = (char) i;
         }
     }
 
@@ -50,7 +50,7 @@ void modp_toprint_map()
 }
 
 
-int main(int argc, char* argv[])
+int main()
 {
     modp_toupper_map();
     modp_tolower_map();

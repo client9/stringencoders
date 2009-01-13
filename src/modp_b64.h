@@ -57,7 +57,7 @@ BEGIN_C
  * \endcode
  *
  */
-int modp_b64_encode(char* dest, const char* src, int len);
+int modp_b64_encode(char* dest, const char* str, int len);
 
 /**
  * Decode a base64 encoded string
@@ -159,7 +159,7 @@ namespace modp {
      */
     inline std::string b64_encode(const char* s)
     {
-        return b64_encode(s, strlen(s));
+        return b64_encode(s, static_cast<int>(strlen(s)));
     }
 
     /** \brief b64 encode a const std::string
@@ -190,7 +190,8 @@ namespace modp {
     inline std::string b64_decode(const char* src, size_t len)
     {
         std::string x(modp_b64_decode_len(len)+1, '\0');
-        int d = modp_b64_decode(const_cast<char*>(x.data()), src, len);
+        int d = modp_b64_decode(const_cast<char*>(x.data()), src,
+                                static_cast<int>(len));
         if (d < 0) {
             x.clear();
         } else {

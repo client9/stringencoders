@@ -50,7 +50,7 @@ void jsencodemap()
     char_array_to_c(jsEncodeMap, 256, "gsJavascriptEncodeMap");
 };
 
-int main(int argc, char* argv[])
+int main()
 {
     jsencodemap();
     hexencodemap();

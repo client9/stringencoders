@@ -181,9 +181,9 @@ static char* testEncodeDecode()
             for (k= 0; k < 256; ++k) {
                 // comment this out.. it really slows down the test
                 // sprintf(msg, "(i,j,k) = (%d,%d,%d):", i,j,k);
-                ibuf[0] = (unsigned char) i;
-                ibuf[1] = (unsigned char) j;
-                ibuf[2] = (unsigned char) k;
+                ibuf[0] = (char)((unsigned char) i);
+                ibuf[1] = (char)((unsigned char) j);
+                ibuf[2] = (char)((unsigned char) k);
                 ibuf[3] = 0;
 
                 memset(obuf, 1, sizeof(obuf));
@@ -220,10 +220,10 @@ static char* testDecodeErrors()
     char goodchar = 'A';
     char badchar = '~';
     for (i = 1; i < 16; ++i) {
-        decode[0] = ((i & 0x01) == 0) ? goodchar : badchar;
-        decode[1] = ((i & 0x02) == 0) ? goodchar : badchar;
-        decode[2] = ((i & 0x04) == 0) ? goodchar : badchar;
-        decode[3] = ((i & 0x08) == 0) ? goodchar : badchar;
+        decode[0] = (char)(((i & 0x01) == 0) ? goodchar : badchar);
+        decode[1] = (char)(((i & 0x02) == 0) ? goodchar : badchar);
+        decode[2] = (char)(((i & 0x04) == 0) ? goodchar : badchar);
+        decode[3] = (char)(((i & 0x08) == 0) ? goodchar : badchar);
         decode[4] = '\0';
 
         sprintf(msg, "i = %d, %s", i, decode);

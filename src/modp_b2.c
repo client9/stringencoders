@@ -87,7 +87,7 @@ int modp_b2_decode(char* dest, const char* str, int len)
         for (j = 0; j <= 7; ++j) {
             char c = *str++;
             if (c == '1') {
-                d ^= (1 << (7-j));
+                d ^= (char)(1 << (7-j));
             }
         }
         *dest++ = d;

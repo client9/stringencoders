@@ -114,7 +114,7 @@ int modp_b64_encode(char* dest, const char* str, int len)
     }
 
     *p = '\0';
-    return p - (uint8_t*)dest;
+    return (int)(p - (uint8_t*)dest);
 }
 
 #ifdef WORDS_BIGENDIAN   /* BIG ENDIAN -- SUN / IBM / MOTOROLA */

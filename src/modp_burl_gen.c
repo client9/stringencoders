@@ -20,7 +20,7 @@ void hexencodemap()
 
 void urlencodemap()
 {
-    int i;
+    uint32_t i;
     char urlEncodeMap[256];
 
     // 0 means unsafe
@@ -90,7 +90,7 @@ void urlencodeminmap()
 
 void hexdecodemap()
 {
-    int i;
+    uint32_t i;
     uint32_t map[256];
     for (i = 0; i <= 255; ++i) {
         map[i] = 256;
@@ -114,7 +114,7 @@ void hexdecodemap()
     uint32_array_to_c(map, 256, "gsHexDecodeMap");
 }
 
-int main(int argc, char* argv[])
+int main()
 {
     urlencodemap();
     urlencodeminmap();

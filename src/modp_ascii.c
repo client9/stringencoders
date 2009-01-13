@@ -61,18 +61,18 @@ void modp_toupper_copy(char* dest, const char* str, int len)
          * This is based on the algorithm by Paul Hsieh
          * http://www.azillionmonkeys.com/qed/asmexample.html
          */
-        ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
-        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
-        ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
+        ebx = (0x7f7f7f7fu & eax) + 0x05050505u;
+        ebx = (0x7f7f7f7fu & ebx) + 0x1a1a1a1au;
+        ebx = ((ebx & ~eax) >> 2)  & 0x20202020u;
         *d++ = eax - ebx;
     }
 
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-    case 3: *dest++ = gsToUpperMap[ustr[i++]];
-    case 2: *dest++ = gsToUpperMap[ustr[i++]];
-    case 1: *dest++ = gsToUpperMap[ustr[i]];
+    case 3: *dest++ = (char) gsToUpperMap[ustr[i++]];
+    case 2: *dest++ = (char) gsToUpperMap[ustr[i++]];
+    case 1: *dest++ = (char) gsToUpperMap[ustr[i]];
     case 0: *dest = '\0';
     }
 }
@@ -92,18 +92,18 @@ void modp_tolower_copy(char* dest, const char* str, int len)
          * This is based on the algorithm by Paul Hsieh
          * http://www.azillionmonkeys.com/qed/asmexample.html
          */
-        ebx = (0x7f7f7f7ful & eax) + 0x25252525ul;
-        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
-        ebx = ((ebx & ~eax) >> 2)  & 0x20202020ul;
+        ebx = (0x7f7f7f7fu & eax) + 0x25252525u;
+        ebx = (0x7f7f7f7fu & ebx) + 0x1a1a1a1au;
+        ebx = ((ebx & ~eax) >> 2)  & 0x20202020u;
         *d++ = eax + ebx;
     }
 
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-    case 3: *dest++ = gsToLowerMap[ustr[i++]];
-    case 2: *dest++ = gsToLowerMap[ustr[i++]];
-    case 1: *dest++ = gsToLowerMap[ustr[i]];
+    case 3: *dest++ = (char) gsToLowerMap[ustr[i++]];
+    case 2: *dest++ = (char) gsToLowerMap[ustr[i++]];
+    case 1: *dest++ = (char) gsToLowerMap[ustr[i]];
     case 0: *dest = '\0';
     }
 }
@@ -132,17 +132,17 @@ void modp_toprint_copy(char* dest, const char* str, int len)
          * it helps the optimizer to figure out what to do
          */
         c1 = s[i]; c2=s[i+1]; c3=s[i+2]; c4=s[i+3];
-        dest[0] = gsToPrintMap[c1];
-        dest[1] = gsToPrintMap[c2];
-        dest[2] = gsToPrintMap[c3];
-        dest[3] = gsToPrintMap[c4];
+        dest[0] = (char) gsToPrintMap[c1];
+        dest[1] = (char) gsToPrintMap[c2];
+        dest[2] = (char) gsToPrintMap[c3];
+        dest[3] = (char) gsToPrintMap[c4];
         dest += 4;
     }
 
     switch (leftover) {
-    case 3: *dest++ = gsToPrintMap[s[i++]];
-    case 2: *dest++ = gsToPrintMap[s[i++]];
-    case 1: *dest++ = gsToPrintMap[s[i]];
+    case 3: *dest++ = (char) gsToPrintMap[s[i++]];
+    case 2: *dest++ = (char) gsToPrintMap[s[i++]];
+    case 1: *dest++ = (char) gsToPrintMap[s[i]];
     case 0: *dest = '\0';
     }
 }
