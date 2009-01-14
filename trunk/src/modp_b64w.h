@@ -154,7 +154,8 @@ namespace modp {
     inline std::string b64w_encode(const char* s, size_t len)
     {
         std::string x(modp_b64w_encode_len(len), '\0');
-        int d = modp_b64w_encode(const_cast<char*>(x.data()), s, len);
+        int d = modp_b64w_encode(const_cast<char*>(x.data()), s,
+                                 static_cast<int>(len));
         x.erase(d, std::string::npos);
         return x;
     }
