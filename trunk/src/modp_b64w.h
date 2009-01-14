@@ -140,6 +140,7 @@ int modp_b64w_decode(char* dest, const char* src, int len);
 END_C
 
 #ifdef __cplusplus
+#include <cstring>
 #include <string>
 
 namespace modp {
@@ -165,7 +166,7 @@ namespace modp {
      */
     inline std::string b64w_encode(const char* s)
     {
-        return b64w_encode(s, strlen(s));
+        return b64w_encode(s, static_cast<int>(strlen(s)));
     }
 
     /** \brief b64w encode a const std::string
@@ -196,7 +197,8 @@ namespace modp {
     inline std::string b64w_decode(const char* src, size_t len)
     {
         std::string x(modp_b64w_decode_len(len)+1, '\0');
-        int d = modp_b64w_decode(const_cast<char*>(x.data()), src, len);
+        int d = modp_b64w_decode(const_cast<char*>(x.data()), src,
+                                 static_cast<int>(len));
         if (d < 0) {
             x.clear();
         } else {
