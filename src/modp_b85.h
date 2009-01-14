@@ -91,7 +91,8 @@ namespace modp {
     inline std::string b85_encode(const char* s, size_t len)
     {
         std::string x(modp_b85_encode_len(len), '\0');
-        int d = modp_b85_encode(const_cast<char*>(x.data()), s, len);
+        int d = modp_b85_encode(const_cast<char*>(x.data()), s,
+                                static_cast<int>(len));
         if (d < 0) {
             x.clear();
         } else {
@@ -139,7 +140,8 @@ namespace modp {
      */
     inline std::string& b85_decode(std::string& s)
     {
-        int d = modp_b85_decode(const_cast<char*>(s.data()), s.data(), s.size());
+        int d = modp_b85_decode(const_cast<char*>(s.data()), s.data(),
+                                static_cast<int>(s.size()));
         if (d < 0) {
             s.clear();
         } else {
