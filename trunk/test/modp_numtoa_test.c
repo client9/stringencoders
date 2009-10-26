@@ -89,8 +89,8 @@ static char* testULITOA()
     }
 
     for (i = 0; i < 1000000; ++i) {
-        sprintf(buf1, "%llu", 0xFFFFFFFFFFFFFFFFul - i);
-        modp_ulitoa10(0xFFFFFFFFFFFFFFFFul -i, buf2);
+        sprintf(buf1, "%llu", 0xFFFFFFFFFFFFFFFFull - i);
+        modp_ulitoa10(0xFFFFFFFFFFFFFFFFull -i, buf2);
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
