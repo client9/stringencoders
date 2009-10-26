@@ -52,6 +52,50 @@ static char* testUITOA()
     return 0;
 }
 
+static char* testLITOA()
+{
+    char buf1[100];
+    char buf2[100];
+    long int i;
+    for (i = 0; i < 100000; ++i) {
+        sprintf(buf1, "%ld", i);
+        modp_litoa10(i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+
+        sprintf(buf1, "%ld", -i);
+        modp_litoa10(-i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+
+        sprintf(buf1, "%ld", LONG_MAX - i);
+        modp_litoa10(LONG_MAX - i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+
+        sprintf(buf1, "%ld", -(LONG_MAX - i));
+        modp_litoa10(-(LONG_MAX - i), buf2);
+        mu_assert_str_equals(buf1, buf2);
+    }
+    return 0;
+}
+
+static char* testULITOA()
+{
+    char buf1[100];
+    char buf2[100];
+    uint64_t i;
+    for (i = 0; i < 1000000; ++i) {
+        sprintf(buf1, "%lu", i);
+        modp_ulitoa10(i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+    }
+
+    for (i = 0; i < 1000000; ++i) {
+        sprintf(buf1, "%lu", 0xFFFFFFFFFFFFFFFFul - i);
+        modp_ulitoa10(0xFFFFFFFFFFFFFFFFul -i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+    }
+    return 0;
+}
+
 static char* testDoubleToA()
 {
     char buf1[100];
@@ -134,6 +178,8 @@ static char* testDoubleToA()
 static char* all_tests() {
     mu_run_test(testITOA);
     mu_run_test(testUITOA);
+    mu_run_test(testLITOA);
+    mu_run_test(testULITOA);
     mu_run_test(testDoubleToA);
     return 0;
 }
