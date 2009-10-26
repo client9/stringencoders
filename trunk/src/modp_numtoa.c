@@ -54,6 +54,31 @@ void modp_uitoa10(uint32_t value, char* str)
     strreverse(str, wstr-1);
 }
 
+void modp_litoa10(int64_t value, char* str)
+{
+    char* wstr=str;
+    long int sign;
+    // Take care of sign
+    if ((sign=value) < 0) value = -value;
+    // Conversion. Number is reversed.
+    do *wstr++ = (char)(48 + (value % 10)); while( value /= 10);
+    if (sign < 0) *wstr++ = '-';
+    *wstr='\0';
+
+    // Reverse string
+    strreverse(str,wstr-1);
+}
+
+void modp_ulitoa10(uint64_t value, char* str)
+{
+    char* wstr=str;
+    // Conversion. Number is reversed.
+    do *wstr++ = (char)(48 + (value % 10)); while (value /= 10);
+    *wstr='\0';
+    // Reverse string
+    strreverse(str, wstr-1);
+}
+
 void modp_dtoa(double value, char* str, int prec)
 {
     /* if input is larger than thres_max, revert to exponential */
