@@ -81,7 +81,7 @@ static char* testULITOA()
 {
     char buf1[100];
     char buf2[100];
-    uint64_t i;
+    long long unsigned int i;
     for (i = 0; i < 1000000; ++i) {
         sprintf(buf1, "%llu", i);
         modp_ulitoa10(i, buf2);
@@ -89,7 +89,7 @@ static char* testULITOA()
     }
 
     for (i = 0; i < 1000000; ++i) {
-        sprintf(buf1, "%llu", 0xFFFFFFFFFFFFFFFFull - i);
+        sprintf(buf1, "%llu", 0xFFFFFFFFFFFFFFFFllu - i);
         modp_ulitoa10(0xFFFFFFFFFFFFFFFFull -i, buf2);
         mu_assert_str_equals(buf1, buf2);
     }
