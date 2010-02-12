@@ -32,12 +32,11 @@ static void strreverse(char* begin, char* end)
 void modp_itoa10(int32_t value, char* str)
 {
     char* wstr=str;
-    int sign;
     // Take care of sign
-    if ((sign=value) < 0) value = -value;
+    unsigned int uvalue = (value < 0) ? -value : value;
     // Conversion. Number is reversed.
-    do *wstr++ = (char)(48 + (value % 10)); while( value /= 10);
-    if (sign < 0) *wstr++ = '-';
+    do *wstr++ = (char)(48 + (uvalue % 10)); while(uvalue /= 10);
+    if (value < 0) *wstr++ = '-';
     *wstr='\0';
 
     // Reverse string
@@ -57,12 +56,11 @@ void modp_uitoa10(uint32_t value, char* str)
 void modp_litoa10(int64_t value, char* str)
 {
     char* wstr=str;
-    long int sign;
-    // Take care of sign
-    if ((sign=value) < 0) value = -value;
+    unsigned long uvalue = (value < 0) ? -value : value;
+
     // Conversion. Number is reversed.
-    do *wstr++ = (char)(48 + (value % 10)); while( value /= 10);
-    if (sign < 0) *wstr++ = '-';
+    do *wstr++ = (char)(48 + (uvalue % 10)); while(uvalue /= 10);
+    if (value < 0) *wstr++ = '-';
     *wstr='\0';
 
     // Reverse string

@@ -175,12 +175,53 @@ static char* testDoubleToA()
     return 0;
 }
 
+/* From Issue 7  -- http://code.google.com/p/stringencoders/issues/detail?id=7
+ * thanks to http://code.google.com/u/simhasana/
+ */
+static char* testOverflowLITOA() {
+    char buf1[100];
+    char buf2[100];
+
+    int64_t longmin = LONG_MIN;
+    sprintf(buf1, "%lld", longmin);
+    modp_litoa10(longmin, buf2);
+    mu_assert_str_equals(buf1, buf2);
+
+    int64_t longmax = LONG_MAX;
+    sprintf(buf1, "%lld", longmax);
+    modp_litoa10(longmax, buf2);
+    mu_assert_str_equals(buf1, buf2);
+
+    return 0;
+}
+
+
+static char* testOverflowITOA() {
+    char buf1[100];
+    char buf2[100];
+
+    int32_t intmin = INT_MIN;
+    sprintf(buf1, "%d", intmin);
+    modp_itoa10(intmin, buf2);
+    mu_assert_str_equals(buf1, buf2);
+
+    int32_t intmax = INT_MAX;
+    sprintf(buf1, "%d", intmax);
+    modp_itoa10(intmax, buf2);
+    mu_assert_str_equals(buf1, buf2);
+
+    return 0;
+}
+
+
 static char* all_tests() {
     mu_run_test(testITOA);
     mu_run_test(testUITOA);
     mu_run_test(testLITOA);
     mu_run_test(testULITOA);
     mu_run_test(testDoubleToA);
+    mu_run_test(testOverflowLITOA);
+    mu_run_test(testOverflowITOA);
     return 0;
 }
 
