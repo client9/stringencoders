@@ -24,19 +24,44 @@
  * OTHER DEALINGS IN THE SOFTWARE.
 */
 
-base64 = {}
+/* base64 encode/decode compatible with window.btoa/atob
+ *
+ * window.atob/btoa is a Firefox extension to convert binary data (the "b")
+ * to base64 (ascii, the "a").
+ *
+ * It is also found in Safari and Chrome.  It is not available in IE.
+ *
+ * if (!window.btoa) window.btoa = base64.encode
+ * if (!window.atob) window.atob = base64.decode
+ *
+ * The original spec's for atob/btoa are a bit lacking
+ * https://developer.mozilla.org/en/DOM/window.atob
+ * https://developer.mozilla.org/en/DOM/window.btoa
+ *
+ * window.btoa and base64.encode takes a string where charCodeAt is [0,255]
+ * If any character is not [0,255], then an exception is thrown.
+ *
+ * window.atob and base64.decode take a base64-encoded string
+ * If the input length is not a multiple of 4, or contains invalid characters
+ *   then an exception is thrown.
+ */
+base64 = {};
 base64.PADCHAR = '=';
 base64.ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-
 base64.getbyte64 = function(s,i) {
+    // This is oddly fast, except on Chrome/V8.
+    //  Minimal or no improvement in performance by using a
+    //   object with properties mapping chars to value (eg. 'A': 0)
     var idx = base64.ALPHA.indexOf(s.charAt(i));
     if (idx == -1) {
-        // do something
+	throw "Cannot decode base64";
     }
     return idx;
 }
 
 base64.decode = function(s) {
+    // convert to string
+    s = "" + s;
     var getbyte64 = base64.getbyte64;
     var pads, i, b10;
     var imax = s.length
@@ -45,7 +70,7 @@ base64.decode = function(s) {
     }
 
     if (imax % 4 != 0) {
-        // throw exception
+	throw "Cannot decode base64";
     }
 
     pads = 0
@@ -81,20 +106,26 @@ base64.decode = function(s) {
 base64.getbyte = function(s,i) {
     var x = s.charCodeAt(i);
     if (x > 255) {
-        // throw exception
+        throw "INVALID_CHARACTER_ERR: DOM Exception 5";
     }
     return x;
 }
 
 
 base64.encode = function(s) {
+    if (arguments.length != 1) {
+	throw "SyntaxError: Not enough arguments";
+    }
     var padchar = base64.PADCHAR;
-    var alpha = base64.ALPHA;
+    var alpha   = base64.ALPHA;
     var getbyte = base64.getbyte;
 
-    var i;
+    var i, b10;
     var x = [];
-    var b10;
+
+    // convert to string
+    s = "" + s;
+
     var imax = s.length - s.length % 3;
 
     if (s.length == 0) {
