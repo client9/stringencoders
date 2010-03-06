@@ -109,7 +109,82 @@ equals(s,base64.decode(b64));
 }
 }
 }
+});
 
+module("Exceptions");
+// make sure what is thrown matches the types
+
+test("Syntax Error", function() {
+
+var e1, e2,x;
+try {
+ base64.encode();
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e1 = x;
+}
+
+try {
+ window.btoa()
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e2 = x;
+}
+
+equals(typeof e1, typeof e2);
+equals("" + e1, "" + e2);
+});
+
+
+test("DOM Exception", function() {
+
+var e1, e2,x;
+try {
+ base64.encode('\u1000');
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e1 = x;
+}
+
+try {
+ window.btoa('\u1000')
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e2 = x;
+}
+
+equals(typeof e1, typeof e2);
+equals("" + e1, "" + e2);
+equals(e1.code, e2.code);
+
+});
+
+
+test("Decode Exception", function() {
+
+var e1, e2,x;
+try {
+ base64.decode('\u1000');
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e1 = x;
+}
+
+try {
+ window.atob('\u1000')
+ ok(false, "expected exception");
+} catch (x) {
+  // odd scoping issue, have to copy exception object
+  e2 = x;
+}
+
+equals(typeof e1, typeof e2);
+equals("" + e1, "" + e2);
 });
 
 });
