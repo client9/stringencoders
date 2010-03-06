@@ -54,7 +54,7 @@ base64.makeDOMException = function() {
     var e, tmp;
     try {
 	e = new DOMException(DOMException.INVALID_CHARACTER_ERR);
-    } catch (x) {
+    } catch (tmp) {
 	// not available, just passback a duck-typed equiv
 	//  Firefox 3.6 has a much more complicated Error object
 	//   but this should suffice
