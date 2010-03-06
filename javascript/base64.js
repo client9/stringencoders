@@ -39,22 +39,40 @@
  * https://developer.mozilla.org/en/DOM/window.btoa
  *
  * window.btoa and base64.encode takes a string where charCodeAt is [0,255]
- * If any character is not [0,255], then an exception is thrown.
+ * If any character is not [0,255], then an DOMException(5) is thrown.
  *
  * window.atob and base64.decode take a base64-encoded string
  * If the input length is not a multiple of 4, or contains invalid characters
- *   then an exception is thrown.
+ *   then an DOMException(5) is thrown.
  */
 base64 = {};
 base64.PADCHAR = '=';
 base64.ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+base64.makeDOMException = function() {
+    // sadly in FF,Safari,Chrome you can't make a DOMException
+    var e, tmp;
+    try {
+	e = new DOMException(DOMException.INVALID_CHARACTER_ERR);
+    } catch (x) {
+	// not available, just passback a duck-typed equiv
+	//  Firefox 3.6 has a much more complicated Error object
+	//   but this should suffice
+	e = {
+	    code: 5,
+	    toString: function() { return "Error: INVALID_CHARACTER_ERR: DOM Exception 5"; }
+	};
+    }
+    return e;
+}
+
 base64.getbyte64 = function(s,i) {
     // This is oddly fast, except on Chrome/V8.
     //  Minimal or no improvement in performance by using a
     //   object with properties mapping chars to value (eg. 'A': 0)
     var idx = base64.ALPHA.indexOf(s.charAt(i));
     if (idx == -1) {
-	throw "Cannot decode base64";
+	throw base64.makeDOMException();
     }
     return idx;
 }
@@ -70,7 +88,7 @@ base64.decode = function(s) {
     }
 
     if (imax % 4 != 0) {
-	throw "Cannot decode base64";
+	throw base64.makeDOMException();
     }
 
     pads = 0
@@ -106,15 +124,14 @@ base64.decode = function(s) {
 base64.getbyte = function(s,i) {
     var x = s.charCodeAt(i);
     if (x > 255) {
-        throw "INVALID_CHARACTER_ERR: DOM Exception 5";
+        throw base64.makeDOMException();
     }
     return x;
 }
 
-
 base64.encode = function(s) {
     if (arguments.length != 1) {
-	throw "SyntaxError: Not enough arguments";
+	throw new SyntaxError("Not enough arguments");
     }
     var padchar = base64.PADCHAR;
     var alpha   = base64.ALPHA;
