@@ -45,25 +45,30 @@
  * If the input length is not a multiple of 4, or contains invalid characters
  *   then an DOMException(5) is thrown.
  */
-base64 = {};
+var base64 = {};
 base64.PADCHAR = '=';
 base64.ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 base64.makeDOMException = function() {
     // sadly in FF,Safari,Chrome you can't make a DOMException
     var e, tmp;
+
     try {
-	e = new DOMException(DOMException.INVALID_CHARACTER_ERR);
+	return new DOMException(DOMException.INVALID_CHARACTER_ERR);
     } catch (tmp) {
 	// not available, just passback a duck-typed equiv
-	//  Firefox 3.6 has a much more complicated Error object
-	//   but this should suffice
-	e = {
-	    code: 5,
-	    toString: function() { return "Error: INVALID_CHARACTER_ERR: DOM Exception 5"; }
-	};
+	// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error
+	// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error/prototype
+	var ex = new Error("DOM Exception 5");
+
+	// ex.number and ex.description is IE-specific.
+        ex.code = ex.number = 5;
+        ex.name = ex.description = "INVALID_CHARACTER_ERR";
+
+	// Safari/Chrome output format
+	ex.toString = function() { return 'Error: ' + ex.name + ': ' + ex.message; };
+        return ex;
     }
-    return e;
 }
 
 base64.getbyte64 = function(s,i) {

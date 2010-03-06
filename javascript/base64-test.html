@@ -134,7 +134,9 @@ try {
 }
 
 equals(typeof e1, typeof e2);
-equals("" + e1, "" + e2);
+ok(e1 instanceof SyntaxError, "Our error is an instance of SyntaxError");
+ok(e2 instanceof SyntaxError, "Native error is an instance of SyntaxError");
+equals(e1.toString(), e2.toString());
 });
 
 
@@ -158,7 +160,7 @@ try {
 }
 
 equals(typeof e1, typeof e2);
-equals("" + e1, "" + e2);
+equals(e1.toString(), e2.toString());
 equals(e1.code, e2.code);
 
 });
@@ -184,7 +186,15 @@ try {
 }
 
 equals(typeof e1, typeof e2);
-equals("" + e1, "" + e2);
+ok(e1 instanceof Error, "Our error is an instance of Error");
+
+// there is no spec for this, just a test to see if it is
+//  this fails!
+ok(e2 instanceof Error, "Native error is an instance of Error");
+
+// this passes
+ok(e2 instanceof DOMException, "Native error is an instance of DOMException");
+equals(e1.toString(), e2.toString());
 });
 
 });
