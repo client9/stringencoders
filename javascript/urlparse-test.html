@@ -309,6 +309,9 @@ equals(urljoin('http://abc.com/shows/', 'http://nbc.com/'), 'http://nbc.com/');
 
 test('urlnormalize', function() {
   equals(urlnormalize('http://foo.com'), 'http://foo.com/');
+  equals(urlnormalize('http://foo.com:80'), 'http://foo.com/');
+  equals(urlnormalize('https://foo.com:443'), 'https://foo.com/');
+  equals(urlnormalize('https://foo.com:443/foo/.././bar'),'https://foo.com/bar');
 });
 
 test('urldefrag', function() {
