@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
                     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,6 +15,7 @@ var urlsplit = urlparse.urlsplit;
 var urlunsplit = urlparse.urlunsplit;
 var urljoin = urlparse.urljoin;
 var urldefrag = urlparse.urldefrag;
+var urlnormalize = urlparse.urlnormalize;
 
 test('urlsplit-full', function() {
 var parts = urlsplit('http://www.abc.com:80/def/ghi?query#frag');
@@ -191,6 +192,17 @@ equals(parts.fragment, '');
 equals(urlunsplit(parts), 'http://127.0.0.1');
 });
 
+// test to make sure implementation (regexp) will match numbers too
+test('urlsplit-ipaddress-path', function() {
+var parts = urlsplit('http://127.0.0.1/');
+equals(parts.scheme, 'http');
+equals(parts.netloc, '127.0.0.1');
+equals(parts.path, '/');
+equals(parts.query, '');
+equals(parts.fragment, '');
+equals(urlunsplit(parts), 'http://127.0.0.1/');
+});
+
 // make sure single words are ok for host
 test('urlsplit-localhost', function() {
 var parts = urlsplit('http://localhost');
@@ -201,6 +213,31 @@ equals(parts.query, '');
 equals(parts.fragment, '');
 
 equals(urlunsplit(parts), 'http://localhost');
+});
+
+// make sure single words are ok for host
+test('urlsplit-localhost-path', function() {
+var parts = urlsplit('http://localhost/');
+equals(parts.scheme, 'http');
+equals(parts.netloc, 'localhost');
+equals(parts.path, '/');
+equals(parts.query, '');
+equals(parts.fragment, '');
+
+equals(urlunsplit(parts), 'http://localhost/');
+});
+
+
+// test bogus all empty case
+test('urlsplit-empty', function() {
+var parts = urlsplit('');
+equals(parts.scheme, '');
+equals(parts.netloc, '');
+equals(parts.path, '');
+equals(parts.query, '');
+equals(parts.fragment, '');
+
+equals(urlunsplit(parts), '');
 });
 
 
@@ -259,7 +296,7 @@ equals(urljoin('http://abc.com/shows/lost', 'scrubs'), 'http://abc.com/shows/scr
 
 equals(urljoin('http://abc.com/shows/lost', '../shop'), 'http://abc.com/shop');
 
-// this is behavior of python. 
+// this is behavior of python.
 equals(urljoin('http://abc.com/shows/lost', '../../shop'), 'http://abc.com/../shop');
 
 equals(urljoin('http://abc.com/shows/lost', ''), 'http://abc.com/shows/lost');
@@ -268,6 +305,10 @@ equals(urljoin('http://abc.com/shows/../lost', ''), 'http://abc.com/lost');
 
 equals(urljoin('http://abc.com/shows/', 'http://nbc.com/'), 'http://nbc.com/');
 
+});
+
+test('urlnormalize', function() {
+  equals(urlnormalize('http://foo.com'), 'http://foo.com/');
 });
 
 test('urldefrag', function() {
