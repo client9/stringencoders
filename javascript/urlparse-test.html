@@ -312,6 +312,9 @@ test('urlnormalize', function() {
   equals(urlnormalize('http://foo.com:80'), 'http://foo.com/');
   equals(urlnormalize('https://foo.com:443'), 'https://foo.com/');
   equals(urlnormalize('https://foo.com:443/foo/.././bar'),'https://foo.com/bar');
+  equals(urlnormalize('file:///foo/bar?junk'), 'file:///foo/bar');
+  equals(urlnormalize('file:///foo/bar?junk#frag'), 'file:///foo/bar');
+  equals(urlnormalize('file:///foo/bar#frag'), 'file:///foo/bar');
 });
 
 test('urldefrag', function() {
