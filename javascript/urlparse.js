@@ -81,7 +81,8 @@
  * TODO: test netloc missing, but hostname present
  */
 
-var urldefrag = function(url)
+var urlparse = {};
+urlparse.urldefrag = function(url)
 {
     var idx = url.indexOf('#');
     if (idx == -1) {
@@ -91,7 +92,7 @@ var urldefrag = function(url)
     }
 }
 
-var urlsplit = function(url, default_scheme, allow_fragments)
+urlparse.urlsplit = function(url, default_scheme, allow_fragments)
  {
     if (typeof allow_fragments === 'undefined') {
         allow_fragments = true;
@@ -140,7 +141,7 @@ var urlsplit = function(url, default_scheme, allow_fragments)
     return o;
 }
 
-var urlunsplit = function(o) {
+urlparse.urlunsplit = function(o) {
     var s = '';
     if (o.scheme) {
         s += o.scheme + '://';
@@ -175,13 +176,13 @@ var urlunsplit = function(o) {
     return s;
 }
 
-var urljoin = function(base, url, allow_fragments)
+urlparse.urljoin = function(base, url, allow_fragments)
 {
     if (typeof allow_fragments === 'undefined') {
         allow_fragments = true;
     }
 
-    var url_parts = urlsplit(url);
+    var url_parts = urlparse.urlsplit(url);
 
     // if url parts has a scheme (i.e. absolute)
     // then nothing to do
@@ -189,10 +190,10 @@ var urljoin = function(base, url, allow_fragments)
 	if (! allow_fragments) {
 	    return url;
 	} else {
-	    return urldefrag(url)[0];
+	    return urlparse.urldefrag(url)[0];
 	}
     }
-    var base_parts = urlsplit(base);
+    var base_parts = urlparse.urlsplit(base);
 
 
     // copy base, only if not present
@@ -261,5 +262,5 @@ var urljoin = function(base, url, allow_fragments)
         base_parts.fragment = '';
     }
 
-    return urlunsplit(base_parts);
+    return urlparse.urlunsplit(base_parts);
 }
