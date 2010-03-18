@@ -11,6 +11,11 @@
 
 $(document).ready(function(){
 
+var urlsplit = urlparse.urlsplit;
+var urlunsplit = urlparse.urlunsplit;
+var urljoin = urlparse.urljoin;
+var urldefrag = urlparse.urldefrag;
+
 test('urlsplit-full', function() {
 var parts = urlsplit('http://www.abc.com:80/def/ghi?query#frag');
 equals(parts.scheme, 'http');
