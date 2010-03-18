@@ -109,7 +109,7 @@ urlparse.urlsplit = function(url, default_scheme, allow_fragments)
     if (parts) {
         o.scheme = parts[1] || default_scheme || '';
         o.hostname = parts[3].toLowerCase() || '';
-        o.port = parseInt(parts[4]) || '';
+        o.port = parseInt(parts[4],10) || '';
 	// Probably should grab the netloc from regexp
 	//  and then parse again for hostname/port
 
