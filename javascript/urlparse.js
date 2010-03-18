@@ -82,6 +82,81 @@
  */
 
 var urlparse = {};
+
+//
+// NORMALIZE PATH with "../" and "./"
+//   http://en.wikipedia.org/wiki/URL_normalization
+//   http://tools.ietf.org/html/rfc3986#section-5.2.3
+//
+urlparse.normalizepath = function(path)
+{
+    if (path == '') {
+	return '/';
+    }
+
+    var parts = path.split('/');
+
+    var newparts = [];
+    // make sure path always starts with '/'
+    if (parts[0] !== '') {
+        newparts.push('');
+    }
+
+    for (var i = 0; i < parts.length; ++i) {
+        if (parts[i] === '..') {
+            if (newparts.length > 1) {
+                newparts.pop();
+            } else {
+                newparts.push(parts[i]);
+            }
+        } else if (parts[i] != '.') {
+            newparts.push(parts[i]);
+        }
+    }
+
+    return newparts.join('/');
+}
+
+//
+// Does many of the normalizations that the stock
+//  python urlsplit/urlunsplit/urljoin neglects
+//
+// Doesn't do hex-escape normalization on path or query
+//   %7e -> %7E
+// Nor, '+' <--> %20 translation
+//
+urlparse.urlnormalize = function(url)
+{
+    var parts = urlparse.urlsplit(url);
+    switch (parts.scheme) {
+    case 'file':
+        // files can't have query strings
+        //  and we don't bother with fragments
+        parts.query = '';
+        parts.fragment = '';
+        break;
+    case 'http':
+    case 'https':
+        // remove default port
+        if ((parts.scheme === 'http' && parts.port == 80) ||
+            (parts.scheme === 'https' && parts.port == 443)) {
+            delete parts.port;
+            // hostname is already lower case
+            parts.netloc = parts.hostname;
+        }
+        break;
+    default:
+        // if we don't have specific normalizations for this
+        // scheme, return the original url unmolested
+        return url;
+    }
+
+    // for [file|http|https].  Not sure about other schemes
+    parts.path = urlparse.normalizepath(parts.path);
+
+    return urlparse.urlunsplit(parts);
+}
+
 urlparse.urldefrag = function(url)
 {
     var idx = url.indexOf('#');
@@ -129,7 +204,7 @@ urlparse.urlsplit = function(url, default_scheme, allow_fragments)
 
     parts = leftover.match(parse_leftovers);
 
-    o.path =  parts[1];
+    o.path =  parts[1] || '';
     o.query = parts[2] || '';
 
     if (allow_fragments) {
@@ -195,7 +270,6 @@ urlparse.urljoin = function(base, url, allow_fragments)
     }
     var base_parts = urlparse.urlsplit(base);
 
-
     // copy base, only if not present
     if (!base_parts.scheme) {
         base_parts.scheme = url_parts.scheme;
@@ -227,31 +301,8 @@ urlparse.urljoin = function(base, url, allow_fragments)
         }
     }
 
-    //
-    // NORMALIZE PATH with "../" and "./"
-    //   http://en.wikipedia.org/wiki/URL_normalization
-    //   http://tools.ietf.org/html/rfc3986#section-5.2.3
-    var parts = base_parts.path.split('/');
-
-    var newparts = [];
-    // make sure path always starts with '/'
-    if (parts[0] != '') {
-        newparts.push('');
-    }
-
-    for (var i = 0; i < parts.length; ++i) {
-        if (parts[i] === '..') {
-            if (newparts.length > 1) {
-                newparts.pop();
-            } else {
-                newparts.push(parts[i]);
-            }
-        } else if (parts[i] != '.') {
-            newparts.push(parts[i]);
-        }
-    }
-
-    base_parts.path = newparts.join('/');
+    // clean up path
+    base_parts.path = urlparse.normalizepath(base_parts.path);
 
     // copy query string
     base_parts.query = url_parts.query;
