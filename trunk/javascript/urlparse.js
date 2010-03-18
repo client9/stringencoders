@@ -22,11 +22,11 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 /*
  * url processing in the spirit of python's urlparse module
- * see `pydoc urlparse` or 
+ * see `pydoc urlparse` or
  * http://docs.python.org/library/urlparse.html
  *
  *  urlsplit: break apart a URL into components
@@ -43,14 +43,14 @@
  * paths with "."  and "..".  It might be nice to have another
  * function that does full normalization
  *
- *   * removes default port numbers 
+ *   * removes default port numbers
  *     http://abc.com:80/ -> http://abc.com/, etc
- *   * normalizes path 
+ *   * normalizes path
  *     http://abc.com -> http://abc.com/
  *     and other "." and ".." cleanups
  *   * normalizes escaped hex values
  *     http://abc.com/%7efoo -> http://abc.com/%7Efoo
- *    
+ *
  *
  * Differences with Python
  *
@@ -71,7 +71,7 @@
  * For all functions, the javascript version use
  * hostname+port if netloc is missing.  In python
  * hostname+port were always ignored.
- * 
+ *
  * Similar functionality in different languages:
  *
  *   http://php.net/manual/en/function.parse-url.php
@@ -86,14 +86,14 @@ urlparse.urldefrag = function(url)
 {
     var idx = url.indexOf('#');
     if (idx == -1) {
-	return [ url, '' ];
+        return [ url, '' ];
     } else {
-	return [ url.substr(0,idx), url.substr(idx+1) ];
+        return [ url.substr(0,idx), url.substr(idx+1) ];
     }
 }
 
 urlparse.urlsplit = function(url, default_scheme, allow_fragments)
- {
+{
     if (typeof allow_fragments === 'undefined') {
         allow_fragments = true;
     }
@@ -110,14 +110,14 @@ urlparse.urlsplit = function(url, default_scheme, allow_fragments)
         o.scheme = parts[1] || default_scheme || '';
         o.hostname = parts[3].toLowerCase() || '';
         o.port = parseInt(parts[4],10) || '';
-	// Probably should grab the netloc from regexp
-	//  and then parse again for hostname/port
+        // Probably should grab the netloc from regexp
+        //  and then parse again for hostname/port
 
-	o.netloc = parts[3];
-	if (parts[4]) {
-	    o.netloc += ':' + parts[4];
-	}
-	   
+        o.netloc = parts[3];
+        if (parts[4]) {
+            o.netloc += ':' + parts[4];
+        }
+
         var leftover = parts[5];
     } else {
         o.scheme = default_scheme || '';
@@ -148,19 +148,19 @@ urlparse.urlunsplit = function(o) {
     }
 
     if (o.netloc) {
-	if (s == '') {
-	    s += '//';
-	}
+        if (s == '') {
+            s += '//';
+        }
         s +=  o.netloc;
     } else if (o.hostname) {
-	// extension.  Python only uses netloc
-	if (s == '') {
-	    s += '//';
-	}
-	s += o.hostname;
-	if (o.port) {
-	    s += ':' + o.port;
-	}
+        // extension.  Python only uses netloc
+        if (s == '') {
+            s += '//';
+        }
+        s += o.hostname;
+        if (o.port) {
+            s += ':' + o.port;
+        }
     }
 
     if (o.path) {
@@ -187,11 +187,11 @@ urlparse.urljoin = function(base, url, allow_fragments)
     // if url parts has a scheme (i.e. absolute)
     // then nothing to do
     if (url_parts.scheme) {
-	if (! allow_fragments) {
-	    return url;
-	} else {
-	    return urlparse.urldefrag(url)[0];
-	}
+        if (! allow_fragments) {
+            return url;
+        } else {
+            return urlparse.urldefrag(url)[0];
+        }
     }
     var base_parts = urlparse.urlsplit(base);
 
@@ -211,22 +211,23 @@ urlparse.urljoin = function(base, url, allow_fragments)
     // paths
     if (url_parts.path.length > 0) {
         if (url_parts.path.charAt(0) == '/') {
-	    base_parts.path = url_parts.path;
+            base_parts.path = url_parts.path;
         } else {
-	    // relative path.. get rid of "current filename" and replace.  Same as
-	    //   var parts = base_parts.path.split('/');
-	    //   parts[parts.length-1] = url_parts.path;
-	    //   base_parts.path = parts.join('/');    
-	    var idx = base_parts.path.lastIndexOf('/');
-	    if (idx == -1) {
-		base_parts.path = url_parts.path;
-	    } else {
-		base_parts.path = base_parts.path.substr(0,idx) + '/' + url_parts.path;
-	    }
-	}
+            // relative path.. get rid of "current filename" and
+            //   replace.  Same as var parts =
+            //   base_parts.path.split('/'); parts[parts.length-1] =
+            //   url_parts.path; base_parts.path = parts.join('/');
+            var idx = base_parts.path.lastIndexOf('/');
+            if (idx == -1) {
+                base_parts.path = url_parts.path;
+            } else {
+                base_parts.path = base_parts.path.substr(0,idx) + '/' +
+                    url_parts.path;
+            }
+        }
     }
 
-    // 
+    //
     // NORMALIZE PATH with "../" and "./"
     //   http://en.wikipedia.org/wiki/URL_normalization
     //   http://tools.ietf.org/html/rfc3986#section-5.2.3
@@ -235,19 +236,19 @@ urlparse.urljoin = function(base, url, allow_fragments)
     var newparts = [];
     // make sure path always starts with '/'
     if (parts[0] != '') {
-	newparts.push('');
+        newparts.push('');
     }
 
     for (var i = 0; i < parts.length; ++i) {
-	if (parts[i] === '..') {
-	    if (newparts.length > 1) {
-		newparts.pop();
-	    } else {
-		newparts.push(parts[i]);
-	    }
-	} else if (parts[i] != '.') {
-	    newparts.push(parts[i]);
-	}
+        if (parts[i] === '..') {
+            if (newparts.length > 1) {
+                newparts.pop();
+            } else {
+                newparts.push(parts[i]);
+            }
+        } else if (parts[i] != '.') {
+            newparts.push(parts[i]);
+        }
     }
 
     base_parts.path = newparts.join('/');

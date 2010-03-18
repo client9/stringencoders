@@ -22,7 +22,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 /* base64 encode/decode compatible with window.btoa/atob
  *
@@ -54,19 +54,19 @@ base64.makeDOMException = function() {
     var e, tmp;
 
     try {
-	return new DOMException(DOMException.INVALID_CHARACTER_ERR);
+        return new DOMException(DOMException.INVALID_CHARACTER_ERR);
     } catch (tmp) {
-	// not available, just passback a duck-typed equiv
-	// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error
-	// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error/prototype
-	var ex = new Error("DOM Exception 5");
+        // not available, just passback a duck-typed equiv
+        // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error
+        // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Error/prototype
+        var ex = new Error("DOM Exception 5");
 
-	// ex.number and ex.description is IE-specific.
+        // ex.number and ex.description is IE-specific.
         ex.code = ex.number = 5;
         ex.name = ex.description = "INVALID_CHARACTER_ERR";
 
-	// Safari/Chrome output format
-	ex.toString = function() { return 'Error: ' + ex.name + ': ' + ex.message; };
+        // Safari/Chrome output format
+        ex.toString = function() { return 'Error: ' + ex.name + ': ' + ex.message; };
         return ex;
     }
 }
@@ -77,7 +77,7 @@ base64.getbyte64 = function(s,i) {
     //   object with properties mapping chars to value (eg. 'A': 0)
     var idx = base64.ALPHA.indexOf(s.charAt(i));
     if (idx == -1) {
-	throw base64.makeDOMException();
+        throw base64.makeDOMException();
     }
     return idx;
 }
@@ -93,7 +93,7 @@ base64.decode = function(s) {
     }
 
     if (imax % 4 != 0) {
-	throw base64.makeDOMException();
+        throw base64.makeDOMException();
     }
 
     pads = 0
@@ -136,7 +136,7 @@ base64.getbyte = function(s,i) {
 
 base64.encode = function(s) {
     if (arguments.length != 1) {
-	throw new SyntaxError("Not enough arguments");
+        throw new SyntaxError("Not enough arguments");
     }
     var padchar = base64.PADCHAR;
     var alpha   = base64.ALPHA;
