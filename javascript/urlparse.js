@@ -40,17 +40,21 @@
  *
  * urlsplit only does minor normalization the components Only scheme
  * and hostname are lowercased urljoin does a bit more, normalizing
- * paths with "."  and "..".  It might be nice to have another
- * function that does full normalization
+ * paths with "."  and "..".
+
+ * urlnormalize adds additional normalization
  *
  *   * removes default port numbers
  *     http://abc.com:80/ -> http://abc.com/, etc
  *   * normalizes path
  *     http://abc.com -> http://abc.com/
  *     and other "." and ".." cleanups
+ *   * if file, remove query and fragment
+ *
+ * It does not do:
  *   * normalizes escaped hex values
  *     http://abc.com/%7efoo -> http://abc.com/%7Efoo
- *
+ *   * normalize '+' <--> '%20'
  *
  * Differences with Python
  *
@@ -83,6 +87,7 @@
 
 var urlparse = {};
 
+// Unlike to be useful standalone
 //
 // NORMALIZE PATH with "../" and "./"
 //   http://en.wikipedia.org/wiki/URL_normalization
@@ -90,15 +95,15 @@ var urlparse = {};
 //
 urlparse.normalizepath = function(path)
 {
-    if (path == '') {
-	return '/';
+    if (!path || path === '/') {
+        return '/';
     }
 
     var parts = path.split('/');
 
     var newparts = [];
     // make sure path always starts with '/'
-    if (parts[0] !== '') {
+    if (parts[0]) {
         newparts.push('');
     }
 
@@ -114,7 +119,11 @@ urlparse.normalizepath = function(path)
         }
     }
 
-    return newparts.join('/');
+    path = newparts.join('/');
+    if (!path) {
+        path = '/';
+    }
+    return path;
 }
 
 //
