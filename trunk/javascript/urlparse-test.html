@@ -16,6 +16,7 @@ var urlunsplit = urlparse.urlunsplit;
 var urljoin = urlparse.urljoin;
 var urldefrag = urlparse.urldefrag;
 var urlnormalize = urlparse.urlnormalize;
+var normalizepath = urlparse.normalizepath;
 
 test('urlsplit-full', function() {
 var parts = urlsplit('http://www.abc.com:80/def/ghi?query#frag');
@@ -315,6 +316,30 @@ test('urlnormalize', function() {
   equals(urlnormalize('file:///foo/bar?junk'), 'file:///foo/bar');
   equals(urlnormalize('file:///foo/bar?junk#frag'), 'file:///foo/bar');
   equals(urlnormalize('file:///foo/bar#frag'), 'file:///foo/bar');
+});
+
+test('normalizepath', function() {
+  equals(normalizepath(''), '/');
+  equals(normalizepath('/'), '/');
+  equals(normalizepath('/foo'), '/foo');
+
+  // we assume everything is absolute in this function
+  equals(normalizepath('foo'), '/foo');
+
+  equals(normalizepath('.'), '/');
+
+  // not sure what the right answer is here
+  equals(normalizepath('/.'), '/');
+
+  equals(normalizepath('/./'), '/');
+  equals(normalizepath('..'), '/..');
+  equals(normalizepath('/..'), '/..');
+
+  equals(normalizepath('/foo/..'), '/');
+  equals(normalizepath('/foo/../bar'), '/bar');
+  equals(normalizepath('/foo/./bar'), '/foo/bar');
+  equals(normalizepath('/foo/./bar/'), '/foo/bar/');
+
 });
 
 test('urldefrag', function() {
