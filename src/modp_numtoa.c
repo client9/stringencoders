@@ -79,6 +79,15 @@ void modp_ulitoa10(uint64_t value, char* str)
 
 void modp_dtoa(double value, char* str, int prec)
 {
+    /* Hacky test for NaN
+     * under -fast-math this won't work, but then you also won't
+     * have correct nan values anyways.  The alternative is
+     * to link with libmath (bad) or hack IEEE double bits (bad)
+     */
+    if (! (value == value)) {
+        str[0] = 'n'; str[1] = 'a'; str[2] = 'n'; str[3] = '\0';
+        return;
+    }
     /* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);
 
@@ -170,6 +179,16 @@ void modp_dtoa(double value, char* str, int prec)
 //   The differnce is noted below
 void modp_dtoa2(double value, char* str, int prec)
 {
+    /* Hacky test for NaN
+     * under -fast-math this won't work, but then you also won't
+     * have correct nan values anyways.  The alternative is
+     * to link with libmath (bad) or hack IEEE double bits (bad)
+     */
+    if (! (value == value)) {
+        str[0] = 'n'; str[1] = 'a'; str[2] = 'n'; str[3] = '\0';
+        return;
+    }
+
     /* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);
 

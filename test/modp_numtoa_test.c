@@ -8,6 +8,8 @@
 #include <string.h>
 #include "minunit.h"
 
+/* Need only for INFINITY and optionally NAN macros */
+/* We do not link with -lm */
 #include <math.h>
 
 static char* testITOA()
@@ -168,24 +170,6 @@ static char* testDoubleToA()
     modp_dtoa(d, buf2, 6);
     mu_assert_str_equals(buf1, buf2);
 
-#ifdef INFINITY
-    // test bad precision values
-    d = INFINITY;
-    sprintf(buf1, "%f", d);
-    mu_assert_str_equals("inf", buf1);
-    //modp_dtoa(d, buf2, 6);
-    //mu_assert_str_equals("inf", buf2);
-    //modp_dtoa(d, buf2, 6);
-#endif
-
-    /* NAN is a GNU extension */
-    /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
-#ifdef NAN
-    d = NAN;
-    sprintf(buf1, "%f", d);
-    mu_assert_str_equals("nan", buf1);
-
-#endif
     return 0;
 }
 
@@ -303,12 +287,6 @@ static char* testDoubleToA2()
     modp_dtoa2(d, buf2, 6);
     mu_assert_str_equals(buf1, buf2);
 
-    /* Test for inf */
-    d = 1e100 * 1e100;
-    sprintf(buf1, "%.6f", d);
-    modp_dtoa2(d, buf2, 6);
-    mu_assert_str_equals(buf1, buf2);
-
     // test bad precision values
     d = 1.1;
     modp_dtoa(d, buf2, -1);
@@ -325,12 +303,12 @@ static char* testOverflowLITOA() {
     char buf1[100];
     char buf2[100];
 
-    int64_t longmin = LONG_MIN;
+    long long int longmin = LONG_MIN;
     sprintf(buf1, "%lld", longmin);
     modp_litoa10(longmin, buf2);
     mu_assert_str_equals(buf1, buf2);
 
-    int64_t longmax = LONG_MAX;
+    long long int longmax = LONG_MAX;
     sprintf(buf1, "%lld", longmax);
     modp_litoa10(longmax, buf2);
     mu_assert_str_equals(buf1, buf2);
@@ -355,6 +333,60 @@ static char* testOverflowITOA() {
     return 0;
 }
 
+// Test NaN and Infinity behavior
+static char* testDTOANonFinite() {
+    char buf1[100];
+    char buf2[100];
+    double d;
+
+    /* Test for inf */
+    d = 1e200 * 1e200;
+    // NOTE!!! next line will core dump!
+    //sprintf(buf1, "%.6f", d);
+    buf2[0] = '\0';
+    modp_dtoa2(d, buf2, 6);
+    mu_assert_str_equals("inf", buf2);
+
+    /* INFINITY should be standard. Defined in <math.h> */
+    /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
+#ifdef INFINITY
+    d = INFINITY;
+
+    // test libc support
+    sprintf(buf1, "%f", d);
+    mu_assert_str_equals("inf", buf1);
+
+    buf2[0] = '\0';
+    modp_dtoa(d, buf2, 6);
+    mu_assert_str_equals("inf", buf2);
+
+    buf2[0] = '\0';
+    modp_dtoa2(d, buf2, 6);
+    mu_assert_str_equals("inf", buf2);
+#endif
+
+    /* NAN is a GNU extension, defined in <math.h> */
+    /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
+#ifdef NAN
+    d = NAN;
+
+    // test libc support
+    sprintf(buf1, "%f", d);
+    mu_assert_str_equals("nan", buf1);
+
+    // now test ours
+    buf2[0] = '\0';
+    modp_dtoa(d, buf2, 6);
+    mu_assert_str_equals("nan", buf2);
+    buf2[0] = '\0';
+    modp_dtoa2(d, buf2, 6);
+    mu_assert_str_equals("nan", buf2);
+#endif
+
+    return 0;
+
+}
+
 static char* all_tests() {
     mu_run_test(testITOA);
     mu_run_test(testUITOA);
@@ -364,6 +396,7 @@ static char* all_tests() {
     mu_run_test(testDoubleToA2);
     mu_run_test(testOverflowLITOA);
     mu_run_test(testOverflowITOA);
+    mu_run_test(testDTOANonFinite);
     return 0;
 }
 
