@@ -8,6 +8,8 @@
 #include <string.h>
 #include "minunit.h"
 
+#include <math.h>
+
 static char* testITOA()
 {
     char buf1[100];
@@ -166,12 +168,24 @@ static char* testDoubleToA()
     modp_dtoa(d, buf2, 6);
     mu_assert_str_equals(buf1, buf2);
 
+#ifdef INFINITY
     // test bad precision values
-    d = 1.1;
-    modp_dtoa(d, buf2, -1);
-    mu_assert_str_equals("1", buf2);
-    modp_dtoa(d, buf2, 10);
-    mu_assert_str_equals("1.100000000", buf2);
+    d = INFINITY;
+    sprintf(buf1, "%f", d);
+    mu_assert_str_equals("inf", buf1);
+    //modp_dtoa(d, buf2, 6);
+    //mu_assert_str_equals("inf", buf2);
+    //modp_dtoa(d, buf2, 6);
+#endif
+
+    /* NAN is a GNU extension */
+    /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
+#ifdef NAN
+    d = NAN;
+    sprintf(buf1, "%f", d);
+    mu_assert_str_equals("nan", buf1);
+
+#endif
     return 0;
 }
 
@@ -286,6 +300,12 @@ static char* testDoubleToA2()
     sprintf(buf1, "%.6f", d);
     stripTrailingZeros(buf1);
 
+    modp_dtoa2(d, buf2, 6);
+    mu_assert_str_equals(buf1, buf2);
+
+    /* Test for inf */
+    d = 1e100 * 1e100;
+    sprintf(buf1, "%.6f", d);
     modp_dtoa2(d, buf2, 6);
     mu_assert_str_equals(buf1, buf2);
 
