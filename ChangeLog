@@ -8,7 +8,10 @@ TODO:
 
 19-Mar-2010
 	* Added "modp_dtoa2" same as dtoa2 but strips trailing zeros (Issue 9)
-	
+	* FIXED Issue 10 -- NaN not handled correctly in modp_dtoa(2).
+	* ADDED more tests for NaN/Inf handling
+	* FIXED some build issues under Ubuntu (64-bit) (sprintf annoyances in testing code)
+
 12-Feb-2010
 	* FIXED Issue 7 - silent overflow error
         * FIXED Incorrect autoconf version
