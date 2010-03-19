@@ -6,7 +6,10 @@ TODO:
 * more doco
 * man pages
 
-12-Feb-2009
+19-Mar-2010
+	* Added "modp_dtoa2" same as dtoa2 but strips trailing zeros (Issue 9)
+	
+12-Feb-2010
 	* FIXED Issue 7 - silent overflow error
         * FIXED Incorrect autoconf version
 	* Issue 6 -- attempt to make VS2008 happy
