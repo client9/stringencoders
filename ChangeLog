@@ -11,6 +11,9 @@ TODO:
 	* FIXED Issue 10 -- NaN not handled correctly in modp_dtoa(2).
 	* ADDED more tests for NaN/Inf handling
 	* FIXED some build issues under Ubuntu (64-bit) (sprintf annoyances in testing code)
+        * REGENERATED that autoconf stuff.  Groan.  Hopefully it works for you.  If not
+	  file a ticket, please!
+        * VERSION 3.10 RELEASED
 
 12-Feb-2010
 	* FIXED Issue 7 - silent overflow error
