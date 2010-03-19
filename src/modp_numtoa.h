@@ -64,7 +64,11 @@ void modp_litoa10(int64_t value, char* buf);
  */
 void modp_ulitoa10(uint64_t value, char* buf);
 
-/** \brief convert a floating point number to char buffer with fixed-precision format
+/** \brief convert a floating point number to char buffer with
+ *         fixed-precision format
+ *
+ * This is similar to "%.[0-9]f" in the printf style.  It will include
+ * trailing zeros
  *
  * If the input value is greater than 1<<31, then the output format
  * will be switched exponential format.
@@ -75,6 +79,23 @@ void modp_ulitoa10(uint64_t value, char* buf);
  *    Can only be 0-9.
  */
 void modp_dtoa(double value, char* buf, int precision);
+
+/** \brief convert a floating point number to char buffer with a
+ *         variable-precision format, and no trailing zeros
+ *
+ * This is similar to "%.[0-9]f" in the printf style, except it will
+ * NOT include trailing zeros after the decimal point.  This type
+ * of format oddly does not exists with printf.
+ *
+ * If the input value is greater than 1<<31, then the output format
+ * will be switched exponential format.
+ *
+ * \param[in] value
+ * \param[out] buf  The allocated output buffer.  Should be 32 chars or more.
+ * \param[in] precision  Number of digits to the right of the decimal point.
+ *    Can only be 0-9.
+ */
+void modp_dtoa2(double value, char* buf, int precision);
 
 END_C
 
