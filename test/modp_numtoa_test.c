@@ -339,6 +339,12 @@ static char* testDTOANonFinite() {
     char buf2[100];
     double d;
 
+    // down below are some IFDEFs that may or may not exist.
+    // depending on compiler settings "buf1" might not be used
+    // and halt compilation.  The next line touches buf1 so this
+    // doesn't happen
+    (void)buf1;
+
     /* Test for inf */
     d = 1e200 * 1e200;
     // NOTE!!! next line will core dump!
