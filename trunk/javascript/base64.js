@@ -76,7 +76,7 @@ base64.getbyte64 = function(s,i) {
     //  Minimal or no improvement in performance by using a
     //   object with properties mapping chars to value (eg. 'A': 0)
     var idx = base64.ALPHA.indexOf(s.charAt(i));
-    if (idx == -1) {
+    if (idx === -1) {
         throw base64.makeDOMException();
     }
     return idx;
@@ -84,22 +84,22 @@ base64.getbyte64 = function(s,i) {
 
 base64.decode = function(s) {
     // convert to string
-    s = "" + s;
+    s = '' + s;
     var getbyte64 = base64.getbyte64;
     var pads, i, b10;
     var imax = s.length
-    if (imax == 0) {
+    if (imax === 0) {
         return s;
     }
 
-    if (imax % 4 != 0) {
+    if (imax % 4 !== 0) {
         throw base64.makeDOMException();
     }
 
     pads = 0
-    if (s.charAt(imax -1) == base64.PADCHAR) {
+    if (s.charAt(imax - 1) === base64.PADCHAR) {
         pads = 1;
-        if (s.charAt(imax -2) == base64.PADCHAR) {
+        if (s.charAt(imax - 2) === base64.PADCHAR) {
             pads = 2;
         }
         // either way, we want to ignore this last block
@@ -115,7 +115,7 @@ base64.decode = function(s) {
 
     switch (pads) {
     case 1:
-        b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) | (getbyte64(s,i+2) << 6)
+        b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) | (getbyte64(s,i+2) << 6);
         x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
         break;
     case 2:
@@ -135,7 +135,7 @@ base64.getbyte = function(s,i) {
 }
 
 base64.encode = function(s) {
-    if (arguments.length != 1) {
+    if (arguments.length !== 1) {
         throw new SyntaxError("Not enough arguments");
     }
     var padchar = base64.PADCHAR;
@@ -146,11 +146,11 @@ base64.encode = function(s) {
     var x = [];
 
     // convert to string
-    s = "" + s;
+    s = '' + s;
 
     var imax = s.length - s.length % 3;
 
-    if (s.length == 0) {
+    if (s.length === 0) {
         return s;
     }
     for (i = 0; i < imax; i += 3) {
