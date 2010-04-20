@@ -393,6 +393,29 @@ static char* testDTOANonFinite() {
 
 }
 
+static char* testUITOA16()
+{
+    char buf1[100];
+    char buf2[100];
+
+    modp_uitoa16(1, buf1);
+    mu_assert_str_equals(buf1, "00000001");
+
+    modp_uitoa16(0, buf1);
+    mu_assert_str_equals(buf1, "00000000");
+    
+    modp_uitoa16(0xFFFFFFFF, buf1);
+    mu_assert_str_equals(buf1, "FFFFFFFF");
+
+    unsigned int i;
+    for (i = 1; i < 1000000; ++i) {
+        sprintf(buf1, "%08X", i);
+        modp_uitoa16(i, buf2);
+        mu_assert_str_equals(buf1, buf2);
+    }
+    return 0;
+}
+
 static char* all_tests() {
     mu_run_test(testITOA);
     mu_run_test(testUITOA);
@@ -403,6 +426,7 @@ static char* all_tests() {
     mu_run_test(testOverflowLITOA);
     mu_run_test(testOverflowITOA);
     mu_run_test(testDTOANonFinite);
+    mu_run_test(testUITOA16);
     return 0;
 }
 

@@ -97,6 +97,13 @@ void modp_dtoa(double value, char* buf, int precision);
  */
 void modp_dtoa2(double value, char* buf, int precision);
 
+
+/**
+ * adds a 8-character hexadecimal representation of value
+ *
+ */
+void modp_uitoa16(uint32_t value, char* buf);
+
 END_C
 
 #endif

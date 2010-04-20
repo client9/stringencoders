@@ -22,6 +22,7 @@
 static const double pow10[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
                                10000000, 100000000, 1000000000};
 
+
 static void strreverse(char* begin, char* end)
 {
     char aux;
@@ -288,4 +289,44 @@ void modp_dtoa2(double value, char* str, int prec)
 }
 
 
+#include "config.h"
 
+/* You can get rid of the include, but adding... */
+/* if on motoral, sun, ibm; uncomment this */
+/* #define WORDS_BIGENDIAN 1 */
+/* else for Intel, Amd; uncomment this */
+/* #undef WORDS_BIGENDIAN */
+
+void modp_uitoa16(uint32_t value, char* str)
+{
+    static const char* hexchars = "0123456789ABCDEF";
+
+    /**
+     * Implementation note: 
+     *  No re-assignment of "value"
+     *  Each line is independent than the previous, so
+     *    even dumb compilers can pipeline without loop unrolling
+     */
+#ifndef WORDS_BIGENDIAN
+    /* x86 */
+    str[0] = hexchars[(value >> 28) & 0x0000000F];
+    str[1] = hexchars[(value >> 24) & 0x0000000F];
+    str[2] = hexchars[(value >> 20) & 0x0000000F];
+    str[3] = hexchars[(value >> 16) & 0x0000000F];
+    str[4] = hexchars[(value >> 12) & 0x0000000F];
+    str[5] = hexchars[(value >>  8) & 0x0000000F];
+    str[6] = hexchars[(value >>  4) & 0x0000000F];
+    str[7] = hexchars[(value ) & 0x0000000F];
+#else
+    /* sun, motorola, ibm */
+    str[0] = hexchars[(value ) & 0x0000000F];
+    str[1] = hexchars[(value >>  4) & 0x0000000F];
+    str[2] = hexchars[(value >>  8) & 0x0000000F];
+    str[3] = hexchars[(value >> 12) & 0x0000000F];
+    str[4] = hexchars[(value >> 16) & 0x0000000F];
+    str[5] = hexchars[(value >> 20) & 0x0000000F];
+    str[6] = hexchars[(value >> 24) & 0x0000000F];
+    str[7] = hexchars[(value >> 28) & 0x0000000F];
+#endif
+    str[8] = '\0';
+}

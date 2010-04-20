@@ -196,6 +196,40 @@ int main()
     printf("%.1fx\n", last/(t1-t0));
     fflush(stdout);
 
+    /* UITOA16 */
+
+    printf("%s", "unsigned 32 hex\t");
+    fflush(stdout);
+
+    t0 = clock();
+    for (i = 0; i < max; ++i) {
+        sprintf(buf, "%X", i);
+    }
+    t1 = clock();
+    printf("%lu\t", (t1-t0));
+    fflush(stdout);
+
+    t0 = clock();
+    for (i = 0; i < max; ++i) {
+        snprintf(buf, sizeof(buf), "%08X", i);
+    }
+    t1 = clock();
+    last = (t1-t0);
+    printf("%lu\t", (t1-t0));
+    fflush(stdout);
+
+    t0 = clock();
+    for (i = 0; i < max; ++i) {
+        modp_uitoa16(i, buf);
+    }
+    t1 = clock();
+    printf("%lu\t", (t1-t0));
+    printf("%.1fx\n", last/(t1-t0));
+    fflush(stdout);
+
+
+    /** FLOATING POINT **/
+
     printf("%s", "\n    type   \t%e\t%f\t%g\tdtoa\timprovement\n");
     printf("%s", "double\t\t");
     t0 = clock();
