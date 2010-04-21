@@ -102,7 +102,7 @@ void modp_dtoa2(double value, char* buf, int precision);
  * adds a 8-character hexadecimal representation of value
  *
  */
-void modp_uitoa16(uint32_t value, char* buf);
+char* modp_uitoa16(uint32_t value, char* buf, int final);
 
 END_C
 

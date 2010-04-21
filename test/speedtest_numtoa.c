@@ -220,7 +220,7 @@ int main()
 
     t0 = clock();
     for (i = 0; i < max; ++i) {
-        modp_uitoa16(i, buf);
+        modp_uitoa16(i, buf, 1);
     }
     t1 = clock();
     printf("%lu\t", (t1-t0));
