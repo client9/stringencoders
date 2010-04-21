@@ -297,7 +297,7 @@ void modp_dtoa2(double value, char* str, int prec)
 /* else for Intel, Amd; uncomment this */
 /* #undef WORDS_BIGENDIAN */
 
-void modp_uitoa16(uint32_t value, char* str)
+char* modp_uitoa16(uint32_t value, char* str, int isfinal)
 {
     static const char* hexchars = "0123456789ABCDEF";
 
@@ -328,5 +328,11 @@ void modp_uitoa16(uint32_t value, char* str)
     str[6] = hexchars[(value >> 24) & 0x0000000F];
     str[7] = hexchars[(value >> 28) & 0x0000000F];
 #endif
-    str[8] = '\0';
+
+    if (isfinal) {
+        str[8] = '\0';
+        return str;
+    } else {
+        return str + 8;
+    }
 }

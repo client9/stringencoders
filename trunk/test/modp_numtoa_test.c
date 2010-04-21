@@ -398,19 +398,19 @@ static char* testUITOA16()
     char buf1[100];
     char buf2[100];
 
-    modp_uitoa16(1, buf1);
+    modp_uitoa16(1, buf1, 1);
     mu_assert_str_equals(buf1, "00000001");
 
-    modp_uitoa16(0, buf1);
+    modp_uitoa16(0, buf1, 1);
     mu_assert_str_equals(buf1, "00000000");
     
-    modp_uitoa16(0xFFFFFFFF, buf1);
+    modp_uitoa16(0xFFFFFFFF, buf1, 1);
     mu_assert_str_equals(buf1, "FFFFFFFF");
 
     unsigned int i;
     for (i = 1; i < 1000000; ++i) {
         sprintf(buf1, "%08X", i);
-        modp_uitoa16(i, buf2);
+        modp_uitoa16(i, buf2, 1);
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
