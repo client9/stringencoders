@@ -6,7 +6,7 @@ This was original based from research for [http://code.google.com/p/cida/ Crypto
 
 ==Base 64 Standard==
 
-Base 64 encoding converts 3 binary bytes into 4 ascii characters.  The base 64 "alphabet" or "digits" are A-Z,a-z,0-9 plus two extra characters `+` (plus) and `/` (slash).  It also defines on extra character `=` for padding if the original input was not a multiple of 3.
+Base 64 encoding converts 3 binary bytes into 4 ascii characters.  The base 64 "alphabet" or "digits" are A-Z,a-z,0-9 plus two extra characters `+` (plus) and `/` (slash).  It also defines one extra character `=` for padding if the original input was not a multiple of 3.
 
 
 == Problems with the standard in urls==
