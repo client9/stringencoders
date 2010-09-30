@@ -4,7 +4,7 @@
 #ifndef COM_MODP_STRINGENCODERS_ARRAYTOC
 #define COM_MODP_STRINGENCODERS_ARRAYTOC
 
-#include <stdint.h>
+#include "modp_stdint.h"
 
 #ifdef __cplusplus
 #define BEGIN_C extern "C" {

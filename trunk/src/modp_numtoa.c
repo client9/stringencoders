@@ -3,9 +3,10 @@
 
 #include "modp_numtoa.h"
 
-#include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+
+#include "modp_stdint.h"
 
 // other interesting references on num to string convesion
 // http://www.jb.man.ac.uk/~slowe/cpp/itoa.html

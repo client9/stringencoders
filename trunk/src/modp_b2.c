@@ -41,10 +41,10 @@
  * http://www.opensource.org/licenses/bsd-license.php
  * </PRE>
  */
-#include <stdint.h>
 #include <string.h>
 #include "config.h"
 #include "modp_b2.h"
+#include "modp_stdint.h"
 #include "modp_b2_data.h"
 
 

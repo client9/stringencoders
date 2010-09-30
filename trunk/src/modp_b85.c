@@ -44,9 +44,7 @@
 
 /* exported public header */
 #include "modp_b85.h"
-
-#include <stdint.h>
-
+#include "modp_stdint.h"
 /* private header */
 #include "modp_b85_data.h"
 
