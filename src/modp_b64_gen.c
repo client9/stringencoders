@@ -28,10 +28,10 @@
 
 
 #include "arraytoc.h"
-#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "modp_stdint.h"
 
 static unsigned char b64chars[64] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -45,7 +45,7 @@ static unsigned char padchar = '=';
 
 void printStart()
 {
-    printf("#include <stdint.h>\n");
+    printf("#include \"modp_stdint.h\"\n");
     printf("#define CHAR62 '%c'\n", b64chars[62]);
     printf("#define CHAR63 '%c'\n", b64chars[63]);
     printf("#define CHARPAD '%c'\n", padchar);

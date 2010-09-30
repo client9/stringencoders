@@ -41,9 +41,8 @@
  * http://www.opensource.org/licenses/bsd-license.php
  * </PRE>
  */
-#include <stdint.h>
-
 #include "modp_bjavascript.h"
+#include "modp_stdint.h"
 #include "modp_bjavascript_data.h"
 
 int modp_bjavascript_encode(char* dest, const char* src, int len)
