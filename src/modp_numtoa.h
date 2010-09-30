@@ -8,7 +8,7 @@
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
  * http://code.google.com/p/stringencoders/
- * Released under the bsd license.
+ * Released under the MIT license.
  * </pre>
  *
  * This defines signed/unsigned integer, and 'double' to char buffer
