@@ -107,6 +107,9 @@ static char* testDoubleToA()
     char msg[200];
     double d;
 
+    char* tmp;
+    int tmplen;
+
     /* test each combination of whole number + fraction,
        at every precision */
     /* and test negative version */
@@ -114,7 +117,12 @@ static char* testDoubleToA()
                        67.0,101.0, 10000, 99999};
     double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.49, 0.5, 0.51, 0.6, 0.7,
                      0.9, 0.01, 0.25, 0.125, 0.05, 0.005, 0.0005, 0.00005,
-                     0.001, 0.00001, 0.99, 0.999, 0.9999};
+                     0.001, 0.00001, 0.99, 0.999, 0.9999, 0.99999, 0.999999,
+                     0.09, 0.099, 0.0999, 0.09999, 0.099999, 0.0999999,
+                     0.09999999
+    };
+
+
     const char* formats[] = {"%.0f", "%.1f", "%.2f", "%.3f", "%.4f", "%.5f",
                              "%.6f", "%.7f", "%.8f", "%.9f"};
 
@@ -131,6 +139,7 @@ static char* testDoubleToA()
                 sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
                         wholes[i], frac[j], k);
                 sprintf(buf1, formats[k], d);
+                //printf("%s\n", buf1);
                 modp_dtoa(d, buf2, k);
                 mu_assert_str_equals_msg(msg,buf1, buf2);
 
@@ -142,6 +151,22 @@ static char* testDoubleToA()
                     sprintf(buf1, formats[k], d);
                     modp_dtoa(d, buf2, k);
                     mu_assert_str_equals_msg(msg,buf1, buf2);
+
+                    // find the '.', and see how many chars are after it
+                    tmp = buf2;
+                    while (*tmp != '.' &&  *tmp != '\0') {
+                        ++tmp;
+                    }
+                    if (*tmp == '\0') {
+                        tmplen = 0;
+                    } else {
+                        tmplen = strlen(++tmp);
+                    }
+
+                    sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
+                            wholes[i], frac[j], k, tmplen, buf2);
+                    mu_assert_msg(msg, k >= tmplen);
+
                 }
 
             }
@@ -216,6 +241,9 @@ static char* testDoubleToA2()
     char msg[200];
     double d;
 
+    char* tmp;
+    int tmplen;
+
     /* test each combination of whole number + fraction,
        at every precision */
     /* and test negative version */
@@ -223,7 +251,10 @@ static char* testDoubleToA2()
                        67.0,101.0, 10000, 99999};
     double frac[] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.49, 0.5, 0.51, 0.6, 0.7,
                      0.9, 0.01, 0.25, 0.125, 0.05, 0.005, 0.0005, 0.00005,
-                     0.001, 0.00001, 0.99, 0.999, 0.9999};
+                     0.001, 0.00001, 0.99, 0.999, 0.9999, 0.99999, 0.999999,
+                     0.09, 0.099, 0.0999, 0.09999, 0.099999, 0.0999999,
+                     0.09999999
+    };
     const char* formats[] = {"%.0f", "%.1f", "%.2f", "%.3f", "%.4f", "%.5f",
                              "%.6f", "%.7f", "%.8f", "%.9f"};
 
@@ -243,9 +274,26 @@ static char* testDoubleToA2()
                 sprintf(buf1, formats[k], d);
                 stripTrailingZeros(buf1);
                 modp_dtoa2(d, buf2, k);
-                mu_assert_str_equals_msg(msg,buf1, buf2);
 
                 if (d != 0) {
+
+                // find the '.', and see how many chars are after it
+                tmp = buf2;
+                while (*tmp != '.' &&  *tmp != '\0') {
+                    ++tmp;
+                }
+                if (*tmp == '\0') {
+                    tmplen = 0;
+                } else {
+                    tmplen = strlen(++tmp);
+                }
+
+                sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
+                        wholes[i], frac[j], k, tmplen, buf2);
+                mu_assert_msg(msg, k >= tmplen);
+
+                mu_assert_str_equals_msg(msg, buf1, buf2);
+
                     sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
                             -wholes[i], frac[j], k);
                     /* not dealing with "-0" issues */
@@ -254,7 +302,7 @@ static char* testDoubleToA2()
                     stripTrailingZeros(buf1);
 
                     modp_dtoa2(d, buf2, k);
-                    mu_assert_str_equals_msg(msg,buf1, buf2);
+                    mu_assert_str_equals_msg(msg, buf1, buf2);
                 }
 
             }
@@ -403,7 +451,7 @@ static char* testUITOA16()
 
     modp_uitoa16(0, buf1, 1);
     mu_assert_str_equals(buf1, "00000000");
-    
+
     modp_uitoa16(0xFFFFFFFF, buf1, 1);
     mu_assert_str_equals(buf1, "FFFFFFFF");
 
@@ -413,6 +461,20 @@ static char* testUITOA16()
         modp_uitoa16(i, buf2, 1);
         mu_assert_str_equals(buf1, buf2);
     }
+    return 0;
+}
+
+/**
+ * Attempt to replicate issue
+ * http://code.google.com/p/stringencoders/issues/detail?id=15
+ */
+static char* testRoundingPrecisionOverflow() {
+    char buf1[100];
+
+    modp_dtoa(0.09999999, buf1, 6);
+    mu_assert_str_equals(buf1, "0.100000");
+    modp_dtoa2(0.09999999, buf1, 6);
+    mu_assert_str_equals(buf1, "0.1");
     return 0;
 }
 
@@ -427,6 +489,7 @@ static char* all_tests() {
     mu_run_test(testOverflowITOA);
     mu_run_test(testDTOANonFinite);
     mu_run_test(testUITOA16);
+    mu_run_test(testRoundingPrecisionOverflow);
     return 0;
 }
 
