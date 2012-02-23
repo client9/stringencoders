@@ -4,6 +4,15 @@
 
 == Performance Numbers ==
 
+Intel Core i7 @ 2.66Ghz
+{{{
+$ date
+Thu Feb 23 06:33:53 EST 2012
+$ ./speedtest_ascii 
+type	clib	direct	map	para	hsieh1	hsieh2	Final	improvement
+toupper	1573096	353679	247750	167802	131714	135453	141505	11.1x
+}}}
+
 Intel Core 2 Duo @ 2.2 GHz / Mac OS 10.5.1 / gcc 4.0.1
 
 {{{
