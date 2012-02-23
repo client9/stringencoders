@@ -6,6 +6,8 @@
 
 Intel Core i7 @ 2.66Ghz
 {{{
+$gcc -i
+gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)
 $ date
 Thu Feb 23 06:33:53 EST 2012
 $ ./speedtest_ascii 
