@@ -1,6 +1,24 @@
 #summary Performance and timing for various platforms
 #labels Featured
 
+== Intel 2.66Ghz Core i7, i686-apple-darwin11-llvm-gcc-4.2 ===
+
+{{{
+Message size = 20
+	modpb64	apache	improvement	modpb85	modpurl	modpb16	modpb2	modpjs
+Encode	  0.03	  0.04	  1.06x		  0.06	  0.02	  0.03	  0.02	  0.03	
+Decode	  0.02	  0.04	  1.91x		  0.04	  0.06	  0.03	  0.50	
+
+Message size = 200
+	modpb64	apache	improvement	modpb85	modpurl	modpb16	modpb2	modpjs
+Encode	  0.24	  0.26	  1.05x		  0.49	  0.20	  0.20	  0.22	  0.21	
+Decode	  0.18	  0.46	  2.53x		  0.32	  0.28	  0.27	  5.22	
+
+Message size = 2000
+	modpb64	apache	improvement	modpb85	modpurl	modpb16	modpb2	modpjs
+Encode	  2.21	  2.43	  1.10x		  4.59	  1.95	  1.73	  2.06	  1.97	
+Decode	  1.63	  4.35	  2.67x		  3.18	  2.60	  2.65	 51.78
+}}}
 
 ==Intel(R) Xeon(R) CPU L5310  @ 1.60GHz ==
 
