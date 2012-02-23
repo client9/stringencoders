@@ -4,6 +4,8 @@
 == Intel 2.66Ghz Core i7, i686-apple-darwin11-llvm-gcc-4.2 ===
 
 {{{
+Thu Feb 23 06:32:17 EST 2012
+
 Message size = 20
 	modpb64	apache	improvement	modpb85	modpurl	modpb16	modpb2	modpjs
 Encode	  0.03	  0.04	  1.06x		  0.06	  0.02	  0.03	  0.02	  0.03	
