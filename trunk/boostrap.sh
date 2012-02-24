@@ -6,7 +6,20 @@
 #
 set -x
 aclocal
-libtoolize --force --copy
+
+# test for MacPorts version first
+#  Mac version of libtool is bizarro
+if [ "`which glibtoolize`" != "" ]; then
+   LIBTOOLIZE=glibtoolize
+elif [ "`which libtool`" != "" ]; then
+   LIBTOOLIZE=libtoolize
+else
+   echo "Perhap you need to install libtool?"
+   exit 1
+fi
+echo "Using ${LIBTOOLIZE}..."
+
+${LIBTOOLIZE} --force --copy
 autoheader
 automake --add-missing --copy
 autoconf
