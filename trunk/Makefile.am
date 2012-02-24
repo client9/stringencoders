@@ -31,6 +31,7 @@ CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
 	doxy/html/* \
+	*.loT \
 	*.gcda *.gcno *.gcov stringencoders.info \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
