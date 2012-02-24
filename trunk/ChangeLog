@@ -6,9 +6,10 @@ TODO:
 * more doco
 * man pages
 
-23-Mar-2012
+23-Feb-2012
 	* Fixed bootstrap code on Mac OS 10.
-
+	* Fixed Issue 25 speedtest fails to compile with gcc 4.6+ -Wextra.  Thanks to   rakesh.pandit
+	
 19-Mar-2010
 	* Added "modp_dtoa2" same as dtoa2 but strips trailing zeros (Issue 9)
 	* FIXED Issue 10 -- NaN not handled correctly in modp_dtoa(2).
