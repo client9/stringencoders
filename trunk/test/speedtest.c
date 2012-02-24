@@ -37,7 +37,6 @@ int main() {
     int i, j;
     clock_t c0, c1;
     char teststr1[SZ];
-    char teststr2[SZ];
 
     /*
       this contains the message sizes we'll test on
@@ -47,7 +46,6 @@ int main() {
 
     for (i = 0; i < (int)sizeof(teststr1); ++i) {
         teststr1[i] = 'A' + i % 26;
-        teststr2[i] = 'A' + i % 26;
     }
 
     // over allocate result buffers
