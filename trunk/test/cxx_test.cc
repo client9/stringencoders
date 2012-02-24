@@ -71,7 +71,7 @@ static void test_b16()
     if (s != expected) {
         WHERE(cerr) << "Expected " << expected << ", recieved " << s << "\n";
         exit(1);
-    }    
+    }
     b16_decode(s);
     if (s != orig) {
         WHERE(cerr) << "Expected " << orig << ", recieved '" << s << "'\n";
@@ -190,7 +190,7 @@ static void test_b64w_const()
         WHERE(cerr) << "Expected decode output to be empty\n";
         exit(1);
     }
-} 
+}
 
 static void test_b64_cstr()
 {
