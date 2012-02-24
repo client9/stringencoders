@@ -376,23 +376,84 @@ static void test_javascript_const()
     }
 }
 
-static void test_ascii_copy()
+static void test_ascii_inline()
 {
     string orig;
 
     orig = "abcd123";
     toupper(orig);
     if (orig != "ABCD123") {
-        WHERE(cerr) << "to upper copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        WHERE(cerr) << "to upper failed: " << orig << " (size=" << orig.size() << ")\n";
         exit(1);
     }
 
     orig = "ABCD123";
     tolower(orig);
     if (orig != "abcd123") {
-        WHERE(cerr) << "to lower copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        WHERE(cerr) << "to lower failed: " << orig << " (size=" << orig.size() << ")\n";
         exit(1);
     }
+
+    orig = "ABCD\n123";
+    toprint(orig);
+    if (orig != "ABCD?123") {
+        WHERE(cerr) << "to print failed: " << orig << " (size=" << orig.size() << ")\n";
+        exit(1);
+    }
+}
+
+static void test_ascii_copy()
+{
+
+    /**
+     * Test of toupper
+     */
+    const char* orig_c = "abcd123";
+    const string orig(orig_c);
+
+    string news(toupper(orig));
+    if (news != "ABCD123") {
+        WHERE(cerr) << "toupper copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        exit(1);
+    }
+    if (orig != orig_c) {
+        WHERE(cerr) << "toupper copy modified original string! Got: " << orig << ", expected " << orig_c << "\n";
+        exit(1);
+    }
+
+
+    /**
+     * Test of tolower
+     */
+    const char* orig2_c = "ABCD123";
+    const string orig2(orig2_c);
+
+    string news2(tolower(orig2));
+    if (news != "abcd123") {
+        WHERE(cerr) << "tolower copy failed: " << orig2 << " (size=" << orig2.size() << ")\n";
+        exit(1);
+    }
+    if (orig2 != orig2_c) {
+        WHERE(cerr) << "tolower copy modified original string! Got: " << orig2 << ", expected " << orig2_c << "\n";
+        exit(1);
+    }
+
+    /**
+     * Test of toprint
+     */
+    const char* orig3_c= "ABCD\n123";
+    const string orig3(orig3_c);
+
+    string news3(toprint(orig3));
+    if (news3 != "abcd123") {
+        WHERE(cerr) << "toprint copy failed: " << orig3 << " (size=" << orig3.size() << ")\n";
+        exit(1);
+    }
+    if (orig3 != orig3_c) {
+        WHERE(cerr) << "toprint copy modified original string! Got: " << orig3 << ", expected " << orig3_c << "\n";
+        exit(1);
+    }
+
 }
 
 int main()
@@ -414,6 +475,7 @@ int main()
     test_url_cstr();
     test_javascript();
     test_javascript_const();
+    test_ascii_inline();
     test_ascii_copy();
 
     return 0;
