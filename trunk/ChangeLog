@@ -6,6 +6,9 @@ TODO:
 * more doco
 * man pages
 
+25-Feb-2012:
+	* ADDED 'make valgrind' to run all tests through valgrind
+
 23-Feb-2012
 	* Fixed bootstrap code on Mac OS 10.
 	* Fixed Issue 25 speedtest fails to compile with gcc 4.6+ -Wextra.  Thanks to   rakesh.pandit
