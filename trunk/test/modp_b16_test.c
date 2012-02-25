@@ -244,6 +244,23 @@ static char* testLengths()
     return 0;
 }
 
+static char* testValgrind() {
+    // an input of 3 chars, means output is 3*2+1 = 7 chars
+    // However, the code works on output in values of 4bytes
+    //   so valgrind complains about use stomping on memory
+    char* ibuf = (char*)malloc(3);
+    ibuf[0] = '1';
+    ibuf[1] = '2';
+    ibuf[2] = '3';
+    char* obuf = (char*)malloc(7);
+
+    memset(obuf, 0, sizeof(7));
+    mu_assert_int_equals(6, modp_b16_encode(obuf, ibuf, 3));
+    free(ibuf);
+    free(obuf);
+    return 0;
+}
+
 static char* all_tests()
 {
     mu_run_test(testEndian);
@@ -254,6 +271,8 @@ static char* all_tests()
     mu_run_test(testOddDecode);
     mu_run_test(testOddEncode);
     mu_run_test(testDecodeMutlipleOf2);
+    mu_run_test(testValgrind);
+
     return 0;
 }
 
