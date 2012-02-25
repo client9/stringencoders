@@ -172,6 +172,22 @@ lcov-html:
 
 test: unittest speedtest
 
+
+
+valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
+	@find . -name '*da' | xargs rm -f
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_b16_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_b64_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_b64w_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_b85_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_b2_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_burl_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_bjavascript_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_numtoa_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./modp_ascii_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full ./cxx_test
+.PHONY: valgrind
+
 unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	@./modp_b16_test
