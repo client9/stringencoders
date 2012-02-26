@@ -55,8 +55,9 @@ int modp_b16_encode(char* dest, const char* str, int len)
     uint8_t* p = (uint8_t*) dest;
     uint8_t t1, t2, t3, t4;
     uint32_t* srcInt = (uint32_t*) str;
-    uint32_t x = *srcInt++;
+    uint32_t x;
     for (i = 0; i < buckets; ++i) {
+        x = *srcInt++;
         //      t1 = *s++; t2 = *s++; t3 = *s++; t4 = *s++;
 #ifdef WORDS_BIGENDIAN
         t1 = (uint8_t) (x >> 24);
@@ -77,44 +78,29 @@ int modp_b16_encode(char* dest, const char* str, int len)
         *p++ = gsHexEncodeC2[t3];
         *p++ = gsHexEncodeC1[t4];
         *p++ = gsHexEncodeC2[t4];
-        x = *srcInt++;
     }
 
+    uint8_t* srcChar = (uint8_t*) srcInt;
     switch (leftover) {
     case 0:
         break;
     case 1:
-#ifdef WORDS_BIGENDIAN
-        t1 = (uint8_t) (x >> 24);
-#else
-        t1 = (uint8_t) x;
-#endif
+        t1 = (uint8_t) *srcChar;
         *p++ = gsHexEncodeC1[t1];
         *p++ = gsHexEncodeC2[t1];
         break;
     case 2:
-#ifdef WORDS_BIGENDIAN
-        t1 = (uint8_t) (x >> 24);
-        t2 = (uint8_t) (x >> 16);
-#else
-        t2 = (uint8_t) (x >>8);
-        t1 = (uint8_t) x;
-#endif
+        t1 = (uint8_t) *srcChar++;
+        t2 = (uint8_t) *srcChar;
         *p++ = gsHexEncodeC1[t1];
         *p++ = gsHexEncodeC2[t1];
         *p++ = gsHexEncodeC1[t2];
         *p++ = gsHexEncodeC2[t2];
         break;
     default: /* case 3 */
-#ifdef WORDS_BIGENDIAN
-        t1 = (uint8_t) (x >> 24);
-        t2 = (uint8_t) (x >> 16);
-        t3 = (uint8_t) (x >> 8);
-#else
-        t3 = (uint8_t) (x >> 16);
-        t2 = (uint8_t) (x >>8);
-        t1 = (uint8_t) x;
-#endif
+        t1 = (uint8_t) *srcChar++;
+        t2 = (uint8_t) *srcChar++;
+        t3 = (uint8_t) *srcChar;
         *p++ = gsHexEncodeC1[t1];
         *p++ = gsHexEncodeC2[t1];
         *p++ = gsHexEncodeC1[t2];
