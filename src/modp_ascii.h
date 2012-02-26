@@ -113,15 +113,15 @@ namespace modp {
 
     inline std::string toupper(const std::string& str)
     {
-        std::string s(str);
-        modp_toupper_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        std::string s(str.size(), '\0');
+        modp_toupper_copy(const_cast<char*>(s.data()), str.data(), str.size());
         return s;
     }
 
     inline std::string tolower(const std::string& str)
     {
-        std::string s(str);
-        modp_tolower_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        std::string s(str.size(), '\0');
+        modp_tolower_copy(const_cast<char*>(s.data()), str.data(), str.size());
         return s;
     }
 
@@ -133,8 +133,8 @@ namespace modp {
 
     inline std::string toprint(const std::string& str)
     {
-        std::string s(str);
-        modp_toprint_copy(const_cast<char*>(s.c_str()), s.data(), s.size());
+        std::string s(str.size(), '\0');
+        modp_toprint_copy(const_cast<char*>(s.data()), str.data(), str.size());
         return s;
     }
 
