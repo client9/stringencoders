@@ -413,7 +413,7 @@ static void test_ascii_copy()
 
     string news(toupper(orig));
     if (news != "ABCD123") {
-        WHERE(cerr) << "toupper copy failed: " << orig << " (size=" << orig.size() << ")\n";
+        WHERE(cerr) << "toupper copy failed: got " << news << " (size=" << news.size() << ")\n";
         exit(1);
     }
     if (orig != orig_c) {
@@ -429,8 +429,8 @@ static void test_ascii_copy()
     const string orig2(orig2_c);
 
     string news2(tolower(orig2));
-    if (news != "abcd123") {
-        WHERE(cerr) << "tolower copy failed: " << orig2 << " (size=" << orig2.size() << ")\n";
+    if (news2 != "abcd123") {
+        WHERE(cerr) << "tolower copy failed: " << news2 << " (size=" << news2.size() << ")\n";
         exit(1);
     }
     if (orig2 != orig2_c) {
@@ -445,7 +445,7 @@ static void test_ascii_copy()
     const string orig3(orig3_c);
 
     string news3(toprint(orig3));
-    if (news3 != "abcd123") {
+    if (news3 != "ABCD?123") {
         WHERE(cerr) << "toprint copy failed: " << orig3 << " (size=" << orig3.size() << ")\n";
         exit(1);
     }
