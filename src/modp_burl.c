@@ -192,3 +192,38 @@ int modp_burl_decode(char* dest, const char* s, int len)
     *dest = '\0';
     return (int)(dest - deststart); // compute "strlen" of dest.
 }
+
+int modp_burl_decode_raw(char* dest, const char* s, int len)
+{
+    uint32_t d = 0; // used for decoding %XX
+    const uint8_t* src = (const uint8_t*) s;
+    const char* deststart = dest;
+    const uint8_t* srcend = (const uint8_t*)(src + len);
+    const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
+
+    while (src < srcendloop) {
+        if (*src == '%') {
+            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) |
+                gsHexDecodeMap[(uint32_t)(*(src + 2))];
+            if (d < 256) { // if one of the hex chars is bad,  d >= 256
+                *dest = (char) d;
+                dest++;
+                src += 3;
+            } else {
+                *dest++ = '%';
+                src++;
+            }
+        } else {
+            *dest++ = (char) *src++;
+        }
+    }
+
+    // handle last two chars
+    // dont decode "%XX"
+    while (src < srcend) {
+        *dest++ = (char)( *src++);
+    }
+
+    *dest = '\0';
+    return (int)(dest - deststart); // compute "strlen" of dest.
+}

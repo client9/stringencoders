@@ -102,6 +102,18 @@ int modp_burl_encode_strlen(const char* str, const int len);
 int modp_burl_decode(char* dest, const char* str, int len);
 
 /**
+ * URL Decode a string, '+' is preserved
+ *
+ * \param[out] dest  The output string.  Must be at least (len + 1)
+ *  bytes allocated.  This may be the same as the input buffer.
+ * \param[in] str The input string that is URL encoded.
+ * \param[in] len The length of the input string (excluding final
+ *   null byte)
+ * \return the strlen of the output string.
+ */
+int modp_burl_decode_raw(char* dest, const char* str, int len);
+
+/**
  * Returns memory required to decoded a url-encoded
  * string of length A.
  *
@@ -185,10 +197,24 @@ namespace modp {
         return s;
     }
 
+    inline std::string& url_decode_raw(std::string& s)
+    {
+        int d = modp_burl_decode_raw(const_cast<char*>(s.data()), s.data(), s.size());
+        s.erase(d, std::string::npos);
+        return s;
+    }
+
     inline std::string url_decode(const char* str)
     {
         std::string s(str);
         url_decode(s);
+        return s;
+    }
+
+    inline std::string url_decode_raw(const char* str)
+    {
+        std::string s(str);
+        url_decode_raw(s);
         return s;
     }
 
@@ -199,10 +225,24 @@ namespace modp {
         return s;
     }
 
+    inline std::string url_decode_raw(const char* str, size_t len)
+    {
+        std::string s(str, len);
+        url_decode_raw(s);
+        return s;
+    }
+
     inline std::string url_decode(const std::string& s)
     {
         std::string x(s);
         url_decode(x);
+        return x;
+    }
+
+    inline std::string url_decode_raw(const std::string& s)
+    {
+        std::string x(s);
+        url_decode_raw(x);
         return x;
     }
 }
