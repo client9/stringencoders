@@ -42,7 +42,7 @@
  * </PRE>
  */
 
-#include "modp_qs.h"
+#include "modp_qsiter.h"
 
 void qsiter_reset(struct qsiter_t* qsi, const char* s, size_t len)
 {
