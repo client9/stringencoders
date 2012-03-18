@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_qs.h"
+#include "modp_qsiter.h"
 #include "minunit.h"
 
 /**
