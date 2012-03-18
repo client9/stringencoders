@@ -190,6 +190,80 @@ static char* test_qs_parse7()
     return 0;
 }
 
+
+static char* test_qs_parse8()
+{
+    struct qsiter_t qsi;
+    
+    const char* s = "&&";
+
+    qsiter_reset(&qsi, s, strlen(s));
+
+    bool ok = qsiter_next(&qsi);
+    mu_assert(ok);
+    mu_assert_int_equals(qsi.pos, 1);
+    mu_assert_int_equals(qsi.len, strlen(s));
+    mu_assert_int_equals(qsi.keylen, 0);
+    mu_assert_int_equals(qsi.vallen, 0);
+    mu_assert(!memcmp("", qsi.key, qsi.keylen));
+    mu_assert(!memcmp("", qsi.val, qsi.vallen));
+    
+    ok = qsiter_next(&qsi);
+    mu_assert(ok);
+    mu_assert_int_equals(qsi.pos, 2);
+    mu_assert_int_equals(qsi.len, strlen(s));
+    mu_assert_int_equals(qsi.keylen, 0);
+    mu_assert_int_equals(qsi.vallen, 0);
+    mu_assert(!memcmp("", qsi.key, qsi.keylen));
+    mu_assert(!memcmp("", qsi.val, qsi.vallen));
+
+    ok = qsiter_next(&qsi);
+    mu_assert(!ok);
+
+    return 0;
+}
+
+static char* test_qs_parse9()
+{
+    struct qsiter_t qsi;
+    
+    const char* s = "&&foo=bar";
+
+    qsiter_reset(&qsi, s, strlen(s));
+
+    bool ok = qsiter_next(&qsi);
+    mu_assert(ok);
+    mu_assert_int_equals(qsi.pos, 1);
+    mu_assert_int_equals(qsi.len, strlen(s));
+    mu_assert_int_equals(qsi.keylen, 0);
+    mu_assert_int_equals(qsi.vallen, 0);
+    mu_assert(!memcmp("", qsi.key, qsi.keylen));
+    mu_assert(!memcmp("", qsi.val, qsi.vallen));
+    
+    ok = qsiter_next(&qsi);
+    mu_assert(ok);
+    mu_assert_int_equals(qsi.pos, 2);
+    mu_assert_int_equals(qsi.len, strlen(s));
+    mu_assert_int_equals(qsi.keylen, 0);
+    mu_assert_int_equals(qsi.vallen, 0);
+    mu_assert(!memcmp("", qsi.key, qsi.keylen));
+    mu_assert(!memcmp("", qsi.val, qsi.vallen));
+
+    ok = qsiter_next(&qsi);
+    mu_assert(ok);
+    mu_assert_int_equals(qsi.pos, strlen(s));
+    mu_assert_int_equals(qsi.len, strlen(s));
+    mu_assert_int_equals(qsi.keylen, 3);
+    mu_assert_int_equals(qsi.vallen, 3);
+    mu_assert(!memcmp("foo", qsi.key, qsi.keylen));
+    mu_assert(!memcmp("bar", qsi.val, qsi.vallen));
+
+    ok = qsiter_next(&qsi);
+    mu_assert(!ok);
+
+    return 0;
+}
+
 static char* all_tests()
 {
     mu_run_test(test_qs_init);
@@ -200,6 +274,8 @@ static char* all_tests()
     mu_run_test(test_qs_parse5);
     mu_run_test(test_qs_parse6);
     mu_run_test(test_qs_parse7);
+    mu_run_test(test_qs_parse8);
+    mu_run_test(test_qs_parse9);
     return 0;
 }
 
