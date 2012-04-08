@@ -58,7 +58,7 @@ To my amazement, in 2012, after doing string encoders for 5+ years, I just found
 
 http://tools.ietf.org/html/rfc3548
 
-which defines a "Base 64 Encoding with URL and Filename Safe Alphabet" and uses "-" (dash), "_" (underscore) and still uses "=" for the padding char.
+which defines a "Base 64 Encoding with URL and Filename Safe Alphabet" and uses "-" (dash), "\_" (underscore) and still uses "=" for the padding char.
 
 {{{
 ./configure --with-b64w-chars='-_='
