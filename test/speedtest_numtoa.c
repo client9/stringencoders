@@ -111,7 +111,7 @@ int main()
     t0 = clock();
     for (i = 0; i < max; ++i) {
         j8 = (int8_t) i;
-        sprintf(buf, "%hhd", ju8);
+        sprintf(buf, "%hhd", j8);
     }
     t1 = clock();
     printf("%lu\t", (t1-t0));
@@ -246,7 +246,6 @@ int main()
         snprintf(buf, sizeof(buf), "%f", d);
     }
     t1 = clock();
-    last = (t1-t0);
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 
