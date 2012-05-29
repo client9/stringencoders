@@ -255,9 +255,11 @@ static char* testValgrind() {
     char* obuf = (char*)malloc(7);
 
     memset(obuf, 0, sizeof(7));
-    mu_assert_int_equals(6, modp_b16_encode(obuf, ibuf, 3));
+    int d = modp_b16_encode(obuf, ibuf, 3);
     free(ibuf);
     free(obuf);
+
+    mu_assert_int_equals(6, d);
     return 0;
 }
 
