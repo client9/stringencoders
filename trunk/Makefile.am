@@ -8,6 +8,7 @@ SOURCES = \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
 	src/modp_numtoa.h src/modp_numtoa.c \
+	src/modp_qsiter.h src/modp_qsiter.c \
 	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h
 
 lib_LTLIBRARIES = libmodpbase64.la
@@ -25,7 +26,8 @@ libmodpbase64_la_DEPENDENCIES = \
 include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
-	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h
+	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h \
+	src/modp_qsiter.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -57,6 +59,8 @@ src/modp_burl.c: src/modp_burl.h modp_burl_data.h
 src/modp_bjavascript.c: src/modp_bjavascript.h modp_bjavascript_data.h
 
 src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
+
+src/modp_qsiter.c: src/modp_qsiter.h
 
 modp_b2_data.h: modp_b2_gen
 	./modp_b2_gen > modp_b2_data.h
