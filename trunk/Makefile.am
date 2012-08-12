@@ -9,6 +9,7 @@ SOURCES = \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
 	src/modp_numtoa.h src/modp_numtoa.c \
 	src/modp_qsiter.h src/modp_qsiter.c \
+	src/modp_xml.h src/modp_xml.c \
 	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h
 
 lib_LTLIBRARIES = libmodpbase64.la
@@ -27,7 +28,7 @@ include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
 	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h \
-	src/modp_qsiter.h
+	src/modp_qsiter.h src/modp_xml.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -62,6 +63,8 @@ src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
 
 src/modp_qsiter.c: src/modp_qsiter.h
 
+src/modp_xml.c: src/modp_xml.h
+
 modp_b2_data.h: modp_b2_gen
 	./modp_b2_gen > modp_b2_data.h
 
@@ -95,7 +98,7 @@ noinst_PROGRAMS = \
 	modp_b16_test modp_b64_test modp_b64w_test \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
-	modp_numtoa_test modp_ascii_test \
+	modp_numtoa_test modp_ascii_test modp_xml_test \
 	cxx_test \
 	speedtest speedtest_numtoa speedtest_ascii
 
@@ -114,7 +117,7 @@ speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
 
 test/speedtest_ascii.c: modp_ascii_data.h
-speedtest_ascii_SOURCES = test/speedtest_ascii.c 
+speedtest_ascii_SOURCES = test/speedtest_ascii.c
 speedtest_ascii_LDADD = libmodpbase64.la
 
 modp_b2_test_SOURCES = test/modp_b2_test.c
@@ -147,6 +150,9 @@ modp_numtoa_test_LDADD = libmodpbase64.la
 modp_ascii_test_SOURCES = test/modp_ascii_test.c
 modp_ascii_test_LDADD = libmodpbase64.la
 
+modp_xml_test_SOURCES = test/modp_xml_test.c
+modp_xml_test_LDADD = libmodpbase64.la
+
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
@@ -178,7 +184,7 @@ test: unittest speedtest
 
 
 
-valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
+valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b16_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b64_test
@@ -189,10 +195,12 @@ valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_bjavascript_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_numtoa_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_ascii_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_xml_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./cxx_test
+
 .PHONY: valgrind
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test cxx_test
+unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	@./modp_b16_test
 	@./modp_b64_test
@@ -203,6 +211,7 @@ unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 	@./modp_bjavascript_test
 	@./modp_numtoa_test
 	@./modp_ascii_test
+	@./modp_xml_test
 	@./cxx_test
 
 perftest: speedtest speedtest_numtoa speedtest_ascii
