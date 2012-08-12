@@ -45,7 +45,7 @@
 #include "modp_stdint.h"
 #include "modp_bjavascript_data.h"
 
-int modp_bjavascript_encode(char* dest, const char* src, int len)
+size_t modp_bjavascript_encode(char* dest, const char* src, size_t len)
 {
     const char* deststart = dest;
     const uint8_t* s = (const uint8_t*) src;
@@ -72,14 +72,14 @@ int modp_bjavascript_encode(char* dest, const char* src, int len)
         }
     }
     *dest = '\0';
-    return (int)(dest - deststart);
+    return (size_t)(dest - deststart);
 }
 
-int modp_bjavascript_encode_strlen(const char* src, int len)
+size_t modp_bjavascript_encode_strlen(const char* src, size_t len)
 {
     const uint8_t* s = (const uint8_t*)src;
     const uint8_t* srcend = s + len;
-    int count = 0;
+    size_t count = 0;
     uint8_t val;
 
     while (s < srcend) {
