@@ -28,6 +28,7 @@
 
 BEGIN_C
 
+#include "modp_stdint.h"
 
 /**
  * "javascript" encode a stirng
@@ -39,7 +40,7 @@ BEGIN_C
  * \param[in] len  The length of the input string, excluding any
  *   final null byte.
  */
-int modp_bjavascript_encode(char* dest, const char* str, int len);
+size_t modp_bjavascript_encode(char* dest, const char* str, size_t len);
 
 #define modp_bjavascript_encode_len(A) (4*A + 1)
 
@@ -58,7 +59,7 @@ int modp_bjavascript_encode(char* dest, const char* str, int len);
  * \return the size of the output string, excluding the final
  *   null byte.
  */
-int modp_bjavascript_encode_strlen(const char* str, int len);
+size_t modp_bjavascript_encode_strlen(const char* str, size_t len);
 
 END_C
 
@@ -70,7 +71,7 @@ namespace modp {
     inline std::string javascript_encode(const char* s, size_t len)
     {
         std::string x(modp_bjavascript_encode_len(len), '\0');
-        int d = modp_bjavascript_encode(const_cast<char*>(x.data()), s, len);
+        size_t d = modp_bjavascript_encode(const_cast<char*>(x.data()), s, len);
         x.erase(d, std::string::npos);
         return x;
     }
