@@ -35,7 +35,7 @@ void modp_itoa10(int32_t value, char* str)
 {
     char* wstr=str;
     // Take care of sign
-    unsigned int uvalue = (value < 0) ? -value : value;
+    uint32_t uvalue = (value < 0) ? (uint32_t)(-value) : (uint32_t)(value);
     // Conversion. Number is reversed.
     do *wstr++ = (char)(48 + (uvalue % 10)); while(uvalue /= 10);
     if (value < 0) *wstr++ = '-';
