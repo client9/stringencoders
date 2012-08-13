@@ -75,10 +75,10 @@ bool qsiter_next(struct qsiter_t* qsi)
             qsi->key = charstart;
             qsi->keylen = (size_t)(qsi->len - qsi->pos);
             qsi->val = NULL;
-            qsi->vallen = 0;
+            qsi->vallen = (size_t)0;
         } else {
             qsi->key = charstart;
-            qsi->keylen = eq - charstart;
+            qsi->keylen = (size_t)(eq - charstart);
             qsi->val = eq + 1;
             qsi->vallen = (size_t)((qsi->s + qsi->len) - qsi->val);
         }
@@ -89,14 +89,14 @@ bool qsiter_next(struct qsiter_t* qsi)
         char* eq = (char*) memchr(charstart, '=', (size_t)(ends - charstart));
         if (eq == NULL) {
             qsi->key = charstart;
-            qsi->keylen = ends - charstart;
+            qsi->keylen = (size_t)(ends - charstart);
             qsi->val = NULL;
-            qsi->vallen = 0;
+            qsi->vallen = (size_t)0;
         } else {
             qsi->key = charstart;
-            qsi->keylen = eq - charstart;
+            qsi->keylen = (size_t)(eq - charstart);
             qsi->val = eq + 1;
-            qsi->vallen = ends - eq - 1;
+            qsi->vallen = (size_t)(ends - eq - 1);
         }
         qsi->pos = (ends - qsi->s) + 1;
         return true;
