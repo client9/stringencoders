@@ -35,7 +35,7 @@ static void toupper_copy2(char* dest, const char* str, size_t len)
     char c;
     for (i = 0; i < len; ++i) {
         c = str[i];
-        *dest++ = (c >= 'a' && c <= 'z') ? c : (c -32);
+        *dest++ = (char)((c >= 'a' && c <= 'z') ? c : (c -32));
     }
     *dest = 0;
 }
@@ -113,10 +113,10 @@ static void toupper_copy5(char* dest, const char* str, size_t len)
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
-        ebx = 0x80808080ul | eax;
-        ecx = ebx - 0x61616161ul;
-        edx = ~(ebx - 0x7b7b7b7bul);
-        ebx = (ecx & edx) & (~eax & 0x80808080ul);
+        ebx = 0x80808080u | eax;
+        ecx = ebx - 0x61616161u;
+        edx = ~(ebx - 0x7b7b7b7bu);
+        ebx = (ecx & edx) & (~eax & 0x80808080u);
         *d++ = eax - (ebx >> 2);
     }
 
