@@ -83,8 +83,12 @@ namespace modp {
     inline std::string& b2_encode(std::string& s)
     {
         std::string x(modp_b2_encode_len(s.size()), '\0');
-        int d = modp_b2_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        x.erase(d, std::string::npos);
+        size_t d = modp_b2_encode(const_cast<char*>(x.data()), s.data(), s.size());
+        if (d == (size_t)-1) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
         s.swap(x);
         return s;
     }
@@ -110,8 +114,8 @@ namespace modp {
      */
     inline std::string& b2_decode(std::string& s)
     {
-        int d = modp_b2_decode(const_cast<char*>(s.data()), s.data(), s.size());
-        if (d < 0) {
+        size_t d = modp_b2_decode(const_cast<char*>(s.data()), s.data(), s.size());
+        if (d == (size_t)-1) {
             s.clear();
         } else {
             s.erase(d, std::string::npos);
