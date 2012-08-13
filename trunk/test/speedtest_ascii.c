@@ -80,17 +80,17 @@ static void toupper_copy4(char* dest, const char* str, size_t len)
          *  it helps the optimizer to figure out what to do
          */
         c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
-        dest[0] = gsToUpperMap[c1];
-        dest[1] = gsToUpperMap[c2];
-        dest[2] = gsToUpperMap[c3];
-        dest[3] = gsToUpperMap[c4];
+        dest[0] = (char)gsToUpperMap[c1];
+        dest[1] = (char)gsToUpperMap[c2];
+        dest[2] = (char)gsToUpperMap[c3];
+        dest[3] = (char)gsToUpperMap[c4];
         dest += 4;
     }
 
     switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[s[i++]];
-        case 2: *dest++ = gsToUpperMap[s[i++]];
-        case 1: *dest++ = gsToUpperMap[s[i]];
+    case 3: *dest++ = (char)gsToUpperMap[s[i++]];
+    case 2: *dest++ = (char)gsToUpperMap[s[i++]];
+    case 1: *dest++ = (char)gsToUpperMap[s[i]];
         case 0: *dest = '\0';
     }
 }
@@ -123,9 +123,9 @@ static void toupper_copy5(char* dest, const char* str, size_t len)
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[ustr[i++]];
-        case 2: *dest++ = gsToUpperMap[ustr[i++]];
-        case 1: *dest++ = gsToUpperMap[ustr[i]];
+    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
         case 0: *dest = '\0';
     }
 }
@@ -182,9 +182,9 @@ static void toupper_copy6(char* dest, const char* str, size_t len)
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[ustr[i++]];
-        case 2: *dest++ = gsToUpperMap[ustr[i++]];
-        case 1: *dest++ = gsToUpperMap[ustr[i]];
+    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
         case 0: *dest = '\0';
     }
 }
@@ -210,9 +210,9 @@ static void modp_toupper_copy_a2(char* dest, const char* str, size_t len)
     i = imax*4;
     dest = (char*) d;
     switch (leftover) {
-        case 3: *dest++ = gsToUpperMap[ustr[i++]];
-        case 2: *dest++ = gsToUpperMap[ustr[i++]];
-        case 1: *dest++ = gsToUpperMap[ustr[i]];
+    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
         case 0: *dest = '\0';
     }
 }
