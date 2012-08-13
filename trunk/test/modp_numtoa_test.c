@@ -17,21 +17,26 @@ static char* testITOA(void)
     char buf1[100];
     char buf2[100];
     int i;
+    size_t len;
     for (i = 0; i < 100000; ++i) {
         sprintf(buf1, "%d", i);
-        modp_itoa10(i, buf2);
+        len = modp_itoa10(i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%d", -i);
-        modp_itoa10(-i, buf2);
+        len = modp_itoa10(-i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%d", INT_MAX - i);
-        modp_itoa10(INT_MAX - i, buf2);
+        len = modp_itoa10(INT_MAX - i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%d", -(INT_MAX - i));
-        modp_itoa10(-(INT_MAX - i), buf2);
+        len = modp_itoa10(-(INT_MAX - i), buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
@@ -42,15 +47,18 @@ static char* testUITOA(void)
     char buf1[100];
     char buf2[100];
     uint32_t i;
+    size_t len;
     for (i = 0; i < 1000000; ++i) {
         sprintf(buf1, "%u", i);
-        modp_uitoa10(i, buf2);
+        len = modp_uitoa10(i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
 
     for (i = 0; i < 1000000; ++i) {
         sprintf(buf1, "%u", 0xFFFFFFFFu - i);
-        modp_uitoa10(0xFFFFFFFFu -i, buf2);
+        len = modp_uitoa10(0xFFFFFFFFu -i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
@@ -61,21 +69,26 @@ static char* testLITOA(void)
     char buf1[100];
     char buf2[100];
     long int i;
+    size_t len;
     for (i = 0; i < 100000; ++i) {
         sprintf(buf1, "%ld", i);
-        modp_litoa10(i, buf2);
+        len = modp_litoa10(i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%ld", -i);
-        modp_litoa10(-i, buf2);
+        len = modp_litoa10(-i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%ld", LONG_MAX - i);
-        modp_litoa10(LONG_MAX - i, buf2);
+        len = modp_litoa10(LONG_MAX - i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
 
         sprintf(buf1, "%ld", -(LONG_MAX - i));
-        modp_litoa10(-(LONG_MAX - i), buf2);
+        len = modp_litoa10(-(LONG_MAX - i), buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
@@ -85,16 +98,19 @@ static char* testULITOA(void)
 {
     char buf1[100];
     char buf2[100];
+    size_t len;
     long long unsigned int i;
     for (i = 0; i < 1000000; ++i) {
         sprintf(buf1, "%llu", i);
-        modp_ulitoa10(i, buf2);
+        len = modp_ulitoa10(i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
 
     for (i = 0; i < 1000000; ++i) {
         sprintf(buf1, "%llu", 0xFFFFFFFFFFFFFFFFllu - i);
-        modp_ulitoa10(0xFFFFFFFFFFFFFFFFull -i, buf2);
+        len = modp_ulitoa10(0xFFFFFFFFFFFFFFFFull -i, buf2);
+        mu_assert_int_equals(len, strlen(buf1));
         mu_assert_str_equals(buf1, buf2);
     }
     return 0;
@@ -106,7 +122,7 @@ static char* testDoubleToA(void)
     char buf2[100];
     char msg[200];
     double d;
-
+    size_t len;
     char* tmp;
     size_t tmplen;
 
@@ -140,7 +156,8 @@ static char* testDoubleToA(void)
                         wholes[i], frac[j],(int) k);
                 sprintf(buf1, formats[k], d);
                 //printf("%s\n", buf1);
-                modp_dtoa(d, buf2, (int)k);
+                len = modp_dtoa(d, buf2, (int)k);
+                mu_assert_int_equals(len, strlen(buf1));
                 mu_assert_str_equals_msg(msg, buf1, buf2);
 
                 if (d != 0) {
@@ -149,8 +166,9 @@ static char* testDoubleToA(void)
                     /* not dealing with "-0" issues */
                     d = -d;
                     sprintf(buf1, formats[k], d);
-                    modp_dtoa(d, buf2, (int)k);
-                    mu_assert_str_equals_msg(msg,buf1, buf2);
+                    len = modp_dtoa(d, buf2, (int)k);
+                    mu_assert_int_equals(len, strlen(buf1));
+                    mu_assert_str_equals_msg(msg, buf1, buf2);
 
                     // find the '.', and see how many chars are after it
                     tmp = buf2;
@@ -168,31 +186,34 @@ static char* testDoubleToA(void)
                     mu_assert_msg(msg, k >= tmplen);
 
                 }
-
             }
         }
     }
 
     /* test very large positive number */
     d = 1.0e200;
-    modp_dtoa(d, buf2, 6);
+    len = modp_dtoa(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("1.000000e+200", buf2);
 
     /* test very large negative number */
     d = -1.0e200;
-    modp_dtoa(d, buf2, 6);
+    len = modp_dtoa(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("-1.000000e+200", buf2);
 
     /* test very small positive number */
     d = 1e-10;
     sprintf(buf1, "%.6f", d);
-    modp_dtoa(d, buf2, 6);
+    len = modp_dtoa(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf1));
     mu_assert_str_equals(buf1, buf2);
 
     /* test very small negative number */
     d = -1e-10;
     sprintf(buf1, "%.6f", d);
-    modp_dtoa(d, buf2, 6);
+    len = modp_dtoa(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf1));
     mu_assert_str_equals(buf1, buf2);
 
     return 0;
@@ -242,6 +263,7 @@ static char* testDoubleToA2(void)
     double d;
 
     char* tmp;
+    size_t len;
     size_t tmplen;
 
     /* test each combination of whole number + fraction,
@@ -273,7 +295,7 @@ static char* testDoubleToA2(void)
 
                 sprintf(buf1, formats[k], d);
                 stripTrailingZeros(buf1);
-                modp_dtoa2(d, buf2, k);
+                len = modp_dtoa2(d, buf2, k);
 
                 if (d != 0) {
 
@@ -301,7 +323,8 @@ static char* testDoubleToA2(void)
                     sprintf(buf1, formats[k], d);
                     stripTrailingZeros(buf1);
 
-                    modp_dtoa2(d, buf2, k);
+                    len = modp_dtoa2(d, buf2, k);
+                    mu_assert_int_equals(len, strlen(buf2));
                     mu_assert_str_equals_msg(msg, buf1, buf2);
                 }
 
@@ -311,12 +334,14 @@ static char* testDoubleToA2(void)
 
     /* test very large positive number */
     d = 1.0e200;
-    modp_dtoa2(d, buf2, 6);
+    len = modp_dtoa2(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("1.000000e+200", buf2);
 
     /* test very large negative number */
     d = -1.0e200;
-    modp_dtoa2(d, buf2, 6);
+    len = modp_dtoa2(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("-1.000000e+200", buf2);
 
     /* test very small positive number */
@@ -324,7 +349,8 @@ static char* testDoubleToA2(void)
     sprintf(buf1, "%.6f", d);
     stripTrailingZeros(buf1);
 
-    modp_dtoa2(d, buf2, 6);
+    len = modp_dtoa2(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals(buf1, buf2);
 
     /* test very small negative number */
@@ -332,14 +358,17 @@ static char* testDoubleToA2(void)
     sprintf(buf1, "%.6f", d);
     stripTrailingZeros(buf1);
 
-    modp_dtoa2(d, buf2, 6);
+    len = modp_dtoa2(d, buf2, 6);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals(buf1, buf2);
 
     // test bad precision values
     d = 1.1;
-    modp_dtoa(d, buf2, -1);
+    len = modp_dtoa(d, buf2, -1);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("1", buf2);
-    modp_dtoa2(d, buf2, 10);
+    len = modp_dtoa2(d, buf2, 10);
+    mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals("1.1", buf2);
     return 0;
 }

@@ -31,7 +31,7 @@ static void strreverse(char* begin, char* end)
         aux = *end, *end-- = *begin, *begin++ = aux;
 }
 
-void modp_itoa10(int32_t value, char* str)
+size_t modp_itoa10(int32_t value, char* str)
 {
     char* wstr=str;
     // Take care of sign
@@ -43,9 +43,10 @@ void modp_itoa10(int32_t value, char* str)
 
     // Reverse string
     strreverse(str,wstr-1);
+    return wstr - str;
 }
 
-void modp_uitoa10(uint32_t value, char* str)
+size_t modp_uitoa10(uint32_t value, char* str)
 {
     char* wstr=str;
     // Conversion. Number is reversed.
@@ -53,9 +54,10 @@ void modp_uitoa10(uint32_t value, char* str)
     *wstr='\0';
     // Reverse string
     strreverse(str, wstr-1);
+    return wstr - str;
 }
 
-void modp_litoa10(int64_t value, char* str)
+size_t modp_litoa10(int64_t value, char* str)
 {
     char* wstr=str;
     uint64_t uvalue = (value < 0) ? (uint64_t)(-value) : (uint64_t)(value);
@@ -67,9 +69,10 @@ void modp_litoa10(int64_t value, char* str)
 
     // Reverse string
     strreverse(str,wstr-1);
+    return wstr - str;
 }
 
-void modp_ulitoa10(uint64_t value, char* str)
+size_t modp_ulitoa10(uint64_t value, char* str)
 {
     char* wstr=str;
     // Conversion. Number is reversed.
@@ -77,9 +80,10 @@ void modp_ulitoa10(uint64_t value, char* str)
     *wstr='\0';
     // Reverse string
     strreverse(str, wstr-1);
+    return wstr - str;
 }
 
-void modp_dtoa(double value, char* str, int prec)
+size_t modp_dtoa(double value, char* str, int prec)
 {
     /* Hacky test for NaN
      * under -fast-math this won't work, but then you also won't
@@ -88,7 +92,7 @@ void modp_dtoa(double value, char* str, int prec)
      */
     if (! (value == value)) {
         str[0] = 'n'; str[1] = 'a'; str[2] = 'n'; str[3] = '\0';
-        return;
+        return (size_t)3;
     }
     /* if input is larger than thres_max, revert to exponential */
     const double thres_max = (double)(0x7FFFFFFF);
@@ -139,7 +143,7 @@ void modp_dtoa(double value, char* str, int prec)
     */
     if (value > thres_max) {
         sprintf(str, "%e", neg ? -value : value);
-        return;
+        return strlen(str);
     }
 
     if (prec == 0) {
@@ -174,12 +178,13 @@ void modp_dtoa(double value, char* str, int prec)
     }
     *wstr='\0';
     strreverse(str, wstr-1);
+    return wstr - str;
 }
 
 
 // This is near identical to modp_dtoa above
 //   The differnce is noted below
-void modp_dtoa2(double value, char* str, int prec)
+size_t modp_dtoa2(double value, char* str, int prec)
 {
     /* Hacky test for NaN
      * under -fast-math this won't work, but then you also won't
@@ -188,7 +193,7 @@ void modp_dtoa2(double value, char* str, int prec)
      */
     if (! (value == value)) {
         str[0] = 'n'; str[1] = 'a'; str[2] = 'n'; str[3] = '\0';
-        return;
+        return (size_t) 3;
     }
 
     /* if input is larger than thres_max, revert to exponential */
@@ -241,7 +246,7 @@ void modp_dtoa2(double value, char* str, int prec)
     */
     if (value > thres_max) {
         sprintf(str, "%e", neg ? -value : value);
-        return;
+        return strlen(str);
     }
 
     if (prec == 0) {
@@ -287,6 +292,7 @@ void modp_dtoa2(double value, char* str, int prec)
     }
     *wstr='\0';
     strreverse(str, wstr-1);
+    return wstr - str;
 }
 
 
