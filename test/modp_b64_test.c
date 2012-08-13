@@ -44,7 +44,7 @@ static char* testEmpty(void)
 {
     char buf[10];
     const char* input = 0; // null
-    int d;
+    size_t d;
 
     memset(buf, 1, sizeof(buf));
     d = modp_b64_encode(buf, input, (size_t)0);
