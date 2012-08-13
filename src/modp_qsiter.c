@@ -98,7 +98,7 @@ bool qsiter_next(struct qsiter_t* qsi)
             qsi->val = eq + 1;
             qsi->vallen = (size_t)(ends - eq - 1);
         }
-        qsi->pos = (ends - qsi->s) + 1;
+        qsi->pos = (size_t)((ends - qsi->s) + 1);
         return true;
     }
 }
