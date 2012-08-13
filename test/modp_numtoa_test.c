@@ -108,7 +108,7 @@ static char* testDoubleToA(void)
     double d;
 
     char* tmp;
-    int tmplen;
+    size_t tmplen;
 
     /* test each combination of whole number + fraction,
        at every precision */
@@ -126,30 +126,30 @@ static char* testDoubleToA(void)
     const char* formats[] = {"%.0f", "%.1f", "%.2f", "%.3f", "%.4f", "%.5f",
                              "%.6f", "%.7f", "%.8f", "%.9f"};
 
-    int imax = sizeof(wholes)/sizeof(double);
-    int jmax = sizeof(frac)/sizeof(double);
-    int kmax = sizeof(formats)/sizeof(const char*);
+    size_t imax = sizeof(wholes)/sizeof(double);
+    size_t jmax = sizeof(frac)/sizeof(double);
+    size_t kmax = sizeof(formats)/sizeof(const char*);
 
-    int i,j,k;
+    size_t i,j,k;
     for (i = 0; i < imax; ++i) {
         for (j = 0; j < jmax; ++j) {
             for (k = 0; k < kmax; ++k) {
                 d = wholes[i] + frac[j];
 
                 sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
-                        wholes[i], frac[j], k);
+                        wholes[i], frac[j],(int) k);
                 sprintf(buf1, formats[k], d);
                 //printf("%s\n", buf1);
-                modp_dtoa(d, buf2, k);
-                mu_assert_str_equals_msg(msg,buf1, buf2);
+                modp_dtoa(d, buf2, (int)k);
+                mu_assert_str_equals_msg(msg, buf1, buf2);
 
                 if (d != 0) {
                     sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
-                            -wholes[i], frac[j], k);
+                            -wholes[i], frac[j], (int) k);
                     /* not dealing with "-0" issues */
                     d = -d;
                     sprintf(buf1, formats[k], d);
-                    modp_dtoa(d, buf2, k);
+                    modp_dtoa(d, buf2, (int)k);
                     mu_assert_str_equals_msg(msg,buf1, buf2);
 
                     // find the '.', and see how many chars are after it
@@ -164,7 +164,7 @@ static char* testDoubleToA(void)
                     }
 
                     sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
-                            wholes[i], frac[j], k, tmplen, buf2);
+                            wholes[i], frac[j], (int)k, (int)tmplen, buf2);
                     mu_assert_msg(msg, k >= tmplen);
 
                 }
