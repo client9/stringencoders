@@ -116,13 +116,13 @@ size_t modp_b64_encode(char* dest, const char* str, size_t len)
     }
 
     *p = '\0';
-    return (int)(p - (uint8_t*)dest);
+    return (size_t)(p - (uint8_t*)dest);
 }
 
 #ifdef WORDS_BIGENDIAN   /* BIG ENDIAN -- SUN / IBM / MOTOROLA */
-int modp_b64_decode(char* dest, const char* src, int len)
+size_t modp_b64_decode(char* dest, const char* src, size_t len)
 {
-    int i;
+    size_t i;
     if (len == 0) return 0;
 
 #ifdef DOPAD
@@ -138,8 +138,8 @@ int modp_b64_decode(char* dest, const char* src, int len)
     }
 #endif  /* DOPAD */
 
-    int leftover = len % 4;
-    int chunks = (leftover == 0) ? len / 4 - 1 : len /4;
+    size_t leftover = len % 4;
+    size_t chunks = (leftover == 0) ? len / 4 - 1 : len /4;
 
     uint8_t* p = (uint8_t*) dest;
     uint32_t x = 0;
