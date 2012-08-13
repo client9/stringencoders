@@ -46,7 +46,7 @@ int main(void)
     }
     t1 = clock();
     printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     printf("unsigned 16\t");
