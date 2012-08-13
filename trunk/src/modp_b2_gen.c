@@ -3,11 +3,14 @@
 #include <stdio.h>
 #include "arraytoc.h"
 
+static void binary_encodemap(void);
+int main(void);
+
 /** \brief make map of a byte to a string of 8 chars
  *
  *
  */
-void binary_encodemap()
+static void binary_encodemap(void)
 {
     static const unsigned char sBinaryChars[] = "01";
     int i, j;
@@ -28,42 +31,6 @@ void binary_encodemap()
         }
     }
     printf("%s", "};\n");
-}
-
-
-// exact same thing as one used on urlencode
-void hexdecodemap()
-{
-    uint32_t i;
-    uint32_t map1[256];
-    uint32_t map2[256];
-    for (i = 0; i <= 255; ++i) {
-        map1[i] = 256;
-        map2[i] = 256;
-    }
-
-    // digits
-    for (i = '0'; i <= '9'; ++i) {
-        map1[i] = i - '0';
-        map2[i] = map1[i] << 4;
-    }
-
-    // upper
-    for (i = 'A'; i <= 'F'; ++i) {
-        map1[i] = i - 'A' + 10;
-        map2[i] = map1[i] << 4;
-    }
-
-    // lower
-    for (i = 'a'; i <= 'f'; ++i) {
-        map1[i] = i - 'a' + 10;
-        map2[i] = map1[i] << 4;
-    }
-
-
-    uint32_array_to_c(map1, 256, "gsHexDecodeMap");
-
-    uint32_array_to_c(map2, 256, "gsHexDecodeD2");
 }
 
 //int main(int argc, char* argv[])
