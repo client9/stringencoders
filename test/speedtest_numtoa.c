@@ -35,7 +35,7 @@ int main(void)
         snprintf(buf, sizeof(buf), "%hhu", ju8);
     }
     t1 = clock();
-    last = (t1-t0);
+    last = ((double)(t1-t0));
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 
@@ -65,7 +65,7 @@ int main(void)
         snprintf(buf, sizeof(buf), "%hu", ju16);
     }
     t1 = clock();
-    last = (t1-t0);
+    last = ((double)(t1-t0));
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 
@@ -75,8 +75,8 @@ int main(void)
         modp_uitoa10(ju16, buf);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
 
@@ -86,7 +86,7 @@ int main(void)
         sprintf(buf, "%u", i);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -94,8 +94,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%u", i);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -103,8 +103,8 @@ int main(void)
         modp_uitoa10(i, buf);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     printf("signed 8\t");
@@ -114,7 +114,7 @@ int main(void)
         sprintf(buf, "%hhd", j8);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -123,8 +123,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%hhd", j8);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -133,8 +133,8 @@ int main(void)
         modp_itoa10(j8, buf);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     printf("signed 16\t");
@@ -144,7 +144,7 @@ int main(void)
         sprintf(buf, "%hd", j16);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -153,8 +153,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%hd", j16);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -163,8 +163,8 @@ int main(void)
         modp_itoa10(j16, buf);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     printf("%s", "signed 32\t");
@@ -175,7 +175,7 @@ int main(void)
         sprintf(buf, "%d", i);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -183,8 +183,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%d", i);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -192,8 +192,8 @@ int main(void)
         modp_itoa10((int32_t)i, buf);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     /* UITOA16 */
@@ -206,7 +206,7 @@ int main(void)
         sprintf(buf, "%X", i);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -214,8 +214,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%08X", i);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -223,8 +223,8 @@ int main(void)
         modp_uitoa16(i, buf, 1);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
 
@@ -237,7 +237,7 @@ int main(void)
         sprintf(buf, "%e", (double)(i));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -246,7 +246,7 @@ int main(void)
         snprintf(buf, sizeof(buf), "%f", d);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -255,8 +255,8 @@ int main(void)
         snprintf(buf, sizeof(buf), "%g", d);
     }
     t1 = clock();
-    last = (t1-t0);
-    printf("%lu\t", (t1-t0));
+    last = ((double)(t1-t0));
+    printf("%lu\t", ((t1-t0)));
     fflush(stdout);
 
     t0 = clock();
@@ -265,8 +265,8 @@ int main(void)
         modp_dtoa(d, buf, 6);
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%lu\t", ((t1-t0)));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     return 0;
