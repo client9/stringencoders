@@ -45,7 +45,7 @@ int main(void) {
     size_t sizes[] = {20, 200, 2000};
 
     for (i = 0; i < (int)sizeof(teststr1); ++i) {
-        teststr1[i] = 'A' + i % 26;
+        teststr1[i] = (char)('A' + i % 26);
     }
 
     // over allocate result buffers
