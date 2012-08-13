@@ -5,10 +5,10 @@
 #include <stdio.h>
 
 // dump uint32_t as hex digits
-void uint32_array_to_c_hex(const uint32_t* ary, int sz, const char* name)
+void uint32_array_to_c_hex(const uint32_t* ary, size_t sz, const char* name)
 {
-    printf("static const uint32_t %s[%d] = {\n", name, sz);
-    int i = 0;
+    printf("static const uint32_t %s[%d] = {\n", name, (int)sz);
+    size_t i = 0;
     for (;;) {
         printf("0x%08x", ary[i]);
         ++i;
@@ -26,11 +26,11 @@ void uint32_array_to_c_hex(const uint32_t* ary, int sz, const char* name)
 /**
  * prints char array as a c program snippet
  */
-void char_array_to_c(const char* ary, int sz, const char* name)
+void char_array_to_c(const char* ary, size_t sz, const char* name)
 {
-    printf("static const unsigned char %s[%d] = {\n", name, sz);
+    printf("static const unsigned char %s[%d] = {\n", name, (int)sz);
     uint8_t tmp;
-    int i = 0;
+    size_t i = 0;
     for (;;) {
         if (ary[i] == 0) {
             printf("'\\0'");
@@ -64,10 +64,10 @@ void char_array_to_c(const char* ary, int sz, const char* name)
 /**
  * prints an uint array as a c program snippet
  */
-void uint32_array_to_c(const uint32_t* ary, int sz, const char* name)
+void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
 {
-    printf("static const uint32_t %s[%d] = {\n", name, sz);
-    int i = 0;
+    printf("static const uint32_t %s[%d] = {\n", name, (int)sz);
+    size_t i = 0;
     for (;;) {
         printf("%3d", ary[i]);
         ++i;

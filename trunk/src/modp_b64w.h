@@ -38,6 +38,7 @@
 #endif
 
 BEGIN_C
+#include "modp_stdint.h"
 
 /**
  * Encode a raw binary string into web-safe base 64.
@@ -64,7 +65,7 @@ BEGIN_C
  * \endcode
  *
  */
-int modp_b64w_encode(char* dest, const char* src, int len);
+size_t modp_b64w_encode(char* dest, const char* src, size_t len);
 
 /**
  * Decode a web-safe base64 encoded string
@@ -87,7 +88,7 @@ int modp_b64w_encode(char* dest, const char* src, int len);
  * if (len == -1) { error }
  * \endcode
  */
-int modp_b64w_decode(char* dest, const char* src, int len);
+size_t modp_b64w_decode(char* dest, const char* src, size_t len);
 
 /**
  * Given a source string of length len, this returns the amount of

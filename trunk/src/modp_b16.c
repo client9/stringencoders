@@ -124,7 +124,7 @@ size_t modp_b16_decode(char* dest, const char* str, size_t len)
     const size_t leftover = len & 0x03; // i.e. len % 4
     if (leftover & 0x01) { // i.e if leftover is odd,
                            // leftover==1 || leftover == 3
-        return 0;
+        return (size_t)-1;
     }
 
     // read 4 bytes, output 2.
@@ -137,7 +137,7 @@ size_t modp_b16_decode(char* dest, const char* str, size_t len)
         val1 = gsHexDecodeD2[t0] | gsHexDecodeMap[t1];
         val2 = gsHexDecodeD2[t2] | gsHexDecodeMap[t3];
         if (val1 > 0xff || val2 > 0xff) {
-            return 0;
+            return (size_t)-1;
         }
         *p++ = (uint8_t) val1;
         *p++ = (uint8_t) val2;
@@ -146,7 +146,7 @@ size_t modp_b16_decode(char* dest, const char* str, size_t len)
     if (leftover == 2) {
         val1 = gsHexDecodeD2[s[0]] | gsHexDecodeMap[s[1]];
         if (val1 > 0xff) {
-            return 0;
+            return (size_t)-1;
         }
         *p++ = (uint8_t) val1;
     }

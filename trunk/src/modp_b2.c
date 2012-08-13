@@ -80,7 +80,7 @@ size_t modp_b2_decode(char* dest, const char* str, size_t len)
     const size_t buckets = len / 8;
     const size_t leftover = len % 8;
     if (leftover != 0) {
-        return 0;
+        return (size_t)-1;
     }
 
     for (i = 0; i < buckets; ++i) {

@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include "arraytoc.h"
 
-static void binary_encodemap(void);
-int main(void);
-
 /** \brief make map of a byte to a string of 8 chars
  *
  *
@@ -34,7 +31,7 @@ static void binary_encodemap(void)
 }
 
 //int main(int argc, char* argv[])
-int main()
+int main(void)
 {
     binary_encodemap();
 

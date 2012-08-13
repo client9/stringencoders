@@ -34,6 +34,8 @@
 
 BEGIN_C
 
+#include "modp_stdint.h"
+
 /**
  * base 85 encode
  *
@@ -42,7 +44,7 @@ BEGIN_C
  * \param[in] len   input string length, must be a multiple of 4
  * \return the strlen of the destination, or -1 if error
  */
-int modp_b85_encode(char* dest, const char* src, int len);
+size_t modp_b85_encode(char* dest, const char* src, size_t len);
 
 /**
  * Base 85 decode
@@ -53,7 +55,7 @@ int modp_b85_encode(char* dest, const char* src, int len);
  * \return -1 on decoding error, length of output otherwise
  *    No ending null is added
  */
-int modp_b85_decode(char* dest, const char* src, int len);
+size_t modp_b85_decode(char* dest, const char* src, size_t len);
 
 /**
  * Returns the amount of memory to allocate for encoding the input

@@ -3,7 +3,7 @@
 
 #include "arraytoc.h"
 
-void hexencodemap()
+static void hexencodemap(void)
 {
     static const char sHexChars[] = "0123456789ABCDEF";
     int i;
@@ -14,11 +14,11 @@ void hexencodemap()
         hexEncode2[i] = sHexChars[i & 0x0f];
     }
 
-    char_array_to_c(hexEncode1, 256, "gsHexEncodeMap1");
-    char_array_to_c(hexEncode2, 256, "gsHexEncodeMap2");
+    char_array_to_c(hexEncode1, sizeof(hexEncode1), "gsHexEncodeMap1");
+    char_array_to_c(hexEncode2, sizeof(hexEncode2), "gsHexEncodeMap2");
 }
 
-void urlencodemap()
+static void urlencodemap(void)
 {
     uint32_t i;
     char urlEncodeMap[256];
@@ -47,10 +47,10 @@ void urlencodemap()
     // space is special
     urlEncodeMap[(int)' '] = '+';
 
-    char_array_to_c(urlEncodeMap, 256, "gsUrlEncodeMap");
+    char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMap");
 };
 
-void urlencodeminmap()
+static void urlencodeminmap(void)
 {
     int i;
     char urlEncodeMap[256];
@@ -85,10 +85,10 @@ void urlencodeminmap()
     }
 
 
-    char_array_to_c(urlEncodeMap, 256, "gsUrlEncodeMinMap");
+    char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMinMap");
 };
 
-void hexdecodemap()
+static void hexdecodemap(void)
 {
     uint32_t i;
     uint32_t map[256];
@@ -111,10 +111,10 @@ void hexdecodemap()
         map[i] = i - 'a' + 10;
     }
 
-    uint32_array_to_c(map, 256, "gsHexDecodeMap");
+    uint32_array_to_c(map, sizeof(map)/sizeof(uint32_t), "gsHexDecodeMap");
 }
 
-int main()
+int main(void)
 {
     urlencodemap();
     urlencodeminmap();

@@ -24,7 +24,7 @@ BEGIN_C
  * \param[in] name the name of the struct for the source code
  *
  */
-void uint32_array_to_c(const uint32_t* ary, int size, const char* name);
+void uint32_array_to_c(const uint32_t* ary, size_t size, const char* name);
 
 /** \brief output an uint32_t array into source code as hex values
  *
@@ -33,7 +33,7 @@ void uint32_array_to_c(const uint32_t* ary, int size, const char* name);
  * \param[in] name the name of the struct for source code
  *
  */
-void uint32_array_to_c_hex(const uint32_t* ary, int size, const char* name);
+void uint32_array_to_c_hex(const uint32_t* ary, size_t size, const char* name);
 
 /** \brief output a char array into source code
  *
@@ -41,6 +41,6 @@ void uint32_array_to_c_hex(const uint32_t* ary, int size, const char* name);
  * \param[in] size number of elements in array
  * \param[in] name the name of the struct for source code
  */
-void char_array_to_c(const char* ary, int size, const char* name);
+void char_array_to_c(const char* ary, size_t size, const char* name);
 
 #endif
