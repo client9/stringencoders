@@ -43,7 +43,7 @@ size_t modp_itoa10(int32_t value, char* str)
 
     // Reverse string
     strreverse(str,wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 size_t modp_uitoa10(uint32_t value, char* str)
@@ -54,7 +54,7 @@ size_t modp_uitoa10(uint32_t value, char* str)
     *wstr='\0';
     // Reverse string
     strreverse(str, wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 size_t modp_litoa10(int64_t value, char* str)
@@ -69,7 +69,7 @@ size_t modp_litoa10(int64_t value, char* str)
 
     // Reverse string
     strreverse(str,wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 size_t modp_ulitoa10(uint64_t value, char* str)
@@ -80,7 +80,7 @@ size_t modp_ulitoa10(uint64_t value, char* str)
     *wstr='\0';
     // Reverse string
     strreverse(str, wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 size_t modp_dtoa(double value, char* str, int prec)
@@ -178,7 +178,7 @@ size_t modp_dtoa(double value, char* str, int prec)
     }
     *wstr='\0';
     strreverse(str, wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 
@@ -292,7 +292,7 @@ size_t modp_dtoa2(double value, char* str, int prec)
     }
     *wstr='\0';
     strreverse(str, wstr-1);
-    return wstr - str;
+    return (size_t)(wstr - str);
 }
 
 
