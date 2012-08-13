@@ -206,7 +206,8 @@ static char* testEncodeDecode(void)
 
 static char* testDecodeErrors(void)
 {
-    int i, y;
+    int i;
+    size_t y;
     char out[1000];
     char decode[5];
     char msg[100];
@@ -228,7 +229,7 @@ static char* testDecodeErrors(void)
 
         sprintf(msg, "i = %d, %s", i, decode);
         y = modp_b64_decode(out, decode, (size_t)4);
-        mu_assert_int_equals_msg(msg, -1, y);
+        mu_assert_int_equals_msg(msg, (size_t)-1, y);
     }
 
 
@@ -238,7 +239,7 @@ static char* testDecodeErrors(void)
         decode[i+1] = '\0';
         y = modp_b64_decode(out, decode, (size_t)(i+1));
         sprintf(msg, "i=%d, b64=%s", i, decode);
-        mu_assert_int_equals_msg(msg, -1, y);
+        mu_assert_int_equals_msg(msg, (size_t)-1, y);
     }
 
     /* Test good+3 pad chars (should be impossible) */
