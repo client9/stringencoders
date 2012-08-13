@@ -46,15 +46,15 @@ static char* testUpperHighBits(void)
     char buf[5];
 
     buf[0] = 'z';
-    buf[1] = 0xff;
-    buf[2] = 0xff;
-    buf[3] = 0xff;
+    buf[1] = (char) 0xff;
+    buf[2] = (char) 0xff;
+    buf[3] = (char) 0xff;
     buf[4] = '\0';
 
     expected[0] = 'Z';
-    expected[1] = 0xff;
-    expected[2] = 0xff;
-    expected[3] = 0xff;
+    expected[1] = (char) 0xff;
+    expected[2] = (char) 0xff;
+    expected[3] = (char) 0xff;
     expected[4] = '\0';
 
     memset(obuf, 0, sizeof(obuf));
@@ -62,15 +62,15 @@ static char* testUpperHighBits(void)
     mu_assert_str_equals(expected, obuf);
 
 
-    buf[0] = 0xff;
-    buf[1] = 0xff;
-    buf[2] = 0xff;
+    buf[0] = (char) 0xff;
+    buf[1] = (char) 0xff;
+    buf[2] = (char) 0xff;
     buf[3] = 'z';
     buf[4] = '\0';
 
-    expected[0] = 0xff;
-    expected[1] = 0xff;
-    expected[2] = 0xff;
+    expected[0] = (char) 0xff;
+    expected[1] = (char) 0xff;
+    expected[2] = (char) 0xff;
     expected[3] = 'Z';
     expected[4] = '\0';
     memset(obuf, 0, sizeof(obuf));
