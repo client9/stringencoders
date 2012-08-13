@@ -232,7 +232,7 @@ int main(void) {
             modp_b2_decode(result2, result, len);
         }
         c1 = clock();
-        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
