@@ -92,10 +92,10 @@ static char* testEncodeDecode(void)
         for (j = 0; j < 256; j+=16) { // save some time +=16
             for (k = 0; k < 256; k += 8) { // save some time += 8
                 for (l = 0; l < 256; ++l) {
-                    ibuf[0] = i;
-                    ibuf[1] = j;
-                    ibuf[2] = k;
-                    ibuf[3] = l;
+                    ibuf[0] = (char) i;
+                    ibuf[1] = (char) j;
+                    ibuf[2] = (char) k;
+                    ibuf[3] = (char) l;
                     memset(obuf, 255, sizeof(obuf));
                     d = modp_b85_encode(obuf, ibuf, (size_t)4);
                     mu_assert_int_equals(5, d);
