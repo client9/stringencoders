@@ -28,6 +28,8 @@
 
 BEGIN_C
 
+#include "modp_stdint.h"
+
 /**
  * encode a string into hex (base 16, 0-9,a-f)
  *
@@ -37,7 +39,7 @@ BEGIN_C
  * \param[in] len of the input string
  * \return strlen of dest
  */
-int modp_b16_encode(char* dest, const char* str, int len);
+size_t modp_b16_encode(char* dest, const char* str, size_t len);
 
 /**
  * Decode a hex-encoded string.
@@ -48,7 +50,7 @@ int modp_b16_encode(char* dest, const char* str, int len);
  * \param[in] len the length of the source
  * \return the length of the the output, or -1 if an error
  */
-int modp_b16_decode(char* dest, const char* src, int len);
+size_t modp_b16_decode(char* dest, const char* src, size_t len);
 
 /**
  * Encode length.
