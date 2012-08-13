@@ -218,7 +218,7 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
             *dest++ = (char) *src++;
             continue;
         }
-        size_t elen = pos - src;
+        size_t elen = (size_t)(pos - src);
         if (*(src+1) == '#') {
             if (*(src+2) == 'x' || *(src+2) == 'X') {
                 unichar = modp_xml_parse_hex_entity((const char*)(src + 3), elen - 3);
