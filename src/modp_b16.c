@@ -46,15 +46,15 @@
 #include "modp_stdint.h"
 #include "modp_b16_data.h"
 
-int modp_b16_encode(char* dest, const char* str, int len)
+size_t modp_b16_encode(char* dest, const char* str, size_t len)
 {
-    int i;
-    const int buckets = len >> 2; // i.e. i / 4
-    const int leftover = len & 0x03; // i.e. i % 4
+    size_t i;
+    const size_t buckets = len >> 2; // i.e. i / 4
+    const size_t leftover = len & 0x03; // i.e. i % 4
 
     uint8_t* p = (uint8_t*) dest;
     uint8_t t1, t2, t3, t4;
-    uint32_t* srcInt = (uint32_t*) str;
+    const uint32_t* srcInt = (const uint32_t*) str;
     uint32_t x;
     for (i = 0; i < buckets; ++i) {
         x = *srcInt++;
@@ -80,7 +80,7 @@ int modp_b16_encode(char* dest, const char* str, int len)
         *p++ = gsHexEncodeC2[t4];
     }
 
-    uint8_t* srcChar = (uint8_t*) srcInt;
+    const uint8_t* srcChar = (const uint8_t*) srcInt;
     switch (leftover) {
     case 0:
         break;
@@ -109,22 +109,22 @@ int modp_b16_encode(char* dest, const char* str, int len)
         *p++ = gsHexEncodeC2[t3];
     }
     *p = '\0';
-    return  (int)(p - (uint8_t*) dest);
+    return  (size_t)(p - (uint8_t*) dest);
 }
 
-int modp_b16_decode(char* dest, const char* str, int len)
+size_t modp_b16_decode(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i;
 
     uint32_t val1, val2;
     uint8_t* p = (uint8_t*) dest;
-    uint8_t* s = (uint8_t*) str;
+    const uint8_t* s = (const uint8_t*) str;
 
-    const int buckets = len >> 2;    // i.e. len / 4
-    const int leftover = len & 0x03; // i.e. len % 4
+    const size_t buckets = len >> 2;    // i.e. len / 4
+    const size_t leftover = len & 0x03; // i.e. len % 4
     if (leftover & 0x01) { // i.e if leftover is odd,
                            // leftover==1 || leftover == 3
-        return -1;
+        return 0;
     }
 
     // read 4 bytes, output 2.
@@ -136,16 +136,20 @@ int modp_b16_decode(char* dest, const char* str, int len)
         t0 = *s++; t1= *s++; t2 = *s++; t3 = *s++;
         val1 = gsHexDecodeD2[t0] | gsHexDecodeMap[t1];
         val2 = gsHexDecodeD2[t2] | gsHexDecodeMap[t3];
-        if (val1 > 0xff || val2 > 0xff) return -1;
+        if (val1 > 0xff || val2 > 0xff) {
+            return 0;
+        }
         *p++ = (uint8_t) val1;
         *p++ = (uint8_t) val2;
     }
 
     if (leftover == 2) {
         val1 = gsHexDecodeD2[s[0]] | gsHexDecodeMap[s[1]];
-        if (val1 > 0xff) return -1;
+        if (val1 > 0xff) {
+            return 0;
+        }
         *p++ = (uint8_t) val1;
     }
 
-    return (int)(p - (uint8_t*)dest);
+    return (size_t)(p - (uint8_t*)dest);
 }
