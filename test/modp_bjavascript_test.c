@@ -20,7 +20,7 @@ static char* testNoEscape(void)
     mu_assert_int_equals(len1, d);
     mu_assert_str_equals(buf, s1);
 
-    int sz = modp_bjavascript_encode_strlen(s1, len1);
+    size_t sz = modp_bjavascript_encode_strlen(s1, len1);
     mu_assert_int_equals(sz, len1);
 
     return 0;
