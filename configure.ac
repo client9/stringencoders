@@ -18,7 +18,8 @@ B64WCHARS="-_."
 AC_ARG_WITH([b64wchars], AC_HELP_STRING([--with-b64wchars=3CHARS],[change b64 web extra chars, default is '-_.']),
           [B64WCHARS=$withval], [])
 
-EXTRACFLAGS="-Isrc -Wall -Wextra -Werror"
+EXTRACFLAGS="-Isrc -Wall -Wextra -Werror -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wmissing-prototypes -Wconversion"
+# -Wstrict-prototypes
 
 if test "x$enable_gcov" = "xyes";
 then
