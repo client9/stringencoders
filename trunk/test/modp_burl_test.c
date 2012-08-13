@@ -10,17 +10,17 @@
 /**
  * Test empty input to encode and decode
  */
-static char* testUrlEmpty()
+static char* testUrlEmpty(void)
 {
-    int d;
+    size_t d;
     char buf[1000];
     buf[0] = 1;
-    d = modp_burl_encode(buf, "", 0);
+    d = modp_burl_encode(buf, "", (size_t)0);
     mu_assert_int_equals(d, 0);
     mu_assert(buf[0] == 0);
 
     buf[0] = 1;
-    d = modp_burl_decode(buf, "", 0);
+    d = modp_burl_decode(buf, "", (size_t)0);
     mu_assert_int_equals(d, 0);
     mu_assert(buf[0] == 0);
 
@@ -30,7 +30,7 @@ static char* testUrlEmpty()
 /**
  * test space <--> plus conversion
  */
-static char* testUrlSpaces()
+static char* testUrlSpaces(void)
 {
     size_t d = 0;
     char buf[1000];
@@ -51,7 +51,7 @@ static char* testUrlSpaces()
 /**
  * Test charactes that should be unchanged
  */
-static char* testUrlUntouched()
+static char* testUrlUntouched(void)
 {
     const char* lower = "abcdefghijklmnopqrstuvwxyz";
     const char* upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -103,7 +103,7 @@ static char* testUrlUntouched()
 /**
  * Test charactes that should be unchanged
  */
-static char* testUrlMinUntouched()
+static char* testUrlMinUntouched(void)
 {
     const char* lower   = "abcdefghijklmnopqrstuvwxyz";
     const char* upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -164,7 +164,7 @@ static char* testUrlMinUntouched()
 /** \brief make sure min encoding actually does hex encoding
  *
  */
-static char* testUrlMinEncodeHex()
+static char* testUrlMinEncodeHex(void)
 {
     char buf[1000];
     size_t d = 0;
@@ -184,7 +184,7 @@ static char* testUrlMinEncodeHex()
     return 0;
 }
 
-static char* testUrlDecodeHexBad()
+static char* testUrlDecodeHexBad(void)
 {
 
     const char* bad1 = "%0X"; // bad trailing char
@@ -247,7 +247,7 @@ static char* testUrlDecodeHexBad()
     return 0;
 }
 
-static char* testUrlDecodeHex()
+static char* testUrlDecodeHex(void)
 {
     int d; // size of output
     int i, j; // loops
@@ -303,10 +303,10 @@ static char* testUrlDecodeHex()
  * test hex encoding.. to be done after hex decoding
  * is tested.
  */
-static char* testHexEncoding()
+static char* testHexEncoding(void)
 {
     int i = 0;
-    int d = 0;
+    size_t d = 0;
     char msg[1000];
     char input[257];
     memset(input, 0, sizeof(input));
@@ -314,7 +314,7 @@ static char* testHexEncoding()
     memset(output, 0, sizeof(output));
     char buf[1000];
     memset(buf, 0, sizeof(buf));
-    d = modp_burl_encode(output, input, 256);
+    d = modp_burl_encode(output, input, (size_t)256);
     d = modp_burl_decode(buf, output, d);
     mu_assert_int_equals(256, d);
     for (i= 0; i < 256; ++i) {
@@ -324,7 +324,7 @@ static char* testHexEncoding()
     return 0;
 }
 
-static char* testEncodeStrlen()
+static char* testEncodeStrlen(void)
 {
     char ibuf[100];
     char obuf[100];
@@ -357,7 +357,7 @@ static char* testEncodeStrlen()
 /** \brief test "modp_burl_min_encode_strlen"
  *
  */
-static char* testEncodeMinStrlen()
+static char* testEncodeMinStrlen(void)
 {
     char ibuf[100];
     char obuf[100];
@@ -386,7 +386,7 @@ static char* testEncodeMinStrlen()
     return 0;
 }
 
-static char* all_tests()
+static char* all_tests(void)
 {
     mu_run_test(testUrlUntouched);
     mu_run_test(testUrlEmpty);

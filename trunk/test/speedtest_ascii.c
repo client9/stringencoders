@@ -14,9 +14,9 @@
  * It has an unfair advantage since it's inside the test file
  * so the optimizer can inline it.
  */
-void toupper_copy1(char* dest, const char* str, int len)
+static void toupper_copy1(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i;
     for (i = 0; i < len; ++i) {
         // toupper is defined in <ctype.h>
         *dest++ = toupper(str[i]);
@@ -29,9 +29,9 @@ void toupper_copy1(char* dest, const char* str, int len)
  * Skipping ctype, and doing the compare directly
  *
  */
-void toupper_copy2(char* dest, const char* str, int len)
+static void toupper_copy2(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i;
     char c;
     for (i = 0; i < len; ++i) {
         c = str[i];
@@ -43,9 +43,9 @@ void toupper_copy2(char* dest, const char* str, int len)
 /** 
  * Sequential table lookup
  */
-void toupper_copy3(char* dest, const char* str, int len)
+static void toupper_copy3(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i;
     unsigned char c;
     for (i = 0; i < len; ++i) {
         c = str[i];
@@ -58,21 +58,21 @@ void toupper_copy3(char* dest, const char* str, int len)
  *
  *
  */
-void toupper_copy4(char* dest, const char* str, int len)
+static void toupper_copy4(char* dest, const char* str, size_t len)
 {
     /*
-     *  int i;
+     *  size_t i;
      *  for (i = 0; i < len; ++i) {
      *      char c = str[i];
      *      *dest++ = (c >= 'a' && c <= 'z') ? c - 32 : c;
      *  }
      */
 
-    int i;
+    size_t i;
     uint8_t c1,c2,c3,c4;
 
     const int leftover = len % 4;
-    const int imax = len - leftover;
+    const size_t imax = len - leftover;
     const uint8_t* s = (const uint8_t*) str;
     for (i = 0; i != imax ; i+=4) {
         /*
@@ -102,13 +102,13 @@ void toupper_copy4(char* dest, const char* str, int len)
  * This was his "improved" version, but it appears to either run just
  * as fast, or a bit slower than his original version
  */
-void toupper_copy5(char* dest, const char* str, int len)
+static void toupper_copy5(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i;
     uint32_t eax,ebx,ecx,edx;
     const uint8_t* ustr = (const uint8_t*) str;
     const int leftover = len % 4;
-    const int imax = len / 4;
+    const size_t imax = len / 4;
     const uint32_t* s = (const uint32_t*) str;
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
@@ -139,13 +139,13 @@ void toupper_copy5(char* dest, const char* str, int len)
  * used in the modp library.
  *
  */
-void toupper_copy6(char* dest, const char* str, int len)
+static void toupper_copy6(char* dest, const char* str, size_t len)
 {
-    int i=0;
+    size_t i=0;
     uint32_t eax,ebx,ecx,edx;
     const uint8_t* ustr = (const uint8_t*) str;
     const int leftover = len % 4;
-    const int imax = len / 4;
+    const size_t imax = len / 4;
     const uint32_t* s = (const uint32_t*) str;
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
@@ -189,13 +189,13 @@ void toupper_copy6(char* dest, const char* str, int len)
     }
 }
 
-void modp_toupper_copy_a2(char* dest, const char* str, int len)
+static void modp_toupper_copy_a2(char* dest, const char* str, size_t len)
 {
-    int i=0;
+    size_t i=0;
     uint32_t eax, ebx;
     const uint8_t* ustr = (const uint8_t*) str;
-    const int leftover = len % 4;
-    const int imax = len / 4;
+    const size_t leftover = len % 4;
+    const size_t imax = len / 4;
     const uint32_t* s = (const uint32_t*) str;
     uint32_t* d = (uint32_t*) dest;
     for (i = 0; i != imax; ++i) {
@@ -217,7 +217,7 @@ void modp_toupper_copy_a2(char* dest, const char* str, int len)
     }
 }
 
-int main()
+int main(void)
 {
     double last = 0.0;
     size_t i = 0;
@@ -230,7 +230,7 @@ int main()
 
     uint32_t max = 1000000;
     clock_t t0, t1;
-    printf("%s", "type\tclib\tdirect\tmap\tpara\thsieh1\thsieh2\tFinal\timprovement\n");
+    printf("%s", "type\tclib\tdirect\tmap\tpara\thsieh1\thsieh2\tAlt\tFinal\timprovement\n");
 
     printf("toupper\t");
     fflush(stdout);
@@ -300,6 +300,18 @@ int main()
         toupper_copy6(obuf, buf, sizeof(buf));
     }
     t1 = clock();
+    printf("%lu\t", (t1-t0));
+    fflush(stdout);
+
+    /**
+     ** MODP ALT
+     **/
+    t0 = clock();
+    for (i = 0; i < max; ++i) {
+        modp_toupper_copy_a2(obuf, buf, sizeof(buf));
+    }
+    t1 = clock();
+
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 

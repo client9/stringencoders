@@ -8,20 +8,20 @@
 #include "modp_b2.h"
 #include "modp_b16.h"
 
-static char* testEndian()
+static char* testEndian(void)
 {
     // this test that "0001" is "0...1"
     char buf[100];
     char result[100];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
-    int d = modp_b2_encode(buf, endian, 4);
+    size_t d = modp_b2_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(32, d);
     mu_assert_str_equals("00000000000000000000000000000001", buf);
     mu_assert_int_equals('0', buf[0]);
     mu_assert_int_equals('1', buf[31]);
 
     memset(result, 255, sizeof(result));
-    d = modp_b2_decode(result, buf, 32);
+    d = modp_b2_decode(result, buf, (size_t)32);
     mu_assert_int_equals(4, d);
     mu_assert_int_equals(endian[0], result[0]);
     mu_assert_int_equals(endian[1], result[1]);
@@ -31,7 +31,7 @@ static char* testEndian()
     return 0;
 }
 
-static char* testEncodeDecode()
+static char* testEncodeDecode(void)
 {
     // 2 bytes == 4 bytes out
     char ibuf[2];
@@ -40,7 +40,7 @@ static char* testEncodeDecode()
     char msg[100]; // for test messages output
     msg[0] = 0; // make msg an empty string
     unsigned int i,j;
-    int d;
+    size_t d;
 
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
@@ -50,7 +50,7 @@ static char* testEncodeDecode()
             ibuf[1] = (char)((unsigned char) j);
 
             memset(obuf, 0, sizeof(obuf));
-            d = modp_b16_encode(obuf, ibuf, 2);
+            d = modp_b16_encode(obuf, ibuf, (size_t)2);
             mu_assert_int_equals_msg(msg, 4, d);
             d = modp_b16_decode(rbuf, obuf, d);
             mu_assert_int_equals_msg(msg, 2, d);
@@ -61,7 +61,7 @@ static char* testEncodeDecode()
     return 0;
 }
 
-static char* testOddDecode()
+static char* testOddDecode(void)
 {
     char obuf[100];
     char ibuf[100];
@@ -73,15 +73,15 @@ static char* testOddDecode()
      * Should be error
      */
     obuf[0] = 1;
-    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 1));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, (size_t)1));
     mu_assert_int_equals(1, obuf[0]);
 
     obuf[0] = 1;
-    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 3));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, (size_t)3));
     mu_assert_int_equals(1, obuf[0]);
 
     obuf[0] = 1;
-    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, 7));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, (size_t)7));
     mu_assert_int_equals(1, obuf[0]);
 
     return 0;
@@ -89,31 +89,31 @@ static char* testOddDecode()
 
 /** \brief test input that is a multiple of 2 (special case in code)
  */
-static char* testDecodeMutlipleOf2()
+static char* testDecodeMutlipleOf2(void)
 {
     char obuf[100];
     memset(obuf, 0xff, sizeof(obuf));
 
-    mu_assert_int_equals(1, modp_b16_decode(obuf, "01", 2));
+    mu_assert_int_equals(1, modp_b16_decode(obuf, "01", (size_t)2));
     mu_assert_int_equals(1, obuf[0]);
     return 0;
 }
 
-static char* testOddEncode()
+static char* testOddEncode(void)
 {
     char obuf[100];
     char ibuf[100];
 
     // oddball 1 char.
     ibuf[0] = 1;
-    mu_assert_int_equals(2, modp_b16_encode(obuf, ibuf, 1));
+    mu_assert_int_equals(2, modp_b16_encode(obuf, ibuf, (size_t)1));
     mu_assert_int_equals(obuf[0], '0');
     mu_assert_int_equals(obuf[1], '1');
 
     // oddball 2 char.
     ibuf[0] = 0;
     ibuf[1] = 1;
-    mu_assert_int_equals(4, modp_b16_encode(obuf, ibuf, 2));
+    mu_assert_int_equals(4, modp_b16_encode(obuf, ibuf, (size_t)2));
     mu_assert_int_equals(obuf[0], '0');
     mu_assert_int_equals(obuf[1], '0');
     mu_assert_int_equals(obuf[2], '0');
@@ -123,7 +123,7 @@ static char* testOddEncode()
     ibuf[0] = 0;
     ibuf[1] = 0;
     ibuf[2] = 1;
-    mu_assert_int_equals(6, modp_b16_encode(obuf, ibuf, 3));
+    mu_assert_int_equals(6, modp_b16_encode(obuf, ibuf, (size_t)3));
     mu_assert_int_equals(obuf[0], '0');
     mu_assert_int_equals(obuf[1], '0');
     mu_assert_int_equals(obuf[2], '0');
@@ -134,7 +134,7 @@ static char* testOddEncode()
 }
 
 
-static char* testBadDecode()
+static char* testBadDecode(void)
 {
     char obuf[100];
     char ibuf[100];
@@ -146,54 +146,54 @@ static char* testBadDecode()
      * to test all possible screwups
      */
     strcpy(ibuf, "X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 1 bad char */
     strcpy(ibuf, "X111");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X11");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "11X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "111X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 2 bad chars */
     strcpy(ibuf, "XX11");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1XX1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "11XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X1X1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "1X1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X11X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 3 bad chars */
     strcpy(ibuf, "1XXX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "X1XX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XX1X");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
     strcpy(ibuf, "XXX1");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
 
     /* 4 bad chars */
     strcpy(ibuf, "XXXX");
-    mu_assert_int_equals(-1, modp_b16_decode(obuf, ibuf,(int) strlen(ibuf)));
+    mu_assert_int_equals(-1, modp_b2_decode(obuf, ibuf, strlen(ibuf)));
 
     return 0;
 }
 
-static char* testEmptyInput()
+static char* testEmptyInput(void)
 {
     char obuf[100];
     char ibuf[100];
@@ -203,17 +203,17 @@ static char* testEmptyInput()
 
     // encode 0 bytes, get a null byte back
     obuf[0] = 1;
-    mu_assert_int_equals(0, modp_b16_encode(obuf, ibuf,0));
+    mu_assert_int_equals(0, modp_b16_encode(obuf, ibuf, (size_t)0));
     mu_assert_int_equals(0, obuf[0]);
 
     // decode 0 bytes, buffer is untouched
     obuf[0] = 1;
-    mu_assert_int_equals(0, modp_b16_decode(obuf, ibuf, 0));
+    mu_assert_int_equals(0, modp_b16_decode(obuf, ibuf, (size_t)0));
     mu_assert_int_equals(1, obuf[0]);
     return 0;
 }
 
-static char* testLengths()
+static char* testLengths(void)
 {
     /* Decode Len
      * 2 input -> 1 output.  No added NULL byte
@@ -235,7 +235,7 @@ static char* testLengths()
     return 0;
 }
 
-static char* all_tests() {
+static char* all_tests(void) {
     mu_run_test(testEndian);
     mu_run_test(testEncodeDecode);
     mu_run_test(testLengths);

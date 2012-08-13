@@ -12,13 +12,13 @@
  * CPU endian type (i.e. Intel vs. Sparc, etc)
  *
  */
-static char* testEndian()
+static char* testEndian(void)
 {
     // this test that "1" is "!!!!#"
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
-    int d = modp_b85_encode(buf, endian, 4);
+    size_t d = modp_b85_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(5, d);
     mu_assert_int_equals('!', buf[0]);
     mu_assert_int_equals('!', buf[1]);
@@ -27,7 +27,7 @@ static char* testEndian()
     mu_assert_int_equals('#', buf[4]);
 
     memset(result, 255, sizeof(result));
-    d = modp_b85_decode(result, "!!!!#", 5);
+    d = modp_b85_decode(result, "!!!!#", (size_t)5);
     mu_assert_int_equals(4, d);
     mu_assert_int_equals(0, result[0]);
     mu_assert_int_equals(0, result[1]);
@@ -38,7 +38,7 @@ static char* testEndian()
     return 0;
 }
 
-static char* testLength()
+static char* testLength(void)
 {
     /**
      * Decode Len
@@ -63,30 +63,30 @@ static char* testLength()
  * The b85 decoder only accepts a mutliple of 5.
  *
  */
-static char* testBadInputLength()
+static char* testBadInputLength(void)
 {
     char buf[100];
-    mu_assert_int_equals(-1, modp_b85_encode(buf, buf, 5));
-    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, 11));
+    mu_assert_int_equals(-1, modp_b85_encode(buf, buf, (size_t)5));
+    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, (size_t)11));
     return 0;
 }
 
 /** \brief test decoding invalid b85 chars
  *
  */
-static char* testBadCharDecode()
+static char* testBadCharDecode(void)
 {
     char buf[] = {'A', 'B', 'C', 'D', '\n', '\0'};
-    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, 5));
+    mu_assert_int_equals(-1, modp_b85_decode(buf, buf, (size_t)5));
     return 0;
 }
 
-static char* testEncodeDecode()
+static char* testEncodeDecode(void)
 {
     char ibuf[10]; /* input */
     char obuf[10]; /* output */
     char rbuf[10]; /* final result */
-    int d;
+    size_t d;
     int i,j,k,l;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; j+=16) { // save some time +=16
@@ -97,11 +97,11 @@ static char* testEncodeDecode()
                     ibuf[2] = k;
                     ibuf[3] = l;
                     memset(obuf, 255, sizeof(obuf));
-                    d = modp_b85_encode(obuf, ibuf, 4);
+                    d = modp_b85_encode(obuf, ibuf, (size_t)4);
                     mu_assert_int_equals(5, d);
                     mu_assert_int_equals(0, obuf[5]);
                     memset(rbuf, 255, sizeof(rbuf));
-                    d = modp_b85_decode(rbuf, obuf, 5);
+                    d = modp_b85_decode(rbuf, obuf, (size_t)5);
                     mu_assert_int_equals(4, d);
                     mu_assert_int_equals(ibuf[0], rbuf[0]);
                     mu_assert_int_equals(ibuf[1], rbuf[1]);
@@ -115,7 +115,7 @@ static char* testEncodeDecode()
     return 0;
 }
 
-static char* all_tests()
+static char* all_tests(void)
 {
     mu_run_test(testEndian);
     mu_run_test(testLength);
