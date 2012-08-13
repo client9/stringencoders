@@ -49,7 +49,7 @@ static void toupper_copy3(char* dest, const char* str, size_t len)
     unsigned char c;
     for (i = 0; i < len; ++i) {
         c = (unsigned char) str[i];
-        *dest++ = gsToUpperMap[c];
+        *dest++ = (char) gsToUpperMap[c];
     }
     *dest = 0;
 }
@@ -243,7 +243,7 @@ int main(void)
         toupper_copy1(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    last = t1 -t0;
+    last = (double)(t1 -t0);
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 
@@ -327,7 +327,7 @@ int main(void)
     printf("%lu\t", (t1-t0));
     fflush(stdout);
 
-    printf("%.1fx\n", last/(t1-t0));
+    printf("%.1fx\n", last/((double)(t1-t0)));
     fflush(stdout);
 
     return 0;
