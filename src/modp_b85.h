@@ -142,9 +142,9 @@ namespace modp {
      */
     inline std::string& b85_decode(std::string& s)
     {
-        int d = modp_b85_decode(const_cast<char*>(s.data()), s.data(),
+        size_t d = modp_b85_decode(const_cast<char*>(s.data()), s.data(),
                                 static_cast<int>(s.size()));
-        if (d < 0) {
+        if (d == (size_t)-1) {
             s.clear();
         } else {
             s.erase(d, std::string::npos);
