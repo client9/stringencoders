@@ -80,8 +80,12 @@ namespace modp {
     inline std::string b16_encode(const char* s, size_t len)
     {
         std::string x(modp_b16_encode_len(len), '\0');
-        int d = modp_b16_encode(const_cast<char*>(x.data()), s, len);
-        x.erase(d, std::string::npos);
+        size_t d = modp_b16_encode(const_cast<char*>(x.data()), s, len);
+        if (d == (size_t)-1) {
+            x.clear();
+        } else {
+            x.erase(d, std::string::npos);
+        }
         return x;
     }
 
@@ -110,8 +114,8 @@ namespace modp {
     inline std::string b16_decode(const char* s, size_t len)
     {
         std::string x(len / 2 + 1, '\0');
-        int d = modp_b16_decode(const_cast<char*>(x.data()), s, len);
-        if (d < 0) {
+        size_t d = modp_b16_decode(const_cast<char*>(x.data()), s, len);
+        if (d == (size_t)-1) {
             x.clear();
         } else {
             x.erase(d, std::string::npos);

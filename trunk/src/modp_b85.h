@@ -93,9 +93,9 @@ namespace modp {
     inline std::string b85_encode(const char* s, size_t len)
     {
         std::string x(modp_b85_encode_len(len), '\0');
-        int d = modp_b85_encode(const_cast<char*>(x.data()), s,
+        size_t d = modp_b85_encode(const_cast<char*>(x.data()), s,
                                 static_cast<int>(len));
-        if (d < 0) {
+        if (d == (size_t)-1) {
             x.clear();
         } else {
             x.erase(d, std::string::npos);
