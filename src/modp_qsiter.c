@@ -73,14 +73,14 @@ bool qsiter_next(struct qsiter_t* qsi)
         char* eq = (char*) memchr(charstart, '=', qsi->len - qsi->pos);
         if (eq == NULL) {
             qsi->key = charstart;
-            qsi->keylen = qsi->len - qsi->pos;
+            qsi->keylen = (size_t)(qsi->len - qsi->pos);
             qsi->val = NULL;
             qsi->vallen = 0;
         } else {
             qsi->key = charstart;
             qsi->keylen = eq - charstart;
             qsi->val = eq + 1;
-            qsi->vallen = (qsi->s + qsi->len) - qsi->val;
+            qsi->vallen = (size_t)((qsi->s + qsi->len) - qsi->val);
         }
         qsi->pos = qsi->len;
         return true;
