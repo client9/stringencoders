@@ -196,9 +196,9 @@ static char* testUrlDecodeHexBad(void)
     const char* bad7 = "AA%"; // test end of line
     char bad8[4]; // %XX where X is high bit (test sign char vs. uint8_t*)
     bad8[0] = '%';
-    bad8[1] = 0x81;
-    bad8[2] = 0x82;
-    bad8[3] = 0;
+    bad8[1] = (char) 0x81;
+    bad8[2] = (char) 0x82;
+    bad8[3] = (char) 0;
 
     size_t d = 0;
     char buf[1000];
@@ -249,7 +249,7 @@ static char* testUrlDecodeHexBad(void)
 
 static char* testUrlDecodeHex(void)
 {
-    int d; // size of output
+    size_t d; // size of output
     int i, j; // loops
     int k = 0; // position in inputbuf;
     char inputbuf[3*256+1];
