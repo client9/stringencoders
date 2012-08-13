@@ -34,11 +34,16 @@ CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
 	*.tmp src/*.tmp test/*.tmp \
 	doxy/html/* \
+	doxy/*.tmp \
+	m4 \
 	*.loT \
 	*.gcda *.gcno *.gcov stringencoders.info \
+	Makefile.in aclocal.m4 autom4te.cache config.guess config.h.in config.sub configure \
+	ltmain.sh depcomp install-sh missing \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
-	modp_ascii_data.h modp_b2_data.h
+	modp_ascii_data.h modp_b2_data.h \
+	modp_xml_test
 
 clean:
 	rm -rf autom4te.cache
