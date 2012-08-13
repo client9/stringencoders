@@ -28,6 +28,8 @@
 
 BEGIN_C
 
+#include "modp_stdint.h"
+
 /**
  * encode a string into binary (base 2, '0' and '1')
  *
