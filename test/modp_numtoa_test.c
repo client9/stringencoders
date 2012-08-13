@@ -242,7 +242,7 @@ static char* testDoubleToA2(void)
     double d;
 
     char* tmp;
-    int tmplen;
+    size_t tmplen;
 
     /* test each combination of whole number + fraction,
        at every precision */
@@ -289,8 +289,8 @@ static char* testDoubleToA2(void)
                 }
 
                 sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
-                        wholes[i], frac[j], k, tmplen, buf2);
-                mu_assert_msg(msg, k >= tmplen);
+                        wholes[i], frac[j], k, (int)tmplen, buf2);
+                mu_assert_msg(msg, (size_t)k >= tmplen);
 
                 mu_assert_str_equals_msg(msg, buf1, buf2);
 
