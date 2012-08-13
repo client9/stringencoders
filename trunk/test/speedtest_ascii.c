@@ -48,7 +48,7 @@ static void toupper_copy3(char* dest, const char* str, size_t len)
     size_t i;
     unsigned char c;
     for (i = 0; i < len; ++i) {
-        c = str[i];
+        c = (unsigned char) str[i];
         *dest++ = gsToUpperMap[c];
     }
     *dest = 0;
@@ -71,7 +71,7 @@ static void toupper_copy4(char* dest, const char* str, size_t len)
     size_t i;
     uint8_t c1,c2,c3,c4;
 
-    const int leftover = len % 4;
+    const size_t leftover = len % 4;
     const size_t imax = len - leftover;
     const uint8_t* s = (const uint8_t*) str;
     for (i = 0; i != imax ; i+=4) {
