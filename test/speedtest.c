@@ -67,7 +67,7 @@ int main(void) {
             modp_b64_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -79,7 +79,7 @@ int main(void) {
                                      (int)sizes[j]);
         }
         c1 = clock();
-        s2 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s2 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t",  s2);
         printf("%6.2fx\t\t", s2/s1);
         fflush(stdout);
@@ -93,7 +93,7 @@ int main(void) {
             modp_b85_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -105,7 +105,7 @@ int main(void) {
             modp_burl_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -117,7 +117,7 @@ int main(void) {
             modp_b16_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -129,7 +129,7 @@ int main(void) {
             modp_b2_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -141,7 +141,7 @@ int main(void) {
             modp_bjavascript_encode(result, teststr1, sizes[j]);
         }
         c1 = clock();
-        s1 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 = (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -164,7 +164,7 @@ int main(void) {
             modp_b64_decode(result2, result, len);
         }
         c1 = clock();
-        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -174,7 +174,7 @@ int main(void) {
             apr_base64_decode_binary((unsigned char*)result2, result);
         }
         c1 = clock();
-        s2 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s2 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t",  s2);
         printf("%6.2fx\t\t", s2/s1);
         fflush(stdout);
@@ -190,7 +190,7 @@ int main(void) {
             modp_b85_decode(result2, result, len);
         }
         c1 = clock();
-        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -202,7 +202,7 @@ int main(void) {
             modp_burl_decode(result2, result, len);
         }
         c1 = clock();
-        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
@@ -217,7 +217,7 @@ int main(void) {
             modp_b16_decode(result2, result, len);
         }
         c1 = clock();
-        s1 =  (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
+        s1 =  (double)(c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
         printf("%6.2f\t", s1);
         fflush(stdout);
 
