@@ -20,8 +20,8 @@
  * Powers of 10
  * 10^0 to 10^9
  */
-static const double pow10[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
-                               10000000, 100000000, 1000000000};
+static const double powers_of_10[] = {1, 10, 100, 1000, 10000, 100000, 1000000,
+                                      10000000, 100000000, 1000000000};
 
 
 static void strreverse(char* begin, char* end)
@@ -114,14 +114,14 @@ void modp_dtoa(double value, char* str, int prec)
 
 
     int whole = (int) value;
-    double tmp = (value - whole) * pow10[prec];
+    double tmp = (value - whole) * powers_of_10[prec];
     uint32_t frac = (uint32_t)(tmp);
     diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
         /* handle rollover, e.g.  case 0.99 with prec 1 is 1.0  */
-        if (frac >= pow10[prec]) {
+        if (frac >= powers_of_10[prec]) {
             frac = 0;
             ++whole;
         }
@@ -216,14 +216,14 @@ void modp_dtoa2(double value, char* str, int prec)
 
 
     int whole = (int) value;
-    double tmp = (value - whole) * pow10[prec];
+    double tmp = (value - whole) * powers_of_10[prec];
     uint32_t frac = (uint32_t)(tmp);
     diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
         /* handle rollover, e.g.  case 0.99 with prec 1 is 1.0  */
-        if (frac >= pow10[prec]) {
+        if (frac >= powers_of_10[prec]) {
             frac = 0;
             ++whole;
         }
