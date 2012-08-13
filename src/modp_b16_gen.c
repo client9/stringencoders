@@ -3,7 +3,10 @@
 #include <stdio.h>
 #include "arraytoc.h"
 
-void hexencodemap_char()
+static void hexencodemap_char(void);
+static void hexdecodemap(void);
+
+static void hexencodemap_char(void)
 {
     static const unsigned char sHexChars[] = "0123456789ABCDEF";
     int i;
@@ -26,7 +29,7 @@ void hexencodemap_char()
 
 
 // exact same thing as one used on urlencode
-void hexdecodemap()
+static void hexdecodemap(void)
 {
     uint32_t i;
     uint32_t map1[256];
@@ -60,7 +63,7 @@ void hexdecodemap()
     uint32_array_to_c(map2, 256, "gsHexDecodeD2");
 }
 
-int main()
+int main(void)
 {
     hexencodemap_char();
 
