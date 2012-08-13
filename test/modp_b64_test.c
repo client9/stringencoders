@@ -12,13 +12,13 @@
  * CPU endian type (i.e. Intel vs. Sparc, etc)
  *
  */
-static char* testEndian()
+static char* testEndian(void)
 {
     // this test that "1" is "AAAB"
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)1};
-    int d = modp_b64_encode(buf, endian, 3);
+    size_t d = modp_b64_encode(buf, endian, (size_t)3);
     mu_assert_int_equals(4, d);
     mu_assert_int_equals('A', buf[0]);
     mu_assert_int_equals('A', buf[1]);
@@ -26,7 +26,7 @@ static char* testEndian()
     mu_assert_int_equals('B', buf[3]);
 
     memset(result, 255, sizeof(result));
-    d = modp_b64_decode(result, "AAAB", 4);
+    d = modp_b64_decode(result, "AAAB", (size_t)4);
     mu_assert_int_equals(3, d);
     mu_assert_int_equals(0, result[0]);
     mu_assert_int_equals(0, result[1]);
@@ -40,20 +40,20 @@ static char* testEndian()
  * sending 0 as length to encode and decode
  * should bascially do nothing
  */
-static char* testEmpty()
+static char* testEmpty(void)
 {
     char buf[10];
     const char* input = 0; // null
     int d;
 
     memset(buf, 1, sizeof(buf));
-    d = modp_b64_encode(buf, input, 0);
+    d = modp_b64_encode(buf, input, (size_t)0);
     mu_assert_int_equals(0, d);
     mu_assert_int_equals(0, buf[0]);
     mu_assert_int_equals(1, buf[1]);
 
     memset(buf, 1, sizeof(buf));
-    d = modp_b64_decode(buf, input, 0);
+    d = modp_b64_decode(buf, input, (size_t)0);
     mu_assert_int_equals(0, d);
     mu_assert_int_equals(1, buf[0]);
     mu_assert_int_equals(1, buf[1]);
@@ -65,18 +65,18 @@ static char* testEmpty()
  * Test 1-6 bytes input and decode
  *
  */
-static char* testPadding()
+static char* testPadding(void)
 {
     char msg[100];
     const char ibuf[6] = {1,1,1,1,1,1};
     char obuf[10];
     char rbuf[10];
-    int d = 0;
+    size_t d = 0;
 
     // 1 in, 4 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 1);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)1);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 4, d);
     mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -87,8 +87,8 @@ static char* testPadding()
 
     // 2 in, 4 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 2);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)2);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 4, d);
     mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -100,8 +100,8 @@ static char* testPadding()
 
     // 3 in, 4 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 3);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)3);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 4, d);
     mu_assert_int_equals_msg(msg, 0, obuf[4]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -114,8 +114,8 @@ static char* testPadding()
 
     // 4 in, 8 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 4);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)4);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 8, d);
     mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -129,8 +129,8 @@ static char* testPadding()
 
     // 5 in, 8 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 5);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)5);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 8, d);
     mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -145,8 +145,8 @@ static char* testPadding()
 
     // 6 in, 8 out
     memset(obuf, 255, sizeof(obuf));
-    d = modp_b64_encode(obuf, ibuf, 6);
-    sprintf(msg, "b64='%s', d=%d", obuf, d);
+    d = modp_b64_encode(obuf, ibuf, (size_t)6);
+    sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
     mu_assert_int_equals_msg(msg, 8, d);
     mu_assert_int_equals_msg(msg, 0, obuf[8]);
     memset(rbuf, 255, sizeof(rbuf));
@@ -167,7 +167,7 @@ static char* testPadding()
  * Test all 17M 3 bytes inputs to encoder, decode
  * and make sure it's equal.
  */
-static char* testEncodeDecode()
+static char* testEncodeDecode(void)
 {
     char ibuf[4];
     char obuf[5];
@@ -175,7 +175,7 @@ static char* testEncodeDecode()
     char msg[100];
     msg[0] = 0; // make msg an empty string
     unsigned int i,j,k;
-    int d = 0;
+    size_t d = 0;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             for (k= 0; k < 256; ++k) {
@@ -187,12 +187,12 @@ static char* testEncodeDecode()
                 ibuf[3] = 0;
 
                 memset(obuf, 1, sizeof(obuf));
-                d = modp_b64_encode(obuf, ibuf, 3);
+                d = modp_b64_encode(obuf, ibuf, (size_t)3);
                 mu_assert_int_equals_msg(msg, 4, d);
                 mu_assert_int_equals_msg(msg, 0, obuf[4]);
 
                 memset(rbuf, 1, sizeof(rbuf));
-                d = modp_b64_decode(rbuf, obuf, 4);
+                d = modp_b64_decode(rbuf, obuf, (size_t)4);
                 mu_assert_int_equals_msg(msg, 3, d);
                 mu_assert_int_equals_msg(msg, ibuf[0], rbuf[0]);
                 mu_assert_int_equals_msg(msg, ibuf[1], rbuf[1]);
@@ -204,7 +204,7 @@ static char* testEncodeDecode()
     return 0;
 }
 
-static char* testDecodeErrors()
+static char* testDecodeErrors(void)
 {
     int i, y;
     char out[1000];
@@ -213,7 +213,7 @@ static char* testDecodeErrors()
 
     /* negative length */
     memset(decode, 1, sizeof(decode));
-    y = modp_b64_decode(out, decode, -1);
+    y = modp_b64_decode(out, decode, (size_t)-1);
     mu_assert_int_equals(-1, y);
 
     /* test bad input -  all combinations */
@@ -227,7 +227,7 @@ static char* testDecodeErrors()
         decode[4] = '\0';
 
         sprintf(msg, "i = %d, %s", i, decode);
-        y = modp_b64_decode(out, decode, 4);
+        y = modp_b64_decode(out, decode, (size_t)4);
         mu_assert_int_equals_msg(msg, -1, y);
     }
 
@@ -236,7 +236,7 @@ static char* testDecodeErrors()
     for (i = 0; i < 4; ++i) {
         decode[i] = '=';
         decode[i+1] = '\0';
-        y = modp_b64_decode(out, decode, i+1);
+        y = modp_b64_decode(out, decode, (size_t)(i+1));
         sprintf(msg, "i=%d, b64=%s", i, decode);
         mu_assert_int_equals_msg(msg, -1, y);
     }
@@ -246,13 +246,13 @@ static char* testDecodeErrors()
     decode[1] = '=';
     decode[2] = '=';
     decode[3] = '=';
-    y = modp_b64_decode(out, decode, 4);
+    y = modp_b64_decode(out, decode, (size_t)4);
     mu_assert_int_equals(-1, y);
 
     return 0;
 }
 
-static char* all_tests()
+static char* all_tests(void)
 {
     mu_run_test(testEndian);
     mu_run_test(testEmpty);

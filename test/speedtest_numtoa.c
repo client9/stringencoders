@@ -6,7 +6,7 @@
 #include <time.h>
 #include <stdint.h>
 
-int main()
+int main(void)
 {
     char buf[100];
     uint32_t max = 1000000;
@@ -189,7 +189,7 @@ int main()
 
     t0 = clock();
     for (i = 0; i < max; ++i) {
-        modp_itoa10(i, buf);
+        modp_itoa10((int32_t)i, buf);
     }
     t1 = clock();
     printf("%lu\t", (t1-t0));

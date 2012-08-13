@@ -32,7 +32,7 @@
 #include <string.h>
 
 #define SZ 4096
-int main() {
+int main(void) {
     double s1, s2;
     int i, j;
     clock_t c0, c1;
@@ -42,7 +42,7 @@ int main() {
       this contains the message sizes we'll test on
       add, subtract, change as desired.
     */
-    int sizes[] = {20, 200, 2000};
+    size_t sizes[] = {20, 200, 2000};
 
     for (i = 0; i < (int)sizeof(teststr1); ++i) {
         teststr1[i] = 'A' + i % 26;
@@ -55,7 +55,7 @@ int main() {
     const int MAX = 1000000;
 
     for (j = 0; j < (int)(sizeof(sizes)/sizeof(int)); ++j) {
-        printf("\nMessage size = %d\n", sizes[j]);
+        printf("\nMessage size = %d\n", (int)sizes[j]);
 
         printf("\tmodpb64\tapache\timprovement\tmodpb85\tmodpurl\tmodpb16\tmodpb2\tmodpjs\n");
         printf("Encode\t");
@@ -76,7 +76,7 @@ int main() {
         for (i = 0; i < MAX; ++i) {
             apr_base64_encode_binary(result,
                                      (const unsigned char*) teststr1,
-                                     sizes[j]);
+                                     (int)sizes[j]);
         }
         c1 = clock();
         s2 = (c1 - c0)*(1.0 / (double)CLOCKS_PER_SEC);
@@ -153,7 +153,7 @@ int main() {
          */
         /* reset result to have b64 chars */
         modp_b64_encode(result, teststr1, sizes[j]);
-        int len = strlen(result);
+        size_t len = strlen(result);
 
         printf("Decode\t");
         fflush(stdout);

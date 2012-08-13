@@ -12,7 +12,7 @@
 /* We do not link with -lm */
 #include <math.h>
 
-static char* testITOA()
+static char* testITOA(void)
 {
     char buf1[100];
     char buf2[100];
@@ -37,7 +37,7 @@ static char* testITOA()
     return 0;
 }
 
-static char* testUITOA()
+static char* testUITOA(void)
 {
     char buf1[100];
     char buf2[100];
@@ -56,7 +56,7 @@ static char* testUITOA()
     return 0;
 }
 
-static char* testLITOA()
+static char* testLITOA(void)
 {
     char buf1[100];
     char buf2[100];
@@ -81,7 +81,7 @@ static char* testLITOA()
     return 0;
 }
 
-static char* testULITOA()
+static char* testULITOA(void)
 {
     char buf1[100];
     char buf2[100];
@@ -100,7 +100,7 @@ static char* testULITOA()
     return 0;
 }
 
-static char* testDoubleToA()
+static char* testDoubleToA(void)
 {
     char buf1[100];
     char buf2[100];
@@ -234,7 +234,7 @@ static void stripTrailingZeros(char* buf)
     }
 }
 
-static char* testDoubleToA2()
+static char* testDoubleToA2(void)
 {
     char buf1[100];
     char buf2[100];
@@ -347,7 +347,7 @@ static char* testDoubleToA2()
 /* From Issue 7  -- http://code.google.com/p/stringencoders/issues/detail?id=7
  * thanks to http://code.google.com/u/simhasana/
  */
-static char* testOverflowLITOA() {
+static char* testOverflowLITOA(void) {
     char buf1[100];
     char buf2[100];
 
@@ -364,7 +364,7 @@ static char* testOverflowLITOA() {
     return 0;
 }
 
-static char* testOverflowITOA() {
+static char* testOverflowITOA(void) {
     char buf1[100];
     char buf2[100];
 
@@ -382,7 +382,7 @@ static char* testOverflowITOA() {
 }
 
 // Test NaN and Infinity behavior
-static char* testDTOANonFinite() {
+static char* testDTOANonFinite(void) {
     char buf1[100];
     char buf2[100];
     double d;
@@ -441,7 +441,7 @@ static char* testDTOANonFinite() {
 
 }
 
-static char* testUITOA16()
+static char* testUITOA16(void)
 {
     char buf1[100];
     char buf2[100];
@@ -468,7 +468,7 @@ static char* testUITOA16()
  * Attempt to replicate issue
  * http://code.google.com/p/stringencoders/issues/detail?id=15
  */
-static char* testRoundingPrecisionOverflow() {
+static char* testRoundingPrecisionOverflow(void) {
     char buf1[100];
 
     modp_dtoa(0.09999999, buf1, 6);
@@ -478,7 +478,7 @@ static char* testRoundingPrecisionOverflow() {
     return 0;
 }
 
-static char* all_tests() {
+static char* all_tests(void) {
     mu_run_test(testITOA);
     mu_run_test(testUITOA);
     mu_run_test(testLITOA);
