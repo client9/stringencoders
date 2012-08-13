@@ -8,7 +8,7 @@
 
 #define mu_assert_msg(msg, test) do { if (!(test)) { snprintf(mu_buf, sizeof(mu_buf), "ASSERTION FAILED: %s %s:%d", msg, __FILE__, __LINE__); return mu_buf; } } while (0)
 
-#define mu_assert_int_equals(lhs, rhs)  do { if (lhs != rhs) { snprintf(mu_buf, sizeof(mu_buf), "ASSERTION FAILED: %s:%d", __FILE__, __LINE__); return mu_buf; } } while (0)
+#define mu_assert_int_equals(lhs, rhs)  do { if ((int)lhs != (int)rhs) { snprintf(mu_buf, sizeof(mu_buf), "ASSERTION FAILED: %s:%d", __FILE__, __LINE__); return mu_buf; } } while (0)
 
 #define mu_assert_str_equals(lhs, rhs)  do { if (strcmp(lhs,rhs) != 0) { snprintf(mu_buf, sizeof(mu_buf), "ASSERTION FAILED: %s:%d %s != %s", __FILE__, __LINE__, lhs, rhs); return mu_buf; } } while (0)
 
@@ -20,7 +20,7 @@
                                 if (message) return message; } while (0)
 
 #define UNITTESTS \
-int main() { \
+int main(void) { \
     printf("%s ", __FILE__); fflush(stdout); \
     char *result = all_tests(); \
     if (result != 0) { \
