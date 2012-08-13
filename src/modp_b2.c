@@ -48,7 +48,7 @@
 #include "modp_b2_data.h"
 
 
-int modp_b2_encode(char* dest, const char* str, int len)
+size_t modp_b2_encode(char* dest, const char* str, size_t len)
 {
     const uint8_t* orig = (const uint8_t*) str;
 #if 0
@@ -62,9 +62,9 @@ int modp_b2_encode(char* dest, const char* str, int len)
     }
 #else
     /* THIS IS 10X FASTER */
-    int i;
+    size_t i;
     for (i = 0; i < len; ++i) {
-        memcpy(dest, modp_b2_encodemap[orig[i]], 8);
+        memcpy((void*) dest, modp_b2_encodemap[orig[i]], (size_t) 8);
         dest += 8;
     }
 #endif
@@ -72,14 +72,15 @@ int modp_b2_encode(char* dest, const char* str, int len)
     return  len*8;
 }
 
-int modp_b2_decode(char* dest, const char* str, int len)
+size_t modp_b2_decode(char* dest, const char* str, size_t len)
 {
     char d;
-    int i,j;
-    const int buckets = len / 8;
-    const int leftover = len % 8;
+    size_t i;
+    int j;
+    const size_t buckets = len / 8;
+    const size_t leftover = len % 8;
     if (leftover != 0) {
-        return -1;
+        return 0;
     }
 
     for (i = 0; i < buckets; ++i) {
