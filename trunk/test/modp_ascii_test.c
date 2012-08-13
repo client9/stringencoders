@@ -141,7 +141,7 @@ static char* testToUpper(void)
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
-        expected[i] = (i >= 'a' && i <= 'z') ? i-32 : i;
+        expected[i] = (char)((i >= 'a' && i <= 'z') ? i-32 : i);
     }
     modp_toupper(buf1, (size_t)256);
     mu_assert(memcmp(expected, buf1, (size_t)256) == 0);
@@ -168,7 +168,7 @@ static char* testToLower(void)
     char expected[300];
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
-        expected[i] = (i >= 'A' && i <= 'Z') ? i+32 : i;
+        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i+32 : i);
     }
 
     modp_tolower(buf1, (size_t)256);
@@ -198,7 +198,7 @@ static char* testToUpperCopy(void)
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
         output[i] = 0;
-        expected[i] = (i >= 'a' && i <= 'z') ? i-32 : i;
+        expected[i] = (char)((i >= 'a' && i <= 'z') ? i-32 : i);
     }
     buf1[i] = 0;
     output[i] = 0;
@@ -230,7 +230,7 @@ static char* testToLowerCopy(void)
     for (i = 0; i < 256; ++i) {
         buf1[i] = (char) i;
         output[i] = 0;
-        expected[i] = (i >= 'A' && i <= 'Z') ? i+32 : i;
+        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i+32 : i);
     }
     buf1[i] = 0;
     output[i] = 0;
