@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include "arraytoc.h"
 
-static void hexencodemap_char(void);
-static void hexdecodemap(void);
-
 static void hexencodemap_char(void)
 {
     static const unsigned char sHexChars[] = "0123456789ABCDEF";
@@ -23,8 +20,8 @@ static void hexencodemap_char(void)
         e2[i] = sHexChars[i &  0x0f];
     }
 
-    char_array_to_c((char*)e1, 256, "gsHexEncodeC1");
-    char_array_to_c((char*)e2, 256, "gsHexEncodeC2");
+    char_array_to_c((char*)e1, sizeof(e1), "gsHexEncodeC1");
+    char_array_to_c((char*)e2, sizeof(e2), "gsHexEncodeC2");
 }
 
 
@@ -58,9 +55,9 @@ static void hexdecodemap(void)
     }
 
 
-    uint32_array_to_c(map1, 256, "gsHexDecodeMap");
+    uint32_array_to_c(map1, sizeof(map1)/sizeof(uint32_t), "gsHexDecodeMap");
 
-    uint32_array_to_c(map2, 256, "gsHexDecodeD2");
+    uint32_array_to_c(map2, sizeof(map2)/sizeof(uint32_t), "gsHexDecodeD2");
 }
 
 int main(void)

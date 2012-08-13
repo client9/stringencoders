@@ -58,13 +58,14 @@
  * you can decode IN PLACE!
  * no memory allocated
  */
-int modp_b85_decode(char* out, const char* data, int len)
+size_t modp_b85_decode(char* out, const char* data, size_t len)
 {
-    int i,j;
-    const int buckets = len / 5;
+    size_t i;
+    int j;
+    const size_t buckets = len / 5;
     const uint8_t* d2 = (const uint8_t*) data;
     if (len % 5 != 0) {
-        return -1;
+        return (size_t)-1;
     }
 
     uint32_t* o2  = (uint32_t*)out;
@@ -73,7 +74,7 @@ int modp_b85_decode(char* out, const char* data, int len)
         for (j = 0; j < 5; ++j) {
             uint32_t digit =  gsCharToInt[(uint32_t) *d2++];
             if (digit >= 85) {
-                return -1;
+                return (size_t)-1;
             }
             tmp = tmp * 85 + digit;
         }
@@ -85,15 +86,15 @@ int modp_b85_decode(char* out, const char* data, int len)
 /**
  * src != out
  */
-int modp_b85_encode(char* out, const char* src, int len)
+size_t modp_b85_encode(char* out, const char* src, size_t len)
 {
     const uint32_t* sary = (const uint32_t*) src;
-    const int buckets = len / 4;
+    const size_t buckets = len / 4;
     if (len % 4 != 0) {
-        return -1;
+        return (size_t)-1;
     }
 
-    int i;
+    size_t i;
     for (i = 0; i < buckets; ++i) {
         uint32_t tmp = *sary++;
         tmp = htonl(tmp);

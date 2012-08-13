@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "arraytoc.h"
 
-void modp_toupper_map()
+static void modp_toupper_map(void)
 {
     size_t i = 0;
     char map[256];
@@ -19,7 +19,7 @@ void modp_toupper_map()
 }
 
 
-void modp_tolower_map()
+static void modp_tolower_map(void)
 {
     size_t i = 0;
     char map[256];
@@ -34,7 +34,7 @@ void modp_tolower_map()
     char_array_to_c(map, sizeof(map), "gsToLowerMap");
 }
 
-void modp_toprint_map()
+static void modp_toprint_map(void)
 {
     size_t i = 0;
     char map[256];
@@ -50,7 +50,7 @@ void modp_toprint_map()
 }
 
 
-int main()
+int main(void)
 {
     modp_toupper_map();
     modp_tolower_map();

@@ -76,9 +76,9 @@
 #define CHARPAD '\0'
 #endif
 
-int modp_b64_encode(char* dest, const char* str, int len)
+size_t modp_b64_encode(char* dest, const char* str, size_t len)
 {
-    int i;
+    size_t i = 0;
     const uint8_t* s = (const uint8_t*) str;
     uint8_t* p = (uint8_t*) dest;
 
@@ -87,12 +87,14 @@ int modp_b64_encode(char* dest, const char* str, int len)
     /* uint32_t is fastest on Intel */
     uint32_t t1, t2, t3;
 
-    for (i = 0; i < len - 2; i += 3) {
-        t1 = s[i]; t2 = s[i+1]; t3 = s[i+2];
-        *p++ = e0[t1];
-        *p++ = e1[((t1 & 0x03) << 4) | ((t2 >> 4) & 0x0F)];
-        *p++ = e1[((t2 & 0x0F) << 2) | ((t3 >> 6) & 0x03)];
-        *p++ = e2[t3];
+    if (len > 2) {
+        for (i = 0; i < len - 2; i += 3) {
+            t1 = s[i]; t2 = s[i+1]; t3 = s[i+2];
+            *p++ = e0[t1];
+            *p++ = e1[((t1 & 0x03) << 4) | ((t2 >> 4) & 0x0F)];
+            *p++ = e1[((t2 & 0x0F) << 2) | ((t3 >> 6) & 0x03)];
+            *p++ = e2[t3];
+        }
     }
 
     switch (len - i) {
@@ -188,9 +190,9 @@ int modp_b64_decode(char* dest, const char* src, int len)
 
 #else /* LITTLE  ENDIAN -- INTEL AND FRIENDS */
 
-int modp_b64_decode(char* dest, const char* src, int len)
+size_t modp_b64_decode(char* dest, const char* src, size_t len)
 {
-    int i;
+    size_t i;
     if (len == 0) return 0;
 
 #ifdef DOPAD
@@ -198,7 +200,9 @@ int modp_b64_decode(char* dest, const char* src, int len)
      * if padding is used, then the message must be at least
      * 4 chars and be a multiple of 4
      */
-    if (len < 4 || (len % 4 != 0)) return -1; /* error */
+    if (len < 4 || (len % 4 != 0)) {
+        return (size_t)-1; /* error */
+    }
     /* there can be at most 2 pad chars at the end */
     if (src[len-1] == CHARPAD) {
         len--;
@@ -208,13 +212,13 @@ int modp_b64_decode(char* dest, const char* src, int len)
     }
 #endif
 
-    int leftover = len % 4;
-    int chunks = (leftover == 0) ? len / 4 - 1 : len /4;
+    size_t leftover = len % 4;
+    size_t chunks = (leftover == 0) ? len / 4 - 1 : len /4;
 
     uint8_t* p = (uint8_t*) dest;
     uint32_t x = 0;
     uint32_t* destInt = (uint32_t*) p;
-    uint32_t* srcInt = (uint32_t*) src;
+    const uint32_t* srcInt = (const uint32_t*) src;
     uint32_t y = *srcInt++;
     for (i = 0; i < chunks; ++i) {
         x = d0[y & 0xff] |
@@ -222,7 +226,9 @@ int modp_b64_decode(char* dest, const char* src, int len)
             d2[(y >> 16) & 0xff] |
             d3[(y >> 24) & 0xff];
 
-        if (x >= BADCHAR) return -1;
+        if (x >= BADCHAR) {
+            return (size_t)-1;
+        }
         *destInt = x ;
         p += 3;
         destInt = (uint32_t*)p;
@@ -236,7 +242,9 @@ int modp_b64_decode(char* dest, const char* src, int len)
             d2[(y >> 16) & 0xff] |
             d3[(y >> 24) & 0xff];
 
-        if (x >= BADCHAR) return -1;
+        if (x >= BADCHAR) {
+            return (size_t)-1;
+        }
         *p++ =  ((uint8_t*)(&x))[0];
         *p++ =  ((uint8_t*)(&x))[1];
         *p =    ((uint8_t*)(&x))[2];
@@ -261,7 +269,9 @@ int modp_b64_decode(char* dest, const char* src, int len)
         break;
     }
 
-    if (x >= BADCHAR) return -1;
+    if (x >= BADCHAR) {
+        return (size_t)-1;
+    }
 
     return 3*chunks + (6*leftover)/8;
 }

@@ -3,7 +3,7 @@
 
 #include "arraytoc.h"
 
-void hexencodemap()
+static void hexencodemap(void)
 {
     static const char sHexChars[] = "0123456789ABCDEF";
     int i;
@@ -14,11 +14,11 @@ void hexencodemap()
         hexEncode2[i] = sHexChars[i & 0x0f];
     }
 
-    char_array_to_c(hexEncode1, 256, "gsHexEncodeMap1");
-    char_array_to_c(hexEncode2, 256, "gsHexEncodeMap2");
+    char_array_to_c(hexEncode1, sizeof(hexEncode1), "gsHexEncodeMap1");
+    char_array_to_c(hexEncode2, sizeof(hexEncode2), "gsHexEncodeMap2");
 }
 
-void jsencodemap()
+static void jsencodemap(void)
 {
     int i;
     char jsEncodeMap[256];
@@ -47,10 +47,10 @@ void jsencodemap()
     jsEncodeMap[0x22] = '"';   /* dquote gets escaped */
     jsEncodeMap[0x27] = '\'';  /* squote gets escaped */
 
-    char_array_to_c(jsEncodeMap, 256, "gsJavascriptEncodeMap");
+    char_array_to_c(jsEncodeMap, sizeof(jsEncodeMap), "gsJavascriptEncodeMap");
 };
 
-int main()
+int main(void)
 {
     jsencodemap();
     hexencodemap();
