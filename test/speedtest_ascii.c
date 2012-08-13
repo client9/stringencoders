@@ -201,9 +201,9 @@ static void modp_toupper_copy_a2(char* dest, const char* str, size_t len)
     for (i = 0; i != imax; ++i) {
         eax = s[i];
 
-        ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
-        ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
-        ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
+        ebx = (0x7f7f7f7fu & eax) + 0x05050505u;
+        ebx = (0x7f7f7f7fu & ebx) + 0x1a1a1a1au;
+        ebx = ((ebx & ~eax) >> 2 ) & 0x20202020u;
         *d++ = eax - ebx;
     }
 
