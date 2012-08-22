@@ -22,13 +22,18 @@
  * version is ridiculously fast -- on some platforms the decode
  * operation is 4x faster than a standard implementation.
  *
+ * See modp_b64.h for details
+ *
  * \section modp_b64w
  *
  * Does the same type of transformation as modp_b64 but uses a
  * slightly different alphabet to make it "safe" to use inside a URL.
  * The mapping is: "/" to "_", * "+" to "-", * "=" to "."  If you are
  * intergating with another base64 encoder, you may need to change
- * this. See the mod_b64w.h header file for details.
+ * this.
+ *
+ * See modp_b64w.h for details.
+ *
  *
  * \section modp_b16
  *
@@ -39,6 +44,8 @@
  * 2.  and in base64 we read 4 bytes to get 3, so base64's loop is
  * shorter).
  *
+ * See modp_b16.h for details
+ *
  * \section modp_b85
  *
  * Base 85 is the "most dense ascii encoding" possible, converting 4
@@ -47,9 +54,14 @@
  * encoding since true division has to be used (instead of raw bit
  * operations).
  *
+ * See modp_b85.h for details
+ *
  * \section mod_b2
+ *
  * Converts the given string to a base 2 or binary encoding (all
  * 1s and 0s).  For useful for debugging.
+ *
+ * See modp_b2.h for details
  *
  * \section modp_burl
  *
@@ -57,6 +69,7 @@
  * converted like the others, it does use an optimized base-16
  * converter for the encoded "%XY" data.  This has an alternate
  * encoder that provides a minimal encoding, modp_burl_min_encode.
+ *
  * See modp_burl.h for details
  *
  * \section modp_bjavascript
@@ -67,6 +80,14 @@
  * use when generating raw "text/javascript" files.  It is <b>NOT</b>
  * safe to make javascript that will ultimately be embedded inside
  * HTML via script tags.
+ *
+ * See modp_bjavascript.h for details
+ *
+ * \section modp_xml
+ *
+ * An experimental XML decoder.
+ *
+ * See modp_xml.h for details
  *
  * \section modp_numtoa
  *
@@ -81,10 +102,19 @@
  *
  * \section modp_ascii
  *
- * modp_toupper and modp_tolower upper or lower case a string using the standard C
- * locale (i.e. 7-bit ascii).  These are 2-22x faster than using standard ctype
- * functions.  Also include is "toprint" which replaces "unprintable" characters
- * with a "?".
+ * modp_toupper and modp_tolower upper or lower case a string using
+ * the standard C locale (i.e. 7-bit ascii).  These are 2-22x faster
+ * than using standard ctype functions.  Also include is "toprint"
+ * which replaces "unprintable" characters with a "?".
  *
+ * See modp_ascii.h for details
+ *
+ * \section modp_qsiter
+ *
+ * URL Query string key-value pair iterator.  Uses no heap, makes no
+ * copy, makes no modification of input.  Think of this as a
+ * super-strtok_r.
+ *
+ * See modp_qsiter.h for details
  *
  */

@@ -1,7 +1,7 @@
 /* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
-/**
- * \file
+
+/*
  * <pre>
  * modp_xml xml decoders
  * http://code.google.com/p/stringencoders/
@@ -212,7 +212,8 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
             continue;
         }
 
-        const uint8_t* pos = (const uint8_t*) memchr(src+1, ';', (size_t)(srcend - src - 1));
+        const uint8_t* pos = (const uint8_t*) memchr(src+1, ';',
+                                   (size_t)(srcend - src - 1));
         if (pos == NULL) {
             // if not found, just copy
             *dest++ = (char) *src++;

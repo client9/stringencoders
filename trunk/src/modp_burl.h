@@ -2,7 +2,12 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
+ * \file modp_burl.h
+ * \brief high performance URL encoding and decoding
+ *
+ */
+
+/*
  * <PRE>
  * High Performance URL Encoder/Decoder
  *
@@ -18,17 +23,8 @@
 #ifndef COM_MODP_STRINGENCODERS_BURL
 #define COM_MODP_STRINGENCODERS_BURL
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /**
  * Url encode a string.  This uses a very strict definition of url
@@ -122,7 +118,7 @@ size_t modp_burl_decode_raw(char* dest, const char* str, size_t len);
  */
 #define modp_burl_decode_len(A) (A + 1)
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <cstring>

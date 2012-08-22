@@ -2,7 +2,13 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
+ * \file modp_b16.h
+ * \brief High performance encoding and decoding of base 16
+ *        (hexadecimal 0-9, A-F)
+ *
+ */
+
+/*
  * <PRE>
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
  * http://code.google.com/p/stringencoders/
@@ -18,17 +24,8 @@
 #ifndef COM_MODP_STRINGENCODERS_B16
 #define COM_MODP_STRINGENCODERS_B16
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /**
  * encode a string into hex (base 16, 0-9,a-f)
@@ -69,7 +66,7 @@ size_t modp_b16_decode(char* dest, const char* src, size_t len);
  */
 #define modp_b16_decode_len(A) ((A + 1)/ 2)
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <cstring>

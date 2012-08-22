@@ -3,6 +3,13 @@
 
 /**
  * \file modp_ascii.h
+ * \brief Simple ASCII manipulations including upper and lower casing,
+ *        white space trimming, and conversion to "printable" characters.
+ *
+ * blah blah blah
+ */
+
+/*
  * <PRE>
  * MODP_ASCII -- Simple ascii manipulation (uppercase, lowercase, etc)
  * http://code.google.com/p/stringencoders/
@@ -18,17 +25,8 @@
 #ifndef COM_MODP_STRINGENCODERS_ASCII
 #define COM_MODP_STRINGENCODERS_ASCII
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /*
  * \param[in,out] str the input string
@@ -101,11 +99,14 @@ void modp_toprint(char* str, size_t len);
 void modp_toprint_copy(char* dest, const char* str, size_t len);
 
 /**
- *
+ * \brief remove trailing whitespace from a string
+ * \param[in,out] str
+ * \param[in] len the size of the input
+ * \return the size of the output, not including any ending null byte.
  */
 size_t modp_rtrim(char* str, size_t len);
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <string>

@@ -2,6 +2,17 @@
 #ifndef MODP_STDINT_H_
 #define MODP_STDINT_H_
 
+/**
+ * \file modp_stdint.h
+ * \brief An attempt to make stringencoders compile under windows
+ *
+ * This attempts to define various integral types that are normally
+ * defined in stdint.h and stdbool.h which oddly don't exit on
+ * windows.
+ *
+ * Please file bugs or patches if it doesn't work!
+ */
+
 #include <string.h>
 
 #ifndef _WIN32
