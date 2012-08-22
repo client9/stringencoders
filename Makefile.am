@@ -47,7 +47,7 @@ CLEANFILES = *.log \
 
 clean:
 	rm -rf autom4te.cache
-	rm -rf lcov-html
+	rm -rf lcov-html/html
 
 src/modp_b2.c: src/modp_b2.h modp_b2_data.h
 
@@ -181,9 +181,9 @@ lcov-html:
 	lcov -b . --directory . --remove stringencoders.info '*test*' -o stringencoders.info
 	lcov -b . --directory . --remove stringencoders.info '*_gen.c' -o stringencoders.info
 	lcov -b . --directory . --remove stringencoders.info '/usr/include*' -o stringencoders.info
-	rm -rf lcov-html
-	mkdir lcov-html
-	genhtml -o lcov-html stringencoders.info
+	rm -rf lcov-html/html
+	mkdir lcov-html/html
+	genhtml -o lcov-html/html --html-prolog=lcov-html/header.html --html-epilog=lcov-html/footer.html stringencoders.info
 
 test: unittest speedtest
 
@@ -205,7 +205,7 @@ valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 
 .PHONY: valgrind
 
-unittest: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
+unittest: modp_b2_test modp_b16_test modp_b64_test modp_b64w_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	@./modp_b16_test
 	@./modp_b64_test
