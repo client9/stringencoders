@@ -1,8 +1,8 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
-/**
- * \file modp_ascii.c
+/*
+ * modp_ascii.c
  * <PRE>
  * MODP_ASCII - Ascii transformations (upper/lower, etc)
  * http://code.google.com/p/stringencoders/

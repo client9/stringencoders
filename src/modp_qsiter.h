@@ -4,23 +4,18 @@
 #ifndef COM_MODP_QSITER
 #define COM_MODP_QSITER
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /**
- * Query string key value pair iterator.  Uses no heap, makes no copy, makes
- *  no modification of input.  Think of this as a super-strtok_r.  This
- *  also does not do query-string un-escaping.
+ * \file modp_qsiter.h
+ * \brief URL Query string key-value pair iterator.  Uses no heap, makes
+ *        no copy, makes no modification of input.  Think of this as a
+ *        super-strtok_r.
  *
+ * This also does not do query-string un-escaping.
+ *
+ * \code
  * qsiiter_t qsi;
  * const char* qs = "foo=bar&ding=bar";
  * qsiter_reset(&qsi, qs, strlen(qs));
@@ -38,7 +33,7 @@ BEGIN_C
  *    free(key);
  *    free(value);
  * }
- *
+ * \endcode
  *
  */
 struct qsiter_t {
@@ -74,6 +69,6 @@ void qsiter_reset(struct qsiter_t* qsi, const char* s, size_t len);
  */
 bool qsiter_next(struct qsiter_t* qsi);
 
-END_C
+#include "extern_c_end.h"
 
 #endif  /* MODP_QSITER */

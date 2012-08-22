@@ -2,8 +2,21 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
+ * \file modp_numtoa.h
+ * \brief Fast integer and floating-point numbers to string conversion
  *
+ * This defines signed/unsigned integer, and 'double' to char buffer
+ * converters.  The standard way of doing this is with "sprintf", however
+ * these functions are
+ *   * guarenteed maximum size output
+ *   * 5-20x faster!
+ *   * Won't core-dump
+ *
+ * Note: this file is under and MIT license
+ */
+
+
+/**
  * <pre>
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] modp [dot] com
  * All rights reserved.
@@ -11,28 +24,12 @@
  * Released under the MIT license.
  * </pre>
  *
- * This defines signed/unsigned integer, and 'double' to char buffer
- * converters.  The standard way of doing this is with "sprintf", however
- * these functions are
- *   * guarenteed maximum size output
- *   * 5-20x faster!
- *   * core-dump safe
- *
- *
  */
 
 #ifndef COM_MODP_STRINGENCODERS_NUMTOA_H
 #define COM_MODP_STRINGENCODERS_NUMTOA_H
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
+#include "extern_c_begin.h"
 
 #include "modp_stdint.h"
 
@@ -97,13 +94,12 @@ size_t modp_dtoa(double value, char* buf, int precision);
  */
 size_t modp_dtoa2(double value, char* buf, int precision);
 
-
 /**
  * adds a 8-character hexadecimal representation of value
  *
  */
 char* modp_uitoa16(uint32_t value, char* buf, int final);
 
-END_C
+#include "extern_c_end.h"
 
 #endif

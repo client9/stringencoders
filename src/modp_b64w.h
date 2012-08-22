@@ -2,7 +2,6 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
  * <PRE>
  * High performance WEB-SAFE base64 encoder / decoder
  *
@@ -29,19 +28,11 @@
 #ifndef COM_MODP_STRINGENCODERS_B64W
 #define COM_MODP_STRINGENCODERS_B64W
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /**
- * Encode a raw binary string into web-safe base 64.
+ * \brief Encode a raw binary string into web-safe base 64.
  * \param[out] dest should be allocated by the caller to contain
  *   at least modp_b64w_encode_len(len) bytes (see below)
  *   This will contain the null-terminated b64w encoded result
@@ -68,7 +59,7 @@ BEGIN_C
 size_t modp_b64w_encode(char* dest, const char* src, size_t len);
 
 /**
- * Decode a web-safe base64 encoded string
+ * \brief Decode a web-safe base64 encoded string
  *
  * \param[out] dest should be allocated by the caller to contain at least
  *    len * 3 / 4 bytes.
@@ -117,7 +108,7 @@ size_t modp_b64w_decode(char* dest, const char* src, size_t len);
  * Will return the strlen of the output from encoding.
  * This may be less than the required number of bytes allocated.
  *
- * This allows you to 'deserialized' a struct
+ * This allows you to 'deserialized' a struct:
  * \code
  * char* b64wencoded = "...";
  * int len = strlen(b64wencoded);
@@ -138,7 +129,7 @@ size_t modp_b64w_decode(char* dest, const char* src, size_t len);
  */
 #define modp_b64w_encode_strlen(A) ((A + 2)/ 3 * 4)
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <cstring>

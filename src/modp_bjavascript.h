@@ -2,7 +2,24 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
+ * \file modp_bjavascript.h
+ * \brief "C-string" to "javascript-string" encoder
+ *
+ * Used in emitting dynamically-generated javascript.  Given a regular
+ * C-string which might contain binary, the encoder will emit a string
+ * that can be used inside a javascript string.  For example:
+ *
+ * \code
+ *  printf("var foo = '%s';", modp_bjavascript_encode(mystring, len));
+ * \endcode
+ *
+ * The "b" in "modp_bjavascript" is due to legacy reasons.  It doesn't
+ * mean anything
+ *
+ * There is no decoder.
+ */
+
+/*
  * <PRE>
  * High Performance c-string to javascript-string encoder
  *
@@ -18,17 +35,11 @@
 #ifndef COM_MODP_STRINGENCODERS_BJAVASCRIPT
 #define COM_MODP_STRINGENCODERS_BJAVASCRIPT
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+
+#include "extern_c_begin.h"
+
+
 
 /**
  * "javascript" encode a stirng
@@ -61,7 +72,7 @@ size_t modp_bjavascript_encode(char* dest, const char* str, size_t len);
  */
 size_t modp_bjavascript_encode_strlen(const char* str, size_t len);
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <cstring>

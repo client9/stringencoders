@@ -2,7 +2,12 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file
+ * \file modp_b2.h
+ * \brief Encode and decode of base 2 strings ("00001110" to 0x43)
+ *
+ */
+
+/*
  * <PRE>
  * MODP_B2 -- Base 2 (binary) encode/decoder
  * http://code.google.com/p/stringencoders/
@@ -18,17 +23,8 @@
 #ifndef COM_MODP_STRINGENCODERS_B2
 #define COM_MODP_STRINGENCODERS_B2
 
-#ifdef __cplusplus
-#define BEGIN_C extern "C" {
-#define END_C }
-#else
-#define BEGIN_C
-#define END_C
-#endif
-
-BEGIN_C
-
 #include "modp_stdint.h"
+#include "extern_c_begin.h"
 
 /**
  * encode a string into binary (base 2, '0' and '1')
@@ -69,7 +65,7 @@ size_t modp_b2_decode(char* dest, const char* src, size_t len);
  */
 #define modp_b2_decode_len(A) ((A + 1)/ 8)
 
-END_C
+#include "extern_c_end.h"
 
 #ifdef __cplusplus
 #include <string>
