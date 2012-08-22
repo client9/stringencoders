@@ -54,7 +54,7 @@ int main(void) {
 
     const int MAX = 1000000;
 
-    for (j = 0; j < (int)(sizeof(sizes)/sizeof(int)); ++j) {
+    for (j = 0; j < (int)(sizeof(sizes)/sizeof(size_t)); ++j) {
         printf("\nMessage size = %d\n", (int)sizes[j]);
 
         printf("\tmodpb64\tapache\timprovement\tmodpb85\tmodpurl\tmodpb16\tmodpb2\tmodpjs\n");
