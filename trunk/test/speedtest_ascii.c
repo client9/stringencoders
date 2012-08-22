@@ -19,7 +19,7 @@ static void toupper_copy1(char* dest, const char* str, size_t len)
     size_t i;
     for (i = 0; i < len; ++i) {
         // toupper is defined in <ctype.h>
-        *dest++ = toupper(str[i]);
+        *dest++ = (char) toupper((int) str[i]);
     }
     *dest = 0;
 }
