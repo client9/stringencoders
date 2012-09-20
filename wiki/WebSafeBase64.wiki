@@ -52,7 +52,7 @@ If you are integrating with a third party source, *be sure to check with them on
 
 *ALWAYS TEST*
 
-== RFC 3548 ==
+== RFC 4648 ==
 
 To my amazement, in 2012, after doing string encoders for 5+ years, I just found out about
 
