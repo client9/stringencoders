@@ -4,6 +4,7 @@ SOURCES = \
 	src/modp_b16.c src/modp_b16.h modp_b16_data.h \
 	src/modp_b64.c src/modp_b64.h modp_b64_data.h \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
+	src/modp_b64r.c src/modp_b64r.h modp_b64r_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
 	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
@@ -18,14 +19,14 @@ libmodpbase64_la_SOURCES = ${SOURCES}
 libmodpbase64_la_DEPENDENCIES = \
 	modp_b2_data.h modp_b2_gen \
 	modp_b16_data.h modp_b16_gen \
-	modp_b64_data.h modp_b64w_data.h modp_b64_gen \
+	modp_b64_data.h modp_b64w_data.h modp_b64r_data.h modp_b64_gen \
 	modp_b85_data.h modp_b85_gen \
 	modp_burl_data.h modp_burl_gen \
 	modp_bjavascript_data.h modp_bjavascript_gen \
 	modp_ascii_data.h modp_ascii_gen
 
 include_HEADERS = \
-	src/modp_b16.h src/modp_b64.h src/modp_b64w.h \
+	src/modp_b16.h src/modp_b64.h src/modp_b64w.h src/modp_b64r.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
 	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h \
 	src/modp_qsiter.h src/modp_xml.h
@@ -42,6 +43,7 @@ CLEANFILES = *.log \
 	ltmain.sh depcomp install-sh missing \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
+	modp_b64r_data.h src/modp_b64r.c test/modp_b64r_test.c \
 	modp_ascii_data.h modp_b2_data.h \
 	modp_xml_test
 
@@ -54,6 +56,9 @@ src/modp_b2.c: src/modp_b2.h modp_b2_data.h
 src/modp_b16.c: src/modp_b16.h modp_b16_data.h
 
 src/modp_b64.c: src/modp_b64.h modp_b64_data.h
+
+src/modp_b64r.c: src/modp_b64.c src/modp_b64r.h modp_b64r_data.h
+	perl -p -i -e 's/b64/b64r/g' < src/modp_b64.c > src/modp_b64r.c
 
 src/modp_b64w.c: src/modp_b64.c src/modp_b64w.h modp_b64w_data.h
 	perl -p -i -e 's/b64/b64w/g' < src/modp_b64.c > src/modp_b64w.c
@@ -88,6 +93,12 @@ modp_ascii_data.h: modp_ascii_gen
 modp_b64w_data.h: modp_b64_gen
 	./modp_b64_gen $(B64WCHARS) > modp_b64w_data.h
 
+#
+# RFC 4648 alphabet is -_=
+# http://www.ietf.org/rfc/rfc4648.txt
+modp_b64r_data.h: modp_b64_gen
+	./modp_b64_gen "-_=" > modp_b64r_data.h
+
 modp_b85_data.h: modp_b85_gen
 	./modp_b85_gen > modp_b85_data.h
 
@@ -100,7 +111,7 @@ modp_bjavascript_data.h: modp_bjavascript_gen
 noinst_PROGRAMS = \
 	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen modp_burl_gen modp_ascii_gen \
 	modp_b2_test \
-	modp_b16_test modp_b64_test modp_b64w_test \
+	modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test \
 	modp_b85_test modp_burl_test \
 	modp_bjavascript_gen modp_bjavascript_test \
 	modp_numtoa_test modp_ascii_test modp_xml_test \
@@ -139,6 +150,12 @@ test/modp_b64w_test.c: test/modp_b64_test.c
 
 modp_b64w_test_SOURCES = test/modp_b64w_test.c
 modp_b64w_test_LDADD = libmodpbase64.la
+
+test/modp_b64r_test.c: test/modp_b64_test.c
+	perl -p -i -e 's/b64/b64r/g' < test/modp_b64_test.c > test/modp_b64r_test.c
+
+modp_b64r_test_SOURCES = test/modp_b64r_test.c
+modp_b64r_test_LDADD = libmodpbase64.la
 
 modp_b85_test_SOURCES = test/modp_b85_test.c
 modp_b85_test_LDADD = libmodpbase64.la
@@ -205,11 +222,12 @@ valgrind: modp_b16_test modp_b64_test modp_b85_test modp_burl_test modp_bjavascr
 
 .PHONY: valgrind
 
-unittest: modp_b2_test modp_b16_test modp_b64_test modp_b64w_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
+unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	@./modp_b16_test
 	@./modp_b64_test
 	@./modp_b64w_test
+	@./modp_b64r_test
 	@./modp_b85_test
 	@./modp_b2_test
 	@./modp_burl_test

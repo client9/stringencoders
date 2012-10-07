@@ -5,7 +5,9 @@ TODO:
 
 * more doco
 * man pages
-
+06-Oct-2012:
+	* ADDED new modp_b64r which is a base64 encoding that follows RFC XYZ
+	
 18-Mar-2012:
 	* ADDED new file/function: modp_qsiter memory-free query string key-value pair iterator
 
