@@ -25,9 +25,6 @@
 # THE SOFTWARE.
 #
 
-#import psyco
-#psyco.full()
-
 gsCharToInt = [
     256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
     256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
@@ -81,9 +78,6 @@ def b85_encode(s):
     return ''.join(parts)
 
 #
-# MAY be 10-20% faster, when running on pysco
-#   certainly 2x SLOWER when running normally.
-#
 # also does not use the 'struct' module which may be desirable
 # to some
 #
@@ -112,7 +106,7 @@ def b85_decode(s):
             bsum = 85*bsum + val
         tmp = pack('!I', bsum)
         parts.append(tmp)
-        #parts += tmp 
+        #parts += tmp
         #parts += unpack('cccc', tmp)
     return ''.join(parts)
 
