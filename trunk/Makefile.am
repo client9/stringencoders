@@ -39,17 +39,17 @@ CLEANFILES = *.log \
 	m4 \
 	*.loT \
 	*.gcda *.gcno *.gcov stringencoders.info \
-	Makefile.in aclocal.m4 autom4te.cache config.guess config.h.in config.sub configure \
-	ltmain.sh depcomp install-sh missing \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
 	modp_b64r_data.h src/modp_b64r.c test/modp_b64r_test.c \
 	modp_ascii_data.h modp_b2_data.h \
 	modp_xml_test modp_qsiter_test
 
-clean:
+superclean:
 	rm -rf autom4te.cache
 	rm -rf lcov-html/html
+	rm -f Makefile.in aclocal.m4 autom4te.cache config.guess config.h.in config.sub configure
+	rm -f ltmain.sh depcomp install-sh missing
 
 src/modp_b2.c: src/modp_b2.h modp_b2_data.h
 
