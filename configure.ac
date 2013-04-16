@@ -1,7 +1,7 @@
 AC_INIT(stringencoders, [v3.10.3], [nickg -at- client9 -dot- com])
 AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_SRCDIR(src)
 AC_CONFIG_MACRO_DIR([m4])
 
