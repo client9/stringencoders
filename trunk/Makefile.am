@@ -43,7 +43,8 @@ CLEANFILES = *.log \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
 	modp_b64r_data.h src/modp_b64r.c test/modp_b64r_test.c \
 	modp_ascii_data.h modp_b2_data.h \
-	modp_xml_test modp_qsiter_test
+	modp_xml_test modp_qsiter_test \
+	cxx_test
 
 superclean:
 	rm -rf autom4te.cache
@@ -230,7 +231,6 @@ valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_tes
 .PHONY: valgrind
 
 unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test modp_qsiter_test
-
 	@find . -name '*da' | xargs rm -f
 	@./modp_b16_test
 	@./modp_b64_test
