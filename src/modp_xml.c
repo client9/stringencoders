@@ -260,3 +260,87 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
     *dest = '\0';
     return (size_t)(dest - deststart); // compute "strlen" of dest.
 }
+
+size_t modp_xml_encode(char* dest, const char* src, size_t len)
+{
+    size_t count = 0;
+    const char* srcend = src + len;
+    char ch;
+    while (src < srcend) {
+        ch = *src++;
+        switch (ch) {
+        case '&':
+            *dest++ = '&';
+            *dest++ = 'a';
+            *dest++ = 'm';
+            *dest++ = 'p';
+            *dest++ = ';';
+            count += 5; /* &amp; */
+            break;
+        case '<':
+            *dest++ = '&';
+            *dest++ = 'l';
+            *dest++ = 't';
+            *dest++ = ';';
+            count += 4; /* &lt; */
+            break;
+        case '>':
+            *dest++ = '&';
+            *dest++ = 'g';
+            *dest++ = 't';
+            *dest++ = ';';
+            count += 4; /* &gt; */
+            break;
+        case '\'':
+            *dest++ = '&';
+            *dest++ = 'q';
+            *dest++ = 'u';
+            *dest++ = 'o';
+            *dest++ = 't';
+            *dest++ = ';';
+            count += 6; /* &quot; */
+            break;
+        case '\"':
+            *dest++ = '&';
+            *dest++ = 'a';
+            *dest++ = 'p';
+            *dest++ = 'o';
+            *dest++ = 's';
+            *dest++ = ';';
+            count += 6; /* &apos; */
+            break;
+        default:
+            *dest++ = ch;
+            count += 1;
+        }
+    }
+    return count;
+}
+
+size_t modp_xml_min_encode_strlen(const char* src, const size_t len)
+{
+    size_t count = 0;
+    const char* srcend = src + len;
+    while (src < srcend) {
+        switch (*src++) {
+        case '&':
+            count += 5; /* &amp; */
+            break;
+        case '<':
+            count += 4; /* &lt; */
+            break;
+        case '>':
+            count += 4; /* &gt; */
+            break;
+        case '\'':
+            count += 6; /* &quot; */
+            break;
+        case '\"':
+            count += 6; /* &apos; */
+            break;
+        default:
+            count += 1;
+        }
+    }
+    return count;
+}
