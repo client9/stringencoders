@@ -5,7 +5,7 @@
  * \file modp_xml.h
  * \brief Experimental XML/HTML decoder
  *
- * There is no encoder at the momemnt.
+ * This is mostly experimental.
  */
 
 /*
@@ -101,6 +101,23 @@ uint32_t modp_xml_parse_dec_entity(const char* s, size_t len);
  */
 size_t modp_xml_decode(char* dest, const char* str, size_t len);
 
+/**
+ * \brief XML encode a UTF-8 string
+ * \param[out] dest output string.
+ * \param[in] str The input string
+ * \param[in] len  The length of the input string, excluding any
+ *   final null byte.
+ * \return the final size of the output, excluding any ending null byte.
+ * Encodes an assumed valid UTF-8 input and escapes
+ *   * &apos;
+ *   * &quot;
+ *   * &amp;
+ *   * &lt;
+ *   * &gt;
+ */
+size_t modp_xml_encode(char* dest, const char* str, size_t len);
+
+size_t modp_xml_min_encode_strlen(const char* str, size_t len);
 
 END_C
 
