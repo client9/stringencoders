@@ -314,6 +314,7 @@ size_t modp_xml_encode(char* dest, const char* src, size_t len)
             count += 1;
         }
     }
+    *dest = '\0';
     return count;
 }
 
