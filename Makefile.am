@@ -11,7 +11,8 @@ SOURCES = \
 	src/modp_numtoa.h src/modp_numtoa.c \
 	src/modp_qsiter.h src/modp_qsiter.c \
 	src/modp_xml.h src/modp_xml.c \
-	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h
+	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h \
+	src/modp_utf8.h src/modp_utf8.c
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -104,7 +105,7 @@ modp_b85_data.h: modp_b85_gen
 	./modp_b85_gen > modp_b85_data.h
 
 modp_burl_data.h: modp_burl_gen
-	./modp_burl_gen > modp_burl_data.h 
+	./modp_burl_gen > modp_burl_data.h
 
 modp_bjavascript_data.h: modp_bjavascript_gen
 	./modp_bjavascript_gen > modp_bjavascript_data.h
@@ -118,6 +119,7 @@ noinst_PROGRAMS = \
 	modp_bjavascript_gen modp_bjavascript_test \
 	modp_numtoa_test modp_ascii_test modp_xml_test \
 	modp_qsiter_test \
+	modp_utf8_test \
 	cxx_test \
 	speedtest speedtest_numtoa speedtest_ascii
 
@@ -181,6 +183,9 @@ modp_xml_test_LDADD = libmodpbase64.la
 modp_qsiter_test_SOURCES = test/modp_qsiter_test.c
 modp_qsiter_test_LDADD = libmodpbase64.la
 
+modp_utf8_test_SOURCES = test/modp_utf8_test.c
+modp_utf8_test_LDADD = libmodpbase64.la
+
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
@@ -212,7 +217,7 @@ test: unittest speedtest
 
 
 
-valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_qsiter_test cxx_test
+valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_qsiter_test modp_utf8_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b16_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b64_test
@@ -226,11 +231,12 @@ valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_tes
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_ascii_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_xml_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_qsiter_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_utf8_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./cxx_test
 
 .PHONY: valgrind
 
-unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test modp_qsiter_test
+unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test cxx_test modp_qsiter_test modp_utf8_test
 	@find . -name '*da' | xargs rm -fr
 	@./modp_b16_test
 	@./modp_b64_test
@@ -244,6 +250,7 @@ unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_tes
 	@./modp_ascii_test
 	@./modp_xml_test
 	@./modp_qsiter_test
+	@./modp_utf8_test
 	@./cxx_test
 
 perftest: speedtest speedtest_numtoa speedtest_ascii
