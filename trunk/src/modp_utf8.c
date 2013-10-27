@@ -1,6 +1,6 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
-
+#include <stdio.h>
 /**
  * \file modp_utf8.c
  * <PRE>
@@ -52,7 +52,6 @@ int modp_utf8_validate(const char* src_orig, size_t len)
     unsigned char c,c1,c2,c3;
     size_t bytes_left;
     int d;
-
     size_t i = 0;
     while (i < len) {
         c = src[i];
@@ -62,12 +61,12 @@ int modp_utf8_validate(const char* src_orig, size_t len)
         } else if (c < 0xE0) {
             /* c starts with 110 */
             if (bytes_left < 2) { return MODP_UTF8_SHORT; }
-            c1= src[i+1];
-            if ((c1 & 0xC0) != 0x80) { return 2; }
+            c1 = src[i+1];
+            if ((c1 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
             d = ((c & 0x1F) << 6) | (c1 & 0x3F);
             // overlong case
             if (d < 0x80) { return MODP_UTF8_OVERLONG; }
-            i += 1;
+            i += 2;
         } else if (c < 0xF0) {
             if (bytes_left < 3) { return MODP_UTF8_SHORT; }
             c1= src[i+1];
@@ -79,6 +78,7 @@ int modp_utf8_validate(const char* src_orig, size_t len)
             if (d >= 0xD800 && d <= 0xDFFF) { return MODP_UTF8_CODEPOINT; }
             i += 3;
         } else if (c < 0xF8) {
+            if (bytes_left < 4) { return MODP_UTF8_SHORT; }
             c1= src[i+1];
             c2= src[i+2];
             c3= src[i+3];
@@ -87,7 +87,7 @@ int modp_utf8_validate(const char* src_orig, size_t len)
             if ((c3 & 0xC0) != 0x80) { return 2; }
             d = ((c & 0x07) << 18) | ((c1 & 0x3F) << 12) | ((c2 & 0x3F) < 6) | (c3 & 0x3F);
             if (d < 0x010000) { return MODP_UTF8_SHORT; }
-            i+=4;
+            i += 4;
         } else {
             return MODP_UTF8_CODEPOINT;
         }
