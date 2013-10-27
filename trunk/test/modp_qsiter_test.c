@@ -13,7 +13,7 @@
 static char* test_qs_init()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "foobar";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -22,14 +22,14 @@ static char* test_qs_init()
     mu_assert_int_equals(qsi.len, strlen(s));
     mu_assert_int_equals(qsi.keylen, 0);
     mu_assert_int_equals(qsi.vallen, 0);
-    
+
     return 0;
 }
 
 static char* test_qs_parse1()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "foo=bar1";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -42,7 +42,7 @@ static char* test_qs_parse1()
     mu_assert_int_equals(qsi.vallen, 4);
     mu_assert(!memcmp("foo", qsi.key, qsi.keylen));
     mu_assert(!memcmp("bar1", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
@@ -52,7 +52,7 @@ static char* test_qs_parse1()
 static char* test_qs_parse2()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "foobar";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -65,7 +65,7 @@ static char* test_qs_parse2()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("foobar", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
@@ -75,7 +75,7 @@ static char* test_qs_parse2()
 static char* test_qs_parse3()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "foo=bar&ding=bat";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -107,7 +107,7 @@ static char* test_qs_parse3()
 static char* test_qs_parse4()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -121,7 +121,7 @@ static char* test_qs_parse4()
 static char* test_qs_parse5()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "=";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -134,7 +134,7 @@ static char* test_qs_parse5()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
@@ -146,7 +146,7 @@ static char* test_qs_parse5()
 static char* test_qs_parse6()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "&";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -159,7 +159,7 @@ static char* test_qs_parse6()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
@@ -170,7 +170,7 @@ static char* test_qs_parse6()
 static char* test_qs_parse7()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "=&";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -183,7 +183,7 @@ static char* test_qs_parse7()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
@@ -194,7 +194,7 @@ static char* test_qs_parse7()
 static char* test_qs_parse8()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "&&";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -207,7 +207,7 @@ static char* test_qs_parse8()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, 2);
@@ -226,7 +226,7 @@ static char* test_qs_parse8()
 static char* test_qs_parse9()
 {
     struct qsiter_t qsi;
-    
+
     const char* s = "&&foo=bar";
 
     qsiter_reset(&qsi, s, strlen(s));
@@ -239,7 +239,7 @@ static char* test_qs_parse9()
     mu_assert_int_equals(qsi.vallen, 0);
     mu_assert(!memcmp("", qsi.key, qsi.keylen));
     mu_assert(!memcmp("", qsi.val, qsi.vallen));
-    
+
     ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, 2);
@@ -280,4 +280,3 @@ static char* all_tests()
 }
 
 UNITTESTS
-
