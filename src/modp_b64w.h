@@ -146,8 +146,7 @@ namespace modp {
     inline std::string b64w_encode(const char* s, size_t len)
     {
         std::string x(modp_b64w_encode_len(len), '\0');
-        size_t d = modp_b64w_encode(const_cast<char*>(x.data()), s,
-                                 static_cast<int>(len));
+        size_t d = modp_b64w_encode(const_cast<char*>(x.data()), s, len);
         if (d == (size_t)-1) {
             x.clear();
         } else {
@@ -163,7 +162,7 @@ namespace modp {
      */
     inline std::string b64w_encode(const char* s)
     {
-        return b64w_encode(s, static_cast<int>(strlen(s)));
+        return b64w_encode(s, strlen(s));
     }
 
     /** \brief b64w encode a const std::string
@@ -194,8 +193,7 @@ namespace modp {
     inline std::string b64w_decode(const char* src, size_t len)
     {
         std::string x(modp_b64w_decode_len(len)+1, '\0');
-        size_t d = modp_b64w_decode(const_cast<char*>(x.data()), src,
-                                    static_cast<int>(len));
+        size_t d = modp_b64w_decode(const_cast<char*>(x.data()), src, len);
         if (d == (size_t)-1) {
             x.clear();
         } else {
