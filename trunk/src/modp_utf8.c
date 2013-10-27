@@ -69,24 +69,24 @@ int modp_utf8_validate(const char* src_orig, size_t len)
             i += 2;
         } else if (c < 0xF0) {
             if (bytes_left < 3) { return MODP_UTF8_SHORT; }
-            c1= src[i+1];
-            c2= src[i+2];
-            if ((c1 & 0xC0) != 0x80) { return 2; }
-            if ((c2 & 0xC0) != 0x80) { return 2; }
-            d = ((c & 0x0F) << 12) | ((c1 & 0x3F) << 6) | ((c2) & 0x3F);
-            if (d < 0x0800) { return MODP_UTF8_SHORT; }
+            c1 = src[i+1];
+            c2 = src[i+2];
+            if ((c1 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
+            if ((c2 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
+            d = ((c & 0x0F) << 12) | ((c1 & 0x3F) << 6) | (c2 & 0x3F);
+            if (d < 0x0800) { return MODP_UTF8_OVERLONG; }
             if (d >= 0xD800 && d <= 0xDFFF) { return MODP_UTF8_CODEPOINT; }
             i += 3;
         } else if (c < 0xF8) {
             if (bytes_left < 4) { return MODP_UTF8_SHORT; }
-            c1= src[i+1];
-            c2= src[i+2];
-            c3= src[i+3];
-            if ((c1 & 0xC0) != 0x80) { return 2; }
-            if ((c2 & 0xC0) != 0x80) { return 2; }
-            if ((c3 & 0xC0) != 0x80) { return 2; }
+            c1 = src[i+1];
+            c2 = src[i+2];
+            c3 = src[i+3];
+            if ((c1 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
+            if ((c2 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
+            if ((c3 & 0xC0) != 0x80) { return MODP_UTF8_INVALID; }
             d = ((c & 0x07) << 18) | ((c1 & 0x3F) << 12) | ((c2 & 0x3F) < 6) | (c3 & 0x3F);
-            if (d < 0x010000) { return MODP_UTF8_SHORT; }
+            if (d < 0x010000) { return MODP_UTF8_OVERLONG; }
             i += 4;
         } else {
             return MODP_UTF8_CODEPOINT;
