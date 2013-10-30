@@ -217,7 +217,7 @@ test: unittest speedtest
 
 
 
-valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_qsiter_test modp_utf8_test cxx_test
+valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_b2_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_qsiter_test modp_utf8_test cxx_test
 	@find . -name '*da' | xargs rm -f
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b16_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_b64_test
