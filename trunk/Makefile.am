@@ -211,7 +211,7 @@ lcov-html:
 	lcov -b . --directory . --remove stringencoders.info '/usr/include*' -o stringencoders.info
 	rm -rf lcov-html/html
 	mkdir lcov-html/html
-	genhtml --rc lcov_branch_coverage=1 -o lcov-html/html stringencoders.info
+	genhtml --lcov_branch_coverage -o lcov-html/html stringencoders.info
 
 test: unittest speedtest
 
