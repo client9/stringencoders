@@ -21,6 +21,7 @@
  */
 
 #include "apr_base64.h"
+#define APR_CHARSET_EBCDIC 0
 #if APR_CHARSET_EBCDIC
 #include "apr_xlate.h"
 #endif				/* APR_CHARSET_EBCDIC */
