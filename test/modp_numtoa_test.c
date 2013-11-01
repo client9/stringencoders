@@ -299,22 +299,22 @@ static char* testDoubleToA2(void)
 
                 if ((int)wholes != 0 && (int)(frac[j]*10000000) != 0) {
 
-                // find the '.', and see how many chars are after it
-                tmp = buf2;
-                while (*tmp != '.' &&  *tmp != '\0') {
-                    ++tmp;
-                }
-                if (*tmp == '\0') {
-                    tmplen = 0;
-                } else {
-                    tmplen = strlen(++tmp);
-                }
+                    // find the '.', and see how many chars are after it
+                    tmp = buf2;
+                    while (*tmp != '.' &&  *tmp != '\0') {
+                        ++tmp;
+                    }
+                    if (*tmp == '\0') {
+                        tmplen = 0;
+                    } else {
+                        tmplen = strlen(++tmp);
+                    }
 
-                sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
-                        wholes[i], frac[j], k, (int)tmplen, buf2);
-                mu_assert_msg(msg, (size_t)k >= tmplen);
+                    sprintf(msg, "whole=%f, frac=%f, prec=%d, got=%d %s-- ",
+                            wholes[i], frac[j], k, (int)tmplen, buf2);
+                    mu_assert_msg(msg, (size_t)k >= tmplen);
 
-                mu_assert_str_equals_msg(msg, buf1, buf2);
+                    mu_assert_str_equals_msg(msg, buf1, buf2);
 
                     sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
                             -wholes[i], frac[j], k);
@@ -412,28 +412,29 @@ static char* testOverflowITOA(void) {
 
 // Test NaN and Infinity behavior
 static char* testDTOANonFinite(void) {
-    char buf1[100];
     char buf2[100];
     double d;
 
-    // down below are some IFDEFs that may or may not exist.
-    // depending on compiler settings "buf1" might not be used
-    // and halt compilation.  The next line touches buf1 so this
-    // doesn't happen
-    (void)buf1;
-
     /* Test for inf */
     d = 1e200 * 1e200;
-    // NOTE!!! next line will core dump!
-    //sprintf(buf1, "%.6f", d);
+    /* NOTE!!! next line will core dump!
+     * sprintf(buf1, "%.6f", d);
+     */
     buf2[0] = '\0';
     modp_dtoa2(d, buf2, 6);
     mu_assert_str_equals("inf", buf2);
+    return 0;
+}
+
+static char* testDTOAInfinity(void)
+{
 
     /* INFINITY should be standard. Defined in <math.h> */
     /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
 #ifdef INFINITY
-    d = INFINITY;
+    char buf1[100];
+    char buf2[100];
+    double d = INFINITY;
 
     // test libc support
     sprintf(buf1, "%f", d);
@@ -448,9 +449,19 @@ static char* testDTOANonFinite(void) {
     mu_assert_str_equals("inf", buf2);
 #endif
 
+    return 0;
+}
+
+static char* testDTOAandNAN(void)
+{
     /* NAN is a GNU extension, defined in <math.h> */
     /* http://www.gnu.org/s/libc/manual/html_node/Infinity-and-NaN.html */
+
 #ifdef NAN
+    char buf1[100];
+    char buf2[100];
+    double d;
+
     d = NAN;
 
     // test libc support
@@ -517,6 +528,8 @@ static char* all_tests(void) {
     mu_run_test(testOverflowLITOA);
     mu_run_test(testOverflowITOA);
     mu_run_test(testDTOANonFinite);
+    mu_run_test(testDTOAInfinity);
+    mu_run_test(testDTOAandNAN);
     mu_run_test(testUITOA16);
     mu_run_test(testRoundingPrecisionOverflow);
     return 0;
