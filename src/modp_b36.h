@@ -90,8 +90,7 @@ namespace modp {
     inline std::string b36_encode(const char* s, size_t len)
     {
         std::string x(modp_b36_encode_len(len), '\0');
-        size_t d = modp_b36_encode(const_cast<char*>(x.data()), s,
-                                static_cast<int>(len));
+        size_t d = modp_b36_encode(const_cast<char*>(x.data()), s, len);
         if (d == (size_t)-1) {
             x.clear();
         } else {
@@ -139,8 +138,7 @@ namespace modp {
      */
     inline std::string& b36_decode(std::string& s)
     {
-        size_t d = modp_b36_decode(const_cast<char*>(s.data()), s.data(),
-                                static_cast<int>(s.size()));
+        size_t d = modp_b36_decode(const_cast<char*>(s.data()), s.data(), s.size());
         if (d == (size_t)-1) {
             s.clear();
         } else {
