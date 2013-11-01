@@ -36,7 +36,7 @@ void modp_toupper(char* str, size_t len);
 
 /** \brief make lower case copy of input string
  *
- * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[out] dest output buffer, with at least 'len + 1' bytes allocated
  * \param[in] str the input string
  * \param[in] len the length of input string (the strlen)
  *
@@ -51,7 +51,7 @@ void modp_toupper_copy(char* dest, const char* str, size_t len);
 
 /** \brief lower case a string in place
  *
- * \param[in, out] str the input string
+ * \param[in,out] str the input string
  * \param[in] len the length of input string (the strlen)
  *
  */
@@ -59,7 +59,7 @@ void modp_tolower(char* str, size_t len);
 
 /** \brief make lower case copy of input string
  *
- * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[out] dest output buffer, with at least 'len + 1' bytes allocated
  * \param[in] str the input string
  * \param[in] len the length of input string (the strlen)
  *
@@ -77,7 +77,7 @@ void modp_tolower_copy(char* dest, const char* str, size_t len);
  * By "printable" we means all characters between 32 and 126.
  * All other values are turned into '?'
  *
- * \param[in, out] str the input string
+ * \param[in,out] str the input string
  * \param[in] len the length of input string (the strlen)
  *
  */
@@ -88,7 +88,7 @@ void modp_toprint(char* str, size_t len);
  * By "printable" we means all characters between 32 and 126.
  * All other values are turned into '?'
  *
- * \param[out] output buffer, with at least 'len + 1' bytes allocated
+ * \param[out] dest output buffer, with at least 'len + 1' bytes allocated
  * \param[in] str the input string
  * \param[in] len the length of input string (the strlen)
  *
@@ -100,7 +100,7 @@ void modp_toprint_copy(char* dest, const char* str, size_t len);
 
 /**
  * \brief remove trailing whitespace from a string
- * \param[in,out] str
+ * \param[in,out] str  string to be stripped
  * \param[in] len the size of the input
  * \return the size of the output, not including any ending null byte.
  */
