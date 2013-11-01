@@ -31,7 +31,7 @@ int main(void) { \
     return result != 0; \
 }
 
-int tests_run = 0;
-char mu_buf[1024];
+static int tests_run = 0;
+static char mu_buf[1024];
 
 #endif
