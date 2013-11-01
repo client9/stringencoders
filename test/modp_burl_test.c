@@ -243,8 +243,6 @@ static char* testUrlDecodeHexBad(void)
     mu_assert_int_equals(d, strlen(bad8));
     mu_assert_str_equals(buf, bad8);
     return 0;
-
-    return 0;
 }
 
 static char* testUrlDecodeHex(void)
