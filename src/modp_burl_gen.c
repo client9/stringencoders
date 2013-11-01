@@ -48,7 +48,7 @@ static void urlencodemap(void)
     urlEncodeMap[(int)' '] = '+';
 
     char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMap");
-};
+}
 
 static void urlencodeminmap(void)
 {
@@ -86,7 +86,7 @@ static void urlencodeminmap(void)
 
 
     char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMinMap");
-};
+}
 
 static void hexdecodemap(void)
 {
