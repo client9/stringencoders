@@ -48,7 +48,7 @@ static void jsencodemap(void)
     jsEncodeMap[0x27] = '\'';  /* squote gets escaped */
 
     char_array_to_c(jsEncodeMap, sizeof(jsEncodeMap), "gsJavascriptEncodeMap");
-};
+}
 
 int main(void)
 {
