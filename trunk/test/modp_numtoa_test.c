@@ -160,7 +160,7 @@ static char* testDoubleToA(void)
                 mu_assert_int_equals(len, strlen(buf1));
                 mu_assert_str_equals_msg(msg, buf1, buf2);
 
-                if (d != 0) {
+                if ((int)wholes != 0 && (int)(frac[j]*10000000) != 0) {
                     sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
                             -wholes[i], frac[j], (int) k);
                     /* not dealing with "-0" issues */
@@ -297,7 +297,7 @@ static char* testDoubleToA2(void)
                 stripTrailingZeros(buf1);
                 len = modp_dtoa2(d, buf2, k);
 
-                if (d != 0) {
+                if ((int)wholes != 0 && (int)(frac[j]*10000000) != 0) {
 
                 // find the '.', and see how many chars are after it
                 tmp = buf2;
