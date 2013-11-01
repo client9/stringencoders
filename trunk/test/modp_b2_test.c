@@ -45,7 +45,7 @@ static char* testEncodeDecode(void)
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             // comment this out.. it really slows down the test
-            sprintf(msg, "(i,j) = (%d,%d):", i,j);
+            sprintf(msg, "(i,j) = (%u,%u):", i,j);
             ibuf[0] = (char)((unsigned char) i);
             ibuf[1] = (char)((unsigned char) j);
 

@@ -24,6 +24,7 @@ static char* testUtf8ValidateAscii(void)
 
     /* with null and highest ASCII character 127 */
     d = modp_utf8_validate("a\x00\x7Fz", (size_t) 4);
+    mu_assert_int_equals(d, 0);
     return 0;
 }
 

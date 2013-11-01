@@ -50,7 +50,7 @@ static char* testEncodeDecode(void)
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             // comment this out.. it really slows down the test
-            sprintf(msg, "(i,j) = (%d,%d):", i,j);
+            sprintf(msg, "(i,j) = (%u,%u):", i,j);
             ibuf[0] = (char)((unsigned char) i);
             ibuf[1] = (char)((unsigned char) j);
 
@@ -248,14 +248,16 @@ static char* testValgrind(void) {
     // an input of 3 chars, means output is 3*2+1 = 7 chars
     // However, the code works on output in values of 4bytes
     //   so valgrind complains about use stomping on memory
-    char* ibuf = (char*)malloc((size_t)3);
+    const size_t buflen1 = 3;
+    const size_t buflen2 = 7;
+    char* ibuf = (char*)malloc(buflen1);
     ibuf[0] = '1';
     ibuf[1] = '2';
     ibuf[2] = '3';
-    char* obuf = (char*)malloc((size_t)7);
+    char* obuf = (char*)malloc(buflen2);
 
-    memset(obuf, 0, sizeof(7));
-    size_t d = modp_b16_encode(obuf, ibuf, (size_t)3);
+    memset(obuf, 0, buflen1);
+    size_t d = modp_b16_encode(obuf, ibuf, buflen1);
     free(ibuf);
     free(obuf);
 

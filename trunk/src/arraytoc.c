@@ -69,7 +69,7 @@ void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
     printf("static const uint32_t %s[%d] = {\n", name, (int)sz);
     size_t i = 0;
     for (;;) {
-        printf("%3d", ary[i]);
+        printf("%3u", ary[i]);
         ++i;
         if (i == sz) break;
         if (i % 12 == 0) {
