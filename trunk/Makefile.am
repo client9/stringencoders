@@ -39,6 +39,7 @@ CLEANFILES = *.log \
 	doxy/*.tmp \
 	m4 \
 	*.loT \
+	*.ll *.ll.out \
 	*.gcda *.gcno *.gcov stringencoders.info \
 	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
