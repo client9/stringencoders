@@ -197,7 +197,7 @@ static char* testXmlDecodeBadNames6(void)
 
 static char* testXmlUnicodeCodePoints(void)
 {
-    static const uint32_t ranges[] = {
+    static const int ranges[] = {
         0x0000, 0x0008, /* control characters */
         0x000B, 0x000B, /* Vertical Tab is forbidden, ?? */
         0x000E, 0x001F, /* control characters */
@@ -230,11 +230,11 @@ static char* testXmlUnicodeCodePoints(void)
     static const int imax = sizeof(ranges)/sizeof(uint32_t);
     int i;
     for (i = 0; i < imax; ++i) {
-        mu_assert_int_equals(0, modp_xml_validate_unicode(ranges[i]));
+        mu_assert_int_equals(-1, modp_xml_validate_unicode(ranges[i]));
     }
 
     // too big
-    mu_assert_int_equals(0, modp_xml_validate_unicode(0xFFFFFF));
+    mu_assert_int_equals(-1, modp_xml_validate_unicode(0xFFFFFF));
 
     // ok
     mu_assert_int_equals(0x41, modp_xml_validate_unicode(0x41));

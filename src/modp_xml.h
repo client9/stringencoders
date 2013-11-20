@@ -47,7 +47,7 @@ BEGIN_C
  *
  * This is only exposed for testing.  It is not designed for public use.
  */
-uint32_t modp_xml_validate_unicode(uint32_t val);
+int modp_xml_validate_unicode(int val);
 
 /**
  * \brief converts a unicode char expressed as uint32_t into a UTF-8 byte sequence.
@@ -58,17 +58,17 @@ uint32_t modp_xml_validate_unicode(uint32_t val);
  *
  * This is only exposed for testing.  It is not designed for public use.
  */
-size_t modp_xml_unicode_char_to_utf8(char* dest, uint32_t uval);
+size_t modp_xml_unicode_char_to_utf8(char* dest, int uval);
 
 /**
  * \brief parse a hex encoded entity between "&#x" and ";"
  * \param[in] s a buffer pointing at the first char after "&$x"
  * \param[in] len the length of string between "&#x" and ";"
- * \return 0 if invalid
+ * \return -1 if invalid, otherwise the unicode character value
  *
  * This is only exposed for testing.  It is not designed for public use.
  */
-uint32_t modp_xml_parse_hex_entity(const char* s, size_t len);
+int modp_xml_parse_hex_entity(const char* s, size_t len);
 
 /**
  * \brief parse a numerical decimal XML entity, eg. &x39;
@@ -76,11 +76,11 @@ uint32_t modp_xml_parse_hex_entity(const char* s, size_t len);
  * \param[in] s the buffer pointing to first char after '&#'.
  * \param[in] len the length between '&#' and ';'.  It is expected
  *            that all chars between are to be decimal digits.
- * \return 0 if invalid, else the value
+ * \return -1 if invalid, else the unicode numeric value
  *
  * Exposed for testing.  Not designed to be useful for public consumption.
  */
-uint32_t modp_xml_parse_dec_entity(const char* s, size_t len);
+int modp_xml_parse_dec_entity(const char* s, size_t len);
 
 /**
  * \brief XML decode a string
