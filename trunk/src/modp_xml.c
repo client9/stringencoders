@@ -42,7 +42,7 @@
  */
 #include "modp_xml.h"
 
-static const uint32_t gsHexDecodeMap[256] = {
+static const int gsHexDecodeMap[256] = {
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
@@ -67,7 +67,7 @@ static const uint32_t gsHexDecodeMap[256] = {
 256, 256, 256, 256
 };
 
-size_t modp_xml_unicode_char_to_utf8(char* dest, uint32_t uval)
+size_t modp_xml_unicode_char_to_utf8(char* dest, int uval)
 {
     if (uval <= 0x7F) {
         dest[0] = (char) uval;
@@ -109,9 +109,9 @@ size_t modp_xml_unicode_char_to_utf8(char* dest, uint32_t uval)
  * permanently undefined Unicode characters (noncharacters), and
  * control characters other than space characters.
  */
-uint32_t modp_xml_validate_unicode(uint32_t val)
+int modp_xml_validate_unicode(int val)
 {
-    static const uint32_t ranges[] = {
+    static const int ranges[] = {
         0x0000, 0x0008, /* control characters */
         0x000B, 0x000B, /* Vertical Tab is forbidden, ?? */
         0x000E, 0x001F, /* control characters */
@@ -148,31 +148,31 @@ uint32_t modp_xml_validate_unicode(uint32_t val)
     for (i = 0; i < imax; i += 2) {
         if (val >= ranges[i]) {
             if (val <= ranges[i+1]) {
-                return 0;
+                return -1;
             }
         } else {
             return val;
         }
     }
-    return 0;
+    return -1;
 }
 
 /**
  * Exposed for testing
  */
 
-uint32_t modp_xml_parse_dec_entity(const char* s, size_t len)
+int modp_xml_parse_dec_entity(const char* s, size_t len)
 {
-    uint32_t val = 0;
+    int val = 0;
     size_t i;
     for (i = 0; i < len; ++i) {
-        uint32_t d = gsHexDecodeMap[(unsigned int)s[i]];
+        int d = gsHexDecodeMap[(unsigned int)s[i]];
         if (d > 9) {
-            return 0;
+            return -1;
         }
         val = (val * 10) + d;
         if (val > 0x1000FF) {
-            return 0;
+            return -1;
         }
     }
     return modp_xml_validate_unicode(val);
@@ -182,18 +182,18 @@ uint32_t modp_xml_parse_dec_entity(const char* s, size_t len)
  * parses
  * Exposed for testing
  */
-uint32_t modp_xml_parse_hex_entity(const char* s, size_t len)
+int modp_xml_parse_hex_entity(const char* s, size_t len)
 {
-    uint32_t val = 0;
+    int val = 0;
     size_t i;
     for (i = 0; i < len; ++i) {
-        uint32_t d = gsHexDecodeMap[(unsigned int)s[i]];
+        int d = gsHexDecodeMap[(unsigned int)s[i]];
         if (d == 256) {
-            return 0;
+            return -1;
         }
         val = (val * 16) + d;
         if (val > 0x1000FF) {
-            return 0;
+            return -1;
         }
     }
     return modp_xml_validate_unicode(val);
@@ -204,7 +204,7 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
     const uint8_t* src = (const uint8_t*) s;
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
-    uint32_t unichar;
+    int unichar;
 
     while (src < srcend) {
         if (*src != '&') {
