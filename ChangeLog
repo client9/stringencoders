@@ -1,10 +1,12 @@
 ChangeLog
 Yeah, I know this isn't quite the right format.
 
-TODO:
-
-* more doco
-* man pages
+01-Nov-2013:
+	* Added new XML, HTML and UTF-8 functions
+	* Fixed warnings for latest compilers
+	* CHANGE: various functions return the amount of data consumed
+	  instead of void
+	
 06-Oct-2012:
 	* ADDED new modp_b64r which is a base64 encoding that follows RFC XYZ
 	
