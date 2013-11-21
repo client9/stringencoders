@@ -106,54 +106,86 @@ static char* testHtmlDecodeHexDigits(void)
 {
     size_t consumed;
     int ch;
-    const char* s1 = "&#x98;";
-    const char* s2 = "&#x00;";
-    const char* s3 = "&#x001;";
-    const char* s4 = "&#x1;";
-    const char* s5 = "&#x01";
-    const char* s6 = "&#x1";
-    const char* s7 = "&#x";
-    const char* s8 = "&#x01X";
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
-    mu_assert_int_equals(ch, 0x98);
-    mu_assert_int_equals(consumed, 6);
+    {
+        const char* s1 = "&#x98;";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 0x98);
+        mu_assert_int_equals(consumed, 6);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s2, strlen(s2), &consumed);
-    mu_assert_int_equals(ch, 0);
-    mu_assert_int_equals(consumed, 6);
+    {
+        const char* s1 = "&#x00;";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 0);
+        mu_assert_int_equals(consumed, 6);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s3, strlen(s3), &consumed);
-    mu_assert_int_equals(ch, 1);
-    mu_assert_int_equals(consumed, 7);
+    {
+        const char* s1 = "&#x001;";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 7);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s4, strlen(s4), &consumed);
-    mu_assert_int_equals(ch, 1);
-    mu_assert_int_equals(consumed, 5);
+    {
+        const char* s1 = "&#x1;";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 5);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s5, strlen(s5), &consumed);
-    mu_assert_int_equals(ch, 1);
-    mu_assert_int_equals(consumed, 5);
+    {
+        const char* s1 = "&#x01";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 5);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s6, strlen(s6), &consumed);
-    mu_assert_int_equals(ch, 1);
-    mu_assert_int_equals(consumed, 4);
+    {
+        const char* s1 = "&#x1";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 4);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s7, strlen(s7), &consumed);
-    mu_assert_int_equals(ch, '&');
-    mu_assert_int_equals(consumed, 1);
+    {
+        const char* s1 = "&#x";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, '&');
+        mu_assert_int_equals(consumed, 1);
+    }
 
-    consumed = 0;
-    ch = modp_html_decode_char_at(s8, strlen(s8), &consumed);
-    mu_assert_int_equals(ch, 1);
-    mu_assert_int_equals(consumed, 5);
+    {
+        const char* s1 = "&#x01X";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 5);
+    }
+
+    {
+        const char* s1 = "&#X";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, '&');
+        mu_assert_int_equals(consumed, 1);
+    }
+
+    {
+        const char* s1 = "&#X1";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, 1);
+        mu_assert_int_equals(consumed, 4);
+    }
 
     return 0;
 }
