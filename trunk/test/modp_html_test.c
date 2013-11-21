@@ -32,10 +32,11 @@ static char* testHtmlDecodeUntouched(void)
 {
     const char* digits  = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_~!$()*,;:@/?";
 
+    int i;
     int ch;
     size_t consumed;
 
-    for (int i = 0; i < (int) strlen(digits); ++i) {
+    for (i = 0; i < (int) strlen(digits); ++i) {
         consumed = 0;
         ch = modp_html_decode_char_at(digits + i, 1, &consumed);
         mu_assert_int_equals(ch, digits[i]);
