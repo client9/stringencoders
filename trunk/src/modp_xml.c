@@ -96,7 +96,7 @@ size_t modp_xml_unicode_char_to_utf8(char* dest, int uval)
 
 
 /**
- * Returns 0 if unicode code point is invalid for HTML (undefined or a
+ * Returns -1 if unicode code point is invalid for HTML (undefined or a
  * non-whitespace control char).
  *
  * Exposed for testing
