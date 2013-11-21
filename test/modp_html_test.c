@@ -187,6 +187,24 @@ static char* testHtmlDecodeHexDigits(void)
         mu_assert_int_equals(consumed, 4);
     }
 
+    {
+        /* overflow */
+        const char* s1 = "&#xFFFFFF";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, '&');
+        mu_assert_int_equals(consumed, 1);
+    }
+
+    {
+        /* overflow */
+        const char* s1 = "&#99999999999999999999999";
+        consumed = 0;
+        ch = modp_html_decode_char_at(s1, strlen(s1), &consumed);
+        mu_assert_int_equals(ch, '&');
+        mu_assert_int_equals(consumed, 1);
+    }
+
     return 0;
 }
 
