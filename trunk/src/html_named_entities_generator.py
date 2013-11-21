@@ -69,8 +69,9 @@ typedef struct trienode {
 } trienode_t;
 
 static const trienode_t entities[];
+static int html_named_entity_decode(const char* s, size_t len, size_t* consumed);
 
-int html_named_entity_decode(const char* s, size_t len, size_t* consumed)
+static int html_named_entity_decode(const char* s, size_t len, size_t* consumed)
 {
    int codepoint = 0;
    size_t pos = 0;
