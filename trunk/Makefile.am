@@ -6,7 +6,7 @@ SOURCES = \
 	src/modp_b64w.c src/modp_b64w.h modp_b64w_data.h \
 	src/modp_b64r.c src/modp_b64r.h modp_b64r_data.h \
 	src/modp_b85.h src/modp_b85.c modp_b85_data.h \
-	src/modp_burl.h src/modp_burl.c modp_burl_data.h \
+	src/modp_burl.h src/modp_burl.c src/modp_burl_data.h \
 	src/modp_bjavascript.h src/modp_bjavascript.c \
 	src/modp_numtoa.h src/modp_numtoa.c \
 	src/modp_qsiter.h src/modp_qsiter.c \
@@ -23,8 +23,6 @@ libmodpbase64_la_DEPENDENCIES = \
 	modp_b16_data.h modp_b16_gen \
 	modp_b64_data.h modp_b64w_data.h modp_b64r_data.h modp_b64_gen \
 	modp_b85_data.h modp_b85_gen \
-	modp_burl_data.h modp_burl_gen \
-	modp_bjavascript_data.h modp_bjavascript_gen \
 	modp_ascii_data.h modp_ascii_gen
 
 include_HEADERS = \
@@ -42,7 +40,7 @@ CLEANFILES = *.log \
 	*.loT \
 	*.ll *.ll.out \
 	*.gcda *.gcno *.gcov stringencoders.info \
-	modp_b16_data.h modp_b64_data.h modp_b85_data.h modp_burl_data.h modp_bjavascript_data.h \
+	modp_b16_data.h modp_b64_data.h modp_b85_data.h \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
 	modp_b64r_data.h src/modp_b64r.c test/modp_b64r_test.c \
 	modp_ascii_data.h modp_b2_data.h \
@@ -69,9 +67,9 @@ src/modp_b64w.c: src/modp_b64.c src/modp_b64w.h modp_b64w_data.h
 
 src/modp_b85.c: src/modp_b85.h modp_b85_data.h
 
-src/modp_burl.c: src/modp_burl.h modp_burl_data.h
+src/modp_burl.c: src/modp_burl.h src/modp_burl_data.h
 
-src/modp_bjavascript.c: src/modp_bjavascript.h modp_bjavascript_data.h
+src/modp_bjavascript.c: src/modp_bjavascript.h src/modp_bjavascript_data.h
 
 src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
 
@@ -109,8 +107,8 @@ modp_b85_data.h: modp_b85_gen
 modp_burl_data.h: modp_burl_gen
 	./modp_burl_gen > modp_burl_data.h
 
-modp_bjavascript_data.h: modp_bjavascript_gen
-	./modp_bjavascript_gen > modp_bjavascript_data.h
+src/modp_bjavascript_data.h: modp_bjavascript_gen
+	./modp_bjavascript_gen > src/modp_bjavascript_data.h
 
 noinst_PROGRAMS = \
 	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen \
