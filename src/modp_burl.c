@@ -41,6 +41,7 @@
  * </PRE>
  */
 #include "modp_burl.h"
+#include "modp_stdint.h"
 #include "modp_burl_data.h"
 
 size_t modp_burl_encode(char* dest, const char* src, size_t len)
