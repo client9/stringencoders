@@ -4,7 +4,8 @@
 #ifndef COM_MODP_QSITER
 #define COM_MODP_QSITER
 
-#include "modp_stdint.h"
+#include <string.h>
+
 #include "extern_c_begin.h"
 
 /**
@@ -65,9 +66,9 @@ void qsiter_reset(struct qsiter_t* qsi, const char* s, size_t len);
  * Get next key/value pair in query string
  *
  * \param[out] qsi data struct
- * \return true if found a key value pair, false if no more data
+ * \return 1 if found a key value pair, 0 if no more data
  */
-bool qsiter_next(struct qsiter_t* qsi);
+int qsiter_next(struct qsiter_t* qsi);
 
 #include "extern_c_end.h"
 

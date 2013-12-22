@@ -34,7 +34,7 @@ static char* test_qs_parse1()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, strlen(s));
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -57,7 +57,7 @@ static char* test_qs_parse2()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, strlen(s));
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -80,7 +80,7 @@ static char* test_qs_parse3()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, 8);
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -112,7 +112,7 @@ static char* test_qs_parse4()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(!ok);
 
     return 0;
@@ -126,7 +126,7 @@ static char* test_qs_parse5()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, strlen(s));
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -151,7 +151,7 @@ static char* test_qs_parse6()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, strlen(s));
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -175,7 +175,7 @@ static char* test_qs_parse7()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, strlen(s));
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -199,7 +199,7 @@ static char* test_qs_parse8()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, 1);
     mu_assert_int_equals(qsi.len, strlen(s));
@@ -231,7 +231,7 @@ static char* test_qs_parse9()
 
     qsiter_reset(&qsi, s, strlen(s));
 
-    bool ok = qsiter_next(&qsi);
+    int ok = qsiter_next(&qsi);
     mu_assert(ok);
     mu_assert_int_equals(qsi.pos, 1);
     mu_assert_int_equals(qsi.len, strlen(s));
