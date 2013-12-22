@@ -23,7 +23,7 @@
 #ifndef COM_MODP_STRINGENCODERS_BURL
 #define COM_MODP_STRINGENCODERS_BURL
 
-#include "modp_stdint.h"
+#include <string.h>
 #include "extern_c_begin.h"
 
 /**
