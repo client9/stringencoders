@@ -56,21 +56,25 @@ void qsiter_reset(struct qsiter_t* qsi, const char* s, size_t len)
     qsi->vallen = 0;
 }
 
-bool qsiter_next(struct qsiter_t* qsi)
+int qsiter_next(struct qsiter_t* qsi)
 {
+    const char* eq;
+    const char* charstart;
+    const char* ends;
+
     if (qsi->pos >= qsi->len) {
         qsi->key = NULL;
         qsi->keylen = 0;
         qsi->val = NULL;
         qsi->vallen = 0;
-        return false;
+        return 0;
     }
 
-    const char* charstart = qsi->s + qsi->pos;
-    const char* ends = (const char*) memchr(charstart, '&', qsi->len - qsi->pos);
+    charstart = qsi->s + qsi->pos;
+    ends = (const char*) memchr(charstart, '&', qsi->len - qsi->pos);
 
     if (ends == NULL) {
-        const char* eq = (const char*) memchr(charstart, '=', qsi->len - qsi->pos);
+        eq = (const char*) memchr(charstart, '=', qsi->len - qsi->pos);
         if (eq == NULL) {
             qsi->key = charstart;
             qsi->keylen = (size_t)(qsi->len - qsi->pos);
@@ -83,10 +87,10 @@ bool qsiter_next(struct qsiter_t* qsi)
             qsi->vallen = (size_t)((qsi->s + qsi->len) - qsi->val);
         }
         qsi->pos = qsi->len;
-        return true;
+        return 1;
     } else {
         // &&foo=bar
-        const char* eq = (const char*) memchr(charstart, '=', (size_t)(ends - charstart));
+        eq = (const char*) memchr(charstart, '=', (size_t)(ends - charstart));
         if (eq == NULL) {
             qsi->key = charstart;
             qsi->keylen = (size_t)(ends - charstart);
@@ -99,6 +103,6 @@ bool qsiter_next(struct qsiter_t* qsi)
             qsi->vallen = (size_t)(ends - eq - 1);
         }
         qsi->pos = (size_t)((ends - qsi->s) + 1);
-        return true;
+        return 1;
     }
 }
