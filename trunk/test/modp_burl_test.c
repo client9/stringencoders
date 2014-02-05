@@ -28,6 +28,28 @@ static char* testUrlEmpty(void)
 }
 
 /**
+ * Handle gracefully null inputs, with 0 length.
+ */
+static char* testUrlEmptyNull(void)
+{
+    size_t d;
+    char buf[1000];
+    buf[0] = 1;
+    d = modp_burl_encode(buf, NULL, (size_t)0);
+    mu_assert_int_equals(d, 0);
+    mu_assert(buf[0] == 0);
+
+    buf[0] = 1;
+    d = modp_burl_decode(buf, NULL, (size_t)0);
+    mu_assert_int_equals(d, 0);
+    mu_assert(buf[0] == 0);
+
+    return 0;
+}
+
+
+
+/**
  * test space <--> plus conversion
  */
 static char* testUrlSpaces(void)
@@ -388,6 +410,7 @@ static char* all_tests(void)
 {
     mu_run_test(testUrlUntouched);
     mu_run_test(testUrlEmpty);
+    mu_run_test(testUrlEmptyNull);
     mu_run_test(testUrlSpaces);
     mu_run_test(testUrlDecodeHex);
     mu_run_test(testUrlDecodeHexBad);
