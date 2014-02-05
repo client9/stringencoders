@@ -53,6 +53,11 @@ size_t modp_burl_encode(char* dest, const char* src, size_t len)
     char c;
     uint8_t x;
 
+    if (len == 0) {
+        *dest = '\0';
+        return (size_t) 0;
+    }
+
     while (s < srcend) {
         x = *s++;
         c = (char)gsUrlEncodeMap[x];
@@ -87,6 +92,11 @@ size_t modp_burl_min_encode(char* dest, const char* src, size_t len)
     char c;
     uint8_t x;
 
+    if (len == 0) {
+        *dest = '\0';
+        return (size_t) 0;
+    }
+
     while (s < srcend) {
         x = *s++;
         c = (char)(gsUrlEncodeMinMap[x]); /** CHANGE HERE **/
@@ -116,6 +126,11 @@ size_t modp_burl_encode_strlen(const char* src, const size_t len)
 {
     size_t count = 0;
     const char* srcend = src + len;
+
+    if (len == 0) {
+        return (size_t) 0;
+    }
+
     while (src < srcend) {
         if (gsUrlEncodeMap[ (uint8_t) *src++]) {
             count++;
@@ -134,6 +149,11 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
 {
     size_t count = 0;
     const char* srcend = src + len;
+
+    if (len == 0) {
+        return (size_t) 0;
+    }
+
     while (src < srcend) {
         if (gsUrlEncodeMinMap[ (uint8_t) *src++]) {
             count++;
@@ -151,6 +171,11 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
     const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
+
+    if (len == 0) {
+        *dest = '\0';
+        return (size_t) 0;
+    }
 
     while (src < srcendloop) {
         switch (*src) {
@@ -199,6 +224,11 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
     const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
+
+    if (len == 0) {
+        *dest = '\0';
+        return (size_t) 0;
+    }
 
     while (src < srcendloop) {
         if (*src == '%') {
