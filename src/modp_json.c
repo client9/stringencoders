@@ -302,6 +302,11 @@ void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int uv)
     ctx->size += r;
 }
 
+void modp_json_add_cstring(modp_json_ctx* ctx, const char* src)
+{
+    return modp_json_add_string(ctx, src, strlen(src));
+}
+
 void modp_json_add_string(modp_json_ctx* ctx, const char* src, size_t len) 
 {
     modp_json_add_value(ctx);
