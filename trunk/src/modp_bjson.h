@@ -36,38 +36,25 @@
 
 #include "extern_c_begin.h"
 
+typedef struct {
+    int depth;
+    int state[10];
+    size_t size;
+    char* dest;
+} modp_json_ctx;
 
+void modp_json_init(modp_json_ctx* ctx, char* dest);
+size_t modp_json_end(modp_json_ctx* ctx);
+void modp_json_map_open(modp_json_ctx* ctx);
+void modp_json_map_close(modp_json_ctx* ctx);
+void modp_json_ary_open(modp_json_ctx* ctx);
+void modp_json_ary_close(modp_json_ctx* ctx);
 
-/**
- * "json" encode a stirng
- * This takes a c-string and does character escaping
- * so it can be put into a JSON object
- *
- * \param[out] dest output string.  Must
- * \param[in] str The input string
- * \param[in] len  The length of the input string, excluding any
- *   final null byte.
- */
-size_t modp_bjson_encode(char* dest, const char* str, size_t len);
-
-#define modp_bjson_encode_len(A) (4*A + 1)
-
-/**
- * Given the exact size of output string.
- *
- * Can be used to allocate the right amount of memory for
- * modp_burl_encode.  Be sure to add 1 byte for final null.
- *
- * This is somewhat expensive since it examines every character
- *  in the input string
- *
- * \param[in] str  The input string
- * \param[in] len  THe length of the input string, excluding any
- *   final null byte (i.e. strlen(str))
- * \return the size of the output string, excluding the final
- *   null byte.
- */
-size_t modp_bjson_encode_strlen(const char* str, size_t len);
+void modp_json_add_string(modp_json_ctx* ctx, const char*, size_t);
+void modp_json_add_bool(modp_json_ctx* ctx, int val);
+void modp_json_add_int(modp_json_ctx* ctx, int val);
+void modp_json_add_double(modp_json_ctx* ctx, double d);
+void modp_json_add_null(modp_json_ctx* ctx);
 
 #include "extern_c_end.h"
 

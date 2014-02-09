@@ -13,7 +13,8 @@ SOURCES = \
 	src/modp_xml.h src/modp_xml.c \
 	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h \
 	src/modp_utf8.h src/modp_utf8.c \
-	src/modp_html.h src/modp_html.c
+	src/modp_html.h src/modp_html.c \
+	src/modp_bjson.h src/modp_bjson.c
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -44,7 +45,7 @@ CLEANFILES = *.log \
 	modp_b64w_data.h src/modp_b64w.c test/modp_b64w_test.c \
 	modp_b64r_data.h src/modp_b64r.c test/modp_b64r_test.c \
 	modp_ascii_data.h modp_b2_data.h \
-	modp_xml_test modp_qsiter_test modp_html_test \
+	modp_xml_test modp_qsiter_test modp_html_test modp_json_test \
 	cxx_test
 
 superclean:
@@ -71,7 +72,7 @@ src/modp_burl.c: src/modp_burl.h src/modp_burl_data.h
 
 src/modp_bjavascript.c: src/modp_bjavascript.h src/modp_bjavascript_data.h
 
-src/modp_bjson.c: src/modp_bson.h src/modp_bjson_data.h
+src/modp_bjson.c: src/modp_bjson.h src/modp_bjson_data.h
 
 src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
 
@@ -123,6 +124,7 @@ noinst_PROGRAMS = \
 	modp_html_test \
 	modp_qsiter_test \
 	modp_utf8_test \
+	modp_json_test \
 	cxx_test \
 	speedtest speedtest_numtoa speedtest_ascii
 
@@ -192,6 +194,9 @@ modp_qsiter_test_LDADD = libmodpbase64.la
 modp_utf8_test_SOURCES = test/modp_utf8_test.c
 modp_utf8_test_LDADD = libmodpbase64.la
 
+modp_json_test_SOURCES = test/modp_json_test.c
+modp_json_test_LDADD = libmodpbase64.la
+
 cxx_test_SOURCES = test/cxx_test.cc
 cxx_test_LDADD = libmodpbase64.la
 
@@ -239,11 +244,12 @@ valgrind: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_tes
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_html_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_qsiter_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_utf8_test
+	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./modp_json_test
 	${LIBTOOL} --mode=execute valgrind --leak-check=full --error-exitcode=1 ./cxx_test
 
 .PHONY: valgrind
 
-unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_b2_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_html_test cxx_test modp_qsiter_test modp_utf8_test
+unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_test modp_b2_test modp_burl_test modp_bjavascript_test modp_numtoa_test modp_ascii_test modp_xml_test modp_html_test cxx_test modp_qsiter_test modp_utf8_test modp_json_test
 	@find . -name '*da' | xargs rm -fr
 	@./modp_b16_test
 	@./modp_b64_test
@@ -259,6 +265,7 @@ unittest: modp_b16_test modp_b64_test modp_b64w_test modp_b64r_test modp_b85_tes
 	@./modp_html_test
 	@./modp_qsiter_test
 	@./modp_utf8_test
+	@./modp_json_test
 	@./cxx_test
 
 perftest: speedtest speedtest_numtoa speedtest_ascii
