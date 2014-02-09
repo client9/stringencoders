@@ -1,7 +1,6 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
-#include <stdio.h>
 /**
  * \file
  * <pre>
@@ -46,7 +45,6 @@
 #include <assert.h>
 
 #include "modp_bjson.h"
-#include "modp_stdint.h"
 #include "modp_bjson_data.h"
 
 typedef enum {
