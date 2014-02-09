@@ -66,6 +66,8 @@ void modp_json_ary_close(modp_json_ctx* ctx);
  */
 void modp_json_add_string(modp_json_ctx* ctx, const char*, size_t);
 
+void modp_json_add_cstring(modp_json_ctx* ctx, const char*);
+
 /*
  * Sets a json 'false' value if val = 0, other wise sets a 'true' value
  */
