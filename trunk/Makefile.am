@@ -14,7 +14,7 @@ SOURCES = \
 	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h \
 	src/modp_utf8.h src/modp_utf8.c \
 	src/modp_html.h src/modp_html.c \
-	src/modp_bjson.h src/modp_bjson.c
+	src/modp_json.h src/modp_json.c
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -30,7 +30,7 @@ include_HEADERS = \
 	src/modp_b16.h src/modp_b64.h src/modp_b64w.h src/modp_b64r.h \
 	src/modp_b85.h src/modp_burl.h src/modp_bjavascript.h \
 	src/modp_numtoa.h src/modp_ascii.h src/modp_b2.h \
-	src/modp_qsiter.h src/modp_xml.h src/modp_html.h src/modp_bjson.h
+	src/modp_qsiter.h src/modp_xml.h src/modp_html.h src/modp_json.h
 
 CLEANFILES = *.log \
 	*~ src/*~ test/*~ \
@@ -72,7 +72,7 @@ src/modp_burl.c: src/modp_burl.h src/modp_burl_data.h
 
 src/modp_bjavascript.c: src/modp_bjavascript.h src/modp_bjavascript_data.h
 
-src/modp_bjson.c: src/modp_bjson.h src/modp_bjson_data.h
+src/modp_json.c: src/modp_json.h src/modp_json_data.h
 
 src/modp_ascii.c: src/modp_ascii.h modp_ascii_data.h
 
