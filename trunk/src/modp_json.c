@@ -152,23 +152,27 @@ void modp_json_ary_close(modp_json_ctx* ctx)
 
 static void modp_json_add_true(modp_json_ctx* ctx)
 {
+    char* wstr;
     if (ctx->dest) {
-        ctx->dest[0] = 't';
-        ctx->dest[1] = 'r';
-        ctx->dest[2] = 'u';
-        ctx->dest[3] = 'e';
+        wstr = ctx->dest + ctx->size;
+        wstr[0] = 't';
+        wstr[1] = 'r';
+        wstr[2] = 'u';
+        wstr[3] = 'e';
     }
     ctx->size += 4;
 }
 
 static void modp_json_add_false(modp_json_ctx* ctx)
 {
+    char* wstr;
     if (ctx->dest) {
-        ctx->dest[0] = 'f';
-        ctx->dest[1] = 'a';
-        ctx->dest[2] = 'l';
-        ctx->dest[3] = 's';
-        ctx->dest[4] = 'e';
+        wstr = ctx->dest + ctx->size;
+        wstr[0] = 'f';
+        wstr[1] = 'a';
+        wstr[2] = 'l';
+        wstr[3] = 's';
+        wstr[4] = 'e';
     }
     ctx->size += 5;
 }
@@ -185,11 +189,13 @@ void modp_json_add_bool(modp_json_ctx* ctx, int val)
 
 void modp_json_add_null(modp_json_ctx* ctx)
 {
+    char* wstr;
     if (ctx->dest) {
-        ctx->dest[0] = 'n';
-        ctx->dest[1] = 'u';
-        ctx->dest[2] = 'l';
-        ctx->dest[3] = 'l';
+        wstr = ctx->dest + ctx->size;
+        wstr[0] = 'n';
+        wstr[1] = 'u';
+        wstr[2] = 'l';
+        wstr[3] = 'l';
     }
     ctx->size += 4;
 }
@@ -224,7 +230,7 @@ void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
     }
 
     if (ctx->dest) {
-        char* wstr = ctx->dest;
+        char* wstr = ctx->dest + ctx->size;
         if (stringonly) {
             wstr[0] = '"';
             wstr[r+1] = '"';
@@ -247,6 +253,7 @@ void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
 
 void modp_json_add_int32(modp_json_ctx* ctx, int v)
 {
+    char* wstr;
     if (v > 0) {
         return modp_json_add_uint32(ctx, (unsigned int) v);
     }
@@ -266,7 +273,7 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
     modp_json_add_value(ctx);
 
     if (ctx->dest) {
-        char* wstr = ctx->dest;
+        wstr = ctx->dest + ctx->size;
         *wstr = '-';
         wstr += r;
         // Conversion. Number is reversed.
@@ -279,6 +286,7 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
 
 void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int uv)
 {
+    char* wstr;
     size_t r =
         (uv >= 1000000000UL) ? 10 :
         (uv >= 100000000UL) ? 9 :
@@ -294,8 +302,8 @@ void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int uv)
     modp_json_add_value(ctx);
 
     if (ctx->dest) {
-        char* wstr = ctx->dest;
-        wstr += r -1;
+        wstr = ctx->dest + ctx->size;
+        wstr += r - 1;
         do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
     }
 
