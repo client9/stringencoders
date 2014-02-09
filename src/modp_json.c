@@ -317,10 +317,10 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
 {
     static const char* hexchar = "0123456789ABCDEF";
     const char* deststart = (const char*) dest;
-    const uint8_t* s = (const uint8_t*) src;
-    const uint8_t* srcend = s + len;
-    uint8_t x;
-    uint8_t val;
+    const unsigned char* s = (const unsigned char*) src;
+    const unsigned char* srcend = s + len;
+    unsigned char x;
+    unsigned char val;
 
     // if 0, do nothing
     // if 'A', hex escape
@@ -352,8 +352,8 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
 
 static size_t modp_bjson_encode_strlen(const char* src, size_t len)
 {
-    const uint8_t* s = (const uint8_t*)src;
-    const uint8_t* srcend = s + len;
+    const unsigned char* s = (const unsigned char*)src;
+    const unsigned char* srcend = s + len;
     size_t count = 2;  /* for start and end quotes */
 
     while (s < srcend) {
