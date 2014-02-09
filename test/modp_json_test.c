@@ -240,24 +240,83 @@ static char* test_json_ary_2()
     return 0;
 }
 
-static char* test_json_int()
+static char* test_json_int32()
 {
     size_t len;
     char buf[100];
     modp_json_ctx ctx;
 
     // do count
-    modp_json_init(&ctx, buf);
-    modp_json_add_int(&ctx, 123);
+    modp_json_init(&ctx, NULL);
+    modp_json_add_int32(&ctx, 123);
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, 3);
-    mu_assert_str_equals("123", buf);
 
     modp_json_init(&ctx, buf);
-    modp_json_add_int(&ctx, -123);
+    modp_json_add_int32(&ctx, -123);
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, 4);
     mu_assert_str_equals("-123", buf);
+
+    modp_json_init(&ctx, NULL);
+    modp_json_add_int32(&ctx, -123);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 4);
+
+    modp_json_init(&ctx, buf);
+    modp_json_add_int32(&ctx, -123);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 4);
+    mu_assert_str_equals("-123", buf);
+
+    return 0;
+}
+
+static char* test_json_uint64()
+{
+    size_t len;
+    char buf[100];
+    unsigned long long val = (1ULL << 53);
+    modp_json_ctx ctx;
+
+    // do count
+    modp_json_init(&ctx, NULL);
+    modp_json_add_uint64(&ctx, val, 0);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 16);
+
+    modp_json_init(&ctx, buf);
+    modp_json_add_uint64(&ctx, val, 0);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 16);
+    mu_assert_str_equals("9007199254740992", buf);
+
+    /* force string-only */
+    modp_json_init(&ctx, NULL);
+    modp_json_add_uint64(&ctx, val, 1);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 18);
+
+    modp_json_init(&ctx, buf);
+    modp_json_add_uint64(&ctx, val, 1);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 18);
+    mu_assert_str_equals("\"9007199254740992\"", buf);
+
+    /* automatic stringonly mode */
+    val = (1ULL << 54);
+
+    modp_json_init(&ctx, NULL);
+    modp_json_add_uint64(&ctx, val, 0);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 19);
+
+    modp_json_init(&ctx, buf);
+    modp_json_add_uint64(&ctx, val, 0);
+    len = modp_json_end(&ctx);
+    mu_assert_int_equals(len, 19);
+    mu_assert_str_equals("\"18014398509481984\"", buf);
+
 
     return 0;
 }
@@ -272,7 +331,8 @@ static char* all_tests()
     mu_run_test(test_json_ary_1);
     mu_run_test(test_json_ary_2);
     mu_run_test(test_json_nest_1);
-    mu_run_test(test_json_int);
+    mu_run_test(test_json_int32);
+    mu_run_test(test_json_uint64);
     return 0;
 }
 

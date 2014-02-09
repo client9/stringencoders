@@ -196,26 +196,108 @@ void modp_json_add_null(modp_json_ctx* ctx)
     ctx->size += 4;
 }
 
-void modp_json_add_int(modp_json_ctx* ctx, int v)
+void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
+                          int stringonly)
 {
-    unsigned int uv = (v < 0) ? (unsigned int)(-v) : (unsigned int)(v);
     size_t r =
-       (uv >= 1000000000) ? 10 : (uv >= 100000000) ? 9 : (uv >= 10000000) ? 8 : 
-       (uv >= 1000000) ? 7 : (uv >= 100000) ? 6 : (uv >= 10000) ? 5 : 
-       (uv >= 1000) ? 4 : (uv >= 100) ? 3 : (uv >= 10) ? 2 : 1;
+        (uv >= 10000000000000000000ULL) ? 20 :
+        (uv >= 1000000000000000000ULL) ? 19 :
+        (uv >= 100000000000000000ULL) ? 18 :
+        (uv >= 10000000000000000ULL) ? 17 :
+        (uv >= 1000000000000000ULL) ? 16 :
+        (uv >= 100000000000000ULL) ? 15 :
+        (uv >= 10000000000000ULL) ? 14 :
+        (uv >= 1000000000000ULL) ? 13 :
+        (uv >= 100000000000ULL) ? 12 :
+        (uv >= 10000000000ULL) ? 11 :
+        (uv >= 1000000000ULL) ? 10 :
+        (uv >= 100000000ULL) ? 9 :
+        (uv >= 10000000ULL) ? 8 : 
+        (uv >= 1000000ULL) ? 7 :
+        (uv >= 100000ULL) ? 6 :
+        (uv >= 10000ULL) ? 5 : 
+        (uv >= 1000ULL) ? 4 :
+        (uv >= 100ULL) ? 3 :
+        (uv >= 10ULL) ? 2 :
+        1ULL;
+
+    if (uv > (1ULL << 53)) {
+        stringonly = 1;
+    }
+
+    if (ctx->dest) {
+        char* wstr = ctx->dest;
+        if (stringonly) {
+            wstr[0] = '"';
+            wstr[r+1] = '"';
+            wstr += r;
+        } else {
+            wstr += r - 1;
+        }
+
+        // Conversion. Number is reversed.
+        do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
+
+    }
+
+    if (stringonly) {
+        r += 2;
+    }
+
+    ctx->size += r;
+}
+
+void modp_json_add_int32(modp_json_ctx* ctx, int v)
+{
+    if (v > 0) {
+        return modp_json_add_uint32(ctx, (unsigned int) v);
+    }
+    unsigned int uv = (unsigned int)(-v);
+    size_t r =
+        (uv >= 1000000000) ? 10 :
+        (uv >= 100000000) ? 9 :
+        (uv >= 10000000) ? 8 : 
+        (uv >= 1000000) ? 7 :
+        (uv >= 100000) ? 6 :
+        (uv >= 10000) ? 5 : 
+        (uv >= 1000) ? 4 :
+        (uv >= 100) ? 3 :
+        (uv >= 10) ? 2 :
+        1;
 
     modp_json_add_value(ctx);
 
     if (ctx->dest) {
         char* wstr = ctx->dest;
-        if (v < 0) {
-            *wstr = '-';
-            r += 1;
-        }
-        wstr += r -1;
-
-
+        *wstr = '-';
+        wstr += r;
         // Conversion. Number is reversed.
+        do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
+    }
+
+    ctx->size += r + 1; /* +1 for '-' minus sign */
+}
+
+
+void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int uv)
+{
+    size_t r =
+        (uv >= 1000000000UL) ? 10 :
+        (uv >= 100000000UL) ? 9 :
+        (uv >= 10000000UL) ? 8 : 
+        (uv >= 1000000UL) ? 7 :
+        (uv >= 100000UL) ? 6 :
+        (uv >= 10000UL) ? 5 : 
+        (uv >= 1000UL) ? 4 :
+        (uv >= 100UL) ? 3 :
+        (uv >= 10UL) ? 2 :
+        1UL;
+
+    modp_json_add_value(ctx);
+
+    if (ctx->dest) {
+        char* wstr = ctx->dest;
+        wstr += r -1;
         do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
     }
 
