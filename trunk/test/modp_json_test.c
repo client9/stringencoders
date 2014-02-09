@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_bjson.h"
+#include "modp_json.h"
 #include "minunit.h"
 
 /**
