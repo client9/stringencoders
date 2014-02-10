@@ -166,6 +166,7 @@ static void modp_json_add_true(modp_json_ctx* ctx)
 static void modp_json_add_false(modp_json_ctx* ctx)
 {
     char* wstr;
+
     if (ctx->dest) {
         wstr = ctx->dest + ctx->size;
         wstr[0] = 'f';
@@ -179,6 +180,9 @@ static void modp_json_add_false(modp_json_ctx* ctx)
 
 void modp_json_add_bool(modp_json_ctx* ctx, int val)
 {
+
+    modp_json_add_value(ctx);
+
     if (val) {
         modp_json_add_true(ctx);
     } else {
@@ -190,6 +194,9 @@ void modp_json_add_bool(modp_json_ctx* ctx, int val)
 void modp_json_add_null(modp_json_ctx* ctx)
 {
     char* wstr;
+
+    modp_json_add_value(ctx);
+
     if (ctx->dest) {
         wstr = ctx->dest + ctx->size;
         wstr[0] = 'n';
@@ -228,6 +235,8 @@ void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
     if (uv > (1ULL << 53)) {
         stringonly = 1;
     }
+
+    modp_json_add_value(ctx);
 
     if (ctx->dest) {
         char* wstr = ctx->dest + ctx->size;
