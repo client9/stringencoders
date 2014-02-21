@@ -23,8 +23,21 @@
 #ifndef COM_MODP_STRINGENCODERS_BURL
 #define COM_MODP_STRINGENCODERS_BURL
 
-#include <string.h>
-#include "extern_c_begin.h"
+/* size_t declaration */
+
+#include <stddef.h>
+
+#ifdef __cplusplus
+#ifndef MODP_C_BEGIN_DECLS
+# define MODP_C_BEGIN_DECLS extern "C" {
+# define MODP_C_END_DECLS   }
+#endif
+#else
+# define MODP_C_BEGIN_DECLS
+# define MODP_C_END_DECLS
+#endif
+
+MODP_C_BEGIN_DECLS
 
 /**
  * Url encode a string.  This uses a very strict definition of url
@@ -118,7 +131,7 @@ size_t modp_burl_decode_raw(char* dest, const char* str, size_t len);
  */
 #define modp_burl_decode_len(A) (A + 1)
 
-#include "extern_c_end.h"
+MODP_C_END_DECLS
 
 #ifdef __cplusplus
 #include <cstring>
