@@ -14,7 +14,8 @@ SOURCES = \
 	src/modp_ascii.h src/modp_ascii.c modp_ascii_data.h \
 	src/modp_utf8.h src/modp_utf8.c \
 	src/modp_html.h src/modp_html.c \
-	src/modp_json.h src/modp_json.c
+	src/modp_json.h src/modp_json.c \
+	src/modp_messagepack.h src/modp_messagepack.c
 
 lib_LTLIBRARIES = libmodpbase64.la
 libmodpbase64_la_SOURCES = ${SOURCES}
@@ -126,7 +127,7 @@ noinst_PROGRAMS = \
 	modp_utf8_test \
 	modp_json_test \
 	cxx_test \
-	speedtest speedtest_numtoa speedtest_ascii
+	speedtest speedtest_numtoa speedtest_ascii speedtest_msg
 
 modp_b2_gen_SOURCES = src/arraytoc.c src/modp_b2_gen.c
 modp_b16_gen_SOURCES = src/arraytoc.c src/modp_b16_gen.c
@@ -141,6 +142,9 @@ speedtest_LDADD = libmodpbase64.la
 
 speedtest_numtoa_SOURCES = test/speedtest_numtoa.c
 speedtest_numtoa_LDADD = libmodpbase64.la
+
+speedtest_msg_SOURCES = test/speedtest_msg.c
+speedtest_msg_LDADD = libmodpbase64.la
 
 test/speedtest_ascii.c: modp_ascii_data.h
 speedtest_ascii_SOURCES = test/speedtest_ascii.c
