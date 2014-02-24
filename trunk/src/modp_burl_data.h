@@ -56,7 +56,7 @@ static const unsigned char gsUrlEncodeMinMap[256] = {
 '\0', '\0', '\0', '\0', '\0', '\0'
 };
 
-static const uint32_t gsHexDecodeMap[256] = {
+static const unsigned int gsHexDecodeMap[256] = {
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
