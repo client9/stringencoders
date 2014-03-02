@@ -104,7 +104,6 @@ int main(void)
   const int imax = 1000000;
   clock_t t0, t1;
   int i;
-  double last;
   double s1;
   size_t len;
   //  char* buf;
@@ -120,7 +119,6 @@ int main(void)
     //free(buf);
   }
   t1 = clock();
-  last = (double)(t1 -t0);
   s1 = (double)(t1 - t0)*(1.0 / (double)CLOCKS_PER_SEC);
   printf("%s\t%8.0f\t%lu\n", "JSON", imax/s1, len);
   fflush(stdout);
