@@ -39,7 +39,7 @@ static void modp_msgpk_raw_uint32(modp_msgpk_ctx* ctx, size_t val)
   ctx->size += 4;
 }
 
-static void modp_msgpk_raw_bytes(modp_msgpk_ctx* ctx, void* s, size_t len)
+static void modp_msgpk_raw_bytes(modp_msgpk_ctx* ctx, const void* s, size_t len)
 {
   if (ctx->dest) {
     memcpy(ctx->dest + ctx->size, s, len);
@@ -60,7 +60,7 @@ void modp_msgpk_add_bool(modp_msgpk_ctx* ctx, int val)
 void modp_msgpk_add_double(modp_msgpk_ctx* ctx, double d)
 {
    modp_msgpk_raw_byte(ctx, 0xCB);
-   modp_msgpk_raw_bytes(ctx, (void*)(&d), 8);
+   modp_msgpk_raw_bytes(ctx, (const void*)(&d), 8);
 }
 
 void modp_msgpk_add_int32(modp_msgpk_ctx* ctx, int val)
@@ -89,7 +89,7 @@ void modp_msgpk_add_string(modp_msgpk_ctx* ctx, const char* s, size_t len)
     modp_msgpk_raw_byte(ctx, 0xDB);
     modp_msgpk_raw_uint32(ctx, len);
   }
-  modp_msgpk_raw_bytes(ctx, (void*)s, len);
+  modp_msgpk_raw_bytes(ctx, (const void*)s, len);
 }
 
 void modp_msgpk_add_cstring(modp_msgpk_ctx* ctx, const char* s)
