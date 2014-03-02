@@ -104,7 +104,7 @@ int main(void)
   const int imax = 1000000;
   clock_t t0, t1;
   int i;
-  double last = 0.0;
+  double last;
   double s1;
   size_t len;
   //  char* buf;
