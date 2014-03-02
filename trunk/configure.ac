@@ -1,5 +1,5 @@
 AC_INIT(stringencoders, [v3.10.3], [nickg -at- client9 -dot- com])
-AC_PREREQ(2.69)
+AC_PREREQ(2.68)
 AM_INIT_AUTOMAKE
 LT_INIT
 AC_CONFIG_HEADERS(config.h)
