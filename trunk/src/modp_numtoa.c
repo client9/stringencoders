@@ -267,9 +267,11 @@ size_t modp_dtoa2(double value, char* str, int prec)
         /* vvvvvvvvvvvvvvvvvvv  Diff from modp_dto2 */
     } else if (frac) {
         count = prec;
-        // now do fractional part, as an unsigned number
-        // we know it is not 0 but we can have leading zeros, these
-        // should be removed
+        /*
+         * now do fractional part, as an unsigned number
+         * we know it is not 0 but we can have leading zeros, these
+         * should be removed
+         */
         while (!(frac % 10)) {
             --count;
             frac /= 10;
