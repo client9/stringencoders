@@ -1,4 +1,4 @@
-static const unsigned char gsJSONEncodeMap[256] = {
+static const uint8_t gsJSONEncodeMap[256] = {
     'A',   'A',   'A',   'A',   'A',   'A',   'A',   'A',   'b',   't',
     'n',   'A',   'f',   'r',   'A',   'A',   'A',   'A',   'A',   'A',
     'A',   'A',   'A',   'A',   'A',   'A',   'A',   'A',   'A',   'A',
