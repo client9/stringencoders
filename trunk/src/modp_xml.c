@@ -215,7 +215,7 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
         const uint8_t* pos = (const uint8_t*) memchr(src+1, ';',
                                    (size_t)(srcend - src - 1));
         if (pos == NULL) {
-            // if not found, just copy
+            /* if not found, just copy */
             *dest++ = (char) *src++;
             continue;
         }
@@ -224,7 +224,7 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
             if (*(src+2) == 'x' || *(src+2) == 'X') {
                 unichar = modp_xml_parse_hex_entity((const char*)(src + 3), elen - 3);
             } else {
-                //
+
                 unichar = modp_xml_parse_dec_entity((const char*)(src + 2), elen - 2);
             }
             if (unichar == 0) {
@@ -252,13 +252,13 @@ size_t modp_xml_decode(char* dest, const char* s, size_t len)
             *dest++ = '>';
             src = pos +1 ;
         } else {
-            // if not found, just copy
+            /* if not found, just copy */
             *dest++ = (char) *src++;
         }
     }
 
     *dest = '\0';
-    return (size_t)(dest - deststart); // compute "strlen" of dest.
+    return (size_t)(dest - deststart); /* compute "strlen" of dest. */
 }
 
 size_t modp_xml_encode(char* dest, const char* src, size_t len)
