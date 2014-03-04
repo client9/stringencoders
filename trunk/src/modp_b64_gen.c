@@ -61,6 +61,11 @@ static void clearDecodeTable(uint32_t* ary)
 
 int main(int argc, char** argv)
 {
+    uint32_t x;
+    uint32_t i = 0;
+    char cary[256];
+    uint32_t ary[256];
+
     /*  over-ride standard alphabet */
     if (argc == 2) {
         unsigned char* replacements = (unsigned char*) argv[1];
@@ -74,10 +79,6 @@ int main(int argc, char** argv)
         padchar = replacements[2];
     }
 
-    uint32_t x;
-    uint32_t i = 0;
-    char cary[256];
-    uint32_t ary[256];
 
     printStart();
 
