@@ -12,7 +12,7 @@
  * MODP_B2 -- Base 2 (binary) encode/decoder
  * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2007, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * Released under bsd license.  See modp_b2.c for details.

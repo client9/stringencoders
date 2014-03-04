@@ -13,7 +13,7 @@
  * <pre>
  * High Performance Base85 Encoder / Decoder
  *
- * Copyright &copy; 2006,2007 Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006,2007 Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * http://code.google.com/p/stringencoders/
