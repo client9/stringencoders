@@ -8,13 +8,15 @@
 
 #include "modp_stdint.h"
 
-// other interesting references on num to string convesion
-// http://www.jb.man.ac.uk/~slowe/cpp/itoa.html
-// and http://www.ddj.com/dept/cpp/184401596?pgno=6
-
-// Version 19-Nov-2007
-// Fixed round-to-even rules to match printf
-//   thanks to Johannes Otepka
+/*
+ * other interesting references on num to string convesion
+ * http://www.jb.man.ac.uk/~slowe/cpp/itoa.html
+ * and http://www.ddj.com/dept/cpp/184401596?pgno=6
+ *
+ * Version 19-Nov-2007
+ * Fixed round-to-even rules to match printf
+ *   thanks to Johannes Otepka
+ */
 
 /**
  * Powers of 10
@@ -34,14 +36,14 @@ static void strreverse(char* begin, char* end)
 size_t modp_itoa10(int32_t value, char* str)
 {
     char* wstr=str;
-    // Take care of sign
+    /* Take care of sign */
     uint32_t uvalue = (value < 0) ? (uint32_t)(-value) : (uint32_t)(value);
-    // Conversion. Number is reversed.
+    /* Conversion. Number is reversed. */
     do *wstr++ = (char)(48 + (uvalue % 10)); while(uvalue /= 10);
     if (value < 0) *wstr++ = '-';
     *wstr='\0';
 
-    // Reverse string
+    /* Reverse string */
     strreverse(str,wstr-1);
     return (size_t)(wstr - str);
 }
@@ -49,10 +51,10 @@ size_t modp_itoa10(int32_t value, char* str)
 size_t modp_uitoa10(uint32_t value, char* str)
 {
     char* wstr=str;
-    // Conversion. Number is reversed.
+    /* Conversion. Number is reversed. */
     do *wstr++ = (char)(48 + (value % 10)); while (value /= 10);
     *wstr='\0';
-    // Reverse string
+    /* Reverse string */
     strreverse(str, wstr-1);
     return (size_t)(wstr - str);
 }
@@ -62,12 +64,12 @@ size_t modp_litoa10(int64_t value, char* str)
     char* wstr=str;
     uint64_t uvalue = (value < 0) ? (uint64_t)(-value) : (uint64_t)(value);
 
-    // Conversion. Number is reversed.
+    /* Conversion. Number is reversed. */
     do *wstr++ = (char)(48 + (uvalue % 10)); while(uvalue /= 10);
     if (value < 0) *wstr++ = '-';
     *wstr='\0';
 
-    // Reverse string
+    /* Reverse string */
     strreverse(str,wstr-1);
     return (size_t)(wstr - str);
 }
@@ -75,10 +77,10 @@ size_t modp_litoa10(int64_t value, char* str)
 size_t modp_ulitoa10(uint64_t value, char* str)
 {
     char* wstr=str;
-    // Conversion. Number is reversed.
+    /* Conversion. Number is reversed. */
     do *wstr++ = (char)(48 + (value % 10)); while (value /= 10);
     *wstr='\0';
-    // Reverse string
+    /* Reverse string */
     strreverse(str, wstr-1);
     return (size_t)(wstr - str);
 }
@@ -158,20 +160,21 @@ size_t modp_dtoa(double value, char* str, int prec)
         }
     } else {
         int count = prec;
-        // now do fractional part, as an unsigned number
+        /* now do fractional part, as an unsigned number */
         do {
             --count;
             *wstr++ = (char)(48 + (frac % 10));
         } while (frac /= 10);
-        // add extra 0s
+        /* add extra 0s */
         while (count-- > 0) *wstr++ = '0';
-        // add decimal
+        /* add decimal */
         *wstr++ = '.';
     }
 
-    // do whole part
-    // Take care of sign
-    // Conversion. Number is reversed.
+    /* do whole part
+     * Take care of sign
+     * Conversion. Number is reversed.
+     */
     do *wstr++ = (char)(48 + (whole % 10)); while (whole /= 10);
     if (neg) {
         *wstr++ = '-';
@@ -182,8 +185,9 @@ size_t modp_dtoa(double value, char* str, int prec)
 }
 
 
-// This is near identical to modp_dtoa above
-//   The differnce is noted below
+/* This is near identical to modp_dtoa above
+ *   The differnce is noted below
+ */
 size_t modp_dtoa2(double value, char* str, int prec)
 {
     /* Hacky test for NaN
@@ -260,7 +264,7 @@ size_t modp_dtoa2(double value, char* str, int prec)
             ++whole;
         }
 
-        //vvvvvvvvvvvvvvvvvvv  Diff from modp_dto2
+        /* vvvvvvvvvvvvvvvvvvv  Diff from modp_dto2 */
     } else if (frac) {
         count = prec;
         // now do fractional part, as an unsigned number
@@ -270,22 +274,23 @@ size_t modp_dtoa2(double value, char* str, int prec)
             --count;
             frac /= 10;
         }
-        //^^^^^^^^^^^^^^^^^^^  Diff from modp_dto2
+        /*^^^^^^^^^^^^^^^^^^^  Diff from modp_dto2 */
 
-        // now do fractional part, as an unsigned number
+        /* now do fractional part, as an unsigned number */
         do {
             --count;
             *wstr++ = (char)(48 + (frac % 10));
         } while (frac /= 10);
-        // add extra 0s
+        /* add extra 0s */
         while (count-- > 0) *wstr++ = '0';
-        // add decimal
+        /* add decimal */
         *wstr++ = '.';
     }
 
-    // do whole part
-    // Take care of sign
-    // Conversion. Number is reversed.
+    /* do whole part
+     * Take care of sign
+     * Conversion. Number is reversed.
+     */
     do *wstr++ = (char)(48 + (whole % 10)); while (whole /= 10);
     if (neg) {
         *wstr++ = '-';
