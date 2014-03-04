@@ -8,12 +8,11 @@
 #define _BSD_SOURCE
 #define _XOPEN_SOURCE 500
 #define _POSIX_C_SOURCE 200112L
-
-#include "modp_numtoa.h"
+#include <stdio.h>
 #include <time.h>
 #include <stdint.h>
 
-#include <stdio.h>
+#include "modp_numtoa.h"
 
 int main(void)
 {
