@@ -1,14 +1,18 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
-#include "modp_numtoa.h"
-#include <time.h>
-#include <stdint.h>
-
 /* needed since we compile as C90
  * trick gcc to accepting snprintf which is a C99-ism
  */
 #define _ISOC99_SOURCE
+#define _BSD_SOURCE
+#define _XOPEN_SOURCE 500
+#define _POSIX_C_SOURCE 200112L
+
+#include "modp_numtoa.h"
+#include <time.h>
+#include <stdint.h>
+
 #include <stdio.h>
 
 int main(void)
