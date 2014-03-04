@@ -90,7 +90,7 @@ int modp_html_decode_char_at(const char* src, size_t len, size_t* consumed)
             ch = (unsigned char) (*(src+3));
             ch = gsHexDecodeMap[ch];
             if (ch == 256) {
-                // degenerate case  '&#[?]'
+                /* degenerate case  '&#[?]' */
                 return '&';
             }
             val = ch;
