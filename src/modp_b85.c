@@ -62,17 +62,21 @@ size_t modp_b85_decode(char* out, const char* data, size_t len)
 {
     size_t i;
     int j;
+    uint32_t tmp;
+    uint32_t digit;
+    uint32_t* o2;
     const size_t buckets = len / 5;
     const uint8_t* d2 = (const uint8_t*) data;
+
     if (len % 5 != 0) {
         return (size_t)-1;
     }
 
-    uint32_t* o2  = (uint32_t*)out;
+    o2  = (uint32_t*)out;
     for (i = 0; i < buckets; ++i) {
-        uint32_t tmp = 0;
+        tmp = 0;
         for (j = 0; j < 5; ++j) {
-            uint32_t digit =  gsCharToInt[(uint32_t) *d2++];
+            digit =  gsCharToInt[(uint32_t) *d2++];
             if (digit >= 85) {
                 return (size_t)-1;
             }
