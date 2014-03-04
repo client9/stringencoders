@@ -248,7 +248,7 @@ void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
             wstr += r - 1;
         }
 
-        // Conversion. Number is reversed.
+        /* Conversion. Number is reversed. */
         do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
 
     }
@@ -285,7 +285,7 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
         wstr = ctx->dest + ctx->size;
         *wstr = '-';
         wstr += r;
-        // Conversion. Number is reversed.
+        /* Conversion. Number is reversed. */
         do *wstr-- = (char)(48 + (uv % 10)); while (uv /= 10);
     }
 
@@ -344,9 +344,10 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
     unsigned char x;
     unsigned char val;
 
-    // if 0, do nothing
-    // if 'A', hex escape
-    // else, \\ + value
+    /* if 0, do nothing
+     * if 'A', hex escape
+     * else, \\ + value
+     */
     *dest++ = '"';
 
     while (s < srcend) {
