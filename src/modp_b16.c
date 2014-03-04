@@ -51,7 +51,7 @@ size_t modp_b16_encode(char* dest, const char* str, size_t len)
     size_t i;
     const size_t buckets = len >> 2; /* i.e. i / 4 */
     const size_t leftover = len & 0x03; /* i.e. i % 4 */
-
+    const uint8_t* srcChar;
     uint8_t* p = (uint8_t*) dest;
     uint8_t t1, t2, t3, t4;
     const uint32_t* srcInt = (const uint32_t*) str;
@@ -80,7 +80,7 @@ size_t modp_b16_encode(char* dest, const char* str, size_t len)
         *p++ = gsHexEncodeC2[t4];
     }
 
-    const uint8_t* srcChar = (const uint8_t*) srcInt;
+    srcChar = (const uint8_t*) srcInt;
     switch (leftover) {
     case 0:
         break;
