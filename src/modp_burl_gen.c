@@ -60,7 +60,7 @@ static void urlencodeminmap(void)
 
     int imax = sizeof(safechar);
 
-    // 0 means unsafe
+    /* 0 means unsafe */
     for (i = 0; i < 256; ++i) {
         urlEncodeMap[i] = 0;
     }
