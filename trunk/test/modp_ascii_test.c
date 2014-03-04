@@ -146,7 +146,7 @@ static char* testToUpper(void)
     modp_toupper(buf1, (size_t)256);
     mu_assert(memcmp(expected, buf1, (size_t)256) == 0);
 
-    // do other sizes to check
+    /* do other sizes to check */
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_toupper(buf1, (size_t)255);
     mu_assert(memcmp(expected, buf1, (size_t)255) == 0);
@@ -174,7 +174,7 @@ static char* testToLower(void)
     modp_tolower(buf1, (size_t)256);
     mu_assert(memcmp(expected, buf1, (size_t)256) == 0);
 
-    // do other sizes to check
+    /* do other sizes to check */
     for (i = 0; i < 256; ++i) buf1[i] = (char) i;
     modp_tolower(buf1, (size_t)255);
     mu_assert(memcmp(expected, buf1, (size_t)255) == 0);
@@ -206,7 +206,7 @@ static char* testToUpperCopy(void)
     modp_toupper_copy(output, buf1, (size_t)256);
     mu_assert(memcmp(expected, output, (size_t)256) == 0);
 
-    // do other sizes to check
+    /* do other sizes to check */
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_toupper_copy(output, buf1, (size_t)255);
     mu_assert(memcmp(expected, output, (size_t)255) == 0);
@@ -238,7 +238,7 @@ static char* testToLowerCopy(void)
     modp_tolower_copy(output, buf1, (size_t)256);
     mu_assert(memcmp(expected, output, (size_t)256) == 0);
 
-    // do other sizes to check
+    /* do other sizes to check */
     for (i = 0; i < 256; ++i) output[i] = 0;
     modp_tolower_copy(output, buf1, (size_t)255);
     mu_assert(memcmp(expected, output, (size_t)255) == 0);
