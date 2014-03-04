@@ -108,7 +108,7 @@ void modp_msgpk_map_open(modp_msgpk_ctx* ctx, size_t count)
     modp_msgpk_raw_byte(ctx, 0xDF);
     modp_msgpk_raw_uint32(ctx, count);
   }
-  // DO ASSERT
+  /* DO ASSERT */
 }
 
 void modp_msgpk_ary_open(modp_msgpk_ctx* ctx, size_t count)
@@ -122,5 +122,5 @@ void modp_msgpk_ary_open(modp_msgpk_ctx* ctx, size_t count)
     modp_msgpk_raw_byte(ctx, 0xDD);
     modp_msgpk_raw_uint32(ctx, count);
   }
-  // ASSERT
+  /* ASSERT */
 }
