@@ -1,12 +1,16 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
-#include "modp_numtoa.h"
+/* we compile as C90 but use snprintf */
+#define _ISOC99_SOURCE
+
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include "minunit.h"
+
+#include "modp_numtoa.h"
 
 /* Need only for INFINITY and optionally NAN macros */
 /* We do not link with -lm */

@@ -14,7 +14,7 @@
  */
 static char* testEndian(void)
 {
-    // this test that "1" is "!!!!#"
+    /* this test that "1" is "!!!!#" */
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
@@ -89,8 +89,8 @@ static char* testEncodeDecode(void)
     size_t d;
     int i,j,k,l;
     for (i = 0; i < 256; ++i) {
-        for (j = 0; j < 256; j+=16) { // save some time +=16
-            for (k = 0; k < 256; k += 8) { // save some time += 8
+        for (j = 0; j < 256; j+=16) { /* save some time +=16 */
+            for (k = 0; k < 256; k += 8) { /* save some time += 8 */
                 for (l = 0; l < 256; ++l) {
                     ibuf[0] = (char) i;
                     ibuf[1] = (char) j;

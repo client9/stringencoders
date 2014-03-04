@@ -14,7 +14,7 @@
  */
 static char* testEndian(void)
 {
-    // this test that "1" is "AAAB"
+    /* this test that "1" is "AAAB" */
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)1};
@@ -43,7 +43,7 @@ static char* testEndian(void)
 static char* testEmpty(void)
 {
     char buf[10];
-    const char* input = 0; // null
+    const char* input = 0; /* null */
     size_t d;
 
     memset(buf, 1, sizeof(buf));
@@ -73,7 +73,7 @@ static char* testPadding(void)
     char rbuf[10];
     size_t d = 0;
 
-    // 1 in, 4 out
+    /* 1 in, 4 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)1);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -85,7 +85,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[0]);
     mu_assert_int_equals(-1, rbuf[1]);
 
-    // 2 in, 4 out
+    /* 2 in, 4 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)2);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -98,7 +98,7 @@ static char* testPadding(void)
     mu_assert_int_equals_msg(msg, 1, rbuf[1]);
     mu_assert_int_equals_msg(msg, -1, rbuf[2]);
 
-    // 3 in, 4 out
+    /* 3 in, 4 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)3);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -112,7 +112,7 @@ static char* testPadding(void)
     mu_assert_int_equals_msg(msg, 1, rbuf[2]);
     mu_assert_int_equals_msg(msg, -1, rbuf[3]);
 
-    // 4 in, 8 out
+    /* 4 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)4);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -127,7 +127,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[3]);
     mu_assert_int_equals(-1, rbuf[4]);
 
-    // 5 in, 8 out
+    /* 5 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)5);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -143,7 +143,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[4]);
     mu_assert_int_equals(-1, rbuf[5]);
 
-    // 6 in, 8 out
+    /* 6 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
     d = modp_b64_encode(obuf, ibuf, (size_t)6);
     sprintf(msg, "b64='%s', d=%d", obuf, (int)d);
@@ -173,14 +173,14 @@ static char* testEncodeDecode(void)
     char obuf[5];
     char rbuf[4];
     char msg[100];
-    msg[0] = 0; // make msg an empty string
+    msg[0] = 0; /* make msg an empty string */
     unsigned int i,j,k;
     size_t d = 0;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             for (k= 0; k < 256; ++k) {
-                // comment this out.. it really slows down the test
-                // sprintf(msg, "(i,j,k) = (%d,%d,%d):", i,j,k);
+                /* comment this out.. it really slows down the test */
+                /* sprintf(msg, "(i,j,k) = (%d,%d,%d):", i,j,k); */
                 ibuf[0] = (char)((unsigned char) i);
                 ibuf[1] = (char)((unsigned char) j);
                 ibuf[2] = (char)((unsigned char) k);

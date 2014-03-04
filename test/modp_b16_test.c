@@ -9,7 +9,7 @@
 
 static char* testEndian(void)
 {
-    // this test that "0001" is "00000001"
+    /* this test that "0001" is "00000001" */
     char buf[100];
     char result[10];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
@@ -38,18 +38,18 @@ static char* testEndian(void)
 
 static char* testEncodeDecode(void)
 {
-    // 2 bytes == 4 bytes out
+    /* 2 bytes == 4 bytes out */
     char ibuf[2];
     char obuf[5];
     char rbuf[4];
-    char msg[100]; // for test messages output
-    msg[0] = 0; // make msg an empty string
+    char msg[100]; /* for test messages output */
+    msg[0] = 0; /* make msg an empty string */
     unsigned int i,j;
     size_t d;
 
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
-            // comment this out.. it really slows down the test
+            /* comment this out.. it really slows down the test */
             sprintf(msg, "(i,j) = (%u,%u):", i,j);
             ibuf[0] = (char)((unsigned char) i);
             ibuf[1] = (char)((unsigned char) j);
@@ -111,13 +111,13 @@ static char* testOddEncode(void)
     char obuf[100];
     char ibuf[100];
 
-    // oddball 1 char.
+    /* oddball 1 char. */
     ibuf[0] = 1;
     mu_assert_int_equals(2, modp_b16_encode(obuf, ibuf, (size_t)1));
     mu_assert_int_equals(obuf[0], '0');
     mu_assert_int_equals(obuf[1], '1');
 
-    // oddball 2 char.
+    /* oddball 2 char. */
     ibuf[0] = 0;
     ibuf[1] = 1;
     mu_assert_int_equals(4, modp_b16_encode(obuf, ibuf, (size_t)2));
@@ -126,7 +126,7 @@ static char* testOddEncode(void)
     mu_assert_int_equals(obuf[2], '0');
     mu_assert_int_equals(obuf[3], '1');
 
-    // oddball 1 char.
+    /* oddball 1 char. */
     ibuf[0] = 0;
     ibuf[1] = 0;
     ibuf[2] = 1;
@@ -208,12 +208,12 @@ static char* testEmptyInput(void)
     memset(obuf, 0, sizeof(obuf));
     memset(ibuf, 0, sizeof(ibuf));
 
-    // encode 0 bytes, get a null byte back
+    /* encode 0 bytes, get a null byte back */
     obuf[0] = 1;
     mu_assert_int_equals(0, modp_b16_encode(obuf, ibuf, (size_t)0));
     mu_assert_int_equals(0, obuf[0]);
 
-    // decode 0 bytes, buffer is untouched
+    /* decode 0 bytes, buffer is untouched */
     obuf[0] = 1;
     mu_assert_int_equals(0, modp_b16_decode(obuf, ibuf, (size_t)0));
     mu_assert_int_equals(1, obuf[0]);
@@ -245,9 +245,11 @@ static char* testLengths(void)
 }
 
 static char* testValgrind(void) {
-    // an input of 3 chars, means output is 3*2+1 = 7 chars
-    // However, the code works on output in values of 4bytes
-    //   so valgrind complains about use stomping on memory
+    /*
+     * an input of 3 chars, means output is 3*2+1 = 7 chars
+     * However, the code works on output in values of 4bytes
+     * so valgrind complains about use stomping on memory
+     */
     const size_t buflen1 = 3;
     const size_t buflen2 = 7;
     char* ibuf = (char*)malloc(buflen1);
