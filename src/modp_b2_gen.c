@@ -34,6 +34,5 @@ int main(void)
 {
     binary_encodemap();
 
-    //hexdecodemap();
     return 0;
 }
