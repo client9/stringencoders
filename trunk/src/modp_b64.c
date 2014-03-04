@@ -199,8 +199,7 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
     uint8_t* p;
     uint32_t x;
     uint32_t* destInt;
-    const uint32_t* srcInt;
-
+    const uint32_t* srcInt = (const uint32_t*) src;
     uint32_t y = *srcInt++;
 
     if (len == 0) return 0;
