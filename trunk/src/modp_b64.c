@@ -252,12 +252,12 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
 #ifndef DOPAD
     case 1:  /* with padding this is an impossible case */
         x = d0[y & 0xff];
-        *p = *((uint8_t*)(&x)); // i.e. first char/byte in int
+        *p = *((uint8_t*)(&x)); /* i.e. first char/byte in int */
         break;
 #endif
-    case 2: // * case 2, 1  output byte */
+    case 2: /* case 2, 1  output byte */
         x = d0[y & 0xff] | d1[y >> 8 & 0xff];
-        *p = *((uint8_t*)(&x)); // i.e. first char
+        *p = *((uint8_t*)(&x)); /* i.e. first char */
         break;
     default: /* case 3, 2 output bytes */
         x = d0[y & 0xff] |
