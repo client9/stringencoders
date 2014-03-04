@@ -42,13 +42,13 @@ static void hexdecodemap(void)
         map2[i] = map1[i] << 4;
     }
 
-    // upper
+    /* upper */
     for (i = 'A'; i <= 'F'; ++i) {
         map1[i] = i - 'A' + 10;
         map2[i] = map1[i] << 4;
     }
 
-    // lower
+    /* lower */
     for (i = 'a'; i <= 'f'; ++i) {
         map1[i] = i - 'a' + 10;
         map2[i] = map1[i] << 4;
