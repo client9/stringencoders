@@ -106,7 +106,6 @@ int main(void)
   int i;
   double s1;
   size_t len;
-  //  char* buf;
   char buf2[512];
 
   printf("ALG\tEncodes/Sec\tBYTES\n");
@@ -114,9 +113,7 @@ int main(void)
   t0 = clock();
   for (i = 0; i < imax; ++i) {
     len = test_json_encode(NULL);
-    //buf = malloc(len);
     len = test_json_encode(buf2);
-    //free(buf);
   }
   t1 = clock();
   s1 = (double)(t1 - t0)*(1.0 / (double)CLOCKS_PER_SEC);
@@ -126,9 +123,7 @@ int main(void)
   t0 = clock();
   for (i = 0; i < imax; ++i) {
     len = test_msgpk_encode(NULL);
-    //buf = malloc(len);
     len = test_msgpk_encode(buf2);
-    //free(buf);
   }
   t1 = clock();
   s1 = (double)(t1 - t0)*(1.0 / (double)CLOCKS_PER_SEC);
