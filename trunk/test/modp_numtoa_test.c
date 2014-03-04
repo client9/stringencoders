@@ -159,7 +159,6 @@ static char* testDoubleToA(void)
                 sprintf(msg, "whole=%f, frac=%f, prec=%d -- ",
                         wholes[i], frac[j],(int) k);
                 sprintf(buf1, formats[k], d);
-                //printf("%s\n", buf1);
                 len = modp_dtoa(d, buf2, (int)k);
                 mu_assert_int_equals(len, strlen(buf1));
                 mu_assert_str_equals_msg(msg, buf1, buf2);
@@ -174,7 +173,7 @@ static char* testDoubleToA(void)
                     mu_assert_int_equals(len, strlen(buf1));
                     mu_assert_str_equals_msg(msg, buf1, buf2);
 
-                    // find the '.', and see how many chars are after it
+                    /* find the '.', and see how many chars are after it */
                     tmp = buf2;
                     while (*tmp != '.' &&  *tmp != '\0') {
                         ++tmp;
@@ -223,9 +222,10 @@ static char* testDoubleToA(void)
     return 0;
 }
 
-// Helper function
-//  Removes trailing zeros
-// this is horible but it's just for testing.
+/* Helper function
+ *  Removes trailing zeros
+ * this is horible but it's just for testing.
+ */
 static void stripTrailingZeros(char* buf)
 {
     size_t i;
@@ -237,7 +237,7 @@ static void stripTrailingZeros(char* buf)
         }
     }
 
-    // it's just an integer
+    /* it's just an integer */
     if (!hasdot) {
         return;
     }
@@ -303,7 +303,7 @@ static char* testDoubleToA2(void)
 
                 if ((int)wholes[i] != 0 && (int)(frac[j]*10000000) != 0) {
 
-                    // find the '.', and see how many chars are after it
+                    /* find the '.', and see how many chars are after it */
                     tmp = buf2;
                     while (*tmp != '.' &&  *tmp != '\0') {
                         ++tmp;
@@ -366,7 +366,7 @@ static char* testDoubleToA2(void)
     mu_assert_int_equals(len, strlen(buf2));
     mu_assert_str_equals(buf1, buf2);
 
-    // test bad precision values
+    /* test bad precision values */
     d = 1.1;
     len = modp_dtoa(d, buf2, -1);
     mu_assert_int_equals(len, strlen(buf2));
@@ -414,7 +414,7 @@ static char* testOverflowITOA(void) {
     return 0;
 }
 
-// Test NaN and Infinity behavior
+/* Test NaN and Infinity behavior */
 static char* testDTOANonFinite(void) {
     char buf2[100];
     double d;
@@ -440,7 +440,7 @@ static char* testDTOAInfinity(void)
     char buf2[100];
     double d = INFINITY;
 
-    // test libc support
+    /* test libc support */
     sprintf(buf1, "%f", d);
     mu_assert_str_equals("inf", buf1);
 
@@ -468,11 +468,11 @@ static char* testDTOAandNAN(void)
 
     d = NAN;
 
-    // test libc support
+    /* test libc support */
     sprintf(buf1, "%f", d);
     mu_assert_str_equals("nan", buf1);
 
-    // now test ours
+    /* now test ours */
     buf2[0] = '\0';
     modp_dtoa(d, buf2, 6);
     mu_assert_str_equals("nan", buf2);
