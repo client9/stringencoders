@@ -1,5 +1,9 @@
-#include "modp_messagepack.h"
+
 #include <stddef.h>
+
+#include "modp_stdint.h"
+#include "modp_messagepack.h"
+
 
 void modp_msgpk_init(modp_msgpk_ctx* ctx, char* dest)
 {
@@ -32,7 +36,7 @@ static void modp_msgpk_raw_unit16(modp_msgpk_ctx* ctx, size_t val)
 
 static void modp_msgpk_raw_uint32(modp_msgpk_ctx* ctx, size_t val)
 {
-  unsigned int nval = (unsigned int) val;
+  uint32_t nval = (uint32_t) val;
   if (ctx->dest) {
     memcpy(ctx->dest + ctx->size, (void*)(&nval), 4);
   }
@@ -66,10 +70,10 @@ void modp_msgpk_add_double(modp_msgpk_ctx* ctx, double d)
 void modp_msgpk_add_int32(modp_msgpk_ctx* ctx, int val)
 {
    modp_msgpk_raw_byte(ctx, 0xD2);
-   modp_msgpk_raw_uint32(ctx, (unsigned int)val);
+   modp_msgpk_raw_uint32(ctx, (uint32_t)val);
 }
 
-void modp_msgpk_add_uint32(modp_msgpk_ctx* ctx, unsigned int val)
+void modp_msgpk_add_uint32(modp_msgpk_ctx* ctx, uint32_t val)
 {
    modp_msgpk_raw_byte(ctx, 0xCE);
    modp_msgpk_raw_uint32(ctx, val);
@@ -81,7 +85,7 @@ void modp_msgpk_add_string(modp_msgpk_ctx* ctx, const char* s, size_t len)
     modp_msgpk_raw_byte(ctx, 0xA0 | len);
   } else if (len < 256) {
     modp_msgpk_raw_byte(ctx, 0xD9);
-    modp_msgpk_raw_byte(ctx, (unsigned char) len);
+    modp_msgpk_raw_byte(ctx, (uint8_t) len);
   } else if (len < 65535) {
     modp_msgpk_raw_byte(ctx, 0xDA);
     modp_msgpk_raw_unit16(ctx, len);

@@ -5,10 +5,10 @@
 
 static void hexencodemap_char(void)
 {
-    static const unsigned char sHexChars[] = "0123456789ABCDEF";
+    static const uint8_t sHexChars[] = "0123456789ABCDEF";
     int i;
-    unsigned char e1[256];
-    unsigned char e2[256];
+    uint8_t e1[256];
+    uint8_t e2[256];
 
     for (i = 0;i < 256; ++i) {
         e1[i] = 0;

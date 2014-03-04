@@ -53,7 +53,7 @@ size_t modp_b2_encode(char* dest, const char* str, size_t len)
     const uint8_t* orig = (const uint8_t*) str;
 #if 0
     /* THIS IS A STANDARD VERSION */
-    static const unsigned char gsBinaryChars[] = "01";
+    static const uint8_t gsBinaryChars[] = "01";
     int i,j;
     for (i = 0; i < len; ++i) {
         for (j = 0; j <= 7; ++j) {
