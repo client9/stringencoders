@@ -2,8 +2,8 @@
 
 def chararray_to_c(ary, name):
     parts = []
-    parts.append("static const unsigned char {0}[{1}] = {{".format(name,
-                                                                   len(ary)))
+    parts.append("static const uint8_t {0}[{1}] = {{".format(name,
+                                                             len(ary)))
     count = 0;
     for val in ary:
         if (count % 10 == 0):
@@ -34,5 +34,5 @@ def json_encode_map():
 
 if __name__ == '__main__':
 
-    with open('modp_json_data_h', 'w') as fd:
+    with open('modp_json_data.h', 'w') as fd:
         fd.write(chararray_to_c(json_encode_map(), "gsJSONEncodeMap"))

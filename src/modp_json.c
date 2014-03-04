@@ -207,7 +207,7 @@ void modp_json_add_null(modp_json_ctx* ctx)
     ctx->size += 4;
 }
 
-void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long uv,
+void modp_json_add_uint64(modp_json_ctx* ctx, uint64_t uv,
                           int stringonly)
 {
     size_t r =

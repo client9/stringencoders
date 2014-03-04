@@ -77,7 +77,7 @@ void modp_json_add_double(modp_json_ctx* ctx, double d);
 
 void modp_json_add_int32(modp_json_ctx* ctx, int val);
 
-void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int val);
+void modp_json_add_uint32(modp_json_ctx* ctx, uint32_t val);
 
 /**
  * JSON/Javascript only supports a single number type represented by a
@@ -92,7 +92,7 @@ void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int val);
  * double value.
  *
  */
-void modp_json_add_uint64(modp_json_ctx* ctx, unsigned long long val,
+void modp_json_add_uint64(modp_json_ctx* ctx, uint64_t val,
                           int stringonly);
 
 /*

@@ -106,6 +106,9 @@ modp_burl_data.h: modp_burl_gen
 modp_bjavascript_data.h: modp_bjavascript_gen
 	./modp_bjavascript_gen > modp_bjavascript_data.h
 
+modp_json_data.h: modp_json_gen.py
+	./modp_json_gen.py
+
 noinst_PROGRAMS = \
 	modp_b2_gen modp_b16_gen modp_b64_gen modp_b85_gen \
 	modp_burl_gen modp_ascii_gen modp_bjavascript_gen
