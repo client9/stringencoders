@@ -25,7 +25,7 @@ static void hexencodemap_char(void)
 }
 
 
-// exact same thing as one used on urlencode
+/*  exact same thing as one used on urlencode */
 static void hexdecodemap(void)
 {
     uint32_t i;
