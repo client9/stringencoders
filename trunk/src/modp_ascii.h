@@ -14,7 +14,7 @@
  * MODP_ASCII -- Simple ascii manipulation (uppercase, lowercase, etc)
  * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2007, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * Released under bsd license.  See modp_ascii.c for details.

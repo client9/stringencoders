@@ -13,7 +13,7 @@
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
  * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2005-2007, Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005-2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * Released under bsd license.  See modp_b16.c for details.
