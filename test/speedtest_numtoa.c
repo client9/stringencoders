@@ -2,7 +2,6 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 #include "modp_numtoa.h"
-#include <stdio.h>
 #include <time.h>
 #include <stdint.h>
 
@@ -10,6 +9,7 @@
  * trick gcc to accepting snprintf which is a C99-ism
  */
 #define _ISOC99_SOURCE
+#include <stdio.h>
 
 int main(void)
 {
