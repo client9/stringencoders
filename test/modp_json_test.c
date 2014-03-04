@@ -1,11 +1,16 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
+/* we compile as C90 but use snprintf */
+#define _ISOC99_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_json.h"
+
 #include "minunit.h"
+
+#include "modp_json.h"
 
 /**
  * Smoke test
@@ -34,14 +39,14 @@ static char* test_json_map_empty()
     modp_json_ctx ctx;
     const int expected = 2;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_map_close(&ctx);
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_map_close(&ctx);
@@ -60,7 +65,7 @@ static char* test_json_map_1()
     modp_json_ctx ctx;
     const int expected = 13;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -69,7 +74,7 @@ static char* test_json_map_1()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -90,7 +95,7 @@ static char* test_json_map_2()
     modp_json_ctx ctx;
     const int expected = 21;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -101,7 +106,7 @@ static char* test_json_map_2()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -125,7 +130,7 @@ static char* test_json_nest_1()
     modp_json_ctx ctx;
     const int expected = 17;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -137,7 +142,7 @@ static char* test_json_nest_1()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_map_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -163,14 +168,14 @@ static char* test_json_ary_empty()
     modp_json_ctx ctx;
     const int expected = 2;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_ary_close(&ctx);
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_ary_close(&ctx);
@@ -188,7 +193,7 @@ static char* test_json_ary_1()
     modp_json_ctx ctx;
     const int expected = 7;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -196,7 +201,7 @@ static char* test_json_ary_1()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -217,7 +222,7 @@ static char* test_json_ary_2()
     modp_json_ctx ctx;
     const int expected = 13;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -226,7 +231,7 @@ static char* test_json_ary_2()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, expected);
 
-    // do real thing
+    /* do real thing */
     modp_json_init(&ctx, buf);
     modp_json_ary_open(&ctx);
     modp_json_add_string(&ctx, "foo", 3);
@@ -246,7 +251,7 @@ static char* test_json_int32()
     char buf[100];
     modp_json_ctx ctx;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, NULL);
     modp_json_add_int32(&ctx, 123);
     len = modp_json_end(&ctx);
@@ -279,7 +284,7 @@ static char* test_json_uint64()
     unsigned long long val = (1ULL << 53);
     modp_json_ctx ctx;
 
-    // do count
+    /* do count */
     modp_json_init(&ctx, NULL);
     modp_json_add_uint64(&ctx, val, 0);
     len = modp_json_end(&ctx);
