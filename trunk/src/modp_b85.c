@@ -92,15 +92,16 @@ size_t modp_b85_decode(char* out, const char* data, size_t len)
  */
 size_t modp_b85_encode(char* out, const char* src, size_t len)
 {
+    size_t i;
+    uint32_t tmp;
     const uint32_t* sary = (const uint32_t*) src;
     const size_t buckets = len / 4;
     if (len % 4 != 0) {
         return (size_t)-1;
     }
 
-    size_t i;
     for (i = 0; i < buckets; ++i) {
-        uint32_t tmp = *sary++;
+        tmp = *sary++;
         tmp = htonl(tmp);
 
         /* this crazy function */
