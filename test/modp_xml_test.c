@@ -1,11 +1,15 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
+/* we compile as C90 but use snprintf */
+#define _ISOC99_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_xml.h"
+
 #include "minunit.h"
+
+#include "modp_xml.h"
 
 /**
  * Test empty input to decode
@@ -233,10 +237,10 @@ static char* testXmlUnicodeCodePoints(void)
         mu_assert_int_equals(-1, modp_xml_validate_unicode(ranges[i]));
     }
 
-    // too big
+    /* too big */
     mu_assert_int_equals(-1, modp_xml_validate_unicode(0xFFFFFF));
 
-    // ok
+    /* ok */
     mu_assert_int_equals(0x41, modp_xml_validate_unicode(0x41));
     return 0;
 }
@@ -252,7 +256,7 @@ static char* testXmlUnicodeCharToUTF8(void)
     buf[d] = '\0';
     mu_assert_str_equals(buf, "A");
 
-    // Cent symbol
+    /* Cent symbol */
     d = modp_xml_unicode_char_to_utf8(buf, 0x00A2);
     mu_assert_int_equals(2, d);
     val = (unsigned char) buf[0];
@@ -260,7 +264,7 @@ static char* testXmlUnicodeCharToUTF8(void)
     val = (unsigned char) buf[1];
     mu_assert_int_equals(val, 0xA2);
 
-    // Euro symbol
+    /* Euro symbol */
     d = modp_xml_unicode_char_to_utf8(buf, 0x20AC);
     mu_assert_int_equals(3, d);
     val = (unsigned char) buf[0];
@@ -270,7 +274,7 @@ static char* testXmlUnicodeCharToUTF8(void)
     val = (unsigned char) buf[2];
     mu_assert_int_equals(val, 0xAC);
 
-    // Chinese Character
+    /* Chinese Character */
     d = modp_xml_unicode_char_to_utf8(buf, 0x24B62);
     mu_assert_int_equals(4, d);
     val = (unsigned char) buf[0];
