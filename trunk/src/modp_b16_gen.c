@@ -36,7 +36,7 @@ static void hexdecodemap(void)
         map2[i] = 256;
     }
 
-    // digits
+    /* digits */
     for (i = '0'; i <= '9'; ++i) {
         map1[i] = i - '0';
         map2[i] = map1[i] << 4;
