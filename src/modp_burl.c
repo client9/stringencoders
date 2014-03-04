@@ -75,7 +75,7 @@ size_t modp_burl_encode(char* dest, const char* src, size_t len)
         }
     }
     *dest = '\0';
-    return (size_t)(dest - deststart); // compute "strlen" of dest.
+    return (size_t)(dest - deststart); /* compute "strlen" of dest. */
 }
 
 /**
@@ -114,7 +114,7 @@ size_t modp_burl_min_encode(char* dest, const char* src, size_t len)
         }
     }
     *dest = '\0';
-    return (size_t)(dest - deststart); // compute "strlen" of dest.
+    return (size_t)(dest - deststart); /* compute "strlen" of dest. */
 }
 
 /**
@@ -165,7 +165,7 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
 
 size_t modp_burl_decode(char* dest, const char* s, size_t len)
 {
-    unsigned int d = 0; // used for decoding %XX
+    unsigned int d = 0; /* used for decoding %XX */
     const unsigned char* src = (const unsigned char*) s;
     const char* deststart = dest;
     const unsigned char* srcend = (const unsigned char*)(src + len);
@@ -185,7 +185,7 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
         case '%':
             d = (gsHexDecodeMap[(unsigned int)(*(src + 1))] << 4) |
                 gsHexDecodeMap[(unsigned int)(*(src + 2))];
-            if (d < 256) { // if one of the hex chars is bad,  d >= 256
+            if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
                 *dest = (char) d;
                 dest++;
                 src += 3;
@@ -199,8 +199,9 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
         }
     }
 
-    // handle last two chars
-    // dont decode "%XX"
+    /* handle last two chars
+     * dont decode "%XX"
+     */
     while (src < srcend) {
         switch (*src) {
         case '+':
@@ -213,12 +214,12 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
     }
 
     *dest = '\0';
-    return (size_t)(dest - deststart); // compute "strlen" of dest.
+    return (size_t)(dest - deststart); /* compute "strlen" of dest. */
 }
 
 size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
 {
-    unsigned int d = 0; // used for decoding %XX
+    unsigned int d = 0; /* used for decoding %XX */
     const unsigned char* src = (const unsigned char*) s;
     const char* deststart = dest;
     const unsigned char* srcend = (const unsigned char*)(src + len);
@@ -233,7 +234,7 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
         if (*src == '%') {
             d = (gsHexDecodeMap[(unsigned int)(*(src + 1))] << 4) |
                 gsHexDecodeMap[(unsigned int)(*(src + 2))];
-            if (d < 256) { // if one of the hex chars is bad,  d >= 256
+            if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
                 *dest = (char) d;
                 dest++;
                 src += 3;
@@ -246,12 +247,13 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
         }
     }
 
-    // handle last two chars
-    // dont decode "%XX"
+    /* handle last two chars
+     * dont decode "%XX"
+     */
     while (src < srcend) {
         *dest++ = (char)( *src++);
     }
 
     *dest = '\0';
-    return (size_t)(dest - deststart); // compute "strlen" of dest.
+    return (size_t)(dest - deststart); /* compute "strlen" of dest. */
 }
