@@ -2,7 +2,7 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /* we compile as C90 but use snprintf */
-#define _ISOC99_SOURCE
+#define _ISOC99_SOUREC
 
 #include <stdio.h>
 #include <stdlib.h>
