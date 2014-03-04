@@ -101,7 +101,7 @@ size_t modp_b85_encode(char* out, const char* src, size_t len)
 
         /* this crazy function */
 #if 1
-        *out++ =  (char)gsIntToChar[(tmp / 52200625)]; // don't need % 85 here, always < 85
+        *out++ =  (char)gsIntToChar[(tmp / 52200625)]; /* don't need % 85 here, always < 85 */
         *out++ =  (char)gsIntToChar[(tmp / 614125) % 85];
         *out++ =  (char)gsIntToChar[(tmp / 7225) % 85];
         *out++ =  (char)gsIntToChar[(tmp / 85) % 85];
@@ -115,18 +115,18 @@ size_t modp_b85_encode(char* out, const char* src, size_t len)
         *out =  gsIntToChar[tmp];
         out += 5;
 #endif
-        // NOTES
-        // Version 1 under -O3 is about 10-20 PERCENT faster than version 2
-        // BUT Version 1 is 10 TIMES SLOWER when used with -Os !!!
-        // Reason: gcc does a lot of tricks to remove the divisions
-        //  op with multiplies and shift.
-        // In V1 with -O3 this works.  Under -Os it reverts to very
-        //   slow division.
-        // In V2 -O3 it does the same thing, but under Os, it's smart
-        // enough to know we want the quotient and remainder and only
-        // one div call per line.
-
+        /* NOTES
+         * Version 1 under -O3 is about 10-20 PERCENT faster than version 2
+         * BUT Version 1 is 10 TIMES SLOWER when used with -Os !!!
+         * Reason: gcc does a lot of tricks to remove the divisions
+         *  op with multiplies and shift.
+         * In V1 with -O3 this works.  Under -Os it reverts to very
+         *   slow division.
+         * In V2 -O3 it does the same thing, but under Os, it's smart
+         * enough to know we want the quotient and remainder and only
+         * one div call per line.
+         */
     }
-    *out = 0; // final null
+    *out = 0; /* final null */
     return buckets * 5;
 }
