@@ -61,7 +61,7 @@ static void clearDecodeTable(uint32_t* ary)
 
 int main(int argc, char** argv)
 {
-    // over-ride standard alphabet
+    /*  over-ride standard alphabet */
     if (argc == 2) {
         unsigned char* replacements = (unsigned char*) argv[1];
         if (strlen((char*)replacements) != 3) {
