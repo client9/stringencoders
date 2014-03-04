@@ -53,9 +53,10 @@ size_t modp_bjavascript_encode(char* dest, const char* src, size_t len)
     uint8_t x;
     uint8_t val;
 
-    // if 0, do nothing
-    // if 'A', hex escape
-    // else, \\ + value
+    /* if 0, do nothing
+     * if 'A', hex escape
+     * else, \\ + value
+     */
     while (s < srcend) {
         x = *s++;
         val = gsJavascriptEncodeMap[x];
