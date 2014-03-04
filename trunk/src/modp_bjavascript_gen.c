@@ -23,12 +23,12 @@ static void jsencodemap(void)
     int i;
     char jsEncodeMap[256];
 
-    // set everything to "as is"
+    /* set everything to "as is" */
     for (i = 0; i < 256; ++i) {
         jsEncodeMap[i] = 0;
     }
 
-    // chars that need hex escaping
+    /* chars that need hex escaping */
     for (i = 0; i < 32; ++i) {
         jsEncodeMap[i] = 'A';
     }
@@ -36,7 +36,7 @@ static void jsencodemap(void)
         jsEncodeMap[i] = 'A';
     }
 
-    // items that have special escaping
+    /* items that have special escaping */
     jsEncodeMap[0x08] = 'b';
     jsEncodeMap[0x09] = 't';
     jsEncodeMap[0x0a] = 'n';
