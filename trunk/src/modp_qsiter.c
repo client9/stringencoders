@@ -89,7 +89,7 @@ int qsiter_next(struct qsiter_t* qsi)
         qsi->pos = qsi->len;
         return 1;
     } else {
-        // &&foo=bar
+        /* &&foo=bar */
         eq = (const char*) memchr(charstart, '=', (size_t)(ends - charstart));
         if (eq == NULL) {
             qsi->key = charstart;
