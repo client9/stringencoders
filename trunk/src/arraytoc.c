@@ -4,7 +4,7 @@
 #include "arraytoc.h"
 #include <stdio.h>
 
-// dump uint32_t as hex digits
+/* dump uint32_t as hex digits */
 void uint32_array_to_c_hex(const uint32_t* ary, size_t sz, const char* name)
 {
     size_t i = 0;
