@@ -1,11 +1,16 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
+/* we compile as C90 but use snprintf */
+#define _ISOC99_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_burl.h"
+
 #include "minunit.h"
+
+#include "modp_burl.h"
 
 /**
  * Test empty input to encode and decode
@@ -209,14 +214,14 @@ static char* testUrlMinEncodeHex(void)
 static char* testUrlDecodeHexBad(void)
 {
 
-    const char* bad1 = "%0X"; // bad trailing char
-    const char* bad2 = "%X0"; // bad leading char
-    const char* bad3 = "%XX"; // bad chars
-    const char* bad4 = "%2"; // not enough room, good char
-    const char* bad5 = "%X"; // not enought room, bad char
-    const char* bad6 = "%";  // test oddball
-    const char* bad7 = "AA%"; // test end of line
-    char bad8[4]; // %XX where X is high bit (test sign char vs. uint8_t*)
+    const char* bad1 = "%0X"; /* bad trailing char */
+    const char* bad2 = "%X0"; /* bad leading char */
+    const char* bad3 = "%XX"; /* bad chars */
+    const char* bad4 = "%2"; /* not enough room, good char */
+    const char* bad5 = "%X"; /* not enought room, bad char */
+    const char* bad6 = "%";  /* test oddball */
+    const char* bad7 = "AA%"; /* test end of line */
+    char bad8[4]; /* %XX where X is high bit (test sign char vs. uint8_t*) */
     bad8[0] = '%';
     bad8[1] = (char) 0x81;
     bad8[2] = (char) 0x82;
@@ -269,14 +274,14 @@ static char* testUrlDecodeHexBad(void)
 
 static char* testUrlDecodeHex(void)
 {
-    size_t d; // size of output
-    int i, j; // loops
-    int k = 0; // position in inputbuf;
+    size_t d; /* size of output */
+    int i, j; /* loops */
+    int k = 0; /* position in inputbuf; */
     char inputbuf[3*256+1];
     char output[257];
     char msg[1000];
 
-    // make input string contain every possible "%XX"
+    /* make input string contain every possible "%XX" */
     static const char* hexdigits1 = "0123456789ABCDEF";
     memset(inputbuf, 0, sizeof(inputbuf));
     memset(output, 1, sizeof(output));
@@ -296,7 +301,7 @@ static char* testUrlDecodeHex(void)
         mu_assert_int_equals_msg(msg, i, (unsigned char) output[i]);
     }
 
-    // make input string contain every possible "%XX"
+    /* make input string contain every possible "%XX" */
     static const char* hexdigits2 = "0123456789abcdef";
     memset(inputbuf, 0, sizeof(inputbuf));
     memset(output, 1, sizeof(output));
@@ -351,23 +356,23 @@ static char* testEncodeStrlen(void)
     memset(ibuf, 0, sizeof(ibuf));
     memset(obuf, 0, sizeof(obuf));
 
-    // Empty.  should be 0
+    /* Empty.  should be 0 */
     ibuf[0] = 0;
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
-    // Plain, should be same size
+    /* Plain, should be same size */
     strcpy(ibuf, "abcdefg");
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
-    // Plain and spaces, should be same size
+    /* Plain and spaces, should be same size */
     strcpy(ibuf, "a b c d e f g");
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
-    // one bad char, adds two bytes
+    /* one bad char, adds two bytes */
     strcpy(ibuf, "abcdefg\n");
     mu_assert_int_equals(strlen(ibuf)+2, (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
 
-    // 2 bad chars, adds 4 bytes
+    /* 2 bad chars, adds 4 bytes */
     strcpy(ibuf, "\nabcdefg\n");
     mu_assert_int_equals(strlen(ibuf)+4, (size_t) modp_burl_encode_strlen(ibuf, strlen(ibuf)));
     return 0;
@@ -384,23 +389,23 @@ static char* testEncodeMinStrlen(void)
     memset(ibuf, 0, sizeof(ibuf));
     memset(obuf, 0, sizeof(obuf));
 
-    // Empty.  should be 0
+    /* Empty.  should be 0 */
     ibuf[0] = 0;
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
-    // Plain, should be same size
+    /* Plain, should be same size */
     strcpy(ibuf, "abcdefg");
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
-    // Plain and spaces, should be same size
+    /* Plain and spaces, should be same size */
     strcpy(ibuf, "a b c d e f g");
     mu_assert_int_equals(strlen(ibuf), (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
-    // one bad char, adds two bytes
+    /* one bad char, adds two bytes */
     strcpy(ibuf, "abcdefg\n");
     mu_assert_int_equals(strlen(ibuf)+2, (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
 
-    // 2 bad chars, adds 4 bytes
+    /* 2 bad chars, adds 4 bytes */
     strcpy(ibuf, "\nabcdefg\n");
     mu_assert_int_equals(strlen(ibuf)+4, (size_t) modp_burl_min_encode_strlen(ibuf, strlen(ibuf)));
     return 0;
