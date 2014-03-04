@@ -11,9 +11,9 @@ static void binary_encodemap(void)
 {
     static const unsigned char sBinaryChars[] = "01";
     int i, j;
+    unsigned char buf[9];
 
     printf("%s","static const char* modp_b2_encodemap[] = {\n");
-    unsigned char buf[9];
     buf[8] = 0;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 8; ++j) {
@@ -30,7 +30,6 @@ static void binary_encodemap(void)
     printf("%s", "};\n");
 }
 
-//int main(int argc, char* argv[])
 int main(void)
 {
     binary_encodemap();
