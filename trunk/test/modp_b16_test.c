@@ -1,11 +1,16 @@
 /* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
+/* we compile as C90 but use snprintf */
+#define _ISOC99_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modp_b16.h"
+
 #include "minunit.h"
+
+#include "modp_b16.h"
 
 static char* testEndian(void)
 {
