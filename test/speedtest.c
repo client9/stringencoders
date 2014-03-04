@@ -48,7 +48,7 @@ int main(void) {
         teststr1[i] = (char)('A' + i % 26);
     }
 
-    // over allocate result buffers
+    /* over allocate result buffers */
     char result[SZ*8];
     char result2[SZ*8];
 
