@@ -23,28 +23,28 @@ static void urlencodemap(void)
     uint32_t i;
     char urlEncodeMap[256];
 
-    // 0 means unsafe
+    /* 0 means unsafe */
     for (i = 0; i < 256; ++i) {
         urlEncodeMap[i] = 0;
     }
 
-    // upper case
+    /* upper case */
     for (i = 'A'; i <= 'Z' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
-    // lower case
+    /* lower case */
     for (i = 'a'; i <= 'z' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
-    // numbers
+    /* numbers */
     for (i = '0'; i <= '9' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
-    // safe chars
+    /* safe chars */
     urlEncodeMap[(int)'.'] = '.';
     urlEncodeMap[(int)'-'] = '-';
     urlEncodeMap[(int)'_'] = '_';
-    // space is special
+    /* space is special */
     urlEncodeMap[(int)' '] = '+';
 
     char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMap");
@@ -54,32 +54,33 @@ static void urlencodeminmap(void)
 {
     int i;
     char urlEncodeMap[256];
+    const char safechar[] = {'_', '.', '-', '~',
+                             '!', '$', '(', ')', '*', ',', ';',
+                             ':', '@', '/', '?'};
+
+    int imax = sizeof(safechar);
 
     // 0 means unsafe
     for (i = 0; i < 256; ++i) {
         urlEncodeMap[i] = 0;
     }
 
-    // upper case
+    /* upper case */
     for (i = 'A'; i <= 'Z' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
-    // lower case
+    /* lower case */
     for (i = 'a'; i <= 'z' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
-    // numbers
+    /* numbers */
     for (i = '0'; i <= '9' ; ++i) {
         urlEncodeMap[i] = (char) i;
     }
 
-    // space
+    /* space */
     urlEncodeMap[(int)' '] = '+';
-    const char safechar[] = {'_', '.', '-', '~',
-                             '!', '$', '(', ')', '*', ',', ';',
-                             ':', '@', '/', '?'};
 
-    int imax = sizeof(safechar);
     for (i = 0; i < imax; ++i) {
         urlEncodeMap[(int)(safechar[i])] = safechar[i];
     }
@@ -96,17 +97,17 @@ static void hexdecodemap(void)
         map[i] = 256;
     }
 
-    // digits
+    /* digits */
     for (i = '0'; i <= '9'; ++i) {
         map[i] = i - '0';
     }
 
-    // upper
+    /* upper */
     for (i = 'A'; i <= 'F'; ++i) {
         map[i] = i - 'A' + 10;
     }
 
-    // lower
+    /* lower */
     for (i = 'a'; i <= 'f'; ++i) {
         map[i] = i - 'a' + 10;
     }
