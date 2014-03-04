@@ -49,8 +49,8 @@
 size_t modp_b16_encode(char* dest, const char* str, size_t len)
 {
     size_t i;
-    const size_t buckets = len >> 2; // i.e. i / 4
-    const size_t leftover = len & 0x03; // i.e. i % 4
+    const size_t buckets = len >> 2; /* i.e. i / 4 */
+    const size_t leftover = len & 0x03; /* i.e. i % 4 */
 
     uint8_t* p = (uint8_t*) dest;
     uint8_t t1, t2, t3, t4;
@@ -58,7 +58,7 @@ size_t modp_b16_encode(char* dest, const char* str, size_t len)
     uint32_t x;
     for (i = 0; i < buckets; ++i) {
         x = *srcInt++;
-        //      t1 = *s++; t2 = *s++; t3 = *s++; t4 = *s++;
+        /*      t1 = *s++; t2 = *s++; t3 = *s++; t4 = *s++; */
 #ifdef WORDS_BIGENDIAN
         t1 = (uint8_t) (x >> 24);
         t2 = (uint8_t) (x >> 16);
@@ -115,23 +115,22 @@ size_t modp_b16_encode(char* dest, const char* str, size_t len)
 size_t modp_b16_decode(char* dest, const char* str, size_t len)
 {
     size_t i;
-
-    uint32_t val1, val2;
+    uint8_t t0,t1,t2,t3;
     uint8_t* p = (uint8_t*) dest;
+    uint32_t val1, val2;
     const uint8_t* s = (const uint8_t*) str;
-
-    const size_t buckets = len >> 2;    // i.e. len / 4
-    const size_t leftover = len & 0x03; // i.e. len % 4
-    if (leftover & 0x01) { // i.e if leftover is odd,
-                           // leftover==1 || leftover == 3
+    const size_t buckets = len >> 2;    /* i.e. len / 4 */
+    const size_t leftover = len & 0x03; /* i.e. len % 4 */
+    if (leftover & 0x01) { /* i.e if leftover is odd,      */
+                           /* leftover==1 || leftover == 3 */
         return (size_t)-1;
     }
 
-    // read 4 bytes, output 2.
-    // Note on PPC G4, GCC 4.0, it's quite a bit faster to
-    // NOT use t0,t1,t2,t3, and just put the *s++ in the gsHexDecodeMap
-    // lookup
-    uint8_t t0,t1,t2,t3;
+    /* read 4 bytes, output 2.
+     * Note on PPC G4, GCC 4.0, it's quite a bit faster to
+     * NOT use t0,t1,t2,t3, and just put the *s++ in the gsHexDecodeMap
+     * lookup
+     */
     for (i = 0; i < buckets; ++i) {
         t0 = *s++; t1= *s++; t2 = *s++; t3 = *s++;
         val1 = gsHexDecodeD2[t0] | gsHexDecodeMap[t1];
