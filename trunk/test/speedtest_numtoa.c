@@ -6,6 +6,11 @@
 #include <time.h>
 #include <stdint.h>
 
+/* needed since we compile as C90
+ * trick gcc to accepting snprintf which is a C99-ism
+ */
+#define _ISOC99_SOURCE
+
 int main(void)
 {
     char buf[100];
