@@ -9,9 +9,9 @@
  */
 static void binary_encodemap(void)
 {
-    static const unsigned char sBinaryChars[] = "01";
+    static const uint8_t sBinaryChars[] = "01";
     int i, j;
-    unsigned char buf[9];
+    uint8_t buf[9];
 
     printf("%s","static const char* modp_b2_encodemap[] = {\n");
     buf[8] = 0;

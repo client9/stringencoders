@@ -48,9 +48,9 @@
 
 int modp_utf8_validate(const char* src_orig, size_t len)
 {
-    const unsigned char* src = (const unsigned char*) src_orig;
-    const unsigned char* srcend = src + len;
-    unsigned char c,c1,c2,c3;
+    const uint8_t* src = (const uint8_t*) src_orig;
+    const uint8_t* srcend = src + len;
+    uint8_t c,c1,c2,c3;
     int d;
     while (src < srcend) {
         c = *src;

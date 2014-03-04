@@ -166,7 +166,7 @@ int modp_xml_parse_dec_entity(const char* s, size_t len)
     int val = 0;
     size_t i;
     for (i = 0; i < len; ++i) {
-        int d = gsHexDecodeMap[(unsigned int)s[i]];
+        int d = gsHexDecodeMap[(uint32_t)s[i]];
         if (d > 9) {
             return -1;
         }
@@ -187,7 +187,7 @@ int modp_xml_parse_hex_entity(const char* s, size_t len)
     int val = 0;
     size_t i;
     for (i = 0; i < len; ++i) {
-        int d = gsHexDecodeMap[(unsigned int)s[i]];
+        int d = gsHexDecodeMap[(uint32_t)s[i]];
         if (d == 256) {
             return -1;
         }

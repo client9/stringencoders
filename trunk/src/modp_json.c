@@ -43,7 +43,7 @@
  */
 
 #include <assert.h>
-
+#include "modp_stdint.h"
 #include "modp_json.h"
 #include "modp_json_data.h"
 
@@ -264,9 +264,9 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
 {
     char* wstr;
     if (v > 0) {
-        return modp_json_add_uint32(ctx, (unsigned int) v);
+        return modp_json_add_uint32(ctx, (uint32_t) v);
     }
-    unsigned int uv = (unsigned int)(-v);
+    uint32_t uv = (uint32_t)(-v);
     size_t r =
         (uv >= 1000000000) ? 10 :
         (uv >= 100000000) ? 9 :
@@ -293,7 +293,7 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
 }
 
 
-void modp_json_add_uint32(modp_json_ctx* ctx, unsigned int uv)
+void modp_json_add_uint32(modp_json_ctx* ctx, uint32_t uv)
 {
     char* wstr;
     size_t r =
@@ -339,10 +339,10 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
 {
     static const char* hexchar = "0123456789ABCDEF";
     const char* deststart = (const char*) dest;
-    const unsigned char* s = (const unsigned char*) src;
-    const unsigned char* srcend = s + len;
-    unsigned char x;
-    unsigned char val;
+    const uint8_t* s = (const uint8_t*) src;
+    const uint8_t* srcend = s + len;
+    uint8_t x;
+    uint8_t val;
 
     /* if 0, do nothing
      * if 'A', hex escape
@@ -375,8 +375,8 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
 
 static size_t modp_bjson_encode_strlen(const char* src, size_t len)
 {
-    const unsigned char* s = (const unsigned char*)src;
-    const unsigned char* srcend = s + len;
+    const uint8_t* s = (const uint8_t*)src;
+    const uint8_t* srcend = s + len;
     size_t count = 2;  /* for start and end quotes */
 
     while (s < srcend) {

@@ -40,6 +40,8 @@
  * http://www.opensource.org/licenses/bsd-license.php
  * </PRE>
  */
+
+#include "modp_stdint.h"
 #include "modp_burl.h"
 #include "modp_burl_data.h"
 
@@ -47,10 +49,10 @@ size_t modp_burl_encode(char* dest, const char* src, size_t len)
 {
 
     const char* deststart = dest;
-    const unsigned char* s = (const unsigned char*)src;
-    const unsigned char* srcend = s + len;
+    const uint8_t* s = (const uint8_t*)src;
+    const uint8_t* srcend = s + len;
     char c;
-    unsigned char x;
+    uint8_t x;
 
     if (len == 0) {
         *dest = '\0';
@@ -86,10 +88,10 @@ size_t modp_burl_min_encode(char* dest, const char* src, size_t len)
 {
 
     const char* deststart = dest;
-    const unsigned char* s = (const unsigned char*)src;
-    const unsigned char* srcend = s + len;
+    const uint8_t* s = (const uint8_t*)src;
+    const uint8_t* srcend = s + len;
     char c;
-    unsigned char x;
+    uint8_t x;
 
     if (len == 0) {
         *dest = '\0';
@@ -131,7 +133,7 @@ size_t modp_burl_encode_strlen(const char* src, const size_t len)
     }
 
     while (src < srcend) {
-        if (gsUrlEncodeMap[ (unsigned char) *src++]) {
+        if (gsUrlEncodeMap[ (uint8_t) *src++]) {
             count++;
         } else {
             count += 3;
@@ -154,7 +156,7 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
     }
 
     while (src < srcend) {
-        if (gsUrlEncodeMinMap[ (unsigned char) *src++]) {
+        if (gsUrlEncodeMinMap[ (uint8_t) *src++]) {
             count++;
         } else {
             count += 3;
@@ -165,11 +167,11 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
 
 size_t modp_burl_decode(char* dest, const char* s, size_t len)
 {
-    unsigned int d = 0; /* used for decoding %XX */
-    const unsigned char* src = (const unsigned char*) s;
+    uint32_t d = 0; /* used for decoding %XX */
+    const uint8_t* src = (const uint8_t*) s;
     const char* deststart = dest;
-    const unsigned char* srcend = (const unsigned char*)(src + len);
-    const unsigned char* srcendloop = (const unsigned char*)(srcend - 2);
+    const uint8_t* srcend = (const uint8_t*)(src + len);
+    const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
 
     if (len == 0) {
         *dest = '\0';
@@ -183,8 +185,8 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
             src++;
             break;
         case '%':
-            d = (gsHexDecodeMap[(unsigned int)(*(src + 1))] << 4) |
-                gsHexDecodeMap[(unsigned int)(*(src + 2))];
+            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) |
+                gsHexDecodeMap[(uint32_t)(*(src + 2))];
             if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
                 *dest = (char) d;
                 dest++;
@@ -219,11 +221,11 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
 
 size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
 {
-    unsigned int d = 0; /* used for decoding %XX */
-    const unsigned char* src = (const unsigned char*) s;
+    uint32_t d = 0; /* used for decoding %XX */
+    const uint8_t* src = (const uint8_t*) s;
     const char* deststart = dest;
-    const unsigned char* srcend = (const unsigned char*)(src + len);
-    const unsigned char* srcendloop = (const unsigned char*)(srcend - 2);
+    const uint8_t* srcend = (const uint8_t*)(src + len);
+    const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
 
     if (len == 0) {
         *dest = '\0';
@@ -232,8 +234,8 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
 
     while (src < srcendloop) {
         if (*src == '%') {
-            d = (gsHexDecodeMap[(unsigned int)(*(src + 1))] << 4) |
-                gsHexDecodeMap[(unsigned int)(*(src + 2))];
+            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) |
+                gsHexDecodeMap[(uint32_t)(*(src + 2))];
             if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
                 *dest = (char) d;
                 dest++;

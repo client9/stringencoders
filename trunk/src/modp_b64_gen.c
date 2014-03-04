@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include "modp_stdint.h"
 
-static unsigned char b64chars[64] = {
+static uint8_t b64chars[64] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -41,7 +41,7 @@ static unsigned char b64chars[64] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
 } ;
 
-static unsigned char padchar = '=';
+static uint8_t padchar = '=';
 
 static void printStart(void)
 {
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 
     /*  over-ride standard alphabet */
     if (argc == 2) {
-        unsigned char* replacements = (unsigned char*) argv[1];
+        uint8_t* replacements = (uint8_t*) argv[1];
         if (strlen((char*)replacements) != 3) {
             fprintf(stderr, "input must be a string of 3 characters '-', '.' or '_'\n");
             exit(1);

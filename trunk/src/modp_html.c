@@ -77,7 +77,7 @@ int modp_html_decode_char_at(const char* src, size_t len, size_t* consumed)
 
     *consumed = 1;
     if (*src != '&' || len < 2) {
-        return (unsigned char)(*src);
+        return (uint8_t)(*src);
     }
 
     int val = 0;
@@ -87,7 +87,7 @@ int modp_html_decode_char_at(const char* src, size_t len, size_t* consumed)
         val = 0;
         if (*(src+2) == 'x' || *(src+2) == 'X') {
             i = 3;
-            ch = (unsigned char) (*(src+3));
+            ch = (uint8_t) (*(src+3));
             ch = gsHexDecodeMap[ch];
             if (ch == 256) {
                 /* degenerate case  '&#[?]' */
@@ -96,7 +96,7 @@ int modp_html_decode_char_at(const char* src, size_t len, size_t* consumed)
             val = ch;
             i = 4;
             while (i < len) {
-                ch = (unsigned char) src[i];
+                ch = (uint8_t) src[i];
                 if (ch == ';') {
                     *consumed = i + 1;
                     return val;
@@ -116,14 +116,14 @@ int modp_html_decode_char_at(const char* src, size_t len, size_t* consumed)
             return val;
         } else {
             i = 2;
-            ch = (unsigned char) src[i];
+            ch = (uint8_t) src[i];
             if (ch < '0' || ch > '9') {
                 return '&';
             }
             val = ch - '0';
             i += 1;
             while (i < len) {
-                ch = (unsigned char) src[i];
+                ch = (uint8_t) src[i];
                 if (ch == ';') {
                     *consumed = i + 1;
                     return val;

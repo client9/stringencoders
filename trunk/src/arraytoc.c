@@ -9,7 +9,7 @@ void uint32_array_to_c_hex(const uint32_t* ary, size_t sz, const char* name)
 {
     size_t i = 0;
 
-    printf("static const unsigned int %s[%d] = {\n", name, (int)sz);
+    printf("static const uint32_t %s[%d] = {\n", name, (int)sz);
     for (;;) {
         printf("0x%08x", ary[i]);
         ++i;
@@ -32,7 +32,7 @@ void char_array_to_c(const char* ary, size_t sz, const char* name)
     uint8_t tmp;
     size_t i = 0;
 
-    printf("static const unsigned char %s[%d] = {\n", name, (int)sz);
+    printf("static const uint8_t %s[%d] = {\n", name, (int)sz);
 
     for (;;) {
         if (ary[i] == 0) {
@@ -71,7 +71,7 @@ void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
 {
     size_t i = 0;
 
-    printf("static const unsigned int %s[%d] = {\n", name, (int)sz);
+    printf("static const uint32_t %s[%d] = {\n", name, (int)sz);
     for (;;) {
         printf("%3u", ary[i]);
         ++i;

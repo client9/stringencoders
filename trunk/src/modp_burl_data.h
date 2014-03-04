@@ -1,4 +1,4 @@
-static const unsigned char gsUrlEncodeMap[256] = {
+static const uint8_t gsUrlEncodeMap[256] = {
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
@@ -27,7 +27,7 @@ static const unsigned char gsUrlEncodeMap[256] = {
 '\0', '\0', '\0', '\0', '\0', '\0'
 };
 
-static const unsigned char gsUrlEncodeMinMap[256] = {
+static const uint8_t gsUrlEncodeMinMap[256] = {
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
@@ -56,7 +56,7 @@ static const unsigned char gsUrlEncodeMinMap[256] = {
 '\0', '\0', '\0', '\0', '\0', '\0'
 };
 
-static const unsigned int gsHexDecodeMap[256] = {
+static const uint32_t gsHexDecodeMap[256] = {
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
@@ -81,7 +81,7 @@ static const unsigned int gsHexDecodeMap[256] = {
 256, 256, 256, 256
 };
 
-static const unsigned char gsHexEncodeMap1[256] = {
+static const uint8_t gsHexEncodeMap1[256] = {
  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',
  '0',  '0',  '0',  '0',  '0',  '0',  '1',  '1',  '1',  '1',
  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',  '1',
@@ -110,7 +110,7 @@ static const unsigned char gsHexEncodeMap1[256] = {
  'F',  'F',  'F',  'F',  'F',  'F'
 };
 
-static const unsigned char gsHexEncodeMap2[256] = {
+static const uint8_t gsHexEncodeMap2[256] = {
  '0',  '1',  '2',  '3',  '4',  '5',  '6',  '7',  '8',  '9',
  'A',  'B',  'C',  'D',  'E',  'F',  '0',  '1',  '2',  '3',
  '4',  '5',  '6',  '7',  '8',  '9',  'A',  'B',  'C',  'D',
