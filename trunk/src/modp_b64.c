@@ -193,6 +193,16 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
 size_t modp_b64_decode(char* dest, const char* src, size_t len)
 {
     size_t i;
+    size_t leftover;
+    size_t chunks;
+
+    uint8_t* p;
+    uint32_t x;
+    uint32_t* destInt;
+    const uint32_t* srcInt;
+
+    uint32_t y = *srcInt++;
+
     if (len == 0) return 0;
 
 #ifdef DOPAD
@@ -212,14 +222,14 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
     }
 #endif
 
-    size_t leftover = len % 4;
-    size_t chunks = (leftover == 0) ? len / 4 - 1 : len /4;
+    leftover = len % 4;
+    chunks = (leftover == 0) ? len / 4 - 1 : len /4;
 
-    uint8_t* p = (uint8_t*) dest;
-    uint32_t x = 0;
-    uint32_t* destInt = (uint32_t*) p;
-    const uint32_t* srcInt = (const uint32_t*) src;
-    uint32_t y = *srcInt++;
+    p = (uint8_t*) dest;
+    x = 0;
+    destInt = (uint32_t*) p;
+    srcInt = (const uint32_t*) src;
+    y = *srcInt++;
     for (i = 0; i < chunks; ++i) {
         x = d0[y & 0xff] |
             d1[(y >> 8) & 0xff] |
