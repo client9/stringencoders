@@ -44,6 +44,7 @@ MODP_C_BEGIN_DECLS
 
 /* pull in size_t */
 #include <string.h>
+#include <stdint.h>
 
 typedef struct {
     int depth;
