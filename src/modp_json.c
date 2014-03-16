@@ -61,15 +61,15 @@ typedef enum {
 static size_t modp_bjson_encode_strlen(const char* src, size_t len);
 static size_t modp_bjson_encode(char* dest, const char* src, size_t len);
 
-static void modp_json_add_char(modp_json_ctx* ctx, char c);
+static void modp_json_add_char(modp_json_ctx* ctx, int c);
 static void modp_json_add_value(modp_json_ctx* ctx);
 static void modp_json_add_false(modp_json_ctx* ctx);
 static void modp_json_add_true(modp_json_ctx* ctx);
 
-static void modp_json_add_char(modp_json_ctx* ctx, char c)
+static void modp_json_add_char(modp_json_ctx* ctx, int c)
 {
     if (ctx->dest) {
-        *(ctx->dest + ctx->size) = c;
+        *(ctx->dest + ctx->size) = (char) c;
     }
     ctx->size += 1;
 }
