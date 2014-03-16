@@ -1,3 +1,21 @@
+/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* vi: set expandtab shiftwidth=4 tabstop=4: */
+
+#ifndef COM_MODP_STRINGENCODERS_MSGPACK
+#define COM_MODP_STRINGENCODERS_MSGPACK
+
+#ifdef __cplusplus
+#ifndef MODP_C_BEGIN_DECLS
+# define MODP_C_BEGIN_DECLS extern "C" {
+# define MODP_C_END_DECLS   }
+#endif
+#else
+# define MODP_C_BEGIN_DECLS
+# define MODP_C_END_DECLS
+#endif
+
+MODP_C_BEGIN_DECLS
+
 #include <string.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -25,3 +43,7 @@ void modp_msgpk_ary_open(modp_msgpk_ctx* ctx, size_t count);
 
 /* Needed in JSON, not  needed in messagepack */
 void modp_msgpk_ary_close(modp_msgpk_ctx* ctx) { (void)ctx; }
+
+MODP_C_END_DECLS
+
+#endif
