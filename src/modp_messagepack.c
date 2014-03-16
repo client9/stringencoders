@@ -14,7 +14,7 @@ size_t modp_msgpk_end(modp_msgpk_ctx* ctx)
   return ctx->size;
 }
 
-static void modp_msgpk_raw_byte(modp_msgpk_ctx* ctx, size_t c)
+static void modp_msgpk_raw_byte(modp_msgpk_ctx* ctx, int c)
 {
   if (ctx->dest) {
     *(ctx->dest + ctx->size) = (char) c;
@@ -27,7 +27,7 @@ static void modp_msgpk_raw_unit16(modp_msgpk_ctx* ctx, size_t val)
 
   uint16_t nval = (uint16_t) val;
   if (ctx->dest) {
-    memcpy(ctx->dest + ctx->size, (void*)(&nval), 2);
+    memcpy(ctx->dest + ctx->size, (void*)(&nval), (size_t)2);
   }
   ctx->size += 2;
 }
@@ -36,7 +36,7 @@ static void modp_msgpk_raw_uint32(modp_msgpk_ctx* ctx, size_t val)
 {
   uint32_t nval = (uint32_t) val;
   if (ctx->dest) {
-    memcpy(ctx->dest + ctx->size, (void*)(&nval), 4);
+    memcpy(ctx->dest + ctx->size, (void*)(&nval), (size_t)4);
   }
   ctx->size += 4;
 }
