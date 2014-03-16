@@ -37,12 +37,12 @@ void modp_msgpk_add_cstring(modp_msgpk_ctx* ctx, const char*);
 void modp_msgpk_map_open(modp_msgpk_ctx* ctx, size_t count);
 
 /* Needed in JSON, not  needed in messagepack */
-void modp_msgpk_map_close(modp_msgpk_ctx* ctx) { (void)ctx; }
+inline void modp_msgpk_map_close(modp_msgpk_ctx* ctx) { (void)ctx; }
 
 void modp_msgpk_ary_open(modp_msgpk_ctx* ctx, size_t count);
 
 /* Needed in JSON, not  needed in messagepack */
-void modp_msgpk_ary_close(modp_msgpk_ctx* ctx) { (void)ctx; }
+inline void modp_msgpk_ary_close(modp_msgpk_ctx* ctx) { (void)ctx; }
 
 MODP_C_END_DECLS
 
