@@ -80,16 +80,16 @@ void modp_msgpk_add_uint32(modp_msgpk_ctx* ctx, uint32_t val)
 void modp_msgpk_add_string(modp_msgpk_ctx* ctx, const char* s, size_t len)
 {
   if (len < 32) {
-    modp_msgpk_raw_byte(ctx, 0xA0 | len);
+    modp_msgpk_raw_byte(ctx, (int) (0xA0 | len));
   } else if (len < 256) {
     modp_msgpk_raw_byte(ctx, 0xD9);
-    modp_msgpk_raw_byte(ctx, (uint8_t) len);
+    modp_msgpk_raw_byte(ctx, (int) len);
   } else if (len < 65535) {
     modp_msgpk_raw_byte(ctx, 0xDA);
-    modp_msgpk_raw_unit16(ctx, len);
+    modp_msgpk_raw_unit16(ctx, (uint16_t) len);
   } else if (len <= 0xFFFFFFFF) {
     modp_msgpk_raw_byte(ctx, 0xDB);
-    modp_msgpk_raw_uint32(ctx, len);
+    modp_msgpk_raw_uint32(ctx, (uint32_t) len);
   }
   modp_msgpk_raw_bytes(ctx, (const void*)s, len);
 }
@@ -102,7 +102,7 @@ void modp_msgpk_add_cstring(modp_msgpk_ctx* ctx, const char* s)
 void modp_msgpk_map_open(modp_msgpk_ctx* ctx, size_t count)
 {
   if (count < 16) {
-    modp_msgpk_raw_byte(ctx, 0x80 | count);
+    modp_msgpk_raw_byte(ctx, (int)(0x80 | count));
   } else if (count < 0xFFFF) {
     modp_msgpk_raw_byte(ctx, 0xDE);
     modp_msgpk_raw_unit16(ctx, count);
@@ -116,7 +116,7 @@ void modp_msgpk_map_open(modp_msgpk_ctx* ctx, size_t count)
 void modp_msgpk_ary_open(modp_msgpk_ctx* ctx, size_t count)
 {
   if (count < 16) {
-    modp_msgpk_raw_byte(ctx, 0x90 | count);
+    modp_msgpk_raw_byte(ctx, (int)(0x90 | count));
   } else if (count < 0xFFFF) {
     modp_msgpk_raw_byte(ctx, 0xDC);
     modp_msgpk_raw_unit16(ctx, count);
