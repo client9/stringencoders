@@ -12,5 +12,5 @@ set -e
 #  a bad cast, etc also this conflicts with GCC checks.
 #
 export CFLAGS="-g -O3 -pie -fPIE -fPIC -fstack-protector --param ssp-buffer-size=4 -Wall -Wextra -Wformat -Wformat-security -Werror -Wcast-align -Wshadow -Wpointer-arith -Wcast-qual -Wstack-protector -D_FORTIFY_SOURCE=2 -ansi"
-./configure --with-pic
+./configure --with-pic --disable-shared --enable-static
 make clean
