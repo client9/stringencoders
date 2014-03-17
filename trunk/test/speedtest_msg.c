@@ -127,7 +127,7 @@ int main(void)
   }
   t1 = clock();
   s1 = (double)(t1 - t0)*(1.0 / (double)CLOCKS_PER_SEC);
-  printf("%s\t%8.0f\t%lu\n", "MSGPK", imax/s1, len);
+  printf("%s\t%8.0f\t%u\n", "MSGPK", imax/s1, (unsigned) len);
   fflush(stdout);
   return 0;
 }
