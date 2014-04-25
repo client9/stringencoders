@@ -43,7 +43,6 @@
  */
 
 #include <assert.h>
-#include "modp_stdint.h"
 #include "modp_json.h"
 #include "modp_json_data.h"
 
