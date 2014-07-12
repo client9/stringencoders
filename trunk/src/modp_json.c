@@ -7,7 +7,7 @@
  * modp_bjavascript.c High performance URL encoder/decoder
  * http://code.google.com/p/stringencoders/
  *
- * Copyright &copy; 2006, 2007  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006-2014 Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,7 +73,7 @@ static void modp_json_add_char(modp_json_ctx* ctx, int c)
     ctx->size += 1;
 }
 
-static void modp_json_add_value(modp_json_ctx* ctx) 
+static void modp_json_add_value(modp_json_ctx* ctx)
 {
     int depth = ctx->depth;
 
@@ -123,7 +123,7 @@ void modp_json_map_open(modp_json_ctx* ctx)
 
     ctx->depth++;
     ctx->state[ctx->depth] = JSON_MAP_OPEN;
-    
+
     modp_json_add_char(ctx, '{');
 }
 
@@ -222,10 +222,10 @@ void modp_json_add_uint64(modp_json_ctx* ctx, uint64_t uv,
         (uv >= 10000000000ULL) ? 11 :
         (uv >= 1000000000ULL) ? 10 :
         (uv >= 100000000ULL) ? 9 :
-        (uv >= 10000000ULL) ? 8 : 
+        (uv >= 10000000ULL) ? 8 :
         (uv >= 1000000ULL) ? 7 :
         (uv >= 100000ULL) ? 6 :
-        (uv >= 10000ULL) ? 5 : 
+        (uv >= 10000ULL) ? 5 :
         (uv >= 1000ULL) ? 4 :
         (uv >= 100ULL) ? 3 :
         (uv >= 10ULL) ? 2 :
@@ -269,10 +269,10 @@ void modp_json_add_int32(modp_json_ctx* ctx, int v)
     size_t r =
         (uv >= 1000000000) ? 10 :
         (uv >= 100000000) ? 9 :
-        (uv >= 10000000) ? 8 : 
+        (uv >= 10000000) ? 8 :
         (uv >= 1000000) ? 7 :
         (uv >= 100000) ? 6 :
-        (uv >= 10000) ? 5 : 
+        (uv >= 10000) ? 5 :
         (uv >= 1000) ? 4 :
         (uv >= 100) ? 3 :
         (uv >= 10) ? 2 :
@@ -298,10 +298,10 @@ void modp_json_add_uint32(modp_json_ctx* ctx, uint32_t uv)
     size_t r =
         (uv >= 1000000000UL) ? 10 :
         (uv >= 100000000UL) ? 9 :
-        (uv >= 10000000UL) ? 8 : 
+        (uv >= 10000000UL) ? 8 :
         (uv >= 1000000UL) ? 7 :
         (uv >= 100000UL) ? 6 :
-        (uv >= 10000UL) ? 5 : 
+        (uv >= 10000UL) ? 5 :
         (uv >= 1000UL) ? 4 :
         (uv >= 100UL) ? 3 :
         (uv >= 10UL) ? 2 :
@@ -323,7 +323,7 @@ void modp_json_add_cstring(modp_json_ctx* ctx, const char* src)
     return modp_json_add_string(ctx, src, strlen(src));
 }
 
-void modp_json_add_string(modp_json_ctx* ctx, const char* src, size_t len) 
+void modp_json_add_string(modp_json_ctx* ctx, const char* src, size_t len)
 {
     modp_json_add_value(ctx);
 
@@ -343,26 +343,25 @@ static size_t modp_bjson_encode(char* dest, const char* src, size_t len)
     uint8_t x;
     uint8_t val;
 
-    /* if 0, do nothing
-     * if 'A', hex escape
-     * else, \\ + value
-     */
     *dest++ = '"';
 
     while (s < srcend) {
         x = *s++;
         val = gsJSONEncodeMap[x];
-        if (val == 0) {
+        if (val == 'a') {
+            /* a for ascii, as-is */
             *dest++ = (char) x;
-        } else if (val == 'A') {
+        } else if (val == 'u') {
+            /* u for unicode, 6 byte escape sequence */
             dest[0] = '\\';
             dest[1] = 'u';
             dest[2] = '0';
             dest[3] = '0';
             dest[4] = hexchar[x >> 4];
-            dest[6] = hexchar[x & 0x0F];
-            dest += 7;
+            dest[5] = hexchar[x & 0x0F];
+            dest += 6;
         } else {
+            /* 2 byte escape sequence */
             dest[0] = '\\';
             dest[1] = (char)val;
             dest += 2;
@@ -377,18 +376,8 @@ static size_t modp_bjson_encode_strlen(const char* src, size_t len)
     const uint8_t* s = (const uint8_t*)src;
     const uint8_t* srcend = s + len;
     size_t count = 2;  /* for start and end quotes */
-
     while (s < srcend) {
-        switch (gsJSONEncodeMap[*s++]) {
-        case 0:
-            count++;
-            break;
-        case 'A':
-            count += 7;
-            break;
-        default:
-            count += 2;
-        }
+        count += (gsJSONEncodeLenMap[*s++]);
     }
     return count;
 }
