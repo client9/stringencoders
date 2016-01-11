@@ -1,0 +1,2 @@
+fast c-string transformations
+
