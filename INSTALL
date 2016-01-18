@@ -1,5 +1,21 @@
 
 ----------------------------------------
+RAW
+----------------------------------------
+
+If you are pulling this from github, please run `./bootstrap.sh` to do
+all the gnu-isms.
+
+
+Mac Users:
+
+```bash
+brew install m4 autoconf automake libtool
+```
+
+(maybe more?)
+
+----------------------------------------
 PLAIN INSTALL
 ----------------------------------------
 
@@ -12,7 +28,7 @@ EXPORT CFLAGS='your optimization flags'
 
 make
 
-make test
+make check
 
 make install
    will produce a shared and static library and put in the right places.
