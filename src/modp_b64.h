@@ -12,10 +12,10 @@
  * <PRE>
  * High performance base64 encoder / decoder
  *
- * Copyright &copy; 2005, 2006, 2007 Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2005, 2006, 2007 Nick Galbreath
  * All rights reserved.
  *
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
  * Released under bsd license.  See modp_b64.c for details.
  * </pre>

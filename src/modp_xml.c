@@ -4,9 +4,9 @@
 /*
  * <pre>
  * modp_xml xml decoders
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2012  Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2012  Nick Galbreath
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

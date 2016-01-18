@@ -5,9 +5,9 @@
  * modp_ascii.c
  * <PRE>
  * MODP_ASCII - Ascii transformations (upper/lower, etc)
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2007  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2007  Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

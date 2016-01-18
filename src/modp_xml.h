@@ -12,12 +12,12 @@
  * <PRE>
  * High Performance XML Decoder (for now)
  *
- * Copyright &copy; 2012  Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2012  Nick Galbreath
  * All rights reserved.
  *
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See bfast64.c for details.
+ * Released under bsd license.  See modp_xml.c for details.
  * </PRE>
  */
 

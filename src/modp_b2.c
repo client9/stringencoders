@@ -5,9 +5,9 @@
  * \file modp_b2.c
  * <PRE>
  * MODP_B2 - Ascii Binary string encode/decode
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2005, 2006,2007  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005,2006,2007  Nick Galbreath
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

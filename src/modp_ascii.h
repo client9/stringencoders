@@ -12,7 +12,7 @@
 /*
  * <PRE>
  * MODP_ASCII -- Simple ascii manipulation (uppercase, lowercase, etc)
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.

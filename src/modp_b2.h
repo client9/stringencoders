@@ -10,9 +10,9 @@
 /*
  * <PRE>
  * MODP_B2 -- Base 2 (binary) encode/decoder
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2007, Nick Galbreath
  * All rights reserved.
  *
  * Released under bsd license.  See modp_b2.c for details.

@@ -2,20 +2,20 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
- * \file modp_b2.h
- * \brief Encode and decode of base 2 strings ("00001110" to 0x43)
+ * \file modp_utf.h
+ * \brief Various UTF8 utilities
  *
  */
 
 /*
  * <PRE>
  * MODP_UTF8 -- UTF-8 utilities
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2013, Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2013, Nick Galbreath
  * All rights reserved.
  *
- * Released under bsd license.  See modp_b2.c for details.
+ * Released under bsd license.  See modp_utf8.c for details.
  * </PRE>
  *
  */
