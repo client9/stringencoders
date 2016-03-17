@@ -20,7 +20,7 @@ static char* testEndian(void)
 {
     /* this test that "1" is "AAAB" */
     char buf[100];
-    char result[10];
+    unsigned char result[10];
     char endian[] = {(char)0, (char)0, (char)1};
     size_t d = modp_b64_encode(buf, endian, (size_t)3);
     mu_assert_int_equals(4, d);
@@ -35,7 +35,7 @@ static char* testEndian(void)
     mu_assert_int_equals(0, result[0]);
     mu_assert_int_equals(0, result[1]);
     mu_assert_int_equals(1, result[2]);
-    mu_assert_int_equals(-1, result[3]);
+    mu_assert_int_equals(255, result[3]);
 
     return 0;
 }
@@ -74,7 +74,7 @@ static char* testPadding(void)
     char msg[100];
     const char ibuf[6] = {1,1,1,1,1,1};
     char obuf[10];
-    char rbuf[10];
+    unsigned char rbuf[10];
     size_t d = 0;
 
     /* 1 in, 4 out */
@@ -87,7 +87,7 @@ static char* testPadding(void)
     d = modp_b64_decode(rbuf, obuf, d);
     mu_assert_int_equals_msg(msg, 1, d);
     mu_assert_int_equals(1, rbuf[0]);
-    mu_assert_int_equals(-1, rbuf[1]);
+    mu_assert_int_equals(255, rbuf[1]);
 
     /* 2 in, 4 out */
     memset(obuf, 255, sizeof(obuf));
@@ -100,7 +100,7 @@ static char* testPadding(void)
     mu_assert_int_equals_msg(msg, 2, d);
     mu_assert_int_equals_msg(msg, 1, rbuf[0]);
     mu_assert_int_equals_msg(msg, 1, rbuf[1]);
-    mu_assert_int_equals_msg(msg, -1, rbuf[2]);
+    mu_assert_int_equals_msg(msg, 255, rbuf[2]);
 
     /* 3 in, 4 out */
     memset(obuf, 255, sizeof(obuf));
@@ -114,7 +114,7 @@ static char* testPadding(void)
     mu_assert_int_equals_msg(msg, 1, rbuf[0]);
     mu_assert_int_equals_msg(msg, 1, rbuf[1]);
     mu_assert_int_equals_msg(msg, 1, rbuf[2]);
-    mu_assert_int_equals_msg(msg, -1, rbuf[3]);
+    mu_assert_int_equals_msg(msg, 255, rbuf[3]);
 
     /* 4 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
@@ -129,7 +129,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[1]);
     mu_assert_int_equals(1, rbuf[2]);
     mu_assert_int_equals(1, rbuf[3]);
-    mu_assert_int_equals(-1, rbuf[4]);
+    mu_assert_int_equals(255, rbuf[4]);
 
     /* 5 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
@@ -145,7 +145,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[2]);
     mu_assert_int_equals(1, rbuf[3]);
     mu_assert_int_equals(1, rbuf[4]);
-    mu_assert_int_equals(-1, rbuf[5]);
+    mu_assert_int_equals(255, rbuf[5]);
 
     /* 6 in, 8 out */
     memset(obuf, 255, sizeof(obuf));
@@ -162,7 +162,7 @@ static char* testPadding(void)
     mu_assert_int_equals(1, rbuf[3]);
     mu_assert_int_equals(1, rbuf[4]);
     mu_assert_int_equals(1, rbuf[5]);
-    mu_assert_int_equals(-1, rbuf[6]);
+    mu_assert_int_equals(255, rbuf[6]);
 
     return 0;
 }

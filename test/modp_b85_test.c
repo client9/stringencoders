@@ -21,7 +21,7 @@ static char* testEndian(void)
 {
     /* this test that "1" is "!!!!#" */
     char buf[100];
-    char result[10];
+    unsigned char result[10];
     char endian[] = {(char)0, (char)0, (char)0, (char)1};
     size_t d = modp_b85_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(5, d);
@@ -38,7 +38,7 @@ static char* testEndian(void)
     mu_assert_int_equals(0, result[1]);
     mu_assert_int_equals(0, result[2]);
     mu_assert_int_equals(1, result[3]);
-    mu_assert_int_equals(-1, result[4]);
+    mu_assert_int_equals(255, result[4]);
 
     return 0;
 }
@@ -88,9 +88,9 @@ static char* testBadCharDecode(void)
 
 static char* testEncodeDecode(void)
 {
-    char ibuf[10]; /* input */
-    char obuf[10]; /* output */
-    char rbuf[10]; /* final result */
+    unsigned char ibuf[10]; /* input */
+    unsigned char obuf[10]; /* output */
+    unsigned char rbuf[10]; /* final result */
     size_t d;
     int i,j,k,l;
     for (i = 0; i < 256; ++i) {
@@ -112,7 +112,7 @@ static char* testEncodeDecode(void)
                     mu_assert_int_equals(ibuf[1], rbuf[1]);
                     mu_assert_int_equals(ibuf[2], rbuf[2]);
                     mu_assert_int_equals(ibuf[3], rbuf[3]);
-                    mu_assert_int_equals(-1, rbuf[4]);
+                    mu_assert_int_equals(255, rbuf[4]);
                 }
             }
         }
