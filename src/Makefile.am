@@ -24,6 +24,9 @@ libmodpbase64_la_SOURCES = \
 	modp_json.h modp_json.c \
 	modp_messagepack.h modp_messagepack.c
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = stringencoders.pc
+
 #libmodpbase64_la_DEPENDENCIES = \
 #	modp_b2_data.h modp_b2_gen \
 #	modp_b16_data.h modp_b16_gen \

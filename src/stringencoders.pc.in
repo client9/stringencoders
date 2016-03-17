@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: stringencoders
+Description:  collection of high performance c-string transformations
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lmodpbase64
+Cflags: -I${includedir}
