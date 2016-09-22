@@ -1,6 +1,9 @@
 ChangeLog
 Yeah, I know this isn't quite the right format.
 
+22-Sep-2016
+	* Fix nasty rounding bug in dtoa functions
+
 01-Nov-2013:
 	* Added new XML, HTML and UTF-8 functions
 	* Fixed warnings for latest compilers
