@@ -38,6 +38,7 @@ AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
 	test/Makefile
+	src/stringencoders.pc
 ])
 AC_PROG_MAKE_SET
 AC_OUTPUT
