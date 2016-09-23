@@ -1,3 +1,9 @@
 sudo: false
 language: c
+addons:
+  apt:
+    sources:
+    - llvm-toolchain-precise
+    packages:
+    - clang-3.8
 script: ./make-ci.sh
