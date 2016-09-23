@@ -123,7 +123,7 @@ size_t modp_dtoa(double value, char* str, int prec)
 	// given 0.05, prec=1
 	// whole = 0 
 	// tmp = (0.05)* 10 = 0.5
-	// frac = 0
+	// frac = 0 
 	// diff = tmp -frac == 0.5 - 0.0 = 0.5
 	// 
 	int whole = (int) value;
@@ -138,7 +138,7 @@ size_t modp_dtoa(double value, char* str, int prec)
 			frac = 0;
 			++whole;
 		}
-	} else if (diff == 0.5 && ((frac & 1))) {
+	} else if (diff == 0.5 && prec > 0 && (frac & 1)) {
 		/* if halfway, round up if odd, OR
 		   if last digit is 0.  That last part is strange */
 		++frac;
@@ -146,8 +146,12 @@ size_t modp_dtoa(double value, char* str, int prec)
 			frac = 0;
 			++whole;
 		}
-	} else if (diff == 0.5 && (prec > 0 && frac == 0)) {
+	} else if (diff == 0.5 && prec == 0 && (whole & 1)) {
 		++frac;
+		if (frac >= powers_of_10[prec]) {
+			frac = 0;
+			++whole;
+		}
 	}
 
 	/* for very large numbers switch back to native sprintf for exponentials.
@@ -238,7 +242,7 @@ size_t modp_dtoa2(double value, char* str, int prec)
 			frac = 0;
 			++whole;
 		}
-	} else if (diff == 0.5 && ((frac & 1))) {
+	} else if (diff == 0.5 && prec > 0 && (frac & 1)) {
 		/* if halfway, round up if odd, OR
 		   if last digit is 0.  That last part is strange */
 		++frac;
@@ -246,8 +250,12 @@ size_t modp_dtoa2(double value, char* str, int prec)
 			frac = 0;
 			++whole;
 		}
-	} else if (diff == 0.5 && (prec > 0 && frac == 0)) {
+	} else if (diff == 0.5 && prec == 0 && (whole & 1)) {
 		++frac;
+		if (frac >= powers_of_10[prec]) {
+			frac = 0;
+			++whole;
+		}
 	}
 
 	/* for very large numbers switch back to native sprintf for exponentials.
