@@ -6,7 +6,7 @@ addons:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
-    - gcc-6.2
+    - gcc-6.1
     - clang-format-3.8
 env: COMPILER=gcc-6.2
 script: ./make-ci.sh
