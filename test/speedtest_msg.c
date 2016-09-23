@@ -1,4 +1,3 @@
-
 #include "modp_json.h"
 #include "modp_messagepack.h"
 
