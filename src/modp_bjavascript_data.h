@@ -26,7 +26,6 @@ static const uint8_t gsJavascriptEncodeMap[256] = {
     'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A',
     'A', 'A', 'A', 'A', 'A', 'A'
 };
-
 static const uint8_t gsHexEncodeMap1[256] = {
     '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
     '0', '0', '0', '0', '0', '0', '1', '1', '1', '1',
@@ -55,7 +54,6 @@ static const uint8_t gsHexEncodeMap1[256] = {
     'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F',
     'F', 'F', 'F', 'F', 'F', 'F'
 };
-
 static const uint8_t gsHexEncodeMap2[256] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3',

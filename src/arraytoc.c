@@ -59,7 +59,7 @@ void char_array_to_c(const char* ary, size_t sz, const char* name)
             printf(", ");
         }
     }
-    printf("\n};\n\n");
+    printf("\n};\n");
 }
 
 /**
@@ -71,7 +71,7 @@ void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
 
     printf("static const uint32_t %s[%d] = {\n    ", name, (int)sz);
     for (;;) {
-        printf("%3u", ary[i]);
+        printf("%u", ary[i]);
         ++i;
         if (i == sz)
             break;
@@ -81,5 +81,5 @@ void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
             printf(", ");
         }
     }
-    printf("\n};\n\n");
+    printf("\n};\n");
 }
