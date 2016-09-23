@@ -2,7 +2,7 @@
 set -x
 set -e
 
-./indent.sh
+INDENT=clang-format-3.8 ./indent.sh
 git status --porcelain | wc -l
 
 autoreconf --install --force
