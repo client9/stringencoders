@@ -55,7 +55,6 @@ static char* test_json_map_empty()
     mu_assert_int_equals(strlen(buf), expected);
     mu_assert_str_equals("{}", buf);
     return 0;
-
 }
 
 static char* test_json_map_1()
@@ -122,7 +121,6 @@ static char* test_json_map_2()
     return 0;
 }
 
-
 static char* test_json_nest_1()
 {
     size_t len;
@@ -159,7 +157,6 @@ static char* test_json_nest_1()
 
     return 0;
 }
-
 
 static char* test_json_ary_empty()
 {
@@ -213,7 +210,6 @@ static char* test_json_ary_1()
     mu_assert_int_equals(len, expected);
     return 0;
 }
-
 
 static char* test_json_ary_2()
 {
@@ -321,7 +317,6 @@ static char* test_json_uint64()
     len = modp_json_end(&ctx);
     mu_assert_int_equals(len, 19);
     mu_assert_str_equals("\"18014398509481984\"", buf);
-
 
     return 0;
 }

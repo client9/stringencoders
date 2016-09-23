@@ -4,19 +4,19 @@
 /* we compile as C90 but use snprintf */
 #define _ISOC99_SOURCE
 
+#include "modp_b2.h"
+#include "minunit.h"
+#include "modp_b16.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "minunit.h"
-#include "modp_b2.h"
-#include "modp_b16.h"
 
 static char* testEndian(void)
 {
     /* this test that "0001" is "0...1" */
     char buf[100];
     char result[100];
-    char endian[] = {(char)0, (char)0, (char)0, (char)1};
+    char endian[] = { (char)0, (char)0, (char)0, (char)1 };
     size_t d = modp_b2_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(32, d);
     mu_assert_str_equals("00000000000000000000000000000001", buf);
@@ -42,15 +42,15 @@ static char* testEncodeDecode(void)
     char rbuf[17];
     char msg[100]; /* for test messages output */
     msg[0] = 0; /* make msg an empty string */
-    unsigned int i,j;
+    unsigned int i, j;
     size_t d;
 
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             /* comment this out.. it really slows down the test */
-            sprintf(msg, "(i,j) = (%u,%u):", i,j);
-            ibuf[0] = (char)((unsigned char) i);
-            ibuf[1] = (char)((unsigned char) j);
+            sprintf(msg, "(i,j) = (%u,%u):", i, j);
+            ibuf[0] = (char)((unsigned char)i);
+            ibuf[1] = (char)((unsigned char)j);
 
             memset(obuf, 0, sizeof(obuf));
             d = modp_b16_encode(obuf, ibuf, (size_t)2);
@@ -135,7 +135,6 @@ static char* testOddEncode(void)
     mu_assert_int_equals(obuf[5], '1');
     return 0;
 }
-
 
 static char* testBadDecode(void)
 {
@@ -238,7 +237,8 @@ static char* testLengths(void)
     return 0;
 }
 
-static char* all_tests(void) {
+static char* all_tests(void)
+{
     mu_run_test(testEndian);
     mu_run_test(testEncodeDecode);
     mu_run_test(testLengths);

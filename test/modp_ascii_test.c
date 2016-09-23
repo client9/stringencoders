@@ -4,11 +4,11 @@
 /* we compile as C90 but use snprintf */
 #define _ISOC99_SOURCE
 
-#include <stdio.h>
+#include "minunit.h"
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "minunit.h"
 
 #include "modp_ascii.h"
 
@@ -50,31 +50,30 @@ static char* testUpperHighBits(void)
     char buf[5];
 
     buf[0] = 'z';
-    buf[1] = (char) 0xff;
-    buf[2] = (char) 0xff;
-    buf[3] = (char) 0xff;
+    buf[1] = (char)0xff;
+    buf[2] = (char)0xff;
+    buf[3] = (char)0xff;
     buf[4] = '\0';
 
     expected[0] = 'Z';
-    expected[1] = (char) 0xff;
-    expected[2] = (char) 0xff;
-    expected[3] = (char) 0xff;
+    expected[1] = (char)0xff;
+    expected[2] = (char)0xff;
+    expected[3] = (char)0xff;
     expected[4] = '\0';
 
     memset(obuf, 0, sizeof(obuf));
     modp_toupper_copy(obuf, buf, strlen(buf));
     mu_assert_str_equals(expected, obuf);
 
-
-    buf[0] = (char) 0xff;
-    buf[1] = (char) 0xff;
-    buf[2] = (char) 0xff;
+    buf[0] = (char)0xff;
+    buf[1] = (char)0xff;
+    buf[2] = (char)0xff;
     buf[3] = 'z';
     buf[4] = '\0';
 
-    expected[0] = (char) 0xff;
-    expected[1] = (char) 0xff;
-    expected[2] = (char) 0xff;
+    expected[0] = (char)0xff;
+    expected[1] = (char)0xff;
+    expected[2] = (char)0xff;
     expected[3] = 'Z';
     expected[4] = '\0';
     memset(obuf, 0, sizeof(obuf));
@@ -144,22 +143,25 @@ static char* testToUpper(void)
     char buf1[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
-        buf1[i] = (char) i;
-        expected[i] = (char)((i >= 'a' && i <= 'z') ? i-32 : i);
+        buf1[i] = (char)i;
+        expected[i] = (char)((i >= 'a' && i <= 'z') ? i - 32 : i);
     }
     modp_toupper(buf1, (size_t)256);
     mu_assert(memcmp(expected, buf1, (size_t)256) == 0);
 
     /* do other sizes to check */
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_toupper(buf1, (size_t)255);
     mu_assert(memcmp(expected, buf1, (size_t)255) == 0);
 
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_toupper(buf1, (size_t)254);
     mu_assert(memcmp(expected, buf1, (size_t)254) == 0);
 
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_toupper(buf1, (size_t)253);
     mu_assert(memcmp(expected, buf1, (size_t)253) == 0);
     return 0;
@@ -171,23 +173,26 @@ static char* testToLower(void)
     char buf1[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
-        buf1[i] = (char) i;
-        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i+32 : i);
+        buf1[i] = (char)i;
+        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i + 32 : i);
     }
 
     modp_tolower(buf1, (size_t)256);
     mu_assert(memcmp(expected, buf1, (size_t)256) == 0);
 
     /* do other sizes to check */
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_tolower(buf1, (size_t)255);
     mu_assert(memcmp(expected, buf1, (size_t)255) == 0);
 
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_tolower(buf1, (size_t)254);
     mu_assert(memcmp(expected, buf1, (size_t)254) == 0);
 
-    for (i = 0; i < 256; ++i) buf1[i] = (char) i;
+    for (i = 0; i < 256; ++i)
+        buf1[i] = (char)i;
     modp_tolower(buf1, (size_t)253);
     mu_assert(memcmp(expected, buf1, (size_t)253) == 0);
     return 0;
@@ -200,9 +205,9 @@ static char* testToUpperCopy(void)
     char output[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
-        buf1[i] = (char) i;
+        buf1[i] = (char)i;
         output[i] = 0;
-        expected[i] = (char)((i >= 'a' && i <= 'z') ? i-32 : i);
+        expected[i] = (char)((i >= 'a' && i <= 'z') ? i - 32 : i);
     }
     buf1[i] = 0;
     output[i] = 0;
@@ -211,15 +216,18 @@ static char* testToUpperCopy(void)
     mu_assert(memcmp(expected, output, (size_t)256) == 0);
 
     /* do other sizes to check */
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_toupper_copy(output, buf1, (size_t)255);
     mu_assert(memcmp(expected, output, (size_t)255) == 0);
 
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_toupper_copy(output, buf1, (size_t)254);
     mu_assert(memcmp(expected, output, (size_t)254) == 0);
 
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_toupper_copy(output, buf1, (size_t)253);
     mu_assert(memcmp(expected, output, (size_t)253) == 0);
     return 0;
@@ -232,9 +240,9 @@ static char* testToLowerCopy(void)
     char output[300];
     char expected[300];
     for (i = 0; i < 256; ++i) {
-        buf1[i] = (char) i;
+        buf1[i] = (char)i;
         output[i] = 0;
-        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i+32 : i);
+        expected[i] = (char)((i >= 'A' && i <= 'Z') ? i + 32 : i);
     }
     buf1[i] = 0;
     output[i] = 0;
@@ -243,21 +251,25 @@ static char* testToLowerCopy(void)
     mu_assert(memcmp(expected, output, (size_t)256) == 0);
 
     /* do other sizes to check */
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_tolower_copy(output, buf1, (size_t)255);
     mu_assert(memcmp(expected, output, (size_t)255) == 0);
 
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_tolower_copy(output, buf1, (size_t)254);
     mu_assert(memcmp(expected, output, (size_t)254) == 0);
 
-    for (i = 0; i < 256; ++i) output[i] = 0;
+    for (i = 0; i < 256; ++i)
+        output[i] = 0;
     modp_tolower_copy(output, buf1, (size_t)253);
     mu_assert(memcmp(expected, output, (size_t)253) == 0);
     return 0;
 }
 
-static char* all_tests(void) {
+static char* all_tests(void)
+{
     mu_run_test(testUpperHighBits);
     mu_run_test(testUpperSimple);
     mu_run_test(testLowerSimple);
@@ -270,5 +282,3 @@ static char* all_tests(void) {
 }
 
 UNITTESTS
-
-

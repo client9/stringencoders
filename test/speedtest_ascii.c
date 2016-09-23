@@ -2,11 +2,11 @@
 /* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 #include "modp_ascii.h"
-#include <stdio.h>
-#include <time.h>
-#include <stdint.h>
 #include "modp_ascii_data.h"
 #include <ctype.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <time.h>
 
 //extern const char gsToUpperMap[256];
 /**
@@ -19,11 +19,10 @@ static void toupper_copy1(char* dest, const char* str, size_t len)
     size_t i;
     for (i = 0; i < len; ++i) {
         // toupper is defined in <ctype.h>
-        *dest++ = (char) toupper((int) str[i]);
+        *dest++ = (char)toupper((int)str[i]);
     }
     *dest = 0;
 }
-
 
 /**
  * Skipping ctype, and doing the compare directly
@@ -35,7 +34,7 @@ static void toupper_copy2(char* dest, const char* str, size_t len)
     char c;
     for (i = 0; i < len; ++i) {
         c = str[i];
-        *dest++ = (char)((c >= 'a' && c <= 'z') ? c : (c -32));
+        *dest++ = (char)((c >= 'a' && c <= 'z') ? c : (c - 32));
     }
     *dest = 0;
 }
@@ -48,8 +47,8 @@ static void toupper_copy3(char* dest, const char* str, size_t len)
     size_t i;
     unsigned char c;
     for (i = 0; i < len; ++i) {
-        c = (unsigned char) str[i];
-        *dest++ = (char) gsToUpperMap[c];
+        c = (unsigned char)str[i];
+        *dest++ = (char)gsToUpperMap[c];
     }
     *dest = 0;
 }
@@ -69,17 +68,17 @@ static void toupper_copy4(char* dest, const char* str, size_t len)
      */
 
     size_t i;
-    uint8_t c1,c2,c3,c4;
+    uint8_t c1, c2, c3, c4;
 
     const size_t leftover = len % 4;
     const size_t imax = len - leftover;
-    const uint8_t* s = (const uint8_t*) str;
-    for (i = 0; i != imax ; i+=4) {
+    const uint8_t* s = (const uint8_t*)str;
+    for (i = 0; i != imax; i += 4) {
         /*
          *  it's important to make these variables
          *  it helps the optimizer to figure out what to do
          */
-        c1 = s[i], c2=s[i+1], c3=s[i+2], c4=s[i+3];
+        c1 = s[i], c2 = s[i + 1], c3 = s[i + 2], c4 = s[i + 3];
         dest[0] = (char)gsToUpperMap[c1];
         dest[1] = (char)gsToUpperMap[c2];
         dest[2] = (char)gsToUpperMap[c3];
@@ -88,10 +87,14 @@ static void toupper_copy4(char* dest, const char* str, size_t len)
     }
 
     switch (leftover) {
-    case 3: *dest++ = (char)gsToUpperMap[s[i++]];
-    case 2: *dest++ = (char)gsToUpperMap[s[i++]];
-    case 1: *dest++ = (char)gsToUpperMap[s[i]];
-        case 0: *dest = '\0';
+    case 3:
+        *dest++ = (char)gsToUpperMap[s[i++]];
+    case 2:
+        *dest++ = (char)gsToUpperMap[s[i++]];
+    case 1:
+        *dest++ = (char)gsToUpperMap[s[i]];
+    case 0:
+        *dest = '\0';
     }
 }
 
@@ -105,12 +108,12 @@ static void toupper_copy4(char* dest, const char* str, size_t len)
 static void toupper_copy5(char* dest, const char* str, size_t len)
 {
     size_t i;
-    uint32_t eax,ebx,ecx,edx;
-    const uint8_t* ustr = (const uint8_t*) str;
+    uint32_t eax, ebx, ecx, edx;
+    const uint8_t* ustr = (const uint8_t*)str;
     const int leftover = len % 4;
     const size_t imax = len / 4;
-    const uint32_t* s = (const uint32_t*) str;
-    uint32_t* d = (uint32_t*) dest;
+    const uint32_t* s = (const uint32_t*)str;
+    uint32_t* d = (uint32_t*)dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
         ebx = 0x80808080u | eax;
@@ -120,13 +123,17 @@ static void toupper_copy5(char* dest, const char* str, size_t len)
         *d++ = eax - (ebx >> 2);
     }
 
-    i = imax*4;
-    dest = (char*) d;
+    i = imax * 4;
+    dest = (char*)d;
     switch (leftover) {
-    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
-        case 0: *dest = '\0';
+    case 3:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1:
+        *dest++ = (char)gsToUpperMap[ustr[i]];
+    case 0:
+        *dest = '\0';
     }
 }
 
@@ -141,13 +148,13 @@ static void toupper_copy5(char* dest, const char* str, size_t len)
  */
 static void toupper_copy6(char* dest, const char* str, size_t len)
 {
-    size_t i=0;
-    uint32_t eax,ebx,ecx,edx;
-    const uint8_t* ustr = (const uint8_t*) str;
+    size_t i = 0;
+    uint32_t eax, ebx, ecx, edx;
+    const uint8_t* ustr = (const uint8_t*)str;
     const int leftover = len % 4;
     const size_t imax = len / 4;
-    const uint32_t* s = (const uint32_t*) str;
-    uint32_t* d = (uint32_t*) dest;
+    const uint32_t* s = (const uint32_t*)str;
+    uint32_t* d = (uint32_t*)dest;
     for (i = 0; i != imax; ++i) {
 #if 1
         /*
@@ -174,46 +181,54 @@ static void toupper_copy6(char* dest, const char* str, size_t len)
         eax = s[i];
         ebx = (0x7f7f7f7ful & eax) + 0x05050505ul;
         ebx = (0x7f7f7f7ful & ebx) + 0x1a1a1a1aul;
-        ebx = ((ebx & ~eax) >> 2 ) & 0x20202020ul;
+        ebx = ((ebx & ~eax) >> 2) & 0x20202020ul;
         *d++ = eax - ebx;
 #endif
     }
 
-    i = imax*4;
-    dest = (char*) d;
+    i = imax * 4;
+    dest = (char*)d;
     switch (leftover) {
-    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
-        case 0: *dest = '\0';
+    case 3:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1:
+        *dest++ = (char)gsToUpperMap[ustr[i]];
+    case 0:
+        *dest = '\0';
     }
 }
 
 static void modp_toupper_copy_a2(char* dest, const char* str, size_t len)
 {
-    size_t i=0;
+    size_t i = 0;
     uint32_t eax, ebx;
-    const uint8_t* ustr = (const uint8_t*) str;
+    const uint8_t* ustr = (const uint8_t*)str;
     const size_t leftover = len % 4;
     const size_t imax = len / 4;
-    const uint32_t* s = (const uint32_t*) str;
-    uint32_t* d = (uint32_t*) dest;
+    const uint32_t* s = (const uint32_t*)str;
+    uint32_t* d = (uint32_t*)dest;
     for (i = 0; i != imax; ++i) {
         eax = s[i];
 
         ebx = (0x7f7f7f7fu & eax) + 0x05050505u;
         ebx = (0x7f7f7f7fu & ebx) + 0x1a1a1a1au;
-        ebx = ((ebx & ~eax) >> 2 ) & 0x20202020u;
+        ebx = ((ebx & ~eax) >> 2) & 0x20202020u;
         *d++ = eax - ebx;
     }
 
-    i = imax*4;
-    dest = (char*) d;
+    i = imax * 4;
+    dest = (char*)d;
     switch (leftover) {
-    case 3: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 2: *dest++ = (char)gsToUpperMap[ustr[i++]];
-    case 1: *dest++ = (char)gsToUpperMap[ustr[i]];
-        case 0: *dest = '\0';
+    case 3:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 2:
+        *dest++ = (char)gsToUpperMap[ustr[i++]];
+    case 1:
+        *dest++ = (char)gsToUpperMap[ustr[i]];
+    case 0:
+        *dest = '\0';
     }
 }
 
@@ -243,8 +258,8 @@ int main(void)
         toupper_copy1(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    last = (double)(t1 -t0);
-    printf("%lu\t", (t1-t0));
+    last = (double)(t1 - t0);
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -255,7 +270,7 @@ int main(void)
         toupper_copy2(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -266,7 +281,7 @@ int main(void)
         toupper_copy3(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -277,9 +292,8 @@ int main(void)
         toupper_copy4(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
-
 
     /**
      ** V5 -- Hsieh Alternate
@@ -289,7 +303,7 @@ int main(void)
         toupper_copy5(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -300,7 +314,7 @@ int main(void)
         toupper_copy6(obuf, buf, sizeof(buf));
     }
     t1 = clock();
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -312,7 +326,7 @@ int main(void)
     }
     t1 = clock();
 
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
     /**
@@ -324,10 +338,10 @@ int main(void)
     }
     t1 = clock();
 
-    printf("%lu\t", (t1-t0));
+    printf("%lu\t", (t1 - t0));
     fflush(stdout);
 
-    printf("%.1fx\n", last/((double)(t1-t0)));
+    printf("%.1fx\n", last / ((double)(t1 - t0)));
     fflush(stdout);
 
     return 0;

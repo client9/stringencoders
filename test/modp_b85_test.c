@@ -22,7 +22,7 @@ static char* testEndian(void)
     /* this test that "1" is "!!!!#" */
     char buf[100];
     char result[10];
-    char endian[] = {(char)0, (char)0, (char)0, (char)1};
+    char endian[] = { (char)0, (char)0, (char)0, (char)1 };
     size_t d = modp_b85_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(5, d);
     mu_assert_int_equals('!', buf[0]);
@@ -56,8 +56,8 @@ static char* testLength(void)
     /* Encode Len
      * 4 byte -> 5 output + 1 null byte
      */
-    mu_assert_int_equals( 1, modp_b85_encode_len(0));
-    mu_assert_int_equals( 6, modp_b85_encode_len(4));
+    mu_assert_int_equals(1, modp_b85_encode_len(0));
+    mu_assert_int_equals(6, modp_b85_encode_len(4));
     mu_assert_int_equals(11, modp_b85_encode_len(8));
     return 0;
 }
@@ -81,7 +81,7 @@ static char* testBadInputLength(void)
  */
 static char* testBadCharDecode(void)
 {
-    char buf[] = {'A', 'B', 'C', 'D', '\n', '\0'};
+    char buf[] = { 'A', 'B', 'C', 'D', '\n', '\0' };
     mu_assert_int_equals(-1, modp_b85_decode(buf, buf, (size_t)5));
     return 0;
 }
@@ -92,15 +92,15 @@ static char* testEncodeDecode(void)
     char obuf[10]; /* output */
     char rbuf[10]; /* final result */
     size_t d;
-    int i,j,k,l;
+    int i, j, k, l;
     for (i = 0; i < 256; ++i) {
-        for (j = 0; j < 256; j+=16) { /* save some time +=16 */
+        for (j = 0; j < 256; j += 16) { /* save some time +=16 */
             for (k = 0; k < 256; k += 8) { /* save some time += 8 */
                 for (l = 0; l < 256; ++l) {
-                    ibuf[0] = (char) i;
-                    ibuf[1] = (char) j;
-                    ibuf[2] = (char) k;
-                    ibuf[3] = (char) l;
+                    ibuf[0] = (char)i;
+                    ibuf[1] = (char)j;
+                    ibuf[2] = (char)k;
+                    ibuf[3] = (char)l;
                     memset(obuf, 255, sizeof(obuf));
                     d = modp_b85_encode(obuf, ibuf, (size_t)4);
                     mu_assert_int_equals(5, d);
@@ -131,4 +131,3 @@ static char* all_tests(void)
 }
 
 UNITTESTS
-

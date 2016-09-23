@@ -127,7 +127,7 @@ END_C
 
 namespace modp {
 
-    /**
+/**
      * Url decode a string.
      * This function does not allocate memory.
      *
@@ -135,33 +135,33 @@ namespace modp {
      * \return a reference to the input string.
      *      There is no error case, bad characters are passed through
      */
-    inline std::string& xml_decode(std::string& s)
-    {
-        size_t d = modp_xml_decode(const_cast<char*>(s.data()), s.data(), s.size());
-        s.erase(d, std::string::npos);
-        return s;
-    }
+inline std::string& xml_decode(std::string& s)
+{
+    size_t d = modp_xml_decode(const_cast<char*>(s.data()), s.data(), s.size());
+    s.erase(d, std::string::npos);
+    return s;
+}
 
-    inline std::string xml_decode(const char* str)
-    {
-        std::string s(str);
-        xml_decode(s);
-        return s;
-    }
+inline std::string xml_decode(const char* str)
+{
+    std::string s(str);
+    xml_decode(s);
+    return s;
+}
 
-    inline std::string xml_decode(const char* str, size_t len)
-    {
-        std::string s(str, len);
-        xml_decode(s);
-        return s;
-    }
+inline std::string xml_decode(const char* str, size_t len)
+{
+    std::string s(str, len);
+    xml_decode(s);
+    return s;
+}
 
-    inline std::string xml_decode(const std::string& s)
-    {
-        std::string x(s);
-        xml_decode(x);
-        return x;
-    }
+inline std::string xml_decode(const std::string& s)
+{
+    std::string x(s);
+    xml_decode(x);
+    return x;
+}
 }
 #endif
 

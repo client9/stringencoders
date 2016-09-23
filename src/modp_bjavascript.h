@@ -39,8 +39,6 @@
 
 #include "extern_c_begin.h"
 
-
-
 /**
  * "javascript" encode a stirng
  * This takes a c-string and does character escaping
@@ -53,7 +51,7 @@
  */
 size_t modp_bjavascript_encode(char* dest, const char* str, size_t len);
 
-#define modp_bjavascript_encode_len(A) (4*A + 1)
+#define modp_bjavascript_encode_len(A) (4 * A + 1)
 
 /**
  * Given the exact size of output string.
@@ -79,32 +77,32 @@ size_t modp_bjavascript_encode_strlen(const char* str, size_t len);
 #include <string>
 namespace modp {
 
-    inline std::string javascript_encode(const char* s, size_t len)
-    {
-        std::string x(modp_bjavascript_encode_len(len), '\0');
-        size_t d = modp_bjavascript_encode(const_cast<char*>(x.data()), s, len);
-        x.erase(d, std::string::npos);
-        return x;
-    }
+inline std::string javascript_encode(const char* s, size_t len)
+{
+    std::string x(modp_bjavascript_encode_len(len), '\0');
+    size_t d = modp_bjavascript_encode(const_cast<char*>(x.data()), s, len);
+    x.erase(d, std::string::npos);
+    return x;
+}
 
-    inline std::string javascript_encode(const char* s)
-    {
-        return javascript_encode(s, strlen(s));
-    }
+inline std::string javascript_encode(const char* s)
+{
+    return javascript_encode(s, strlen(s));
+}
 
-    inline std::string& javascript_encode(std::string& s)
-    {
-        std::string x(javascript_encode(s.data(), s.size()));
-        s.swap(x);
-        return s;
-    }
+inline std::string& javascript_encode(std::string& s)
+{
+    std::string x(javascript_encode(s.data(), s.size()));
+    s.swap(x);
+    return s;
+}
 
-    inline std::string javascript_encode(const std::string& s)
-    {
-        return javascript_encode(s.data(), s.size());
-    }
+inline std::string javascript_encode(const std::string& s)
+{
+    return javascript_encode(s.data(), s.size());
+}
 
-}       /* namespace modp */
-#endif  /* __cplusplus */
+} /* namespace modp */
+#endif /* __cplusplus */
 
 #endif /* modp_bjavascript */

@@ -17,7 +17,7 @@ static char* testEndian(void)
     /* this test that "0001" is "00000001" */
     char buf[100];
     char result[10];
-    char endian[] = {(char)0, (char)0, (char)0, (char)1};
+    char endian[] = { (char)0, (char)0, (char)0, (char)1 };
     size_t d = modp_b16_encode(buf, endian, (size_t)4);
     mu_assert_int_equals(8, d);
     mu_assert_str_equals("00000001", buf);
@@ -49,15 +49,15 @@ static char* testEncodeDecode(void)
     char rbuf[4];
     char msg[100]; /* for test messages output */
     msg[0] = 0; /* make msg an empty string */
-    unsigned int i,j;
+    unsigned int i, j;
     size_t d;
 
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
             /* comment this out.. it really slows down the test */
-            sprintf(msg, "(i,j) = (%u,%u):", i,j);
-            ibuf[0] = (char)((unsigned char) i);
-            ibuf[1] = (char)((unsigned char) j);
+            sprintf(msg, "(i,j) = (%u,%u):", i, j);
+            ibuf[0] = (char)((unsigned char)i);
+            ibuf[1] = (char)((unsigned char)j);
 
             memset(obuf, 0, sizeof(obuf));
             d = modp_b16_encode(obuf, ibuf, (size_t)2);
@@ -249,7 +249,8 @@ static char* testLengths(void)
     return 0;
 }
 
-static char* testValgrind(void) {
+static char* testValgrind(void)
+{
     /*
      * an input of 3 chars, means output is 3*2+1 = 7 chars
      * However, the code works on output in values of 4bytes

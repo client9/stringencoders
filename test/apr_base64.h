@@ -58,8 +58,9 @@ extern "C" {
  * encrypted string.
  * @param len the length of an unencrypted string.
  * @return the length of the string after it is encrypted
- */ 
-APU_DECLARE(int) apr_base64_encode_len(int len);
+ */
+APU_DECLARE(int)
+apr_base64_encode_len(int len);
 
 /**
  * Encode a text string using base64encoding.
@@ -67,9 +68,10 @@ APU_DECLARE(int) apr_base64_encode_len(int len);
  * @param plain_src The original string in plain text
  * @param len_plain_src The length of the plain text string
  * @return the length of the encoded string
- */ 
-APU_DECLARE(int) apr_base64_encode(char * coded_dst, const char *plain_src, 
-                                 int len_plain_src);
+ */
+APU_DECLARE(int)
+apr_base64_encode(char* coded_dst, const char* plain_src,
+    int len_plain_src);
 
 /**
  * Encode an EBCDIC string using base64encoding.
@@ -77,38 +79,42 @@ APU_DECLARE(int) apr_base64_encode(char * coded_dst, const char *plain_src,
  * @param plain_src The original string in plain text
  * @param len_plain_src The length of the plain text string
  * @return the length of the encoded string
- */ 
-APU_DECLARE(int) apr_base64_encode_binary(char * coded_dst, 
-                                        const unsigned char *plain_src,
-                                        int len_plain_src);
+ */
+APU_DECLARE(int)
+apr_base64_encode_binary(char* coded_dst,
+    const unsigned char* plain_src,
+    int len_plain_src);
 
 /**
  * Determine the length of a plain text string given the encoded version
  * @param coded_src The encoded string
  * @return the length of the plain text string
- */ 
-APU_DECLARE(int) apr_base64_decode_len(const char * coded_src);
+ */
+APU_DECLARE(int)
+apr_base64_decode_len(const char* coded_src);
 
 /**
  * Decode a string to plain text
  * @param plain_dst The destination string for the plain text
  * @param coded_src The encoded string 
  * @return the length of the plain text string
- */ 
-APU_DECLARE(int) apr_base64_decode(char * plain_dst, const char *coded_src);
+ */
+APU_DECLARE(int)
+apr_base64_decode(char* plain_dst, const char* coded_src);
 
 /**
  * Decode an EBCDIC string to plain text
  * @param plain_dst The destination string for the plain text
  * @param coded_src The encoded string 
  * @return the length of the plain text string
- */ 
-APU_DECLARE(int) apr_base64_decode_binary(unsigned char * plain_dst, 
-                                        const char *coded_src);
+ */
+APU_DECLARE(int)
+apr_base64_decode_binary(unsigned char* plain_dst,
+    const char* coded_src);
 
 /** @} */
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* !APR_BASE64_H */
+#endif /* !APR_BASE64_H */

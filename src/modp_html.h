@@ -36,7 +36,6 @@
 
 BEGIN_C
 
-
 /**
  * \brief HTML decode a single character
  *

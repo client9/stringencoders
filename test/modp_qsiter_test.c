@@ -146,8 +146,6 @@ static char* test_qs_parse5()
     return 0;
 }
 
-
-
 static char* test_qs_parse6()
 {
     struct qsiter_t qsi;
@@ -171,7 +169,6 @@ static char* test_qs_parse6()
     return 0;
 }
 
-
 static char* test_qs_parse7()
 {
     struct qsiter_t qsi;
@@ -194,7 +191,6 @@ static char* test_qs_parse7()
 
     return 0;
 }
-
 
 static char* test_qs_parse8()
 {

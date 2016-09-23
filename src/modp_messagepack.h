@@ -6,23 +6,23 @@
 
 #ifdef __cplusplus
 #ifndef MODP_C_BEGIN_DECLS
-# define MODP_C_BEGIN_DECLS extern "C" {
-# define MODP_C_END_DECLS   }
+#define MODP_C_BEGIN_DECLS extern "C" {
+#define MODP_C_END_DECLS }
 #endif
 #else
-# define MODP_C_BEGIN_DECLS
-# define MODP_C_END_DECLS
+#define MODP_C_BEGIN_DECLS
+#define MODP_C_END_DECLS
 #endif
 
 MODP_C_BEGIN_DECLS
 
-#include <string.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
 typedef struct {
-  size_t size;
-  char* dest;
+    size_t size;
+    char* dest;
 } modp_msgpk_ctx;
 
 void modp_msgpk_init(modp_msgpk_ctx* ctx, char* dest);

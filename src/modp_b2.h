@@ -23,8 +23,8 @@
 #ifndef COM_MODP_STRINGENCODERS_B2
 #define COM_MODP_STRINGENCODERS_B2
 
-#include "modp_stdint.h"
 #include "extern_c_begin.h"
+#include "modp_stdint.h"
 
 /**
  * encode a string into binary (base 2, '0' and '1')
@@ -53,17 +53,17 @@ size_t modp_b2_decode(char* dest, const char* src, size_t len);
  * 2 x the length of A, round up the next high mutliple of 2
  * +1 for null byte added
  */
-#define modp_b2_encode_len(A) (8*A + 1)
+#define modp_b2_encode_len(A) (8 * A + 1)
 
 /**
  * Encode string length
  */
-#define modp_b2_encode_strlen(A) (8*A)
+#define modp_b2_encode_strlen(A) (8 * A)
 
 /**
  * Decode string length
  */
-#define modp_b2_decode_len(A) ((A + 1)/ 8)
+#define modp_b2_decode_len(A) ((A + 1) / 8)
 
 #include "extern_c_end.h"
 
@@ -71,63 +71,63 @@ size_t modp_b2_decode(char* dest, const char* src, size_t len);
 #include <string>
 
 namespace modp {
-    /**
+/**
      * hex encode a string (self-modified)
      * \param[in,out] s the input string to be encoded
      * \return a reference to the input string.
      */
-    inline std::string& b2_encode(std::string& s)
-    {
-        std::string x(modp_b2_encode_len(s.size()), '\0');
-        size_t d = modp_b2_encode(const_cast<char*>(x.data()), s.data(), s.size());
-        if (d == (size_t)-1) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        s.swap(x);
-        return s;
+inline std::string& b2_encode(std::string& s)
+{
+    std::string x(modp_b2_encode_len(s.size()), '\0');
+    size_t d = modp_b2_encode(const_cast<char*>(x.data()), s.data(), s.size());
+    if (d == (size_t)-1) {
+        x.clear();
+    } else {
+        x.erase(d, std::string::npos);
     }
+    s.swap(x);
+    return s;
+}
 
-    /**
+/**
      *
      * \param[in] s original data source
      * \return new b2 encoding string
      */
-    inline std::string b2_encode(const std::string& s)
-    {
-        std::string str(s);
-        b2_encode(str);
-        return str;
-    }
+inline std::string b2_encode(const std::string& s)
+{
+    std::string str(s);
+    b2_encode(str);
+    return str;
+}
 
-    /**
+/**
      * Decode a hex-encoded string.  On error, input string is cleared.
      * This function does not allocate memory.
      *
      * \param[in,out] s the input string
      * \return a reference to the input string
      */
-    inline std::string& b2_decode(std::string& s)
-    {
-        size_t d = modp_b2_decode(const_cast<char*>(s.data()), s.data(), s.size());
-        if (d == (size_t)-1) {
-            s.clear();
-        } else {
-            s.erase(d, std::string::npos);
-        }
-        return s;
+inline std::string& b2_decode(std::string& s)
+{
+    size_t d = modp_b2_decode(const_cast<char*>(s.data()), s.data(), s.size());
+    if (d == (size_t)-1) {
+        s.clear();
+    } else {
+        s.erase(d, std::string::npos);
     }
+    return s;
+}
 
-    inline std::string b2_decode(const std::string& s)
-    {
-        std::string x(s);
-        b2_decode(x);
-        return x;
-    }
+inline std::string b2_decode(const std::string& s)
+{
+    std::string x(s);
+    b2_decode(x);
+    return x;
+}
 
 } /* namespace modp */
 
 #endif /* cplusplus */
 
-#endif  /* ifndef modp_b2 */
+#endif /* ifndef modp_b2 */

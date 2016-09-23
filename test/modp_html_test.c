@@ -35,13 +35,13 @@ static char* testHtmlDecodeEmpty(void)
  */
 static char* testHtmlDecodeUntouched(void)
 {
-    const char* digits  = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_~!$()*,;:@/?";
+    const char* digits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_~!$()*,;:@/?";
 
     int i;
     int ch;
     size_t consumed;
 
-    for (i = 0; i < (int) strlen(digits); ++i) {
+    for (i = 0; i < (int)strlen(digits); ++i) {
         consumed = 0;
         ch = modp_html_decode_char_at(digits + i, 1, &consumed);
         mu_assert_int_equals(ch, digits[i]);
@@ -105,7 +105,6 @@ static char* testHtmlDecodeDigits(void)
 
     return 0;
 }
-
 
 static char* testHtmlDecodeHexDigits(void)
 {
@@ -275,7 +274,7 @@ static char* testHtmlDecodeNamedEntities(void)
     }
 
     {
-       /* off the edge */
+        /* off the edge */
         consumed = 0;
         const char* s1 = "&NotHumpEqua";
         cp = modp_html_decode_char_at(s1, strlen(s1), &consumed);
@@ -284,7 +283,6 @@ static char* testHtmlDecodeNamedEntities(void)
     }
 
     return 0;
-
 }
 
 static char* all_tests(void)
@@ -299,4 +297,3 @@ static char* all_tests(void)
 }
 
 UNITTESTS
-

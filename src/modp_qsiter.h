@@ -38,17 +38,16 @@
  *
  */
 struct qsiter_t {
-  const char* s;
-  size_t pos;
-  size_t len;
+    const char* s;
+    size_t pos;
+    size_t len;
 
-  const char* key;
-  size_t keylen;
+    const char* key;
+    size_t keylen;
 
-  const char* val;
-  size_t vallen;
+    const char* val;
+    size_t vallen;
 };
-
 
 /**
  * Reset a qsiter to an initial start (constructor)
@@ -72,4 +71,4 @@ int qsiter_next(struct qsiter_t* qsi);
 
 #include "extern_c_end.h"
 
-#endif  /* MODP_QSITER */
+#endif /* MODP_QSITER */

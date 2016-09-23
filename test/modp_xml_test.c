@@ -33,9 +33,9 @@ static char* testXmlDecodeEmpty(void)
  */
 static char* testXmlDecodeUntouched(void)
 {
-    const char* lower   = "abcdefghijklmnopqrstuvwxyz";
-    const char* upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const char* digits  = "0123456789";
+    const char* lower = "abcdefghijklmnopqrstuvwxyz";
+    const char* upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const char* digits = "0123456789";
     const char* special = ".-_~!$()*,;:@/?";
     char buf[1000];
 
@@ -231,7 +231,7 @@ static char* testXmlUnicodeCodePoints(void)
         0xE01F0, 0xEFFFF,
         0xFFFFE, 0xFFFFF
     };
-    static const int imax = sizeof(ranges)/sizeof(uint32_t);
+    static const int imax = sizeof(ranges) / sizeof(uint32_t);
     int i;
     for (i = 0; i < imax; ++i) {
         mu_assert_int_equals(-1, modp_xml_validate_unicode(ranges[i]));
@@ -259,31 +259,31 @@ static char* testXmlUnicodeCharToUTF8(void)
     /* Cent symbol */
     d = modp_xml_unicode_char_to_utf8(buf, 0x00A2);
     mu_assert_int_equals(2, d);
-    val = (unsigned char) buf[0];
+    val = (unsigned char)buf[0];
     mu_assert_int_equals(val, 0xC2);
-    val = (unsigned char) buf[1];
+    val = (unsigned char)buf[1];
     mu_assert_int_equals(val, 0xA2);
 
     /* Euro symbol */
     d = modp_xml_unicode_char_to_utf8(buf, 0x20AC);
     mu_assert_int_equals(3, d);
-    val = (unsigned char) buf[0];
+    val = (unsigned char)buf[0];
     mu_assert_int_equals(val, 0xE2);
-    val = (unsigned char) buf[1];
+    val = (unsigned char)buf[1];
     mu_assert_int_equals(val, 0x82);
-    val = (unsigned char) buf[2];
+    val = (unsigned char)buf[2];
     mu_assert_int_equals(val, 0xAC);
 
     /* Chinese Character */
     d = modp_xml_unicode_char_to_utf8(buf, 0x24B62);
     mu_assert_int_equals(4, d);
-    val = (unsigned char) buf[0];
+    val = (unsigned char)buf[0];
     mu_assert_int_equals(val, 0xF0);
-    val = (unsigned char) buf[1];
+    val = (unsigned char)buf[1];
     mu_assert_int_equals(val, 0xA4);
-    val = (unsigned char) buf[2];
+    val = (unsigned char)buf[2];
     mu_assert_int_equals(val, 0xAD);
-    val = (unsigned char) buf[3];
+    val = (unsigned char)buf[3];
     mu_assert_int_equals(val, 0xA2);
 
     return 0;
@@ -340,4 +340,3 @@ static char* all_tests(void)
 }
 
 UNITTESTS
-

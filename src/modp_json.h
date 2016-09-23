@@ -28,12 +28,12 @@
 
 #ifdef __cplusplus
 #ifndef MODP_C_BEGIN_DECLS
-# define MODP_C_BEGIN_DECLS extern "C" {
-# define MODP_C_END_DECLS   }
+#define MODP_C_BEGIN_DECLS extern "C" {
+#define MODP_C_END_DECLS }
 #endif
 #else
-# define MODP_C_BEGIN_DECLS
-# define MODP_C_END_DECLS
+#define MODP_C_BEGIN_DECLS
+#define MODP_C_END_DECLS
 #endif
 
 MODP_C_BEGIN_DECLS
@@ -43,8 +43,8 @@ MODP_C_BEGIN_DECLS
 #endif
 
 /* pull in size_t */
-#include <string.h>
 #include <stdint.h>
+#include <string.h>
 
 typedef struct {
     int depth;
@@ -94,7 +94,7 @@ void modp_json_add_uint32(modp_json_ctx* ctx, uint32_t val);
  *
  */
 void modp_json_add_uint64(modp_json_ctx* ctx, uint64_t val,
-                          int stringonly);
+    int stringonly);
 
 /*
  * explicity add a null type

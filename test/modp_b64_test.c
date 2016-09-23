@@ -21,7 +21,7 @@ static char* testEndian(void)
     /* this test that "1" is "AAAB" */
     char buf[100];
     char result[10];
-    char endian[] = {(char)0, (char)0, (char)1};
+    char endian[] = { (char)0, (char)0, (char)1 };
     size_t d = modp_b64_encode(buf, endian, (size_t)3);
     mu_assert_int_equals(4, d);
     mu_assert_int_equals('A', buf[0]);
@@ -72,7 +72,7 @@ static char* testEmpty(void)
 static char* testPadding(void)
 {
     char msg[100];
-    const char ibuf[6] = {1,1,1,1,1,1};
+    const char ibuf[6] = { 1, 1, 1, 1, 1, 1 };
     char obuf[10];
     char rbuf[10];
     size_t d = 0;
@@ -178,16 +178,16 @@ static char* testEncodeDecode(void)
     char rbuf[4];
     char msg[100];
     msg[0] = 0; /* make msg an empty string */
-    unsigned int i,j,k;
+    unsigned int i, j, k;
     size_t d = 0;
     for (i = 0; i < 256; ++i) {
         for (j = 0; j < 256; ++j) {
-            for (k= 0; k < 256; ++k) {
+            for (k = 0; k < 256; ++k) {
                 /* comment this out.. it really slows down the test */
                 /* sprintf(msg, "(i,j,k) = (%d,%d,%d):", i,j,k); */
-                ibuf[0] = (char)((unsigned char) i);
-                ibuf[1] = (char)((unsigned char) j);
-                ibuf[2] = (char)((unsigned char) k);
+                ibuf[0] = (char)((unsigned char)i);
+                ibuf[1] = (char)((unsigned char)j);
+                ibuf[2] = (char)((unsigned char)k);
                 ibuf[3] = 0;
 
                 memset(obuf, 1, sizeof(obuf));
@@ -236,12 +236,11 @@ static char* testDecodeErrors(void)
         mu_assert_int_equals_msg(msg, (size_t)-1, y);
     }
 
-
     /*  test just 1-4 padchars */
     for (i = 0; i < 4; ++i) {
         decode[i] = '=';
-        decode[i+1] = '\0';
-        y = modp_b64_decode(out, decode, (size_t)(i+1));
+        decode[i + 1] = '\0';
+        y = modp_b64_decode(out, decode, (size_t)(i + 1));
         sprintf(msg, "i=%d, b64=%s", i, decode);
         mu_assert_int_equals_msg(msg, (size_t)-1, y);
     }
@@ -268,4 +267,3 @@ static char* all_tests(void)
 }
 
 UNITTESTS
-

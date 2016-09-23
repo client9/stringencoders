@@ -33,8 +33,8 @@
 #ifndef COM_MODP_STRINGENCODERS_B64
 #define COM_MODP_STRINGENCODERS_B64
 
-#include "modp_stdint.h"
 #include "extern_c_begin.h"
+#include "modp_stdint.h"
 
 /**
  * \brief Encode a raw binary string into base 64.
@@ -97,7 +97,7 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len);
  *
  * +1 is for any extra null.
  */
-#define modp_b64_encode_len(A) ((A+2)/3 * 4 + 1)
+#define modp_b64_encode_len(A) ((A + 2) / 3 * 4 + 1)
 
 /**
  * Given a base64 string of length len,
@@ -133,7 +133,7 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len);
  * // foo is filled out now
  * \endcode
  */
-#define modp_b64_encode_strlen(A) ((A + 2)/ 3 * 4)
+#define modp_b64_encode_strlen(A) ((A + 2) / 3 * 4)
 
 #include "extern_c_end.h"
 
@@ -142,45 +142,45 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len);
 #include <string>
 
 namespace modp {
-    /** \brief b64 encode a cstr with len
+/** \brief b64 encode a cstr with len
      *
      * \param[in] s the input string to encode
      * \param[in] len the length of the input string
      * \return a newly allocated b64 string.  Empty if failed.
      */
-    inline std::string b64_encode(const char* s, size_t len)
-    {
-        std::string x(modp_b64_encode_len(len), '\0');
-        size_t d = modp_b64_encode(const_cast<char*>(x.data()), s, len);
-        if (d == (size_t)-1) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        return x;
+inline std::string b64_encode(const char* s, size_t len)
+{
+    std::string x(modp_b64_encode_len(len), '\0');
+    size_t d = modp_b64_encode(const_cast<char*>(x.data()), s, len);
+    if (d == (size_t)-1) {
+        x.clear();
+    } else {
+        x.erase(d, std::string::npos);
     }
+    return x;
+}
 
-    /** \brief b64 encode a cstr
+/** \brief b64 encode a cstr
      *
      * \param[in] s the input string to encode
      * \return a newly allocated b64 string.  Empty if failed.
      */
-    inline std::string b64_encode(const char* s)
-    {
-        return b64_encode(s, strlen(s));
-    }
+inline std::string b64_encode(const char* s)
+{
+    return b64_encode(s, strlen(s));
+}
 
-    /** \brief b64 encode a const std::string
+/** \brief b64 encode a const std::string
      *
      * \param[in] s the input string to encode
      * \return a newly allocated b64 string.  Empty if failed.
      */
-    inline std::string b64_encode(const std::string& s)
-    {
-        return b64_encode(s.data(), s.size());
-    }
+inline std::string b64_encode(const std::string& s)
+{
+    return b64_encode(s.data(), s.size());
+}
 
-    /**
+/**
      * base 64 encode a string (self-modifing)
      *
      * This function is for C++ only (duh)
@@ -188,31 +188,31 @@ namespace modp {
      * \param[in,out] s the string to be decoded
      * \return a reference to the input string
      */
-    inline std::string& b64_encode(std::string& s)
-    {
-        std::string x(b64_encode(s.data(), s.size()));
-        s.swap(x);
-        return s;
-    }
+inline std::string& b64_encode(std::string& s)
+{
+    std::string x(b64_encode(s.data(), s.size()));
+    s.swap(x);
+    return s;
+}
 
-    inline std::string b64_decode(const char* src, size_t len)
-    {
-        std::string x(modp_b64_decode_len(len)+1, '\0');
-        size_t d = modp_b64_decode(const_cast<char*>(x.data()), src, len);
-        if (d == (size_t)-1) {
-            x.clear();
-        } else {
-            x.erase(d, std::string::npos);
-        }
-        return x;
+inline std::string b64_decode(const char* src, size_t len)
+{
+    std::string x(modp_b64_decode_len(len) + 1, '\0');
+    size_t d = modp_b64_decode(const_cast<char*>(x.data()), src, len);
+    if (d == (size_t)-1) {
+        x.clear();
+    } else {
+        x.erase(d, std::string::npos);
     }
+    return x;
+}
 
-    inline std::string b64_decode(const char* src)
-    {
-        return b64_decode(src, strlen(src));
-    }
+inline std::string b64_decode(const char* src)
+{
+    return b64_decode(src, strlen(src));
+}
 
-    /**
+/**
      * base 64 decode a string (self-modifing)
      * On failure, the string is empty.
      *
@@ -221,18 +221,17 @@ namespace modp {
      * \param[in,out] s the string to be decoded
      * \return a reference to the input string
      */
-    inline std::string& b64_decode(std::string& s)
-    {
-        std::string x(b64_decode(s.data(), s.size()));
-        s.swap(x);
-        return s;
-    }
+inline std::string& b64_decode(std::string& s)
+{
+    std::string x(b64_decode(s.data(), s.size()));
+    s.swap(x);
+    return s;
+}
 
-    inline std::string b64_decode(const std::string& s)
-    {
-        return b64_decode(s.data(), s.size());
-    }
-
+inline std::string b64_decode(const std::string& s)
+{
+    return b64_decode(s.data(), s.size());
+}
 }
 
 #endif /* __cplusplus */

@@ -15,7 +15,6 @@
  * Note: this file is under and MIT license
  */
 
-
 /**
  * <pre>
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
