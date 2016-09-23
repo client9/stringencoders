@@ -1,6 +1,3 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * \file
  * <pre>
@@ -71,10 +68,10 @@ int qsiter_next(struct qsiter_t* qsi)
     }
 
     charstart = qsi->s + qsi->pos;
-    ends = (const char*) memchr(charstart, '&', qsi->len - qsi->pos);
+    ends = (const char*)memchr(charstart, '&', qsi->len - qsi->pos);
 
     if (ends == NULL) {
-        eq = (const char*) memchr(charstart, '=', qsi->len - qsi->pos);
+        eq = (const char*)memchr(charstart, '=', qsi->len - qsi->pos);
         if (eq == NULL) {
             qsi->key = charstart;
             qsi->keylen = (size_t)(qsi->len - qsi->pos);
@@ -90,7 +87,7 @@ int qsiter_next(struct qsiter_t* qsi)
         return 1;
     } else {
         /* &&foo=bar */
-        eq = (const char*) memchr(charstart, '=', (size_t)(ends - charstart));
+        eq = (const char*)memchr(charstart, '=', (size_t)(ends - charstart));
         if (eq == NULL) {
             qsi->key = charstart;
             qsi->keylen = (size_t)(ends - charstart);

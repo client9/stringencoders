@@ -17,7 +17,6 @@
  *
  */
 
-
 /****************************/
 /* To change the alphabet   */
 /* Edit the following lines */
@@ -26,12 +25,11 @@
 
 /****************************/
 
-
 #include "arraytoc.h"
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "modp_stdint.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static uint8_t b64chars[64] = {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -39,7 +37,7 @@ static uint8_t b64chars[64] = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
-} ;
+};
 
 static uint8_t padchar = '=';
 
@@ -68,7 +66,7 @@ int main(int argc, char** argv)
 
     /*  over-ride standard alphabet */
     if (argc == 2) {
-        uint8_t* replacements = (uint8_t*) argv[1];
+        uint8_t* replacements = (uint8_t*)argv[1];
         if (strlen((char*)replacements) != 3) {
             fprintf(stderr, "input must be a string of 3 characters '-', '.' or '_'\n");
             exit(1);
@@ -79,7 +77,6 @@ int main(int argc, char** argv)
         padchar = replacements[2];
     }
 
-
     printStart();
 
     for (i = 0; i < 256; ++i) {
@@ -88,23 +85,24 @@ int main(int argc, char** argv)
     char_array_to_c(cary, sizeof(cary), "e0");
 
     for (i = 0; i < 256; ++i) {
-        cary[i] = (char) b64chars[(i & 0x3F)]; }
+        cary[i] = (char)b64chars[(i & 0x3F)];
+    }
     char_array_to_c(cary, sizeof(cary), "e1");
 
-    for (i = 0; i < 256; ++i) { cary[i] = (char) b64chars[(i & 0x3F)]; }
+    for (i = 0; i < 256; ++i) {
+        cary[i] = (char)b64chars[(i & 0x3F)];
+    }
     char_array_to_c(cary, sizeof(cary), "e2");
-
 
     printf("\n\n#ifdef WORDS_BIGENDIAN\n");
     printf("\n\n/* SPECIAL DECODE TABLES FOR BIG ENDIAN (IBM/MOTOROLA/SUN) CPUS */\n\n");
-
 
     clearDecodeTable(ary);
     for (i = 0; i < 64; ++i) {
         x = b64chars[i];
         ary[x] = i << 18;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d0");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d0");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -112,7 +110,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = i << 12;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d1");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d1");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -120,7 +118,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = i << 6;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d2");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d2");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -128,7 +126,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = i;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d3");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d3");
     printf("\n\n");
 
     printf("#else\n");
@@ -140,7 +138,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = i << 2;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t),"d0");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d0");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -148,7 +146,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = ((i & 0x30) >> 4) | ((i & 0x0F) << 12);
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d1");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d1");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -156,7 +154,7 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = ((i & 0x03) << 22) | ((i & 0x3c) << 6);
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d2");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d2");
     printf("\n\n");
 
     clearDecodeTable(ary);
@@ -164,9 +162,8 @@ int main(int argc, char** argv)
         x = b64chars[i];
         ary[x] = i << 16;
     }
-    uint32_array_to_c_hex(ary, sizeof(ary)/sizeof(uint32_t), "d3");
+    uint32_array_to_c_hex(ary, sizeof(ary) / sizeof(uint32_t), "d3");
     printf("\n\n");
-
 
     printf("#endif\n");
 

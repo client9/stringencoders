@@ -1,7 +1,5 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-#include <stdio.h>
 #include "arraytoc.h"
+#include <stdio.h>
 
 static void hexencodemap_char(void)
 {
@@ -10,20 +8,19 @@ static void hexencodemap_char(void)
     uint8_t e1[256];
     uint8_t e2[256];
 
-    for (i = 0;i < 256; ++i) {
+    for (i = 0; i < 256; ++i) {
         e1[i] = 0;
         e2[i] = 0;
     }
 
     for (i = 0; i < 256; ++i) {
         e1[i] = sHexChars[i >> 4];
-        e2[i] = sHexChars[i &  0x0f];
+        e2[i] = sHexChars[i & 0x0f];
     }
 
     char_array_to_c((char*)e1, sizeof(e1), "gsHexEncodeC1");
     char_array_to_c((char*)e2, sizeof(e2), "gsHexEncodeC2");
 }
-
 
 /*  exact same thing as one used on urlencode */
 static void hexdecodemap(void)
@@ -54,10 +51,9 @@ static void hexdecodemap(void)
         map2[i] = map1[i] << 4;
     }
 
+    uint32_array_to_c(map1, sizeof(map1) / sizeof(uint32_t), "gsHexDecodeMap");
 
-    uint32_array_to_c(map1, sizeof(map1)/sizeof(uint32_t), "gsHexDecodeMap");
-
-    uint32_array_to_c(map2, sizeof(map2)/sizeof(uint32_t), "gsHexDecodeD2");
+    uint32_array_to_c(map2, sizeof(map2) / sizeof(uint32_t), "gsHexDecodeD2");
 }
 
 int main(void)

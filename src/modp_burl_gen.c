@@ -1,6 +1,3 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 #include "arraytoc.h"
 
 static void hexencodemap(void)
@@ -29,16 +26,16 @@ static void urlencodemap(void)
     }
 
     /* upper case */
-    for (i = 'A'; i <= 'Z' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = 'A'; i <= 'Z'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
     /* lower case */
-    for (i = 'a'; i <= 'z' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = 'a'; i <= 'z'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
     /* numbers */
-    for (i = '0'; i <= '9' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = '0'; i <= '9'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
     /* safe chars */
     urlEncodeMap[(int)'.'] = '.';
@@ -54,9 +51,9 @@ static void urlencodeminmap(void)
 {
     int i;
     char urlEncodeMap[256];
-    const char safechar[] = {'_', '.', '-', '~',
-                             '!', '$', '(', ')', '*', ',', ';',
-                             ':', '@', '/', '?'};
+    const char safechar[] = { '_', '.', '-', '~',
+        '!', '$', '(', ')', '*', ',', ';',
+        ':', '@', '/', '?' };
 
     int imax = sizeof(safechar);
 
@@ -66,16 +63,16 @@ static void urlencodeminmap(void)
     }
 
     /* upper case */
-    for (i = 'A'; i <= 'Z' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = 'A'; i <= 'Z'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
     /* lower case */
-    for (i = 'a'; i <= 'z' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = 'a'; i <= 'z'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
     /* numbers */
-    for (i = '0'; i <= '9' ; ++i) {
-        urlEncodeMap[i] = (char) i;
+    for (i = '0'; i <= '9'; ++i) {
+        urlEncodeMap[i] = (char)i;
     }
 
     /* space */
@@ -84,7 +81,6 @@ static void urlencodeminmap(void)
     for (i = 0; i < imax; ++i) {
         urlEncodeMap[(int)(safechar[i])] = safechar[i];
     }
-
 
     char_array_to_c(urlEncodeMap, sizeof(urlEncodeMap), "gsUrlEncodeMinMap");
 }
@@ -112,7 +108,7 @@ static void hexdecodemap(void)
         map[i] = i - 'a' + 10;
     }
 
-    uint32_array_to_c(map, sizeof(map)/sizeof(uint32_t), "gsHexDecodeMap");
+    uint32_array_to_c(map, sizeof(map) / sizeof(uint32_t), "gsHexDecodeMap");
 }
 
 int main(void)

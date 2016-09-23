@@ -1,6 +1,3 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * \file
  * <pre>
@@ -42,13 +39,13 @@
  * </PRE>
  */
 #include "modp_bjavascript.h"
-#include "modp_stdint.h"
 #include "modp_bjavascript_data.h"
+#include "modp_stdint.h"
 
 size_t modp_bjavascript_encode(char* dest, const char* src, size_t len)
 {
     const char* deststart = dest;
-    const uint8_t* s = (const uint8_t*) src;
+    const uint8_t* s = (const uint8_t*)src;
     const uint8_t* srcend = s + len;
     uint8_t x;
     uint8_t val;
@@ -61,7 +58,7 @@ size_t modp_bjavascript_encode(char* dest, const char* src, size_t len)
         x = *s++;
         val = gsJavascriptEncodeMap[x];
         if (val == 0) {
-            *dest++ = (char) x;
+            *dest++ = (char)x;
         } else if (val == 'A') {
             *dest++ = '\\';
             *dest++ = 'x';

@@ -1,6 +1,3 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /*
  * <pre>
  * modp_xml xml decoders
@@ -43,34 +40,34 @@
 #include "modp_xml.h"
 
 static const int gsHexDecodeMap[256] = {
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-  0,   1,   2,   3,   4,   5,   6,   7,   8,   9, 256, 256,
-256, 256, 256, 256, 256,  10,  11,  12,  13,  14,  15, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256,  10,  11,  12,  13,  14,  15, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
-256, 256, 256, 256
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 256, 256,
+    256, 256, 256, 256, 256, 10, 11, 12, 13, 14, 15, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 10, 11, 12, 13, 14, 15, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256,
+    256, 256, 256, 256
 };
 
 size_t modp_xml_unicode_char_to_utf8(char* dest, int uval)
 {
     if (uval <= 0x7F) {
-        dest[0] = (char) uval;
+        dest[0] = (char)uval;
         return 1;
     }
     if (uval <= 0x7FF) {
@@ -80,7 +77,7 @@ size_t modp_xml_unicode_char_to_utf8(char* dest, int uval)
     }
     if (uval <= 0xFFFF) {
         dest[0] = (char)((uval >> 12) + 224);
-        dest[1] = (char)(((uval >>  6) & 63) + 128);
+        dest[1] = (char)(((uval >> 6) & 63) + 128);
         dest[2] = (char)((uval & 63) + 128);
         return 3;
     }
@@ -93,7 +90,6 @@ size_t modp_xml_unicode_char_to_utf8(char* dest, int uval)
     }
     return 0;
 }
-
 
 /**
  * Returns -1 if unicode code point is invalid for HTML (undefined or a
@@ -142,12 +138,12 @@ int modp_xml_validate_unicode(int val)
         0xFFFFE, 0xFFFFF
     };
 
-    static const int imax = sizeof(ranges)/sizeof(uint32_t);
+    static const int imax = sizeof(ranges) / sizeof(uint32_t);
 
     int i;
     for (i = 0; i < imax; i += 2) {
         if (val >= ranges[i]) {
-            if (val <= ranges[i+1]) {
+            if (val <= ranges[i + 1]) {
                 return -1;
             }
         } else {
@@ -201,59 +197,56 @@ int modp_xml_parse_hex_entity(const char* s, size_t len)
 
 size_t modp_xml_decode(char* dest, const char* s, size_t len)
 {
-    const uint8_t* src = (const uint8_t*) s;
+    const uint8_t* src = (const uint8_t*)s;
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
     int unichar;
 
     while (src < srcend) {
         if (*src != '&') {
-            *dest++ = (char) *src++;
+            *dest++ = (char)*src++;
             continue;
         }
 
-        const uint8_t* pos = (const uint8_t*) memchr(src+1, ';',
-                                   (size_t)(srcend - src - 1));
+        const uint8_t* pos = (const uint8_t*)memchr(src + 1, ';',
+            (size_t)(srcend - src - 1));
         if (pos == NULL) {
             /* if not found, just copy */
-            *dest++ = (char) *src++;
+            *dest++ = (char)*src++;
             continue;
         }
         size_t elen = (size_t)(pos - src);
-        if (*(src+1) == '#') {
-            if (*(src+2) == 'x' || *(src+2) == 'X') {
+        if (*(src + 1) == '#') {
+            if (*(src + 2) == 'x' || *(src + 2) == 'X') {
                 unichar = modp_xml_parse_hex_entity((const char*)(src + 3), elen - 3);
             } else {
 
                 unichar = modp_xml_parse_dec_entity((const char*)(src + 2), elen - 2);
             }
             if (unichar == 0) {
-                *dest++ = (char) *src++;
+                *dest++ = (char)*src++;
             } else {
                 dest += modp_xml_unicode_char_to_utf8(dest, unichar);
                 src = pos + 1;
             }
-        } else if (elen == 5 && src[1] == 'q' && src[2] == 'u' &&
-                   src[3] == 'o' && src[4] == 't') {
+        } else if (elen == 5 && src[1] == 'q' && src[2] == 'u' && src[3] == 'o' && src[4] == 't') {
             *dest++ = '"';
             src = pos + 1;
-        } else if (elen == 5 && src[1] == 'a' && src[2] == 'p' &&
-                   src[3] == 'o' && src[4] == 's') {
+        } else if (elen == 5 && src[1] == 'a' && src[2] == 'p' && src[3] == 'o' && src[4] == 's') {
             *dest++ = '\'';
             src = pos + 1;
-        } else if (elen == 4 && src[1] == 'a' && src[2] == 'm' &&
-                   src[3] == 'p') {
+        } else if (elen == 4 && src[1] == 'a' && src[2] == 'm' && src[3] == 'p') {
             *dest++ = '&';
             src = pos + 1;
         } else if (elen == 3 && src[1] == 'l' && src[2] == 't') {
             *dest++ = '<';
-            src = pos +1 ;
+            src = pos + 1;
         } else if (elen == 3 && src[1] == 'g' && src[2] == 't') {
             *dest++ = '>';
-            src = pos +1 ;
+            src = pos + 1;
         } else {
             /* if not found, just copy */
-            *dest++ = (char) *src++;
+            *dest++ = (char)*src++;
         }
     }
 

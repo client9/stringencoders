@@ -1,6 +1,3 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 #include "arraytoc.h"
 #include <stdio.h>
 
@@ -13,7 +10,8 @@ void uint32_array_to_c_hex(const uint32_t* ary, size_t sz, const char* name)
     for (;;) {
         printf("0x%08x", ary[i]);
         ++i;
-        if (i == sz) break;
+        if (i == sz)
+            break;
         if (i % 6 == 0) {
             printf(",\n");
         } else {
@@ -22,7 +20,6 @@ void uint32_array_to_c_hex(const uint32_t* ary, size_t sz, const char* name)
     }
     printf("\n};\n");
 }
-
 
 /**
  * prints char array as a c program snippet
@@ -48,13 +45,14 @@ void char_array_to_c(const char* ary, size_t sz, const char* name)
         } else if (ary[i] == '\\') {
             printf("'\\\\'");
         } else if (ary[i] < 32 || ary[i] > 126) {
-            tmp = (uint8_t) ary[i];
+            tmp = (uint8_t)ary[i];
             printf("0x%02x", tmp);
         } else {
             printf(" '%c'", (char)ary[i]);
         }
         ++i;
-        if (i == sz) break;
+        if (i == sz)
+            break;
         if (i % 10 == 0) {
             printf(",\n");
         } else {
@@ -75,7 +73,8 @@ void uint32_array_to_c(const uint32_t* ary, size_t sz, const char* name)
     for (;;) {
         printf("%3u", ary[i]);
         ++i;
-        if (i == sz) break;
+        if (i == sz)
+            break;
         if (i % 12 == 0) {
             printf(",\n");
         } else {

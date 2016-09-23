@@ -1,7 +1,5 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-#include <stdio.h>
 #include "arraytoc.h"
+#include <stdio.h>
 
 static void modp_toupper_map(void)
 {
@@ -17,7 +15,6 @@ static void modp_toupper_map(void)
 
     char_array_to_c(map, sizeof(map), "gsToUpperMap");
 }
-
 
 static void modp_tolower_map(void)
 {
@@ -42,13 +39,12 @@ static void modp_toprint_map(void)
         if (i < 32 || i > 126) {
             map[i] = '?';
         } else {
-            map[i] = (char) i;
+            map[i] = (char)i;
         }
     }
 
     char_array_to_c(map, sizeof(map), "gsToPrintMap");
 }
-
 
 int main(void)
 {

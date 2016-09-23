@@ -1,6 +1,3 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * \file
  * <PRE>
@@ -66,17 +63,17 @@ size_t modp_b85_decode(char* out, const char* data, size_t len)
     uint32_t digit;
     uint32_t* o2;
     const size_t buckets = len / 5;
-    const uint8_t* d2 = (const uint8_t*) data;
+    const uint8_t* d2 = (const uint8_t*)data;
 
     if (len % 5 != 0) {
         return (size_t)-1;
     }
 
-    o2  = (uint32_t*)out;
+    o2 = (uint32_t*)out;
     for (i = 0; i < buckets; ++i) {
         tmp = 0;
         for (j = 0; j < 5; ++j) {
-            digit =  gsCharToInt[(uint32_t) *d2++];
+            digit = gsCharToInt[(uint32_t)*d2++];
             if (digit >= 85) {
                 return (size_t)-1;
             }
@@ -94,7 +91,7 @@ size_t modp_b85_encode(char* out, const char* src, size_t len)
 {
     size_t i;
     uint32_t tmp;
-    const uint32_t* sary = (const uint32_t*) src;
+    const uint32_t* sary = (const uint32_t*)src;
     const size_t buckets = len / 4;
     if (len % 4 != 0) {
         return (size_t)-1;
@@ -104,20 +101,24 @@ size_t modp_b85_encode(char* out, const char* src, size_t len)
         tmp = *sary++;
         tmp = htonl(tmp);
 
-        /* this crazy function */
+/* this crazy function */
 #if 1
-        *out++ =  (char)gsIntToChar[(tmp / 52200625)]; /* don't need % 85 here, always < 85 */
-        *out++ =  (char)gsIntToChar[(tmp / 614125) % 85];
-        *out++ =  (char)gsIntToChar[(tmp / 7225) % 85];
-        *out++ =  (char)gsIntToChar[(tmp / 85) % 85];
-        *out++ =  (char)gsIntToChar[tmp % 85];
+        *out++ = (char)gsIntToChar[(tmp / 52200625)]; /* don't need % 85 here, always < 85 */
+        *out++ = (char)gsIntToChar[(tmp / 614125) % 85];
+        *out++ = (char)gsIntToChar[(tmp / 7225) % 85];
+        *out++ = (char)gsIntToChar[(tmp / 85) % 85];
+        *out++ = (char)gsIntToChar[tmp % 85];
 #else
         /* is really this */
-        *(out+4) =  gsIntToChar[tmp % 85]; tmp /= 85;
-        *(out+3) =  gsIntToChar[tmp % 85]; tmp /= 85;
-        *(out+2) =  gsIntToChar[tmp % 85]; tmp /= 85;
-        *(out+1) =  gsIntToChar[tmp % 85]; tmp /= 85;
-        *out =  gsIntToChar[tmp];
+        *(out + 4) = gsIntToChar[tmp % 85];
+        tmp /= 85;
+        *(out + 3) = gsIntToChar[tmp % 85];
+        tmp /= 85;
+        *(out + 2) = gsIntToChar[tmp % 85];
+        tmp /= 85;
+        *(out + 1) = gsIntToChar[tmp % 85];
+        tmp /= 85;
+        *out = gsIntToChar[tmp];
         out += 5;
 #endif
         /* NOTES

@@ -41,16 +41,15 @@
  * http://www.opensource.org/licenses/bsd-license.php
  * </PRE>
  */
-#include <string.h>
-#include "config.h"
 #include "modp_b2.h"
-#include "modp_stdint.h"
+#include "config.h"
 #include "modp_b2_data.h"
-
+#include "modp_stdint.h"
+#include <string.h>
 
 size_t modp_b2_encode(char* dest, const char* str, size_t len)
 {
-    const uint8_t* orig = (const uint8_t*) str;
+    const uint8_t* orig = (const uint8_t*)str;
 #if 0
     /* THIS IS A STANDARD VERSION */
     static const uint8_t gsBinaryChars[] = "01";
@@ -64,12 +63,12 @@ size_t modp_b2_encode(char* dest, const char* str, size_t len)
     /* THIS IS 10X FASTER */
     size_t i;
     for (i = 0; i < len; ++i) {
-        memcpy((void*) dest, modp_b2_encodemap[orig[i]], (size_t) 8);
+        memcpy((void*)dest, modp_b2_encodemap[orig[i]], (size_t)8);
         dest += 8;
     }
 #endif
     *dest = '\0';
-    return  len*8;
+    return len * 8;
 }
 
 size_t modp_b2_decode(char* dest, const char* str, size_t len)
@@ -88,7 +87,7 @@ size_t modp_b2_decode(char* dest, const char* str, size_t len)
         for (j = 0; j <= 7; ++j) {
             char c = *str++;
             if (c == '1') {
-                d ^= (char)(1 << (7-j));
+                d ^= (char)(1 << (7 - j));
             }
         }
         *dest++ = d;

@@ -1,6 +1,3 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /*
  * <pre>
  * BFASTURL.c High performance URL encoder/decoder
@@ -42,6 +39,7 @@
  */
 
 #include "modp_stdint.h"
+
 #include "modp_burl.h"
 #include "modp_burl_data.h"
 
@@ -56,7 +54,7 @@ size_t modp_burl_encode(char* dest, const char* src, size_t len)
 
     if (len == 0) {
         *dest = '\0';
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (s < srcend) {
@@ -95,7 +93,7 @@ size_t modp_burl_min_encode(char* dest, const char* src, size_t len)
 
     if (len == 0) {
         *dest = '\0';
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (s < srcend) {
@@ -105,7 +103,7 @@ size_t modp_burl_min_encode(char* dest, const char* src, size_t len)
             *dest++ = c;
         } else {
             *dest++ = '%';
-            *dest++ = (char) gsHexEncodeMap1[x];
+            *dest++ = (char)gsHexEncodeMap1[x];
             *dest++ = (char)(gsHexEncodeMap2[x]);
             /*
               is the equiv of this
@@ -129,11 +127,11 @@ size_t modp_burl_encode_strlen(const char* src, const size_t len)
     const char* srcend = src + len;
 
     if (len == 0) {
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (src < srcend) {
-        if (gsUrlEncodeMap[ (uint8_t) *src++]) {
+        if (gsUrlEncodeMap[(uint8_t)*src++]) {
             count++;
         } else {
             count += 3;
@@ -152,11 +150,11 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
     const char* srcend = src + len;
 
     if (len == 0) {
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (src < srcend) {
-        if (gsUrlEncodeMinMap[ (uint8_t) *src++]) {
+        if (gsUrlEncodeMinMap[(uint8_t)*src++]) {
             count++;
         } else {
             count += 3;
@@ -168,14 +166,14 @@ size_t modp_burl_min_encode_strlen(const char* src, const size_t len)
 size_t modp_burl_decode(char* dest, const char* s, size_t len)
 {
     uint32_t d = 0; /* used for decoding %XX */
-    const uint8_t* src = (const uint8_t*) s;
+    const uint8_t* src = (const uint8_t*)s;
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
     const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
 
     if (len == 0) {
         *dest = '\0';
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (src < srcendloop) {
@@ -185,10 +183,9 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
             src++;
             break;
         case '%':
-            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) |
-                gsHexDecodeMap[(uint32_t)(*(src + 2))];
+            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) | gsHexDecodeMap[(uint32_t)(*(src + 2))];
             if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
-                *dest = (char) d;
+                *dest = (char)d;
                 dest++;
                 src += 3;
             } else {
@@ -197,7 +194,7 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
             }
             break;
         default:
-            *dest++ = (char) *src++;
+            *dest++ = (char)*src++;
         }
     }
 
@@ -211,7 +208,7 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
             src++;
             break;
         default:
-            *dest++ = (char)( *src++);
+            *dest++ = (char)(*src++);
         }
     }
 
@@ -222,22 +219,21 @@ size_t modp_burl_decode(char* dest, const char* s, size_t len)
 size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
 {
     uint32_t d = 0; /* used for decoding %XX */
-    const uint8_t* src = (const uint8_t*) s;
+    const uint8_t* src = (const uint8_t*)s;
     const char* deststart = dest;
     const uint8_t* srcend = (const uint8_t*)(src + len);
     const uint8_t* srcendloop = (const uint8_t*)(srcend - 2);
 
     if (len == 0) {
         *dest = '\0';
-        return (size_t) 0;
+        return (size_t)0;
     }
 
     while (src < srcendloop) {
         if (*src == '%') {
-            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) |
-                gsHexDecodeMap[(uint32_t)(*(src + 2))];
+            d = (gsHexDecodeMap[(uint32_t)(*(src + 1))] << 4) | gsHexDecodeMap[(uint32_t)(*(src + 2))];
             if (d < 256) { /* if one of the hex chars is bad,  d >= 256 */
-                *dest = (char) d;
+                *dest = (char)d;
                 dest++;
                 src += 3;
             } else {
@@ -245,7 +241,7 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
                 src++;
             }
         } else {
-            *dest++ = (char) *src++;
+            *dest++ = (char)*src++;
         }
     }
 
@@ -253,7 +249,7 @@ size_t modp_burl_decode_raw(char* dest, const char* s, size_t len)
      * dont decode "%XX"
      */
     while (src < srcend) {
-        *dest++ = (char)( *src++);
+        *dest++ = (char)(*src++);
     }
 
     *dest = '\0';

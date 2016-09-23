@@ -43,9 +43,9 @@ static void jsencodemap(void)
     jsEncodeMap[0x0b] = 'v';
     jsEncodeMap[0x0c] = 'f';
     jsEncodeMap[0x0d] = 'r';
-    jsEncodeMap[0x5c] = '\\';  /* blackslash gets escaped */
-    jsEncodeMap[0x22] = '"';   /* dquote gets escaped */
-    jsEncodeMap[0x27] = '\'';  /* squote gets escaped */
+    jsEncodeMap[0x5c] = '\\'; /* blackslash gets escaped */
+    jsEncodeMap[0x22] = '"'; /* dquote gets escaped */
+    jsEncodeMap[0x27] = '\''; /* squote gets escaped */
 
     char_array_to_c(jsEncodeMap, sizeof(jsEncodeMap), "gsJavascriptEncodeMap");
 }
