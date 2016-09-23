@@ -1,6 +1,3 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * \file modp_b64.h
  * \brief High performance base 64 encode and decode
