@@ -4,7 +4,7 @@ fast c-string transformations
 
 Hello!
 
-I don't use this library anymore and try to avoid C programming at all costs.  That said,
+I don't use this library anymore and try to avoid C programming if possible.  That said,
 I'm very happy to accept pull-requests and collaborators.
 
 ## Install from Source
