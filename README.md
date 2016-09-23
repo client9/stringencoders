@@ -23,7 +23,7 @@ I'm very happy to accept pull-requests and collaborators.
 
 ## Alpine Linux / musl-libc
 
-* As mentioned, the tests for `modp_numtoa.c`  may fail due to different
+* As mentioned, the tests for `modp_numtoa.c`  may fail due to a different
   rounding algorithm.
 * https://wiki.alpinelinux.org/wiki/How_to_get_regular_stuff_working
 * `apk add gcc bash autoconf automake libtools util-linux pciutils usbutils coreutils binutils findutils grep`
