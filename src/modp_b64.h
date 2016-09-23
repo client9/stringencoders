@@ -23,6 +23,11 @@
  * This uses the standard base 64 alphabet.  If you are planning
  * to embed a base 64 encoding inside a URL use modp_b64w instead.
  *
+ * ATTENTION: the algorithm may require ALIGNED strings.  For Intel
+ * chips alignment doens't (perhaps a performance issues).  But for
+ * Sparc and maybe ARM, use of unaligned strings can core dump.
+ * see https://github.com/client9/stringencoders/issues/1
+ * see https://github.com/client9/stringencoders/issues/42
  */
 
 #ifndef COM_MODP_STRINGENCODERS_B64
