@@ -6,5 +6,5 @@ addons:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-precise-3.8
     packages:
-    - clang-3.8
+    - clang-format-3.8
 script: ./make-ci.sh
