@@ -28,7 +28,7 @@ static void test_b2()
     b2_encode(s);
     b2_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s << "\n";
         exit(1);
     }
 
@@ -46,7 +46,7 @@ static void test_b2_const()
     const string s(b2_encode(orig));
     string result = b2_decode(s);
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 
@@ -65,16 +65,16 @@ static void test_b16()
     string s(orig);
     b16_encode(s);
     if (s.size() != expected.size()) {
-        WHERE(cerr) << "Bad Size.  Expected " << expected.size() << ", recieved " << s.size() << "\n";
+        WHERE(cerr) << "Bad Size.  Expected " << expected.size() << ", received " << s.size() << "\n";
         exit(1);
     }
     if (s != expected) {
-        WHERE(cerr) << "Expected " << expected << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << expected << ", received " << s << "\n";
         exit(1);
     }
     b16_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved '" << s << "'\n";
+        WHERE(cerr) << "Expected " << orig << ", received '" << s << "'\n";
         exit(1);
     }
 
@@ -93,7 +93,7 @@ static void test_b16_const()
     const string s(b16_encode(orig));
     string result = b16_decode(s);
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 
@@ -118,7 +118,7 @@ static void test_b64()
 
     b64_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s << "\n";
         exit(1);
     }
 
@@ -143,7 +143,7 @@ static void test_b64w()
 
     b64w_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s << "\n";
         exit(1);
     }
 
@@ -162,7 +162,7 @@ static void test_b64_const()
     const string s(b64_encode(orig));
     string result = b64_decode(s);
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 
@@ -180,7 +180,7 @@ static void test_b64w_const()
     const string s(b64w_encode(orig));
     string result = b64w_decode(s);
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 
@@ -199,17 +199,17 @@ static void test_b64_cstr()
     string result = b64_decode(s);
 
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
     result = b64_decode(s.data(), s.size());
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
     result = b64_decode(s.c_str());
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 }
@@ -221,17 +221,17 @@ static void test_b64w_cstr()
     string result = b64w_decode(s);
 
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
     result = b64w_decode(s.data(), s.size());
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
     result = b64w_decode(s.c_str());
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 }
@@ -247,7 +247,7 @@ static void test_b85()
     }
     b85_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s << "\n";
         exit(1);
     }
 
@@ -275,14 +275,14 @@ static void test_b85_const()
     const string s(b85_encode(orig));
     string result = b85_decode(s);
     if (result != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 
     const string badstr("abcdef");
     result = b85_encode(badstr);
     if (!result.empty()) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << result << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << result << "\n";
         exit(1);
     }
 }
@@ -294,13 +294,13 @@ static void test_url()
     string s(orig);
     url_encode(s);
     if (s != expected) {
-        WHERE(cerr) << "Expected " << expected << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << expected << ", received " << s << "\n";
         exit(1);
     }
 
     url_decode(s);
     if (s != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s << "\n";
         exit(1);
     }
 
@@ -319,13 +319,13 @@ static void test_url_const()
     const string expected("this+is+a+test");
     const string s1(url_encode(orig));
     if (s1 != expected) {
-        WHERE(cerr) << "Expected " << expected << ", recieved " << s1 << "\n";
+        WHERE(cerr) << "Expected " << expected << ", received " << s1 << "\n";
         exit(1);
     }
 
     const string s2(url_decode(s1));
     if (s2 != orig) {
-        WHERE(cerr) << "Expected " << orig << ", recieved " << s2 << "\n";
+        WHERE(cerr) << "Expected " << orig << ", received " << s2 << "\n";
         exit(1);
     }
 
@@ -344,13 +344,13 @@ static void test_url_cstr()
 
     const string s1(url_decode(data));
     if (s1 != expected) {
-        WHERE(cerr) << "Expected " << expected << ", recieved " << s1 << "\n";
+        WHERE(cerr) << "Expected " << expected << ", received " << s1 << "\n";
         exit(1);
     }
 
     const string s2(url_decode(data, strlen(data)));
     if (s2 != expected) {
-        WHERE(cerr) << "Expected " << expected << ", recieved " << s2 << "\n";
+        WHERE(cerr) << "Expected " << expected << ", received " << s2 << "\n";
         exit(1);
     }
 }

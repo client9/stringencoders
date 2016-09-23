@@ -1,0 +1,10 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: stringencoders
+Description:  collection of high performance c-string transformations
+Version: v3.10.3
+Libs: -L${libdir} -lmodpbase64
+Cflags: -I${includedir}

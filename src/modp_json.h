@@ -59,7 +59,7 @@ void modp_json_ary_close(modp_json_ctx* ctx);
 
 /*
  *
- * Note: to add a 'null string' explicity use 'add_null' and do NOT
+ * Note: to add a 'null string' explicitly use 'add_null' and do NOT
  * pass in a null pointer here.
  */
 void modp_json_add_string(modp_json_ctx* ctx, const char*, size_t);
@@ -94,7 +94,7 @@ void modp_json_add_uint64(modp_json_ctx* ctx, uint64_t val,
     int stringonly);
 
 /*
- * explicity add a null type
+ * explicitly add a null type
  */
 void modp_json_add_null(modp_json_ctx* ctx);
 

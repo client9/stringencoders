@@ -83,7 +83,7 @@ static char* testXmlDecodeNames(void)
 }
 
 /**
- * Bad entity name.. not existant
+ * Bad entity name.. not existent
  */
 static char* testXmlDecodeBadNames1(void)
 {
@@ -140,7 +140,7 @@ static char* testXmlDecodeBadNames3(void)
 }
 
 /**
- * Bad entity name -- boundry!
+ * Bad entity name -- boundary!
  */
 static char* testXmlDecodeBadNames4(void)
 {
@@ -159,7 +159,7 @@ static char* testXmlDecodeBadNames4(void)
 }
 
 /**
- * Bad entity name -- boundry!
+ * Bad entity name -- boundary!
  */
 static char* testXmlDecodeBadNames5(void)
 {

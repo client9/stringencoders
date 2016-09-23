@@ -39,7 +39,7 @@ static char* testEndian(void)
 
 /**
  * sending 0 as length to encode and decode
- * should bascially do nothing
+ * should basically do nothing
  */
 static char* testEmpty(void)
 {

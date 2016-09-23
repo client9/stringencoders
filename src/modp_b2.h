@@ -38,7 +38,7 @@ size_t modp_b2_encode(char* dest, const char* str, size_t len);
  * Decode a hex-encoded string.
  *
  * \param[out] dest output, must have at least modp_b16_decode_len bytes allocated,
- *   input must be a mutliple of 2, and be different than the source buffer.
+ *   input must be a multiple of 2, and be different than the source buffer.
  * \param[in] src the hex encoded source
  * \param[in] len the length of the source
  * \return the length of the the output, or 0 if an error (input size not a multiple of 8)
@@ -47,7 +47,7 @@ size_t modp_b2_decode(char* dest, const char* src, size_t len);
 
 /**
  * Encode length.
- * 2 x the length of A, round up the next high mutliple of 2
+ * 2 x the length of A, round up the next high multiple of 2
  * +1 for null byte added
  */
 #define modp_b2_encode_len(A) (8 * A + 1)

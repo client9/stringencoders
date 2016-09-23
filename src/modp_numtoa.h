@@ -5,7 +5,7 @@
  * This defines signed/unsigned integer, and 'double' to char buffer
  * converters.  The standard way of doing this is with "sprintf", however
  * these functions are
- *   * guarenteed maximum size output
+ *   * guaranteed maximum size output
  *   * 5-20x faster!
  *   * Won't core-dump
  *

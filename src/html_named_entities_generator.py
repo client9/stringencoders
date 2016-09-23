@@ -63,7 +63,7 @@ class Trie(object):
 
 typedef struct trienode {
     char value;    /* 1 byte -- char value - we deal only in pure ASCII */
-    char more;     /* 1 byte -- should be read next value in array (boundry marker) */
+    char more;     /* 1 byte -- should be read next value in array (boundary marker) */
     short next;    /* 2 byte -- position of next leaf */
     int codepoint; /* 4 byte -- codepoint or 0 if none */
 } trienode_t;

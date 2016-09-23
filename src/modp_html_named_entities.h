@@ -5,7 +5,7 @@
 
 typedef struct trienode {
     char value; /* 1 byte -- char value - we deal only in pure ASCII */
-    char more; /* 1 byte -- should be read next value in array (boundry marker) */
+    char more; /* 1 byte -- should be read next value in array (boundary marker) */
     short next; /* 2 byte -- position of next leaf */
     int codepoint; /* 4 byte -- codepoint or 0 if none */
 } trienode_t;
@@ -3795,7 +3795,7 @@ static const trienode_t entities[] = {
     { 59, 0, 0, 8734 }, /* &infin; */
     { 105, 0, 3740, 0 },
     { 101, 0, 3741, 0 },
-    { 59, 0, 0, 10717 }, /* &infintie; */
+    { 59, 0, 0, 10717 }, /* &infinite; */
     { 121, 1, 3744, 0 },
     { 105, 0, 4761, 0 },
     { 59, 0, 0, 1048 }, /* &Icy; */
@@ -8517,7 +8517,7 @@ static const trienode_t entities[] = {
     { 111, 0, 8461, 0 },
     { 116, 0, 8462, 0 },
     { 59, 0, 0, 8411 }, /* &TripleDot; */
-    { 59, 0, 0, 10844 }, /* &andd; */
+    { 59, 0, 0, 10844 }, /* &and; */
     { 104, 0, 8465, 0 },
     { 105, 0, 8466, 0 },
     { 110, 1, 8468, 0 },

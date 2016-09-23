@@ -62,7 +62,7 @@ static char* testLength(void)
 /** \brief test bad input lengths
  * The b85 encode only accepts multiples of 4.
  *
- * The b85 decoder only accepts a mutliple of 5.
+ * The b85 decoder only accepts a multiple of 5.
  *
  */
 static char* testBadInputLength(void)

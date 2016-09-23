@@ -49,7 +49,7 @@
  * \section modp_b85
  *
  * Base 85 is the "most dense ascii encoding" possible, converting 4
- * bytes into 5 chars (1.2).  The ouput is 11% smaller than base 64
+ * bytes into 5 chars (1.2).  The output is 11% smaller than base 64
  * (1.33/1.2), but unfortunately, it's about twice as slow as base-64
  * encoding since true division has to be used (instead of raw bit
  * operations).

@@ -48,7 +48,7 @@
 /* public header */
 #include "modp_b64.h"
 
-/* if on motoral, sun, ibm; uncomment this */
+/* if on motorola, sun, ibm; uncomment this */
 /* #define WORDS_BIGENDIAN 1 */
 /* else for Intel, Amd; uncomment this */
 /* #undef WORDS_BIGENDIAN */
@@ -60,7 +60,7 @@
 /**
  * you can control if we use padding by commenting out this
  * next line.  However, I highly recommend you use padding and not
- * using it should only be for compatability with a 3rd party.
+ * using it should only be for compatibility with a 3rd party.
  * Also, 'no padding' is not tested!
  */
 #define DOPAD 1
