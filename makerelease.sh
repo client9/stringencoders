@@ -1,10 +1,10 @@
 #!/bin/sh
 
-FILE=stringencoders-v3.10.3
+FILE=stringencoders-v3.11.0
 rm -rf ${FILE}
-svn export http://stringencoders.googlecode.com/svn/trunk ${FILE}
-
-find $FILE -name '.svn' | xargs rm -rf
+git clone --depth=1 git@github.com:client9/stringencoders.git ${FILE}
+(cd ${FILE} && ./bootstrap.sh)
+find $FILE -name ".git" | xargs rm -rf
 
 rm -f ${FILE}/Doxyfile
 rm -f ${FILE}/makerelease.sh
