@@ -1,5 +1,4 @@
 #include "modp_json.h"
-#include "modp_messagepack.h"
 
 #include <time.h>
 #ifndef CLOCKS_PER_SEC
@@ -52,49 +51,6 @@ size_t test_json_encode(char* dest)
     modp_json_ary_close(&ctx);
     modp_json_map_close(&ctx);
     return modp_json_end(&ctx);
-}
-
-size_t test_msgpk_encode(char* dest)
-{
-    modp_msgpk_ctx ctx;
-    modp_msgpk_init(&ctx, dest);
-    modp_msgpk_map_open(&ctx, (size_t)4);
-
-    modp_msgpk_add_cstring(&ctx, "start_ms");
-    modp_msgpk_add_uint32(&ctx, (uint32_t)123456789);
-
-    modp_msgpk_add_cstring(&ctx, "remote_ip");
-    modp_msgpk_add_cstring(&ctx, "123.123.123.13");
-
-    modp_msgpk_add_cstring(&ctx, "request");
-    modp_msgpk_add_cstring(&ctx, "GET /foobar HTTP/1.1");
-
-    modp_msgpk_add_cstring(&ctx, "headers_in");
-    modp_msgpk_ary_open(&ctx, (size_t)3);
-
-    modp_msgpk_ary_open(&ctx, (size_t)2);
-    modp_msgpk_add_cstring(&ctx, "Accept");
-    modp_msgpk_add_cstring(&ctx, "*/*");
-    modp_msgpk_ary_close(&ctx);
-
-    modp_msgpk_ary_open(&ctx, (size_t)2);
-    modp_msgpk_add_cstring(&ctx, "Content-type");
-    modp_msgpk_add_cstring(&ctx, "text/plain");
-    modp_msgpk_ary_close(&ctx);
-
-    modp_msgpk_ary_open(&ctx, (size_t)2);
-    modp_msgpk_add_cstring(&ctx, "Connection");
-    modp_msgpk_add_cstring(&ctx, "close");
-    modp_msgpk_ary_close(&ctx);
-
-    modp_msgpk_ary_open(&ctx, (size_t)2);
-    modp_msgpk_add_cstring(&ctx, "User-agent");
-    modp_msgpk_add_cstring(&ctx, "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405");
-    modp_msgpk_ary_close(&ctx);
-
-    modp_msgpk_ary_close(&ctx);
-    modp_msgpk_map_close(&ctx);
-    return modp_msgpk_end(&ctx);
 }
 
 int main(void)

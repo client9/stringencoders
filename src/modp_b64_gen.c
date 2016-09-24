@@ -1,16 +1,13 @@
-/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * B64FAST - High performance base64 encoder/decoder
  * Version 1.1 -- 20-Feb-2005
  *
- * Copyright 2005, 2006 Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright 2005-2016 Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
- * http://modp.com/release/base64
+ * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See b64fast.c for details.
+ * Released under MIT license.  See LICENSE for details.
  *
  * Data table generator.  This generates a ".h" file for use
  * in compiling b64fast.c.  This does not need to be exported.

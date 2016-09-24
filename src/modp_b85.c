@@ -4,7 +4,7 @@
  * MODP_B85 - High performance base85 encoder/decoder
  * https://github.com/client9/stringencoders/
  *
- * Copyright &copy; 2006-2016  Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2006-2016  Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  * Released under MIT license. See LICENSE for details.
  * </pre>

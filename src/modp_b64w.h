@@ -1,19 +1,16 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * <PRE>
  * High performance WEB-SAFE base64 encoder / decoder
  *
- * Copyright &copy; 2005, 2006, 2007 Nick Galbreath -- nickg [at] modp [dot] com
+ * Copyright &copy; 2005-2016 Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders/
  *
- * Released under bsd license.  See modp_b64w.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </pre>
  *
- * This uses a "URL-safe" or "WEB-safe" encoding.  THe standard
+ * This uses a "URL-safe" or "WEB-safe" encoding.  The standard
  * base 64 encoding uses the characters '+', '/' and '=' have special
  * restrictions when used inside a URL.
  *
