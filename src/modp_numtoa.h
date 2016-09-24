@@ -15,7 +15,7 @@
  * <pre>
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
- * http://github.com/client9/stringencoders/
+ * https://github.com/client9/stringencoders/
  * Released under the MIT license.  See LICENSE for details.
  * </pre>
  *

@@ -3,7 +3,7 @@
  * \file modp_utf8.c
  * <PRE>
  * MODP_UTF8 - UTF8 string utilities
- * http://github.com/client9/stringencoders/
+ * https://github.com/client9/stringencoders/
  *
  * Copyright 2013-2016  Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
