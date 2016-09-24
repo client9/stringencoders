@@ -74,15 +74,5 @@ int main(void)
     s1 = (double)(t1 - t0) * (1.0 / (double)CLOCKS_PER_SEC);
     printf("%s\t%8.0f\t%u\n", "JSON", imax / s1, (unsigned)len);
     fflush(stdout);
-
-    t0 = clock();
-    for (i = 0; i < imax; ++i) {
-        len = test_msgpk_encode(NULL);
-        len = test_msgpk_encode(buf2);
-    }
-    t1 = clock();
-    s1 = (double)(t1 - t0) * (1.0 / (double)CLOCKS_PER_SEC);
-    printf("%s\t%8.0f\t%u\n", "MSGPK", imax / s1, (unsigned)len);
-    fflush(stdout);
     return 0;
 }
