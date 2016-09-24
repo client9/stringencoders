@@ -3,6 +3,9 @@ Yeah, I know this isn't quite the right format.
 
 22-Sep-2016
 	* Fix nasty rounding bug in dtoa functions
+	* Change license from New BSD to MIT
+	* Reformat whitespace
+	* Fix URLs and other documentation
 
 01-Nov-2013:
 	* Added new XML, HTML and UTF-8 functions
