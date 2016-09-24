@@ -9,12 +9,12 @@
  * <PRE>
  * High performance base64 encoder / decoder
  *
- * Copyright &copy; 2005, 2006, 2007 Nick Galbreath
+ * Copyright &copy; 2005-2016 Nick Galbreath
  * All rights reserved.
  *
  * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See modp_b64.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </pre>
  *
  * This uses the standard base 64 alphabet.  If you are planning

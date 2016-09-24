@@ -9,12 +9,13 @@
  * <PRE>
  * High Performance XML Decoder (for now)
  *
- * Copyright &copy; 2012  Nick Galbreath
+ * Copyright &copy; 2012-2016  Nick Galbreath
  * All rights reserved.
+ *
+ * Released under MIT license. See LICENSE fro details.
  *
  * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See modp_xml.c for details.
  * </PRE>
  */
 

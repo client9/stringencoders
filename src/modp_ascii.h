@@ -11,10 +11,10 @@
  * MODP_ASCII -- Simple ascii manipulation (uppercase, lowercase, etc)
  * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2007-2016, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
- * Released under bsd license.  See modp_ascii.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  *
  */

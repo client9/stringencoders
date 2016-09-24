@@ -10,10 +10,10 @@
  * MODP_B16 -- High performance base16 (hex) Encoder/Decoder
  * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2005-2007, Nick Galbreath
+ * Copyright &copy; 2005-2016, Nick Galbreath
  * All rights reserved.
  *
- * Released under bsd license.  See modp_b16.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  *
  */

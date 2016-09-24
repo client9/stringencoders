@@ -10,12 +10,12 @@
  * <pre>
  * High Performance Base85 Encoder / Decoder
  *
- * Copyright &copy; 2006,2007 Nick Galbreath -- nickg [at] client9 [dot] com
+ * Copyright &copy; 2006-2016 Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
  *
- * http://code.google.com/p/stringencoders/
+ * https://github.com/client9/stringencoders/
  *
- * Released under bsd license.  See modp_b85.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  *
  * This provides a endian-safe base85 encode/decode operations.  This

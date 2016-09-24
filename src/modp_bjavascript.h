@@ -20,12 +20,12 @@
  * <PRE>
  * High Performance c-string to javascript-string encoder
  *
- * Copyright &copy; 2006, 2007  Nick Galbreath
+ * Copyright &copy; 2006-2016  Nick Galbreath
  * All rights reserved.
  *
  * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See modp_bjavascript.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  */
 

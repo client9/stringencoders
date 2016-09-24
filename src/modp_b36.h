@@ -1,6 +1,3 @@
-/* -*- mode: c++; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
-/* vi: set expandtab shiftwidth=4 tabstop=4: */
-
 /**
  * \file modp_b36.h
  * \brief Base 36 encoding and decoding
@@ -13,12 +10,12 @@
  * <pre>
  * High Performance Base36 Encoder / Decoder
  *
- * Copyright &copy; 2013 Nick Galbreath
+ * Copyright &copy; 2013-2016 Nick Galbreath
  * All rights reserved.
  *
  * https://github.com/client9/stringencoders
  *
- * Released under bsd license.  See modp_b36.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  *
  * This provides a endian-safe base36 encode/decode operations.  This

@@ -9,10 +9,10 @@
  * MODP_B2 -- Base 2 (binary) encode/decoder
  * https://github.com/client9/stringencoders
  *
- * Copyright &copy; 2007, Nick Galbreath
+ * Copyright &copy; 2007-2016, Nick Galbreath
  * All rights reserved.
  *
- * Released under bsd license.  See modp_b2.c for details.
+ * Released under MIT license.  See LICENSE for details.
  * </PRE>
  *
  */

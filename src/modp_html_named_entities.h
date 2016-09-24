@@ -1,4 +1,3 @@
-
 #ifndef _MODP_HTML_NAMED_ENTITIES_H
 #define _MODP_HTML_NAMED_ENTITIES_H
 #include <string.h>

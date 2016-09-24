@@ -9,15 +9,14 @@
  *   * 5-20x faster!
  *   * Won't core-dump
  *
- * Note: this file is under and MIT license
  */
 
 /**
  * <pre>
  * Copyright &copy; 2007, Nick Galbreath -- nickg [at] client9 [dot] com
  * All rights reserved.
- * http://code.google.com/p/stringencoders/
- * Released under the MIT license.
+ * http://github.com/client9/stringencoders/
+ * Released under the MIT license.  See LICENSE for details.
  * </pre>
  *
  */
