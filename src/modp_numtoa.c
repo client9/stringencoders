@@ -322,14 +322,6 @@ size_t modp_dtoa2(double value, char* str, int prec)
     return (size_t)(wstr - str);
 }
 
-#include "config.h"
-
-/* You can get rid of the include, but adding... */
-/* if on motorola, sun, ibm; uncomment this */
-/* #define WORDS_BIGENDIAN 1 */
-/* else for Intel, Amd; uncomment this */
-/* #undef WORDS_BIGENDIAN */
-
 char* modp_uitoa16(uint32_t value, char* str, int isfinal)
 {
     static const char* hexchars = "0123456789ABCDEF";
@@ -340,8 +332,6 @@ char* modp_uitoa16(uint32_t value, char* str, int isfinal)
 	 *  Each line is independent than the previous, so
 	 *    even dumb compilers can pipeline without loop unrolling
 	 */
-#ifndef WORDS_BIGENDIAN
-    /* x86 */
     str[0] = hexchars[(value >> 28) & 0x0000000F];
     str[1] = hexchars[(value >> 24) & 0x0000000F];
     str[2] = hexchars[(value >> 20) & 0x0000000F];
@@ -350,17 +340,6 @@ char* modp_uitoa16(uint32_t value, char* str, int isfinal)
     str[5] = hexchars[(value >> 8) & 0x0000000F];
     str[6] = hexchars[(value >> 4) & 0x0000000F];
     str[7] = hexchars[(value)&0x0000000F];
-#else
-    /* sun, motorola, ibm */
-    str[0] = hexchars[(value)&0x0000000F];
-    str[1] = hexchars[(value >> 4) & 0x0000000F];
-    str[2] = hexchars[(value >> 8) & 0x0000000F];
-    str[3] = hexchars[(value >> 12) & 0x0000000F];
-    str[4] = hexchars[(value >> 16) & 0x0000000F];
-    str[5] = hexchars[(value >> 20) & 0x0000000F];
-    str[6] = hexchars[(value >> 24) & 0x0000000F];
-    str[7] = hexchars[(value >> 28) & 0x0000000F];
-#endif
 
     if (isfinal) {
         str[8] = '\0';
