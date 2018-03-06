@@ -1,5 +1,6 @@
 
 include_HEADERS = \
+	extern_c_begin.h extern_c_end.h \
 	modp_b16.h modp_b64.h modp_b64w.h modp_b64r.h \
 	modp_b85.h modp_burl.h modp_bjavascript.h \
 	modp_numtoa.h modp_ascii.h modp_b2.h \
