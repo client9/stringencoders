@@ -20,6 +20,8 @@ I'm very happy to accept pull-requests and collaborators.
   doesn't matter.  But for ARM chips it can segfault.
 * `modp_numtoa.c` functions may produce different rounding than whatever
   `printf` is on your system. 
+* On mingw (windows) compiling with `-D__USE_MINGW_ANSI_STDIO` gives the 
+  standard `prinf` behavior.
 
 ## Alpine Linux / musl-libc
 
