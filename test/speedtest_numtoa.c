@@ -2,7 +2,7 @@
  * trick gcc to accepting snprintf which is a C99-ism
  */
 #define _ISOC99_SOURCE
-#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #define _XOPEN_SOURCE 500
 #define _POSIX_C_SOURCE 200112L
 #include <stdint.h>
