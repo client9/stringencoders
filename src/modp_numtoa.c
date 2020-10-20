@@ -107,18 +107,37 @@ size_t modp_dtoa(double value, char* str, int prec)
         str[3] = '\0';
         return (size_t)3;
     }
-    /* if input is larger than thres_max, revert to exponential */
-    const double thres_max = (double)(0x7FFFFFFF);
 
-    double diff = 0.0;
-    char* wstr = str;
-
+    // Bound precision to [0, 9] places.
     if (prec < 0) {
         prec = 0;
     } else if (prec > 9) {
         /* precision of >= 10 can lead to overflow errors */
         prec = 9;
     }
+
+    // Short circuit for zero value.
+    if (value == 0.0) {
+        str[0] = '0';
+        if (prec == 0) {
+            str[1] = '\0';
+            return (size_t)1;
+        }
+
+        str[1] = '.';
+        int i;
+        for (i = 0; i < prec; ++i) {
+            str[i + 2] = '0';
+        }
+        str[i + 2] = '\0';
+        return (size_t)(i + 2);
+    }
+
+    /* if input is larger than thres_max, revert to exponential */
+    const double thres_max = (double)(0x7FFFFFFF);
+
+    double diff = 0.0;
+    char* wstr = str;
 
     /* we'll work in positive values and deal with the
 	   negative sign issue later */
@@ -221,18 +240,36 @@ size_t modp_dtoa2(double value, char* str, int prec)
         return (size_t)3;
     }
 
-    /* if input is larger than thres_max, revert to exponential */
-    const double thres_max = (double)(0x7FFFFFFF);
-
-    double diff = 0.0;
-    char* wstr = str;
-
+    // Bound precision to [0, 9] places.
     if (prec < 0) {
         prec = 0;
     } else if (prec > 9) {
         /* precision of >= 10 can lead to overflow errors */
         prec = 9;
     }
+
+    // Short circuit for zero value.
+    if (value == 0.0) {
+        str[0] = '0';
+        if (prec == 0) {
+            str[1] = '\0';
+            return (size_t)1;
+        }
+
+        str[1] = '.';
+        int i;
+        for (i = 0; i < prec; ++i) {
+            str[i + 2] = '0';
+        }
+        str[i + 2] = '\0';
+        return (size_t)(i + 2);
+    }
+
+    /* if input is larger than thres_max, revert to exponential */
+    const double thres_max = (double)(0x7FFFFFFF);
+
+    double diff = 0.0;
+    char* wstr = str;
 
     /* we'll work in positive values and deal with the
 	   negative sign issue later */
@@ -327,7 +364,7 @@ char* modp_uitoa16(uint32_t value, char* str, int isfinal)
     static const char* hexchars = "0123456789ABCDEF";
 
 /**
-	 * Implementation note: 
+	 * Implementation note:
 	 *  No re-assignment of "value"
 	 *  Each line is independent than the previous, so
 	 *    even dumb compilers can pipeline without loop unrolling
