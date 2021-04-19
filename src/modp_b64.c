@@ -166,6 +166,9 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
 
 size_t modp_b64_decode(char* dest, const char* src, size_t len)
 {
+    if (len == 0)
+        return 0;
+
     size_t i;
     size_t leftover;
     size_t chunks;
@@ -175,9 +178,6 @@ size_t modp_b64_decode(char* dest, const char* src, size_t len)
     uint32_t* destInt;
     const uint32_t* srcInt = (const uint32_t*)src;
     uint32_t y = *srcInt++;
-
-    if (len == 0)
-        return 0;
 
 #ifdef DOPAD
     /*
